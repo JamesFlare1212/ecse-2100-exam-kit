@@ -10,7 +10,7 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-打开终端显示的地址（默认 http://localhost:5173）。`bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
+打开终端显示的地址（默认 http://localhost:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
 
 技术栈：Svelte 5、SvelteKit 3、Vite 8、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Inter、Noto Sans SC 与 KaTeX 字体均随应用提供，不访问 Google Fonts。为支持 OneDrive / WSL 文件系统，Vite 开发服务器启用了文件轮询。
 
@@ -67,7 +67,11 @@ https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp
 
 ## 校验与重新生成
 
-Dependabot 配置位于 `.github/dependabot.yml`，每周一纽约时间 09:00 检查根目录的 Bun 依赖和 `scripts/requirements.txt` 中的 Python 依赖。次版本与补丁更新分别按生态分组提出 PR，主版本更新单独提出，不自动合并。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在推送到 `main`、创建或更新 PR 时自动运行，也支持手动触发。前端任务按 `package.json` 指定的 Bun 版本安装锁定依赖，检查题库重新编译后是否一致，并运行下面的类型检查、测试和静态构建。Python 工具任务覆盖 3.12 和 3.14，验证依赖一致性、25 个 PDF 的 SHA-256 与页尺寸、全部页面的文字提取、引用区域渲染与 WebP 编解码，以及全部图形两种主题的标注和球形几何；不会改写原始素材，也不会上传课程 PDF 或站点构建产物。图形检查失败时保留 7 天的诊断图片和报告。
+
+Dependabot 配置位于 `.github/dependabot.yml`，每周一纽约时间 09:00 检查 GitHub Actions、根目录的 Bun 依赖和 `scripts/requirements.txt` 中的 Python 依赖。Actions 更新按组提出；Bun / Python 次版本与补丁更新分别按生态分组提出 PR，主版本更新单独提出，不自动合并。
+
+对于加入 CI 前已存在的 PR，可手动运行 `gh workflow run ci.yml -f ref=refs/pull/123/merge`，验证该 PR 与当前主分支的合并结果；手动运行记录显示在 Actions 中，之后的 PR 更新会正常触发 PR 检查。
 
 ```bash
 bun run check
@@ -80,6 +84,8 @@ bun run build
 交付时检查结果：Svelte / TypeScript 为 0 错误、0 警告；22 项测试通过（11700 次断言）；静态构建通过。另以真实 Chromium 验证了 37 项浏览器场景，覆盖全部题目、470 个推导步骤的公式显示与逐步揭示、公式原页定位、多页缩略图独立滚动与切页、长讲义、原图切换、练习与数据持久化、中英文、主题，以及 4 种手机 / 平板尺寸；无未捕获异常或失败请求。全部 20 题、93 小问、470 个步骤均在 375px 手机宽度下完整展开检查，无页面横向溢出。原题英文正文中 267 个文字片段与 PDF 提取文本直接匹配，另 2 个因公式排版打乱提取顺序的片段已对照原页人工核验。
 
 `python3 scripts/check_figures.py` 在相同 Matplotlib 环境中检查全部 44 幅图的两种主题，共 88 组：文字边界框不重叠，球形图的半径共享球心、箭头止于对应边界、法向从高斯面径向向外，球形文字避开曲线和引线。检查不改写静态素材，逐图 PNG 和报告写入 Git 忽略的 `artifacts/figure-review/`。
+
+`python3 scripts/check_sources.py` 使用已保存的 PDF 核验来源散列、748 页的尺寸与文字提取，并在内存中验证引用裁图、缩略图拼接和 WebP 编解码，便于检查 PyMuPDF / Pillow 更新的兼容性；无需父目录中的原始文件。
 
 可选浏览器回归脚本为 `scripts/browser-qa.mjs`。先在独立目录安装 Playwright 与 Chromium，再设置 `PLAYWRIGHT_MODULE` 为其模块的绝对路径；对已启动的本机预览运行：
 
