@@ -41,7 +41,7 @@ jobs:
         run: |
           python3 scripts/build_content.py
           git diff --exit-code -- src/lib/data/exams.json
-      - name: Check Svelte and TypeScript
+      - name: Check Svelte with native TypeScript 7
         run: bun run check
       - name: Test content and geometry
         run: bun test
