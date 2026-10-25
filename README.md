@@ -14,6 +14,8 @@ bun run dev
 
 技术栈：Svelte 5、SvelteKit 3、Vite 8、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Inter、Noto Sans SC 与 KaTeX 字体均随应用提供，不访问 Google Fonts。为支持 OneDrive / WSL 文件系统，Vite 开发服务器启用了文件轮询。
 
+类型检查使用正式版 TypeScript 7.0.2 原生编译器，按 [svelte-check 官方方案](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check#typescript-7-supports)并存两个依赖：`@typescript/native` 是 `typescript@^7.0.2` 的 npm 别名；`typescript@~6.0.3` 为 SvelteKit 配置同步和 Svelte 文件转换提供仍需的 JavaScript 编译器 API。`bun run check` 与 `bun run check:watch` 均通过 `svelte-check --tsgo` 调用 TS7，CI 使用相同命令。保留 TS6 的兼容 API 符合 [TypeScript 官方迁移说明](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)；Svelte 编辑器仍使用兼容工具链。Dependabot 继续更新原生编译器，兼容依赖 `typescript` 暂不自动升级主版本。
+
 ## 已实现
 
 - Exam 1：Fall 2025、Spring 2026、Fall 2026；Exam 2：Fall 2025、Spring 2026。英文标题、题干和全部小问均转录试卷原文，只调整数学排版与换行；中文模式直接展示原题的忠实翻译，标题、题干和小问随全局语言一起切换。93 小问共 470 个双语推导步骤，每问 3–9 步：先展示公式，再代入实际条件或数值，展开积分、边界条件、逐次反射和代数化简。最终结果融入最后一步算式，仅用 KaTeX `\boxed{}` 强调。
@@ -80,6 +82,8 @@ bun run build
 ```
 
 内容测试包含所有小问与双语字段、KaTeX 公式、748 个页图、SVG 两种主题、PDF 页码与矩形引用，还包括匹配、源/负载边界、瞬态级数、功率、Gauss、电势梯度、微分电容、镜像法及电流密度的一致性检查。
+
+原生类型检查的回归测试在隔离目录中植入 Svelte 脚本、组件属性和通过 `#lib` 引入的 `.svelte.ts` rune 类型错误，检查 TS7 能逐项报错；修正后必须通过，避免迁移时漏掉诊断。
 
 交付时检查结果：Svelte / TypeScript 为 0 错误、0 警告；22 项测试通过（11700 次断言）；静态构建通过。另以真实 Chromium 验证了 37 项浏览器场景，覆盖全部题目、470 个推导步骤的公式显示与逐步揭示、公式原页定位、多页缩略图独立滚动与切页、长讲义、原图切换、练习与数据持久化、中英文、主题，以及 4 种手机 / 平板尺寸；无未捕获异常或失败请求。全部 20 题、93 小问、470 个步骤均在 375px 手机宽度下完整展开检查，无页面横向溢出。原题英文正文中 267 个文字片段与 PDF 提取文本直接匹配，另 2 个因公式排版打乱提取顺序的片段已对照原页人工核验。
 
