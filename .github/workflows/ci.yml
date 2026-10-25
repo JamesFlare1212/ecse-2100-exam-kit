@@ -1,0 +1,87 @@
+name: CI
+run-name: CI · ${{ inputs.ref || github.head_ref || github.ref_name }}
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Ref to validate (for an existing PR: refs/pull/123/merge)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ inputs.ref || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: App checks, tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version-file: package.json
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Verify generated question bank
+        run: |
+          python3 scripts/build_content.py
+          git diff --exit-code -- src/lib/data/exams.json
+      - name: Check Svelte and TypeScript
+        run: bun run check
+      - name: Test content and geometry
+        run: bun test
+      - name: Build static app
+        run: bun run build
+
+  source-tools:
+    name: Source tools (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.12', '3.14']
+    env:
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: /tmp/fieldnotes-matplotlib
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install source-tool dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Check installed dependency compatibility
+        run: python -m pip check
+      - name: Verify source provenance and PDF/image APIs
+        run: python scripts/check_sources.py
+      - name: Check both figure themes and spherical geometry
+        run: python scripts/check_figures.py
+      - name: Upload figure diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: figure-review-python-${{ matrix.python }}
+          path: artifacts/figure-review/
+          if-no-files-found: ignore
+          retention-days: 7
