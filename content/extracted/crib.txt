@@ -1,0 +1,471 @@
+
+--- PAGE 1 ---
+Fields and Waves
+
+
+                         Fields and Waves Crib Sheet
+
+                               Basic Properties of Waves
+
+                      Speed of light in vacuum 𝑢𝑐≈3 × 108m/s
+
+             Phase Constant                           Wavelength
+              𝜔                               2𝜋  𝑢
+          𝛽=                     𝜆=                  𝑢                  𝛽= 𝑓
+
+                          Euler’s Formula: 𝑒𝑗𝜃= cos 𝜃+ 𝑗sin 𝜃
+
+
+                               Lossless Transmission Lines
+
+          Telegrapher’s Equations                     Voltage Wave Phasor
+         𝜕                   𝑡) = −𝑙𝜕     𝑡)                 𝑉(𝑧) = 𝑉+𝑒−𝑗𝛽𝑧+ 𝑉−𝑒+𝑗𝛽𝑧         𝜕𝑧𝑉(𝑧,        𝜕𝑡𝐼(𝑧,
+         𝜕                  𝑡) = −𝑐𝜕      𝑡)                𝑉(𝑧) = 𝑉+𝑒−𝑗𝛽𝑧+ Γ𝐿𝑉+𝑒+𝑗𝛽𝑧          𝜕𝑧𝐼(𝑧,        𝜕𝑡𝑉(𝑧,
+          Characteristic Impedance                      Reflection Coefficient
+               +      −                               𝑉0−     −  𝑍𝐿−𝑍0                𝑉0                        Γ𝐿=  + = −𝐼0+ =          𝑍0 =  + = −𝑉0−= √𝑙                         𝑉0       𝐼0  𝑍𝐿+ 𝑍0
+                    𝐼0       𝐼0     𝑐
+       Voltage Standing Wave Ratio                Wave Velocity
+           |𝑉𝑚𝑎𝑥|   |𝑉0+| + |𝑉0−|  1 + |Γ|                  1
+  SWR =    =       =             𝑢=   = vf ⋅𝑢𝑐
+            |𝑉𝑚𝑖𝑛|   |𝑉0+| −|𝑉0−|  1 −|Γ|                    √𝑙𝑐
+             Input Impedance                      Time-Average Power
+            𝑍𝐿+ 𝑗𝑍0 tan(𝛽𝐿)                                   |𝑉0+|2
+       𝑍𝑖𝑛= 𝑍0                        𝑃𝑎𝑣= 𝑃𝑎𝑣𝑖+ 𝑃𝑎𝑣𝑟=      (1 −|Γ|2)
+                 𝑍0 + 𝑗𝑍𝐿tan(𝛽𝐿)                             2𝑍0
+      Zin for Open Circuit Termination             Zin for Short Circuit Termination
+
+          𝑍𝑖𝑛= −𝑗𝑍0 cot(𝛽𝐿)                    𝑍𝑖𝑛= 𝑗𝑍0 tan(𝛽𝐿)
+         Input Impedance: L = λ/2                  Input Impedance: L = λ/4
+                                                              𝑍02              𝑍𝑖𝑛= 𝑍𝐿                                              𝑍𝑖𝑛=
+                                                               𝑍𝐿
+        Incident Instantaneous Power               Reflected Instantaneous Power
+                |𝑉0+|2                                                   |𝑉0+|2
+     𝑃𝑖(𝑧, 𝑡) =     cos2(𝜔𝑡−𝛽𝑧+ 𝜙+)           𝑃𝑟(𝑧, 𝑡) = −|Γ|2    ×
+               𝑍0                                              𝑍0
+                                              cos2(𝜔𝑡+ 𝛽𝑧+ 𝜙+ + 𝜃𝑟)
+
+
+                                          1
+
+--- PAGE 2 ---
+Fields and Waves
+
+
+                             Lossy Transmission Lines
+
+           Voltage Wave Phasor                     Propagation Constant
+         𝑉(𝑧) = 𝑉+𝑒−𝛾𝑧+ 𝑉−𝑒+𝛾𝑧        𝛾= 𝛼+ 𝑗𝛽= √(𝑟+ 𝑗𝜔𝑙)(𝑔+ 𝑗𝜔𝑐)
+
+        𝑉(𝑧) = 𝑉+𝑒−𝛾𝑧+ Γ𝐿𝑉+𝑒+𝛾𝑧                 𝑒−𝛾𝑧= 𝑒−𝛼𝑧𝑒−𝑗𝛽𝑧
+
+          Characteristic Impedance                     Heaviside Condition
+
+                                                           𝑟  𝑔
+             𝑍0 = √𝑟+ 𝑗𝜔𝑙                     𝑙= 𝑐            𝑔+ 𝑗𝜔𝑐
+
+        Low-Loss Line Conditions                 Low-Loss Attenuation
+                                                               𝑟          𝑟≪𝑗𝜔𝑙; 𝑔≪𝑗𝜔𝑐                                 𝛼=
+                                                          2𝑍0
+    Low-Loss Characteristic Impedance         Attenuation on Dispersionless Lines
+                                 𝛼= 𝑟√𝑐              √𝑙  −𝑗𝑟                                                        𝑙           𝑍0 =               𝑐(1   2𝜔𝑙)
+
+
+
+                              Bounce Diagram
+
+
+
+                                             𝑉2−
+
+
+                                             𝑉2+
+
+
+                                              𝑉1−
+
+
+                                              𝑉1+
+
+
+                            z = 0                         z = d
+
+
+
+
+
+                                          2
+
+--- PAGE 3 ---
+        Fields and Waves
+
+
+                                         Vector Math
+
+                                      Cartesian             Cylindrical
+                    Symbol                                                Spherical Coordinates
+                                    Coordinates          Coordinates
+
+Coordinate Variables                                𝑥, 𝑦, 𝑧                            𝑟, 𝜙, 𝑧                             𝑟, 𝜃, 𝜙
+
+Vector Representation                  𝑨⃗⃗           𝐴𝑥𝐱̂ + 𝐴𝑦𝐲̂ + 𝐴𝑧𝐳̂             𝐴𝑟𝐫̂ + 𝐴𝜙𝛟̂ + 𝐴𝑧𝐳̂             𝐴𝑟𝐫̂ + 𝐴𝜃𝛉̂ + 𝐴𝜙𝛟̂
+
+Magnitude of A                            |𝑨⃗⃗ |          √𝐴𝑥2 + 𝐴𝑦2 + 𝐴𝑧2             √𝐴𝑟2 + 𝐴𝜙2 + 𝐴𝑧2              √𝐴𝑟2 + 𝐴𝜃2 + 𝐴𝜙2
+
+                                                      𝑥0𝐱̂ + 𝑦0𝐲̂ + 𝑧0𝐳̂                    𝑟0𝒓̂ + 𝑧0𝐳̂                             𝑟0𝒓̂
+Position Vector                                           𝑂𝑃0⃗⃗⃗⃗⃗⃗⃗           for P0 = (x0, y0, z0)             for P0 = (r0, ϕ0, z0)              for P0 = (r0, θ0, ϕ0)
+
+                                                                       𝐱̂ ⋅𝐱̂ = 𝐲̂ ⋅𝒚̂ = 𝒛̂ ⋅𝒛̂ = 1        𝒓̂ ⋅𝒓̂ = 𝝓̂ ⋅𝝓̂ = 𝒛̂ ⋅𝒛̂ = 1        𝒓̂ ⋅𝒓̂ = 𝜽̂ ⋅𝜽̂ = 𝝓̂ ⋅𝝓̂ = 1
+                                                                       𝐱̂ ⋅𝒚̂ = 𝐲̂ ⋅𝒛̂ = 𝒛̂ ⋅𝒙̂ = 0        𝒓̂ ⋅𝝓̂ = 𝝓̂ ⋅𝒛̂ = 𝒛̂ ⋅𝒓̂ = 0        𝒓̂ ⋅𝜽̂ = 𝜽̂ ⋅𝝓̂ = 𝝓̂ ⋅𝒓̂ = 0
+Unit Vector Properties                                         𝐱̂ × 𝒚̂ = 𝒛̂                              𝒓̂ × 𝝓̂ = 𝒛̂                               𝒓̂ × 𝜽̂ = 𝝓̂
+                                                                        𝒚̂ × 𝒛̂ = 𝒙̂                     𝝓̂ × 𝒛̂ = 𝒓̂                           𝜽̂ × 𝝓̂ = 𝒓̂
+                                                                                   𝒛̂ × 𝒙̂ = 𝒚̂                               𝒛̂ × 𝒓̂ = 𝝓̂                      𝝓̂ × 𝒓̂ = 𝜽̂
+
+Dot Product             𝐴 ⋅𝐵⃗     𝐴𝑥𝐵𝑥+ 𝐴𝑦𝐵𝑦+ 𝐴𝑧𝐵𝑧      𝐴𝑟𝐵𝑟+ 𝐴𝜙𝐵𝜙+ 𝐴𝑧𝐵𝑧      𝐴𝑟𝐵𝑟+ 𝐴𝜃𝐵𝜃+ 𝐴𝜙𝐵𝜙
+
+                                      (𝐴𝑦𝐵𝑧−𝐴𝑧𝐵𝑦)𝒙̂        (𝐴𝜙𝐵𝑧−𝐴𝑧𝐵𝜙)𝒓̂           (𝐴𝜃𝐵𝜙−𝐴𝜙𝐵𝜃)𝒓̂
+Cross Product           𝐴 × 𝐵⃗      −(𝐴𝑥𝐵𝑧−𝐴𝑧𝐵𝑥)𝒚̂        −(𝐴𝑟𝐵𝑧−𝐴𝑧𝐵𝑟)𝝓̂        −(𝐴𝑟𝐵𝜙−𝐴𝜙𝐵𝑟)𝜽̂
+                          + (𝐴𝑥𝐵𝑦−𝐴𝑦𝐵𝑥)𝒛̂      + (𝐴𝑟𝐵𝜙−𝐴𝜙𝐵𝑟)𝒛̂        +(𝐴𝑟𝐵𝜃−𝐴𝜃𝐵𝑟)𝝓̂
+Differential Length            𝑑𝑙                𝐱̂ 𝑑𝑥+ 𝐲̂ 𝑑𝑦+ 𝐳̂ 𝑑𝑧                𝐫̂ 𝑑𝑟+ 𝛟̂ 𝑟𝑑𝜙+ 𝐳̂ 𝑑𝑧         𝒓̂ 𝑑𝑟+ 𝜽̂ 𝑟 𝑑𝜃+ 𝝓̂ 𝑟𝑠𝑖𝑛𝜃 𝑑𝜙
+
+                                    𝑑𝑆𝑥= 𝒙 ̂𝑑𝑦 𝑑𝑧          𝑑𝑆𝑟= 𝒓̂ 𝑟 𝑑𝜙 𝑑𝑧        𝑑𝑆𝑟= 𝒓̂ 𝑟2𝑠𝑖𝑛𝜃 𝑑𝜃 𝑑𝜙
+Differential Surface Area    𝑑𝑆         𝑑𝑆𝑦= 𝒚̂ 𝑑𝑥 𝑑𝑧          𝑑𝑆𝜙= 𝝓̂ 𝑑𝑟 𝑑𝑧         𝑑𝑆𝜃= 𝜽̂ 𝑟𝑠𝑖𝑛𝜃 𝑑𝑟 𝑑𝜙
+                                    𝑑𝑆𝑧= 𝒛̂ 𝑑𝑥 𝑑𝑦          𝑑𝑆𝑧= 𝒛̂ 𝑟 𝑑𝑟 𝑑𝜙          𝑑𝑆𝜙= 𝝓̂ 𝑟 𝑑𝑟 𝑑𝜃
+Differential Volume        𝑑𝑉           𝑑𝑥 𝑑𝑦 𝑑𝑧                 𝑟 𝑑𝑟 𝑑𝜙 𝑑𝑧              𝑟2 𝑠𝑖𝑛𝜃 𝑑𝑟 𝑑𝜃 𝑑𝜙
+
+
+
+
+
+                                                3
+
+--- PAGE 4 ---
+        Fields and Waves
+
+
+                                       Vector Operators
+
+           Symbol    Cartesian Coordinates     Cylindrical Coordinates     Spherical Coordinates
+
+                           𝜕𝑓    𝜕𝑓    𝜕𝑓             𝜕𝑓   1 𝜕𝑓    𝜕𝑓         𝜕𝑓    1 𝜕𝑓     1  𝜕𝑓
+Gradient                      ∇⃗⃗ 𝑓           𝜕𝑥𝒙̂ + 𝜕𝑦𝒚̂ + 𝜕𝑧𝒛̂              𝜕𝑟𝒓̂ + 𝑟 𝜕𝜙𝝓̂ + 𝜕𝑧𝒛̂          𝜕𝑟𝒓̂ + 𝑟 𝜕𝜃𝜽̂ + 𝑟𝑠𝑖𝑛𝜃 𝜕𝜙𝝓̂
+                                                                            1 𝜕(𝑟2𝐹𝑟)
+                                                                                           𝑟2   𝜕𝑟
+                                 𝜕𝐹𝑥   𝜕𝐹𝑦   𝜕𝐹𝑧            1 𝜕       1 𝜕𝐹𝜙   𝜕𝐹𝑧                 1   𝜕
+Divergence               ∇⃗⃗ ⋅𝐹       𝜕𝑥+ 𝜕𝑦+ 𝜕𝑧              𝑟 𝜕𝑟(𝑟𝐹𝑟) + 𝑟 𝜕𝜙+ 𝜕𝑧          + 𝑟𝑠𝑖𝑛𝜃 𝜕𝜃(𝐹𝜃𝑠𝑖𝑛𝜃)
+                                                                                             1  𝜕𝐹𝜙
+                                                                   +
+                                                                                                          𝑟𝑠𝑖𝑛𝜃 𝜕𝜙
+
+                                                                              1                                                                𝒙̂             (1                                                                                  𝜕       −𝜕𝐹𝜃                           (𝜕𝐹𝑧𝜕𝑦−𝜕𝐹𝑦𝜕𝑧)                                                         𝑟                                                             𝜕𝐹𝑧𝜕𝜙−𝜕𝐹𝜙𝜕𝑧)                                                                                                                           𝒓̂                𝑟𝑠𝑖𝑛𝜃(                                                                                      𝜕𝜃(𝐹𝜙𝑠𝑖𝑛𝜃)                                                                                 𝜕𝜙) 𝒓̂
+                                                                               1  1  𝜕𝐹𝑟
+                                                                                                                                                                            𝜽̂Curl                             ∇⃗⃗ × 𝐹       + (𝜕𝐹𝑥𝜕𝑧−𝜕𝐹𝑧𝜕𝑥)                                                                         𝒚̂           + (𝜕𝐹𝑟𝜕𝑧−𝜕𝐹𝑧𝜕𝑟)                                                                                                𝝓̂       + 𝑟(𝑠𝑖𝑛𝜃 𝜕𝜙−𝜕𝜕𝑟(𝑟𝐹𝜙))
+                                                           1                        1
+                                                                                                 𝒛̂        +                                                                                                                                                            𝒛̂       +                                                                                                                                              𝝓̂                         + (𝜕𝐹𝑦𝜕𝑥−𝜕𝐹𝑥𝜕𝑦)                                                             𝑟(𝜕(𝑟𝐹𝜙)𝜕𝑟  −𝜕𝐹𝑟𝜕𝜙)                                                                                           𝑟(𝜕(𝑟𝐹𝜃)𝜕𝑟  −𝜕𝐹𝑟𝜕𝜃)
+
+                                                                            1 𝜕    𝜕𝑓
+                                                                                           𝑟2 𝜕𝑟(𝑟2 𝜕𝑟)
+                               𝜕2𝐹𝑥   𝜕2𝐹𝑦   𝜕2𝐹𝑧          1 𝜕        1 𝜕2𝐹𝜙   𝜕2𝐹𝑧           1   𝜕
+Laplacian                  ∇⃗⃗2𝑓         +   +                 +     +        +                            𝜕𝑥2   𝜕𝑦2   𝜕𝑧2            𝑟 𝜕𝑟(𝑟𝜕𝑓𝜕𝑟)   𝑟2 𝜕𝜙2   𝜕𝑧2           𝑟2𝑠𝑖𝑛𝜃 𝜕𝜃(𝑠𝑖𝑛𝜃𝜕𝑓𝜕𝜃)
+                                                                                            1   𝜕2𝑓
+                                                                 +
+                                                                                                           𝑟2 sin2 𝜃 𝜕𝜙2
+
+                                               Electrostatics
+
+               ∯𝐷⃗⃗ ⋅𝑑𝑆 = ∭𝜌𝑑𝑉= 𝑄𝑒𝑛𝑐                                                           ∇⃗⃗ ⋅𝐷⃗⃗ = 𝜌
+
+                     ∮𝐸⃗ ⋅𝑑𝑙 = 0                                                                           ∇⃗⃗ × 𝐸⃗ = 0
+                                                𝐷⃗⃗ = 𝜖𝐸⃗                              𝜖0 = 8.85 × 10−12 F/m
+
+                                     Coulomb’s Law
+
+                  Field of point charge q:              Force on charge 𝒒𝟐 from charge 𝒒𝟏:
+                        𝑞                                        𝑞1𝑞2
+                                𝐸⃗ =           𝒓̂                       𝐹12 =           𝒓̂                       4𝜋𝜖𝑟2                                 4𝜋𝜖𝑟2
+
+                                                Potential
+
+                                                                                  𝑏
+                                                    𝑉(𝑏) −𝑉(𝑎) = −∫𝐸⃗ ⋅𝑑𝑙                                  𝐸⃗ = −∇⃗⃗ 𝑉
+                                                                              𝑎
+
+
+
+
+
+                                                4
+
+--- PAGE 5 ---
+Fields and Waves
+
+
+                             Electrostatic Boundary Conditions*
+
+          𝐷1𝑛−𝐷2𝑛= 𝜌𝑠                        𝐸1𝑡= 𝐸2𝑡
+                *Assuming material 1 is on the top/right and material 2 is on the bottom/left.
+
+           Material 1
+                                  𝑛̂21                                            𝑛̂21                                                       Material 2         Material 1
+           Material 2
+
+                          Capacitance and Electric Energy
+
+               Capacitance                            Electric Energy Density
+               𝑄                                1     2
+          𝐶=                       𝑤𝑒=   𝜖|𝐸⃗ |
+                 𝑉                                2
+                                 Total Electric Energy
+                             1            1
+                  𝑊𝑒=  ∭𝜖|𝐸⃗ | 2𝑑𝑉=  𝐶𝑉2
+                             2            2
+
+
+                  Laplace’s & Poisson’s Equations + Finite Difference
+
+                                                          Poisson’s Equation            Laplace’s Equation
+                                        ∇⃗⃗ 2𝑉= 0                                                                              ∇⃗⃗ 2𝑉= −𝜌
+                                                                   𝜖
+         Laplace Equation Solver                    Poisson Equation Solver
+                1                               1         𝑉𝑐𝑒𝑛𝑡𝑒𝑟=  (∑𝑉𝑛𝑒𝑖𝑔ℎ𝑏𝑜𝑟𝑠)               𝑉𝑐𝑒𝑛𝑡𝑒𝑟=  (∑𝑉𝑛𝑒𝑖𝑔ℎ𝑏𝑜𝑟𝑠−𝜌ℎ2                4                               4         𝜖)
+
+
+                                 Current Flow
+
+          Microscopic Ohm’s Law                           Resistance
+                                                𝑉
+                      𝐽 = 𝜎𝐸⃗                    𝑅=
+                                                                               𝐼
+
+
+
+
+
+                                          5
+
+--- PAGE 6 ---
+Fields and Waves
+
+
+                                   Magnetostatics
+
+            ∯𝐵⃗ ⋅𝑑𝑆 = 0                                                                          ∇⃗⃗ ⋅𝐵⃗ = 0
+
+           ∮𝐻⃗⃗ ⋅𝑑𝑙 = ∬𝐽 ⋅𝑑𝑆 = 𝐼𝑒𝑛𝑐                                                            ∇⃗⃗ × 𝐻⃗⃗ = 𝐽
+                         𝐵⃗ = 𝜇𝐻⃗⃗                            𝜇0 = 4𝜋× 10−7 H/m
+
+                            Magnetic Vector Potential
+
+                       𝐵⃗ = ∇⃗⃗ × 𝐴              𝜓= ∯𝐵⃗ ⋅𝑑𝑆 = ∮𝐴 ⋅𝑑𝑙
+
+                    Flux, Flux Linkage, Inductance & Faraday’s Law
+
+                   Flux:                                Flux Linkage:
+        𝜓= ∬𝐵⃗ ⋅𝑑𝑆                         Λ = 𝑁𝜓
+         𝐸𝑚𝑓= −𝐿𝑑𝐼                  𝐸𝑚𝑓= −𝑑Λ
+                        𝑑𝑡                                     𝑑𝑡
+     Differential Form of Faraday’s Law:           Integral Form of Faraday’s Law:
+                                  ∇⃗⃗ × 𝐸⃗ = −𝜕𝐵⃗                        ∮𝐸⃗ ⋅𝑑𝑙 = −𝑑    ⋅𝑑𝑆                        𝜕𝑡                             𝑑𝑡∬𝐵⃗
+                                 Λ
+                       𝐿=
+                                                     𝐼
+
+                         Magnetostatic Boundary Conditions*
+
+            𝐵1𝑛= 𝐵2𝑛                                    𝑛̂21 × (𝐻⃗⃗1𝑡−𝐻⃗⃗2𝑡) = 𝐽𝑠
+*Assuming material 1 is on the top/right and material 2 is on the bottom/left. 𝑛̂21 points from material 2 to material 1.
+
+                               Magnetic Circuits
+
+      Magnetomotive Force (MMF):                       Reluctance:
+                                                                                               𝑙           𝑉𝑚= 𝑁𝐼                               ℛ=
+                                                  𝜇𝐴
+
+                        𝑁𝐼= 𝜓ℛ
+
+                           Magnetic Energy and Force
+
+        Magnetic Energy Density:                                                     Total Magnetic Energy:
+                        2
+              1 |𝐵⃗ |   1     2                                1
+      𝑤𝑚=    =   𝜇|𝐻⃗⃗ |            𝑊𝑚= ∭𝑤𝑚𝑑𝑉=  𝐿𝐼2              2 𝜇   2                                     2
+
+  Force due to Magnetic Energy Pressure:           Force on a Point Charge:
+
+     𝐹= −∇⃗⃗ 𝑊𝑚= 𝑤𝑚⋅𝐴𝑟𝑒𝑎                   𝐹 = 𝑞(𝑣 × 𝐵⃗ )
+
+
+
+                                          6
+
+--- PAGE 7 ---
+Fields and Waves
+
+
+
+
+                               Magnetization Curves
+
+
+
+
+
+                                     Constants
+             𝜖0 = 8.85 × 10−12 F/m                 𝜇0 = 4𝜋× 10−7 H/m
+             𝜂0 = √𝜇0/𝜖0 = 377Ω            𝑐≈3 × 108 m/s
+
+                           Full Version of Maxwell’s Equations
+
+                  Integral Form                          Differential Form
+
+
+
+                                                                                                                                𝜕𝐷⃗⃗
+           ∮𝐻⃗⃗ ⋅𝑑𝑙 = ∫𝐽 ⋅𝑑𝑆 + ∫𝜕𝐷⃗⃗                                                  ∇⃗⃗ × 𝐻⃗⃗ = 𝐽 + 𝜕𝑡                       𝜕𝑡⋅𝑑𝑆
+
+                 ∮𝐵⃗ ⋅𝑑𝑆 = 0                                                                  ∇⃗⃗ ⋅𝐵⃗ = 0
+
+            ∮𝐸⃗ ⋅𝑑𝑙 = −𝑑    ⋅𝑑𝑆                                                 ∇⃗⃗ × 𝐸⃗ = −𝜕𝐵⃗                     𝑑𝑡∫𝐵⃗                                  𝜕𝑡
+
+              ∮𝐷⃗⃗ ⋅𝑑𝑆 = ∮𝜌𝑑𝑉= 𝑄𝑒𝑛𝑐                                                     ∇⃗⃗ ⋅𝐷⃗⃗ = 𝜌
+
+             Conduction Current                  Displacement Current
+        𝐼𝑐= ∬𝐽𝑐⋅𝑑𝑆 = ∬𝜎(𝐸⃗ ⋅𝑑𝑆 )         𝐼𝑑= ∬𝐽𝑑⋅𝑑𝑆 = ∬𝜕𝐷⃗⃗                                                    𝜕𝑡⋅𝑑𝑆
+
+
+
+
+
+                                          7
+
+--- PAGE 8 ---
+Fields and Waves
+
+
+               Complex Permittivity and EM Waves in Lossy Media
+
+                           Complex Permittivity
+                                                           𝜎
+                  𝜖𝑐= 𝜖′ −𝑗𝜖′′, where 𝜖′ = 𝜖 and 𝜖′′ =                                               𝜔
+                 Skin Depth                           Intrinsic Impedance
+                     1                                                      |Ẽ|
+              𝛿𝑠=                             η =                   𝛼                                                                                  |𝐻̃|
+
+                        1                                   2𝜋
+             𝑢=                          𝜆=
+                         √𝜇𝜖′                                 𝛽
+
+                             Low-Loss Dielectrics
+
+                         𝜖′′             < 0.01                 𝜂= √𝜇
+                      𝜖′                                          𝜖
+
+
+                        𝜎  𝜇
+           𝛼= √                         β = 𝜔√𝜇𝜖
+                           2   𝜖
+
+                           Good Conductor
+
+                         𝜖′′                                  𝛼
+             > 100                𝜂= (1 + 𝑗)
+                       𝜖′                                   𝜎
+
+          𝛼= √𝜋𝑓𝜇𝜎               𝛽= √𝜋𝑓𝜇𝜎
+
+                  EM Waves and Energy
+
+               Magnetic Field                           Electric Field
+                                        𝐸̃
+                       𝐻̃ = 𝑘̂ ×                                         𝐸̃ = −(𝑘̂ × 𝜂𝐻̃)
+                        𝜂
+               Poynting Vector
+                              𝑃= ∫(𝑆 ⋅𝑛̂)𝑑𝐴
+                𝑆 = 𝐸⃗ × 𝐻⃗⃗                              𝐴
+
+                                                                                                                  |𝐸̃|2
+         𝑃= |𝑆 |𝐴cos 𝜃                     𝑆𝑎𝑣=                                                                      2𝜂
+
+                   Time-Average Power Density in Lossy Media
+                                                 2
+                                                          |𝐸̃|
+                           𝑆𝑎𝑣= 2𝜂𝑒−2𝛼𝑧
+
+
+
+
+
+                                          8
+
+--- PAGE 9 ---
+Fields and Waves
+
+
+                         Wave Polarization
+
+                                         Linear Polarization Inclination Angle (ψ):      Polarization Phasor Expression:
+                                                            (𝑎𝑦 )         𝐸̃(𝑧) = (𝑎𝑥𝑥̂ + 𝑎𝑦𝑒𝑗𝛿𝑦̂)𝑒−𝑗𝑘𝑧           𝜓= tan−1                                                               𝑎𝑥
+
+     For linear polarization: 𝜹= 𝟎, ±𝝅
+ For circular polarization (for propagation                                                  Elliptical Polarization Auxiliary Angle (ψ0):
+                    in +z):
+                     𝜋                           𝜓0 = tan−1 (𝑎𝑦 )
+       When 𝛿= + 2: left-handed                                𝑎𝑥
+                    𝜋
+       When 𝛿= − 2: right-handed
+
+
+  Elliptical Polarization Rotation Angle (γ):   Elliptical Polarization Ellipticity Angle (χ):
+          tan 2𝛾= (tan 2𝜓0) cos 𝛿                      sin 2𝜒= (sin 2𝜓0) sin 𝛿
+                      (for − 𝜋 < 𝛾< 𝜋                                            (for − 𝜋 < 𝜒< 𝜋                           2        2)                                              4        4)
+
+
+
+
+
+                                          9
+
+--- PAGE 10 ---
+Fields and Waves
+
+
+               Wave Propagation, Reflection and Transmission
+
+                                                       2𝜋  𝜔
+                          In Lossless Media: 𝛾= 𝑘= 𝜆= 𝑢
+                               Refractive Index: 𝑛= √𝜀𝑟
+
+     Wave Phasor with E pointed in x and          Propagation Constant
+               propagating in z:                                                      𝛾1 = 𝑘1 = 𝛼1 + 𝑗𝛽1
+             𝐸̃1(𝑧) = 𝐸0𝑖𝑥̂(𝑒−𝛾1𝑧+ Γ𝑒𝛾1𝑧)
+
+         Normal Incidence Reflection        Normal Incidence Transmission
+                    Coefficient                              Coefficient
+            E0𝑟   𝜂2 −𝜂1   √𝜖𝑟1 −√𝜖𝑟2                      𝐸0𝑡    2𝜂2
+       Γ = 𝑖=     =              𝜏= 1 + Γ = 𝑖=            𝐸0   𝜂2 + 𝜂1   √𝜖𝑟1 + √𝜖𝑟2                      𝐸0   𝜂2 + 𝜂1
+                    Snell’s Law                    Parallel Polarization Reflection
+                                                              Coefficient:              𝑘1 sin 𝜃1 = 𝑘2 sin 𝜃2
+              𝑛1 sin 𝜃1 = 𝑛2 sin 𝜃2                                                      𝜂2 cos 𝜃2 −𝜂1 cos 𝜃1
+                        𝜂0                                     Γ|| =
+            𝜂=                              𝜂2 cos 𝜃2 + 𝜂1 cos 𝜃1                    𝑛
+        Parallel Polarization Transmission    Perpendicular Polarization Reflection
+                    Coefficient:                              Coefficient:
+                    2𝜂2 cos 𝜃1                                                      𝜂2 cos 𝜃1 −𝜂1 cos 𝜃2                  𝜏|| =                                  Γ⊥=                𝜂2 cos 𝜃2 + 𝜂1 cos 𝜃1                                                      𝜂2 cos 𝜃1 + 𝜂1 cos 𝜃2
+                          cos 𝜃2
+             1 + Γ|| = τ||
+                          cos 𝜃1
+           Perpendicular Polarization                     Critical Angle:
+           Transmission Coefficient:
+                    2𝜂2 cos 𝜃1                                  𝜖2         𝑛2                                   𝜃𝑐= sin−1 √  = sin−1 (  )        𝜏⊥=                𝜂2 cos 𝜃1 + 𝜂1 cos 𝜃2                             𝜖1         𝑛1
+               1 + Γ⊥= τ⊥
+         Perpendicular Brewster Angle:             Parallel Brewster Angle:
+                                                   1 −(𝜖1𝜇2                                                                𝜖2𝜇1)                    1 −(𝜇1𝜖2                    sin 𝜃𝐵|| = √         2                            𝜇2𝜖1)              sin 𝜃𝐵⊥= √         2                        1 −(𝜖1                                                                  𝜖2)                    1 −(𝜇1                           𝜇2)                                                            𝜖2
+                                                                                          if 𝜇1 = 𝜇2: 𝜃𝐵= tan−1 √
+                                                                                                            𝜖1
+
+       * 𝛽= 𝑘 for wave propagation in free space or lossless materials
+
+
+
+
+
+                                         10

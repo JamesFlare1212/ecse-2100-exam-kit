@@ -1,0 +1,670 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+Lecture 15
+Magnetostatics & Ampere’s Law
+
+                                                    Alex Patterson
+                                      Electrical, Computer, and Systems Engineering Department
+                                              Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following people:
+
+  ▪Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY (Emeritus)
+ ▪J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+ ▪Thomas P. Crowley – National Institute of Standards and Technology, Boulder, CO
+  ▪Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY (Emeritus)
+  ▪Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+  ▪Jeffrey Braunstein – ECE Department, University at Albany
+  ▪James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+  ▪James Dylan Rees - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+  ▪Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+
+    Materials from other sources are referenced where they are used.
+   Those listed as Ulaby are figures from Ulaby’s textbook.
+
+
+
+
+
+                                                                            2
+
+--- PAGE 3 ---
+Overview
+
+•  Magnetostatics
+
+•  Ampere’s Law
+
+
+
+
+
+                                                                                                                                       https://web.mit.edu/8.02t/www/802TEAL3D/visualizations/magnet
+                                                                                                                                               ostatics/MagneticForceRepel/MagneticForceRepel.htm
+
+
+
+
+                                                                             3
+
+--- PAGE 4 ---
+Magnetostatics
+
+
+
+
+
+                                                 4
+
+--- PAGE 5 ---
+Magnetostatics
+
+
+
+
+                               •  In magnetostatics, we have current. All currents are
+                           constant.
+
+
+
+
+                               •  Thus, all magnetic fields are constant
+
+
+   TeachEngineering.org
+
+
+
+
+                                                                             5
+
+--- PAGE 6 ---
+Magnetostatics
+
+             Electrostatic Version of Maxwell’s Equations
+
+             Integral Form                          Differential Form
+
+
+
+
+
+                                                                             6
+
+--- PAGE 7 ---
+Magnetostatics
+
+          Magnetostatic Version of Maxwell’s Equations
+
+               Integral Form                          Differential Form
+
+
+
+
+
+                                                                             7
+
+--- PAGE 8 ---
+Magnetostatics
+
+•  Electrostatics is based on two of Maxwell’s equations, but simplified.
+•  Magnetostatics is based on the other two Maxwell’s equations, but
+   simplified.
+•  In these simplified Maxwell’s equations, electric and magnetic fields are
+  separate. In the full Maxwell’s equations below, they are coupled.
+
+            Integral Form                          Differential Form
+
+       ∮𝐵⋅𝑑Ԧ𝑆= 0             ∇⋅𝐵= 0
+       ∮𝐷⋅𝑑Ԧ𝑆= ∫𝜌𝑑𝑉          ∇⋅𝐷= 𝜌
+                       𝑑                 𝜕𝐷
+       ∮𝐻⋅𝑑Ԧ𝑙= ∫Ԧ𝐽⋅𝑑Ԧ𝑆+ 𝑑𝑡∫𝐷⋅𝑑Ԧ𝑆  ∇× 𝐻= Ԧ𝐽+ 𝜕𝑡
+        ∮𝐸⋅𝑑Ԧ𝑙= −𝑑                          ∇× 𝐸= −𝜕𝐵                  𝑑𝑡∫𝐵⋅𝑑Ԧ𝑆                                                    𝜕𝑡                 8
+
+--- PAGE 9 ---
+Magnetostatics
+
+
+          Magnetostatic Version of Maxwell’s Equations
+
+               Integral Form                          Differential Form
+
+
+
+
+
+             These equations tell you that magnetic field arises from
+                     current (and circulates around the current).
+
+
+
+                                                                             9
+
+--- PAGE 10 ---
+Magnetostatics
+
+
+          Magnetostatic Version of Maxwell’s Equations
+
+              Integral Form                          Differential Form
+
+
+
+
+
+           These equations tell you that magnetic field doesn’t have any
+            sources or sinks (i.e. no “magnetic charge”.) It just circulates.
+
+
+
+                                                                            10
+
+--- PAGE 11 ---
+Magnetostatics
+•  There are 2 different ways of writing the magnetic field.
+
+              called just called “magnetic field” or “H-field”) has units of amperes per  𝐻(often
+      meter (A/m). Thus it has a direct relationship with current.
+
+
+              called “magnetic flux density”), has units of teslas (T) or webers per  𝐵(often
+      square meter (Wb/m2).
+
+
+• These two quantities are related by the magnetic permeability 𝝁, which
+   is a property of the magnetic material that the field is in
+
+                                                                                                          Magnetic
+                                                                                                                    permeability                     = 4𝜋× 10−7 H/m                             𝜇0                                                                                                                         of free space
+• We will mostly deal with 𝐵because it is responsible for the most
+   interesting physical consequences of magnetism
+                                                                            11
+
+--- PAGE 12 ---
+Magnetostatics
+
+• What determines a material’s permeability or whether or not it is
+  magnetic?
+     •  Atoms are tiny magnets pointed in random directions due to the current and
+      spin of the orbiting electrons
+     •  In some materials, this intrinsic magnetism is stronger than in others, leading
+       to higher 𝜇.
+     •  The higher the μ, the more an externally-applied H-field leads to a stronger
+       B-field due to alignment of the atoms and the more magnetic the material is
+
+
+
+
+
+                                                                                                                                starfishmedical.com
+                                                                            12
+
+--- PAGE 13 ---
+Magnetostatics
+
+
+
+
+
+                                                                                                                                      byjus.com
+
+
+        Permanent magnets exhibit permanent magnetic fields due to
+                      these atomic magnetic moments
+
+
+                                                                            13
+
+--- PAGE 14 ---
+Magnetostatics
+
+
+
+• A permanent magnet that is cut in two will
+  not separate into “north” and “south”
+  magnetic charges, it will just become two
+  magnets with two new north and south poles.
+
+
+
+
+
+                                                                                                                  ency123.com
+
+
+
+•  This is due to Maxwell’s Equations →“Gauss’s
+  Law for magnetic fields”
+
+                                                                            14
+
+--- PAGE 15 ---
+Ampere’s Law
+
+
+
+
+
+                                                15
+
+--- PAGE 16 ---
+Ampere’s Law
+
+                                   •  In magnetostatics, current is the cause of
+                          magnetic field circulation or “whirlpooling”.
+                ∇× 𝐻= Ԧ𝐽
+
+                                   • We will solve magnetostatic problems by using
+                          Ampere’s Law and drawing an Amperian loop.
+
+
+• The more current that passes through the loop, the stronger the electric field
+  around the loop
+
+           ∮𝐻⋅𝑑Ԧ𝑙= ∬Ԧ𝐽⋅𝑑Ԧ𝑠
+                                                                            16
+
+--- PAGE 17 ---
+Ampere’s Law
+•  In differential form, Ampere’s law states:
+           ∇× 𝐻= Ԧ𝐽
+
+        “Current densities generate a circulating magnetic field according
+                              to the right-hand rule”
+
+•  Previously, we said the following:
+
+                         “The circulation of a vector field in practice is often
+                       due to a distributionof curl - that is, the vector field
+                              acts less like it has one whirlpool and more like it
+                        has a distribution of infinitesimally-small whirlpools.”
+
+                        How does this relate to Ampere’s law?
+                                                                            17
+
+--- PAGE 18 ---
+Ampere’s Law
+
+•  If we look at the magnetic field generated by multiple local current
+   densities flowing through a surface (coming out of the page):
+
+
+
+
+
+                                               Ԧ𝐽                                                               Ԧ𝐽                                  𝐻    𝐻                                     Ԧ𝐽
+                                                       Ԧ𝐽                   Ԧ𝐽                          𝐻      𝐻     𝐻
+                                                                   Ԧ𝐽                Ԧ𝐽         Ԧ𝐽                                    𝐻   𝐻                                    Ԧ𝐽                                                 𝐻                          Ԧ𝐽                        Ԧ𝐽                               𝐻   𝐻    𝐻                                                                                  Ԧ𝐽
+                                           Ԧ𝐽                Ԧ𝐽         Ԧ𝐽                     Ԧ𝐽                      𝐻     𝐻   𝐻   𝐻  𝐻
+                                                                                   Ԧ𝐽                                                                    𝐻
+
+
+
+       Each local current density contributes a local magnetic field
+
+
+                                                                            18
+
+--- PAGE 19 ---
+Ampere’s Law
+• How do we calculate the resulting magnetic field 𝐻?
+
+• We can use superposition to calculate the net effect of the current density
+  by integrating over the surface:
+
+      ∬∇× 𝐻⋅𝑑Ԧ𝑠= ∬Ԧ𝐽⋅𝑑Ԧ𝑠=                                               𝐼𝑒𝑛𝑐
+
+•  But this doesn’t help us much, since solving for 𝐻inside a double integral
+  with the curl operation applied is difficult. Now what?
+
+
+
+
+
+                                                                            19
+
+--- PAGE 20 ---
+Ampere’s Law
+
+• Use Stokes’ theorem:
+
+
+              ∬∇× Ԧ𝐹⋅𝑑Ԧ𝑠= ∮Ԧ𝐹⋅𝑑Ԧ𝑙
+                                   𝑑Ԧ𝑙
+
+           𝐻    𝐻
+       𝐻              𝐻     𝐻                    𝑑Ԧ𝑠            𝐻                           𝐻                 𝐻    𝐻   𝐻    𝐻                                              Assigning Ԧ𝐹→𝐻
+                       𝐻  𝐻         𝐻               𝐻   𝐻
+                       𝐻
+              ∬∇× 𝐻⋅𝑑Ԧ𝑠= ∮𝐻⋅𝑑Ԧ𝑙=                                                                    𝐼𝑒𝑛𝑐
+
+                                                   Integral form of Ampere’s law
+
+
+
+                                                                            20
+
+--- PAGE 21 ---
+Ampere’s Law
+
+                        Examples of Amperian Loops
+
+
+
+
+
+          ∮𝐻⋅𝑑Ԧ𝑙= ∬Ԧ𝐽⋅𝑑Ԧ𝑠=                                       𝐼𝑒𝑛𝑐
+                                                                            21
+
+--- PAGE 22 ---
+Ampere’s Law
+
+•  Direction of 𝐻is given by the right-hand rule
+
+
+
+                       𝐼                𝐼
+
+
+
+
+                𝐻
+
+                    𝐻
+
+
+                                                                            22
+
+--- PAGE 23 ---
+Ampere’s Law
+
+•  In the case of multiple current channels, use field superposition as you
+  would with point charges in electrostatics.
+
+
+
+
+
+                                                                              scienceforums.net
+
+
+                                                                            23
+
+--- PAGE 24 ---
+Ampere’s Law
+
+
+
+
+
+                                      https://em8e.eecs.umich.edu/jsmodules/ch5/mod5_2.html
+
+                                                                            24
+
+--- PAGE 25 ---
+Ampere’s Law
+
+• To begin, let’s calculate the magnetic flux density field 𝐵generated by a
+   wire that carries a current 𝐼in the Ƹ𝑧direction
+   ∮𝐻⋅𝑑Ԧ𝑙= ∬Ԧ𝐽⋅𝑑Ԧ𝑠
+
+     𝐵= 𝜇𝐻
+
+
+
+
+
+                       𝐽0 Ƹ𝑧
+
+ ∬𝐽0 Ƹ𝑧⋅𝑟𝑑𝑟𝑑𝜙Ƹ𝑟= 𝐼                                                                            25
+
+--- PAGE 26 ---
+Ampere’s Law
+
+--- PAGE 27 ---
+Ampere’s Law
+
+•  What does the magnetic field look like for this conductive coaxial cable?
+
+
+
+
+
+                                                                            27
+
+--- PAGE 28 ---
+Ampere’s Law
+
+
+
+                                The field between the conductors
+                                       looks something like this. (you can
+                                    check this using the right-hand rule)
+
+                              A quick point: conductors do not
+                                          shield magnetic fields in the same way
+                                     they shield electric fields. Why is this?
+
+
+
+
+
+                                  comsol.com
+
+
+                                                                            28
+
+--- PAGE 29 ---
+Ampere’s Law
+
+•  Find the magnetic flux density (B) in all regions.
+
+
+
+
+
+• Assume J is constant in the conductors.
+                                                                            29
+
+--- PAGE 30 ---
+Ampere’s Law
+
+
+
+
+
+                                                                            30
+
+--- PAGE 31 ---
+Ampere’s Law
+
+
+
+
+
+                                                                                                sciencefacts.net
+
+                                                                            31
+
+--- PAGE 32 ---
+Ampere’s Law
+
+
+
+
+
+           Do Lecture 15, Exercise 1 in groups of up to 4.
+
+
+
+
+
+                                                                            32
+
+--- PAGE 33 ---
+                                                                                        UlabyAmpere’s Law
+
+
+
+
+
+                      (a) Loosely             (b) Tightly                                                                            (c) Ideal solenoid
+                   wound solenoid      wound solenoid
+
+•  Just like with Gauss’s law, solving problems using Ampere’s law requires a
+  great deal of symmetry
+
+• We also use the symmetry of the system to help us choose our Amperian
+  loop geometry, which simplifies the math                                                                             33
+
+--- PAGE 34 ---
+Ampere’s Law
+
+                                                        (a) Loosely                                       (b) Tightly
+                                         wound solenoid                         wound solenoid
+
+
+
+                         • An ideal solenoid has rotational symmetry in ϕ, so the
+                        B-field can’t change in ϕ:
+
+                             𝐵𝑟, 𝜙, 𝑧= 𝐵(𝑟, 𝑧)
+
+                         • We also know that the B field cannot be parallel to the
+                       direction of current flow, so it cannot point in ϕ:
+
+   Ulaby                     𝐵𝑟, 𝑧=< 𝐵𝑟𝑟, 𝑧, 0, 𝐵𝑧(𝑟, 𝑧) >
+   (c) Ideal solenoid
+
+
+                                                                            34
+
+--- PAGE 35 ---
+Ampere’s Law
+
+                                                        (a) Loosely                                       (b) Tightly
+                                         wound solenoid                         wound solenoid
+
+
+                         •  Using the right-hand rule, we know that the field in the
+                    plane of a single wire loop also does not point in r:
+
+                              𝐵𝑟, 𝑧= 𝐵𝑧𝑟, 𝑧  Ƹ𝑧
+                         • And because the ideal solenoid is very long, the B-field
+                       can’t change in z:
+
+                                        𝐵(𝑟, 𝑧) = 𝐵𝑧𝑟  Ƹ𝑧
+
+   Ulaby                         •  Therefore, the B-field points in the Ƹ𝑧direction and
+   (c) Ideal solenoid
+                       varies with changing 𝑟:
+
+                                     𝐵(𝑟) = 𝐵𝑧𝑟  Ƹ𝑧
+                                                                            35
+
+--- PAGE 36 ---
+Ampere’s Law
+
+
+
+
+
+                                                                            36
+
+--- PAGE 37 ---
+Ampere’s Law
+
+•  What’s the basis of the claim that 𝐵= 0 outside the solenoid?
+
+
+
+
+
+    𝑧
+                                                                            37
+
+--- PAGE 38 ---
+Ampere’s Law
+
+•  What’s the basis of the claim that 𝐵= 0 outside the solenoid?
+
+
+
+
+
+           𝑧
+
+
+
+
+                                                                            38
+
+--- PAGE 39 ---
+Ampere’s Law
+
+
+
+                                                         𝑧
+
+
+
+
+
+                                                                            39
+
+--- PAGE 40 ---
+Ampere’s Law
+
+•  What’s the basis of the claim that 𝐵= 0 outside the solenoid?
+
+
+
+
+
+𝑧                             𝑟1    𝑟3
+         0                   𝑙
+                     1
+            2               4
+
+                     3
+
+         𝐵
+
+
+
+
+
+                                                                            40
+
+--- PAGE 41 ---
+Ampere’s Law
+
+
+
+
+
+                                                                            41
+
+--- PAGE 42 ---
+Ampere’s Law
+
+
+
+
+
+             Do Lecture 15, Exercise 2 in groups of up to 4.
+
+--- PAGE 43 ---
+Wrap-Up
+
+• Exam 2 next Monday. Covers Lectures 8 - 14
+
+• No calculators, just fun!
+
+
+
+
+
+                                                                            43

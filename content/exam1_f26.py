@@ -1,0 +1,145 @@
+"""Fall 2026 Exam 1 (only the combined questions/solutions PDF is available)."""
+def create(L,S,P,R,Q,E):
+    f='e1-f26'
+    basics=Q(f,1,'无损线模型与反弹图','Lossless-line model & bounce diagram',('传输线模型 · 瞬态','Line model · transients'),
+      ('传输线由很短的串联电感和并联电容单元构成，模型中未给出电阻与漏电导。每单位长度电感 l=0.3125 μH/m，电容 c=55.6 pF/m，总长 60 m。随后用它连接 12 V 直流源、75 Ω 源电阻与 25 Ω 负载。',
+       'A line consists of short series-inductance and shunt-capacitance cells, with no resistance or conductance elements. Per-unit-length l=0.3125 μH/m and c=55.6 pF/m, total length 60 m. It then connects a 12 V DC source with 75 Ω source resistance to a 25 Ω load.'),
+      [r'l=3.125\times10^{-7}\,\mathrm{H/m}',r'c=5.56\times10^{-11}\,\mathrm{F/m}',r'L=60\,\mathrm m'],8,2,[.15,.16,.72,.13],
+      [R(2,10,'分布参数模型','Distributed line model'),R(4,31,'反弹图与源分压','Bounce diagram and launch divider')],[
+        P('a(i)',0,'模型代表有损线还是无损线？简要解释。','Is this a lossy or lossless model? Explain.',[
+          S('先写传播常数的分布参数表达式，实部 α 表示衰减。', 'Begin with propagation constant in terms of distributed parameters; its real part α is attenuation.', '\\gamma=\\alpha+j\\beta=\\sqrt{(r+j\\omega l)(g+j\\omega c)}', ['lossy-wave']),
+          S('逐项检查原图：只有串联电感 lΔz 和并联电容 cΔz，没有耗散元件 rΔz 或 gΔz。', 'Inspect the original cell: it contains series lΔz and shunt cΔz, with no dissipative rΔz or gΔz elements.', 'r=0,\\qquad g=0,\\qquad l>0,\\quad c>0', []),
+          S('把零电阻、零漏电导代入传播常数，得到纯虚数。', 'Insert zero resistance and conductance to obtain a purely imaginary propagation constant.', '\\gamma=\\sqrt{(j\\omega l)(j\\omega c)}=j\\omega\\sqrt{lc}\\quad\\Longrightarrow\\quad\\alpha=0', []),
+          S('因此该模型是无损线；电感和电容交换储能，没有电阻性平均功率损耗。', 'The model is lossless: inductors and capacitors exchange stored energy with no resistive average power dissipation.', '\\text{Lossless: }r=g=0', [])],r'\text{Lossless: }r=g=0',2,answerText=L('无损线。','A lossless line.')),
+        P('a(ii)',0,'求速度因子与特性阻抗。','Find velocity factor and characteristic impedance.',[
+          S('先写原表的无损线波速、特性阻抗和速度因子定义。', 'Begin with the crib lossless speed, characteristic impedance and velocity-factor relations.', 'u=\\frac1{\\sqrt{lc}},\\qquad Z_0=\\sqrt{\\frac lc},\\qquad \\mathrm{vf}=\\frac u{u_c}', ['velocity', 'impedance']),
+          S('先将每单位长度参数转为 SI 单位，再代入乘积。', 'Convert the per-length parameters to SI units, then form their product.', 'l=3.125\\times10^{-7}\\,\\mathrm{H/m},\\quad c=5.56\\times10^{-11}\\,\\mathrm{F/m},\\quad lc=1.7375\\times10^{-17}\\,\\mathrm{s^2/m^2}', []),
+          S('对乘积开方后取倒数，求得波速。', 'Take the square root of the product and invert to obtain speed.', 'u=\\frac1{\\sqrt{1.7375\\times10^{-17}}}=2.3990406\\times10^8\\,\\mathrm{m/s}', []),
+          S('再除以真空光速，计算无量纲速度因子。', 'Divide by vacuum light speed for the dimensionless velocity factor.', '\\mathrm{vf}=\\frac{2.3990406\\times10^8}{3.00\\times10^8}=0.799680\\approx0.80', []),
+          S('独立计算 l/c 的平方根，H/F 的平方根单位是 Ω。', 'Independently evaluate the square root of l/c; the square root of H/F has units Ω.', 'Z_0=\\sqrt{\\frac{3.125\\times10^{-7}}{5.56\\times10^{-11}}}=\\sqrt{5620.5036}\\,\\Omega\\approx74.97\\,\\Omega', []),
+          S('列出两个结果。后面的反弹图按标准答案使用舍入值 Z₀≈75 Ω。', 'State both results. The later bounce diagram uses rounded Z₀≈75 Ω, as in the official solution.', '\\mathrm{vf}\\approx0.80,\\qquad Z_0\\approx74.97\\,\\Omega', [])],r'\mathrm{vf}\approx0.80,\qquad Z_0\approx74.97\,\Omega',2),
+        P('a(iii)',0,'求 60 m 传输线的单程时延。','Find the one-way delay of the 60 m line.',[
+          S('先写传播距离与单程时间的关系，并解出 Td。', 'Begin with propagation distance versus one-way time and solve for Td.', 'L=uT_d\\quad\\Longrightarrow\\quad T_d=\\frac Lu', ['bounce']),
+          S('将 60 m 与上问未舍入的波速代入。', 'Substitute 60 m and the unrounded speed from the preceding part.', 'T_d=\\frac{60\\,\\mathrm m}{2.3990406\\times10^8\\,\\mathrm{m/s}}=2.5009998\\times10^{-7}\\,\\mathrm s', []),
+          S('秒转换为纳秒，1 s=10⁹ ns。', 'Convert seconds to nanoseconds using 1 s=10⁹ ns.', 'T_d=(2.5009998\\times10^{-7})(10^9)\\,\\mathrm{ns}=250.100\\,\\mathrm{ns}', []),
+          S('与原解采用 vf=0.8 的 250 ns 一致到所需精度。', 'This agrees to the required precision with the official 250 ns using vf=0.8.', 'T_d\\approx250.1\\,\\mathrm{ns}\\approx250\\,\\mathrm{ns}', [])],r'T_d\approx250.1\,\mathrm{ns}\approx250\,\mathrm{ns}',2),
+        P('b',0,'直流开关闭合后，求所有反射系数与前两次行波幅度，并求 VL(Td)、Vin(2Td)。','After closing the DC switch, find reflection coefficients, the first two pairs of traveling amplitudes, VL(Td) and Vin(2Td).',[
+          S('先写端点反射系数、初始分压和行波反射递推式。', 'Begin with endpoint reflection, the launch divider and the traveling-wave recurrence.', '\\Gamma=\\frac{R-Z_0}{R+Z_0},\\quad V_1^+=V_g\\frac{Z_0}{R_g+Z_0},\\quad V_n^-=\\Gamma_LV_n^+,\\quad V_{n+1}^+=\\Gamma_gV_n^-', ['reflection', 'bounce']),
+          S('沿用标准答案舍入的 75 Ω 线路阻抗；负载为 25 Ω。', 'Use the official rounded line impedance of 75 Ω and the 25 Ω load.', '\\Gamma_L=\\frac{25-75}{25+75}=\\frac{-50}{100}=-\\frac12', []),
+          S('源电阻同样为 75 Ω，所以返回源端的波被吸收，不再产生新正向波。', 'The source resistance is also 75 Ω, so returning waves are absorbed without another forward wave.', '\\Gamma_g=\\frac{75-75}{75+75}=0', []),
+          S('t=0 时发出的第一正向电压由 12 V 分压求得。', 'Find the first forward voltage at t=0 by dividing the 12 V source.', 'V_1^+=(12\\,\\mathrm V)\\frac{75}{75+75}=6\\,\\mathrm V', []),
+          S('在 Td≈250 ns 到达负载，反射电压因 ΓL<0 而反相。', 'On reaching the load at Td≈250 ns, the reflected voltage changes sign because ΓL<0.', 'V_1^-=\\Gamma_LV_1^+=-\\frac12(6)=-3\\,\\mathrm V', []),
+          S('在 2Td≈500 ns 返回源后，再乘 Γg=0，后续正反向行波都为零。', 'At 2Td≈500 ns the return reaches the source. Multiplication by Γg=0 makes subsequent traveling waves zero.', 'V_2^+=\\Gamma_gV_1^-=0(-3)=0,\\qquad V_2^-=\\Gamma_LV_2^+=0', []),
+          S('负载第一次到达时测到入射和即时反射的代数和。', 'At the first load arrival the measured voltage is the sum of incident and immediate reflected waves.', 'V_L(T_d)=V_1^++V_1^-=6+(-3)=3\\,\\mathrm V', []),
+          S('源是持续 DC，500 ns 后的输入电压需计入此前已有的 6 V，再加返回波和新反射波。', 'The source is sustained DC. At 500 ns include the existing 6 V input plus the return and its new reflection.', 'V_{\\mathrm{in}}(2T_d)=V_1^++V_1^-+V_2^+=6-3+0=3\\,\\mathrm V', []),
+          S('所有非零幅度与端点电压都应标在反弹图上；Γg=0 后没有继续传播的非零轨迹。', 'Label all nonzero traveling amplitudes and measured endpoint voltages; after Γg=0 there is no further nonzero traveling trajectory.', '\\begin{gathered}\\Gamma_L=-0.5,\\quad\\Gamma_g=0\\\\V_1^+=6\\,\\mathrm V,\\quad V_1^-=-3\\,\\mathrm V,\\quad V_2^+=V_2^-=0\\\\V_L(T_d)=V_{\\mathrm{in}}(2T_d)=3\\,\\mathrm V\\end{gathered}', [])],r'\begin{gathered}\Gamma_L=-0.5,\quad\Gamma_g=0\\V_1^+=6\,\mathrm V,\;V_1^-=-3\,\mathrm V,\;V_2^+=V_2^-=0\\V_L(T_d)=V_{\mathrm{in}}(2T_d)=3\,\mathrm V\end{gathered}',3,figure='bounce-f26',figureCaption=L('采用 Z₀≈75 Ω 的反弹图：负载反射 −3 V，源端匹配并吸收返回波，两个测量电压均为 3 V。', 'Bounce diagram using Z₀≈75 Ω: −3 V load reflection, matched-source absorption, and 3 V at both measured endpoints.'))
+      ])
+    damage=Q(f,2,'受损传输线与驻波','A damaged line & standing waves',('驻波 · 功率 · 反射','Standing waves · power · reflection'),
+      (r'原电路为 50 Ω 信号源、50 Ω 电缆和 50 Ω 负载，源幅度 10 V、频率 150 MHz。损坏部分及其后的电路以 Zeff 表示。测得正、反向电压相量分别为 $5e^{-j2\pi z}$ V 和 $3e^{j2\pi z}$ V。采用原解在 Zeff 处 z=0 的参考面。',
+       r'Initially a 10 V, 150 MHz source with 50 Ω resistance drives a 50 Ω cable and 50 Ω load. Replace the damaged section and downstream network by Zeff. Measured voltage phasors are $5e^{-j2\pi z}$ V forward and $3e^{j2\pi z}$ V backward. Follow the official reference plane z=0 at Zeff.'),
+      [r'\widetilde V^+=5e^{-j2\pi z}\,\mathrm V',r'\widetilde V^-=3e^{j2\pi z}\,\mathrm V',r'Z_0=50\,\Omega',r'f=150\,\mathrm{MHz}'],8,4,[.20,.15,.56,.28],
+      [R(3,18,'行波与驻波','Traveling and standing waves'),R(5,8,'传输线净平均功率','Net average line power')],[
+        P('a',0,'写出总电压的时域表达式。','Write the time-domain total voltage.',[
+          S('先写相量取实部的定义，将正反行波相量先相加。', 'Begin with the real-part definition, adding forward and backward phasors first.', 'v(z,t)=\\Re\\{[\\widetilde V^+(z)+\\widetilde V^-(z)]e^{j\\omega t}\\}', ['phasor']),
+          S('由原图的 150 MHz 频率求角频率，不把相位常数 2π 当成角频率。', 'Use the circuit frequency of 150 MHz to calculate angular frequency; do not confuse it with spatial phase constant 2π.', '\\omega=2\\pi f=2\\pi(150\\times10^6)=3\\pi\\times10^8\\,\\mathrm{rad/s}', ['wave']),
+          S('将给定的 5e⁻ʲ²πz 与 3eʲ²πz 两项完整代入。', 'Substitute both given terms 5e⁻ʲ²πz and 3eʲ²πz.', 'v(z,t)=\\Re\\{[5e^{-j2\\pi z}+3e^{j2\\pi z}]e^{j3\\pi10^8t}\\}', []),
+          S('分别合并空间与时间指数，再用 Re(eʲθ)=cosθ。', 'Combine each spatial and temporal exponent, then use Re(eʲθ)=cosθ.', 'v(z,t)=\\Re\\{5e^{j(3\\pi10^8t-2\\pi z)}+3e^{j(3\\pi10^8t+2\\pi z)}\\}', []),
+          S('得到含一个正向、一个反向余弦行波的时域电压。', 'Obtain time-domain voltage as one forward and one backward cosine wave.', 'v(z,t)=5\\cos(3\\pi10^8t-2\\pi z)+3\\cos(3\\pi10^8t+2\\pi z)\\quad[\\mathrm V]', [])],r'v(z,t)=5\cos(3\pi10^8t-2\pi z)+3\cos(3\pi10^8t+2\pi z)\quad[\mathrm V]',4),
+        P('b',0,'求电缆与 Zeff 之间的反射系数。','Find the reflection coefficient at Zeff.',[
+          S('先写原表的电压反射系数，必须比较同一参考面上的反向与正向波。', 'Begin with the crib voltage reflection coefficient, comparing backward and forward waves at the same reference plane.', '\\Gamma=\\frac{V_0^-}{V_0^+}', ['reflection']),
+          S('按本题采用的 Zeff 参考面，两个给定行波系数分别为正实数 3 V 与 5 V。', 'At the Zeff reference plane used for this problem, the given wave coefficients are positive real 3 V and 5 V.', 'V_0^-=3\\,\\mathrm V,\\qquad V_0^+=5\\,\\mathrm V', []),
+          S('代入比值，电压单位约去，相位差为零。', 'Form the ratio; voltage units cancel and the phase difference is zero.', '\\Gamma=\\frac{3\\,\\mathrm V}{5\\,\\mathrm V}=0.6e^{j0}', []),
+          S('因此反射系数为正实数，而非只知道它的模。', 'The reflection coefficient is therefore positive real, rather than merely having a known magnitude.', '\\Gamma=+0.60', [])],r'\Gamma=+0.60',4),
+        P('c',0,'求驻波比。','Find standing-wave ratio.',[
+          S('先写原表的驻波比公式。', 'Begin with the crib standing-wave-ratio formula.', '\\mathrm{SWR}=\\frac{1+|\\Gamma|}{1-|\\Gamma|}', ['swr']),
+          S('代入 |Γ|=0.6，分别计算分子、分母。', 'Substitute |Γ|=0.6 and evaluate numerator and denominator separately.', '\\mathrm{SWR}=\\frac{1+0.6}{1-0.6}=\\frac{1.6}{0.4}', []),
+          S('也可直接用最大最小包络交叉核对：两幅度相加为 8，相减为 2。', 'Cross-check with envelope extrema: the two amplitudes sum to 8 and differ by 2.', 'V_{\\max}=5+3=8\\,\\mathrm V,\\quad V_{\\min}=5-3=2\\,\\mathrm V,\\quad\\frac{V_{\\max}}{V_{\\min}}=\\frac82', []),
+          S('驻波比是无量纲量。', 'The standing-wave ratio is dimensionless.', '\\mathrm{SWR}=4.00', [])],r'\mathrm{SWR}=4.00',5),
+        P('d',0,'求线上的最大电压幅度，并与未受损情况比较。','Find the maximum voltage amplitude and compare to the undamaged line.',[
+          S('先写原表中的电压包络最大值：正反行波在同相位置相加。', 'Begin with the crib maximum voltage envelope: the traveling waves add at constructive-interference positions.', '|V|_{\\max}=|V_0^+|+|V_0^-|', ['swr']),
+          S('将测得的两个峰值幅度代入，而不是把瞬时余弦值任意相加。', 'Insert the two measured peak amplitudes, rather than arbitrarily adding instantaneous cosine values.', '|V|_{\\max}=|5|+|3|=8\\,\\mathrm V', []),
+          S('可由复相量模的平方核对：驻波交叉项在 cos(4πz)=1 时最大。', 'Verify from the squared phasor magnitude: the standing-wave cross term is maximal when cos(4πz)=1.', '|\\widetilde V(z)|^2=25+9+30\\cos(4\\pi z)\\le64\\,\\mathrm{V^2}', []),
+          S('未受损时负载匹配，Γ=0、反向幅度为零，最大包络仅为 5 V。', 'Before damage the load was matched, with Γ=0 and zero backward amplitude, giving only a 5 V maximum envelope.', 'V_{\\max,\\mathrm{undamaged}}=5+0=5\\,\\mathrm V,\\qquad \\frac{8}{5}=1.6', []),
+          S('损坏后最大电压增至原来的 1.6 倍。', 'After damage the maximum voltage is 1.6 times the undamaged value.', 'V_{\\max}=8.00\\,\\mathrm V', [])],r'V_{\max}=8.00\,\mathrm V',5,figure='standing-damage',figureCaption=L('由原题 5 V 正向和 3 V 反向相量求得的驻波包络，最大值 8 V，最小值 2 V。', 'Standing-wave envelope computed from the stated 5 V forward and 3 V backward waves, with extrema 8 V and 2 V.')),
+        P('e',0,'求送至 Zeff 的时间平均功率，并与未受损情况比较。','Find average power delivered to Zeff and compare with the undamaged case.',[
+          S('先写原表的净平均功率式。题目电压相量是峰值幅度，所以分母含 2。', 'Begin with the crib net average-power equation. The voltage phasors are peak amplitudes, so the denominator includes two.', 'P_{\\mathrm{av}}=\\frac{|V_0^+|^2}{2Z_0}(1-|\\Gamma|^2)', ['power']),
+          S('先算正向波功率，再算反射功率的大小。', 'Calculate forward power first and reflected-power magnitude separately.', 'P^+=\\frac{5^2}{2(50)}=0.25\\,\\mathrm W,\\qquad |P^-|=\\frac{3^2}{2(50)}=0.09\\,\\mathrm W', []),
+          S('反向功率朝源传播，因此送给 Zeff 的净功率是两者之差。', 'Reflected power travels toward the source, so net power delivered to Zeff is the difference.', 'P_{\\mathrm{av}}=P^+-|P^-|=0.25-0.09=0.16\\,\\mathrm W', []),
+          S('同样代入 Γ 的公式可核对：1−0.6²=0.64，表示正向功率的 64% 被净接收。', 'Verify through Γ: 1−0.6²=0.64, so 64% of forward power is accepted as net power.', 'P_{\\mathrm{av}}=\\frac{25}{100}(1-0.36)=0.25(0.64)=0.16\\,\\mathrm W', []),
+          S('未受损时无反射，送达功率为 0.25 W，因此损坏后功率下降 36%。', 'Before damage there was no reflection and delivered power was 0.25 W, so damage reduces it by 36%.', 'P_{\\mathrm{av}}=0.160\\,\\mathrm W', [])],r'P_{\mathrm{av}}=0.160\,\mathrm W',5),
+        P('f',0,'求 Zeff，说明损坏处所见阻抗增大还是减小。','Find Zeff and state whether the impedance seen at the damage increases or decreases.',[
+          S('先写反射系数与等效阻抗的原始关系。', 'Begin with the original relation between reflection coefficient and effective impedance.', '\\Gamma=\\frac{Z_{\\mathrm{eff}}-Z_0}{Z_{\\mathrm{eff}}+Z_0}', ['reflection']),
+          S('先消分母，再把含 Zeff 的项移到同一侧。', 'Clear the denominator and collect terms containing Zeff.', '\\Gamma Z_{\\mathrm{eff}}+\\Gamma Z_0=Z_{\\mathrm{eff}}-Z_0', []),
+          S('提取 Zeff 并解出它，显示反射系数如何变成阻抗。', 'Factor out Zeff and solve, showing explicitly how reflection gives impedance.', '(1-\\Gamma)Z_{\\mathrm{eff}}=(1+\\Gamma)Z_0\\quad\\Longrightarrow\\quad Z_{\\mathrm{eff}}=Z_0\\frac{1+\\Gamma}{1-\\Gamma}', []),
+          S('代入 +0.6 与 50 Ω，先求无量纲倍率 1.6/0.4=4。', 'Insert +0.6 and 50 Ω, first evaluating the dimensionless multiplier 1.6/0.4=4.', 'Z_{\\mathrm{eff}}=(50\\,\\Omega)\\frac{1+0.6}{1-0.6}=(50\\,\\Omega)(4)', []),
+          S('等效输入阻抗由 50 Ω 增至 200 Ω；这就是官方简化模型中“损坏使阻抗增大”的含义。', 'The effective input increases from 50 Ω to 200 Ω, which is the increase inferred in the official simplified model.', 'Z_{\\mathrm{eff}}=200\\,\\Omega', [])],r'Z_{\mathrm{eff}}=200\,\Omega',5,answerText=L('有效输入阻抗增大。仅由 Zeff 不能唯一还原损坏段本身的局部特性阻抗；原解在其简化模型下称为增大。','The effective input impedance increases. Zeff alone does not uniquely determine the damaged section’s local characteristic impedance; the official simplified model calls it an increase.'))
+      ],caption=('复刻损坏处的等效电路，并绘制驻波包络；z 以米为单位。','Recreated equivalent circuit and standing-wave envelope; z is measured in meters.'))
+    matching=Q(f,3,'四种阻抗匹配的直觉','Four impedance-matching cases',('匹配性质 · 并联导纳','Matching properties · shunt admittance'),
+      ('逐个判断信号源看到的输入阻抗是否匹配。须用无损线性质或具体匹配方法解释，不只代入通用输入阻抗公式。四个电路的线阻抗均为 50 Ω。',
+       'For each circuit find the input impedance and decide whether it matches the source. Explain using a lossless-line property or matching method rather than only substituting into the general impedance equation. All lines have Z₀=50 Ω.'),
+      [r'Z_0=50\,\Omega',r'Z_{\mathrm{in}}\stackrel{?}{=}R_g'],8,6,[.13,.26,.50,.52],
+      [R(3,39,'输入阻抗性质','Input-impedance properties'),R(6,14,'四分之一波长变换','Quarter-wave transformation'),R(7,17,'并联支节导纳','Parallel-stub admittance')],[
+        P('a',0,'L=λ/6、Rg=RL=50 Ω。求 Zin 并判断是否匹配。','L=λ/6 and Rg=RL=50 Ω. Find Zin and state whether it is matched.',[
+          S('优先使用匹配负载的性质，而不是只代通用输入阻抗式。先检验负载反射系数。', 'Use the matched-load property rather than only the general impedance formula. First check load reflection.', '\\Gamma_L=\\frac{R_L-Z_0}{R_L+Z_0}', ['reflection']),
+          S('原图负载和线阻抗均为 50 Ω，因此 ΓL=0。', 'The original circuit has a 50 Ω load and 50 Ω line, so ΓL=0.', '\\Gamma_L=\\frac{50-50}{50+50}=0', []),
+          S('只有正向行波时，任意位置 V/I 均为 Z₀；所以 λ/6 长度也不改变输入阻抗。', 'With only a forward wave, V/I is Z₀ everywhere; a λ/6 length therefore leaves the input unchanged.', 'Z_{\\mathrm{in}}=\\frac{V^+e^{-j\\beta z}}{(V^+/Z_0)e^{-j\\beta z}}=Z_0', []),
+          S('输入 50 Ω 等于源电阻，因此是匹配的。', 'The 50 Ω input equals source resistance and is matched.', 'Z_{\\mathrm{in}}=50\\,\\Omega\\quad\\text{matched}', [])],r'Z_{\mathrm{in}}=50\,\Omega\quad\text{matched}',6),
+        P('b',0,'L=λ/2、Rg=RL=25 Ω。求 Zin 并判断是否匹配。','L=λ/2 and Rg=RL=25 Ω. Find Zin and state whether it is matched.',[
+          S('先写原表的半波阻抗重复性质。', 'Begin with the crib half-wave impedance-repeat property.', 'L=\\frac{\\lambda}{2}\\quad\\Longrightarrow\\quad Z_{\\mathrm{in}}=Z_L', ['half']),
+          S('半波长度对应 βL=π，一次往返相位为 2π，输入端与负载的电压电流比重复。', 'A half wavelength gives βL=π and round-trip phase 2π, repeating the load voltage/current ratio at the input.', '2\\beta L=2\\pi,\\qquad \\Gamma_{\\mathrm{in}}=\\Gamma_Le^{-j2\\pi}=\\Gamma_L', []),
+          S('把原图 25 Ω 负载代入，得到输入也是 25 Ω，虽然线本身的 Z₀ 为 50 Ω。', 'Substitute the original 25 Ω load to obtain a 25 Ω input, even though line Z₀ is 50 Ω.', 'Z_{\\mathrm{in}}=25\\,\\Omega=R_g', []),
+          S('比较的是源看到的整体输入与源电阻，故本电路匹配。', 'Compare the whole input seen by the source with source resistance; this circuit is matched.', 'Z_{\\mathrm{in}}=25\\,\\Omega\\quad\\text{matched}', [])],r'Z_{\mathrm{in}}=25\,\Omega\quad\text{matched}',6),
+        P('c',0,'L=λ/4、Rg=25 Ω、RL=100 Ω。求 Zin 并判断是否匹配。','L=λ/4, Rg=25 Ω, RL=100 Ω. Find Zin and state whether it is matched.',[
+          S('先写原表的四分之一波长阻抗反演性质。', 'Begin with the crib quarter-wave impedance inversion.', 'L=\\frac{\\lambda}{4}\\quad\\Longrightarrow\\quad Z_{\\mathrm{in}}=\\frac{Z_0^2}{Z_L}', ['quarter']),
+          S('代入 Z₀=50 Ω、负载 100 Ω，保留平方的单位。', 'Substitute Z₀=50 Ω and load 100 Ω, retaining units in the square.', 'Z_{\\mathrm{in}}=\\frac{(50\\,\\Omega)^2}{100\\,\\Omega}=\\frac{2500}{100}\\,\\Omega=25\\,\\Omega', []),
+          S('原图源电阻是 25 Ω，因此这段线正是匹配 25 Ω 与 100 Ω 的四分之一波变换线。', 'The circuit source is 25 Ω, so the line is exactly a quarter-wave transformer between 25 Ω and 100 Ω.', 'Z_0=\\sqrt{R_gR_L}=\\sqrt{25\\cdot100}=50\\,\\Omega', []),
+          S('输入阻抗等于源电阻，判断为匹配。', 'The input equals source resistance and is matched.', 'Z_{\\mathrm{in}}=25\\,\\Omega\\quad\\text{matched}', [])],r'Z_{\mathrm{in}}=25\,\Omega\quad\text{matched}',7),
+        P('d',0,'Rg=50 Ω，主线导纳 Yd=0.02+j0.04 S，开路支节 Ys=−j0.04 S 并联。求 Zin 并判断匹配。','Rg=50 Ω. Through-line admittance Yd=0.02+j0.04 S is in parallel with open-stub Ys=−j0.04 S. Find Zin and matching.',[
+          S('并联主线与支节共享电压，先由两支路电流相加推导导纳相加。', 'The parallel main line and stub share a voltage. Begin by adding branch currents to obtain admittance addition.', 'I_{\\mathrm{in}}=Y_dV+Y_sV=(Y_d+Y_s)V\\quad\\Longrightarrow\\quad Y_{\\mathrm{in}}=Y_d+Y_s', []),
+          S('代入题给的两个有单位导纳，按实部和虚部分别相加。', 'Substitute both given admittances with units and add real and imaginary components separately.', 'Y_{\\mathrm{in}}=(0.02+j0.04)\\,\\mathrm S+(-j0.04)\\,\\mathrm S', []),
+          S('主线感性电纳与开路支节电纳抵消，总导纳成为纯实数。', 'The main-line and open-stub susceptances cancel, leaving a purely real admittance.', 'Y_{\\mathrm{in}}=0.02+j(0.04-0.04)=0.02\\,\\mathrm S', ['open']),
+          S('导纳取倒数得到节点阻抗；西门子取倒数的单位为欧姆。', 'Invert admittance to obtain node impedance; reciprocal siemens are ohms.', 'Z_{\\mathrm{in}}=\\frac1{0.02\\,\\mathrm S}=50\\,\\Omega', []),
+          S('节点与 50 Ω 馈线和源匹配；匹配馈线将这个阻抗重复到源。', 'The node matches the 50 Ω feedline and source; the matched feedline repeats that impedance to the source.', 'Z_{\\mathrm{in}}=50\\,\\Omega\\quad\\text{matched}', [])],r'Z_{\mathrm{in}}=50\,\Omega\quad\text{matched}',7)
+      ])
+    smith=Q(f,4,'Smith 图与四分之一波变换器','Smith chart & a quarter-wave transformer',('Smith 图 · 复数负载匹配','Smith chart · complex-load matching'),
+      (r'用一段 50 Ω、长度 d 的传输线把 $Z_L=150-j50\,\Omega$ 变换为纯电阻，再用 λ/4 变换线匹配到 50 Ω 馈线。主线速度因子 0.85，频率 100 MHz。',
+       r'Transform $Z_L=150-j50\,\Omega$ to a real resistance with a 50 Ω line of length d, then match it to a 50 Ω feedline using a λ/4 transformer. Through-line velocity factor is 0.85 and frequency 100 MHz.'),
+      [r'Z_L=(150-j50)\,\Omega',r'Z_0=50\,\Omega',r'\mathrm{vf}=0.85',r'f=100\,\mathrm{MHz}'],8,8,[.17,.20,.66,.208],
+      [R(6,35,'Smith 图上的主线旋转','Through-line rotation on a Smith chart'),R(6,44,'主线加四分之一波匹配','Through-line plus quarter-wave match')],[
+        P('a',0,'求归一化负载阻抗并在 Smith 图定位。','Normalize and plot the load impedance.',[
+          S('先写归一化负载阻抗定义，参考阻抗为题设 50 Ω。', 'Begin with normalized load impedance referenced to the specified 50 Ω.', 'z_L=\\frac{Z_L}{Z_0}', ['zin']),
+          S('把实部 150 Ω 与虚部 −j50 Ω 分别除以 50 Ω。', 'Divide the real 150 Ω and imaginary −j50 Ω parts separately by 50 Ω.', 'z_L=\\frac{(150-j50)\\,\\Omega}{50\\,\\Omega}=\\frac{150}{50}-j\\frac{50}{50}=3-j', []),
+          S('在 Smith 图上找 r=3 圆与 x=−1 弧的交点；负电抗位于下半图。', 'On the Smith chart intersect r=3 with x=−1; negative reactance lies in the lower half.', '\\Gamma_L=\\frac{z_L-1}{z_L+1}=\\frac{2-j}{4-j}', ['reflection']),
+          S('用共轭数求反射系数坐标，后续实轴交点和旋转都沿同一个等模圆。', 'Use the conjugate to obtain the reflection-plane coordinate; subsequent real-axis intersections and rotations follow its magnitude circle.', '\\Gamma_L=\\frac{(2-j)(4+j)}{(4-j)(4+j)}=\\frac{9-2j}{17}', []),
+          S('标出的归一化负载阻抗如下。', 'The plotted normalized load impedance is:', 'z_L=3-j', [])],r'z_L=3-j',8),
+        P('b',0,'主线可能呈现的两个纯实输入阻抗是多少？给出未归一化值。','Find both possible real input impedances of the through-line, in ohms.',[
+          S('先由反射系数反解归一化阻抗。纯实输入阻抗对应 Smith 图实轴上的 Γ。', 'Invert the reflection equation for normalized impedance. Purely real input impedance corresponds to real-axis Γ on the Smith chart.', 'z=\\frac{1+\\Gamma}{1-\\Gamma}', ['reflection']),
+          S('无损线向源移动只改变相位，不改变 Γ 的模；先由负载值求该圆的半径。', 'Moving toward the source on a lossless line changes phase but not magnitude. Calculate the circle radius from the load.', '\\rho=|\\Gamma_L|=\\left|\\frac{9-2j}{17}\\right|=\\frac{\\sqrt{9^2+2^2}}{17}=\\frac{\\sqrt{85}}{17}\\approx0.542326', []),
+          S('实轴上的两个交点为 +ρ 与 −ρ；分别代入阻抗反解式。', 'The two real-axis intersections are +ρ and −ρ. Substitute both into the impedance relation.', 'r_{\\min}=\\frac{1-\\rho}{1+\\rho},\\qquad r_{\\max}=\\frac{1+\\rho}{1-\\rho}', []),
+          S('代入半径，得到两个无量纲电阻值，互为倒数。', 'Insert the radius to obtain reciprocal dimensionless resistances.', 'r_{\\min}\\approx0.2967425905,\\qquad r_{\\max}\\approx3.3699240762', []),
+          S('题目要求去归一化，分别乘回 50 Ω，而不是直接把图上刻度当欧姆。', 'The question asks for unnormalized values, so multiply each chart reading by 50 Ω.', 'R_{\\min}=50(0.2967425905)\\,\\Omega,\\qquad R_{\\max}=50(3.3699240762)\\,\\Omega', []),
+          S('结果由给定复负载精确计算；官方图上的近似读数保留在核对说明中。', 'These values are computed from the exact stated load; the official chart estimates remain documented in the source note.', 'R_{\\min}=14.8371\\,\\Omega,\\qquad R_{\\max}=168.4962\\,\\Omega', [])],r'R_{\min}=14.8371\,\Omega,\qquad R_{\max}=168.4962\,\Omega',8,
+          note=L('官方图读数约 14.5 Ω 与 170 Ω，且把“0.26×50”写成 14.5；该乘法本身不一致。本页由原负载精确计算，图上近似读数作为参考。','The official chart reads about 14.5 Ω and 170 Ω and writes “0.26×50=14.5”, an inconsistent multiplication. Here the values are computed exactly from the given load.')),
+        P('c',0,'任选一个纯实阻抗，求达到它的主线长度 d（米）。','Choose either real impedance and find d in meters.',[
+          S('先写波长与反射系数沿线传播关系；向源移动 d 使 Γ 顺时针旋转 4πd/λ。', 'Begin with wavelength and reflection propagation. Moving d toward the source rotates Γ clockwise by 4πd/λ.', '\\lambda=\\frac uf,\\qquad \\Gamma_{\\mathrm{in},d}=\\Gamma_Le^{-2j\\beta d},\\quad\\beta=\\frac{2\\pi}{\\lambda}', ['wave', 'reflection']),
+          S('代入速度因子和频率，求出将电长度换成米所需的波长。', 'Substitute velocity factor and frequency for the wavelength needed to convert electrical length to meters.', '\\lambda=\\frac{0.85(3\\times10^8\\,\\mathrm{m/s})}{100\\times10^6\\,\\mathrm{Hz}}=2.55\\,\\mathrm m', []),
+          S('由 ΓL=(9−2j)/17 求初始相位，使用弧度制。', 'Find the initial phase from ΓL=(9−2j)/17, in radians.', '\\theta_L=\\arg(9-2j)=-\\arctan(2/9)\\approx-0.218669\\,\\mathrm{rad}', []),
+          S('若选较小实电阻，目标是 Γ=−ρ，即相位 −π。列出旋转角方程并解 d。', 'For the smaller real resistance target Γ=−ρ, with phase −π. Write the rotation equation and solve for d.', '\\theta_L-\\frac{4\\pi d_1}{\\lambda}=-\\pi\\quad\\Longrightarrow\\quad\\frac{d_1}{\\lambda}=\\frac{\\pi+\\theta_L}{4\\pi}=0.232598878', []),
+          S('将第一分支电长度乘波长；另一实轴交点比它多转半圈，对应再加 λ/4。', 'Multiply the first electrical length by λ. Reaching the other real-axis intersection requires another half-turn, adding λ/4.', 'd_1=(0.232598878)(2.55)=0.593127\\,\\mathrm m,\\qquad \\frac{d_2}{\\lambda}=0.232598878+\\frac14=0.482598878', []),
+          S('第二分支也换成米。两个方案均可，后续变换线阻抗必须与所选分支配套。', 'Convert the second branch to meters as well. Either works, but the subsequent transformer impedance must use the matching branch.', 'd_2=(0.482598878)(2.55)=1.230627\\,\\mathrm m', []),
+          S('列出两组电阻与长度的对应关系。', 'State the resistance–length pairing for both branches.', '\\begin{gathered}R_{\\min}:\\ d=0.593127\\,\\mathrm m\\\\R_{\\max}:\\ d=1.230627\\,\\mathrm m\\end{gathered}', [])],r'\begin{gathered}R_{\min}:\ d=0.593127\,\mathrm m\\R_{\max}:\ d=1.230627\,\mathrm m\end{gathered}',9,figureCaption=L('从复负载沿等反射系数模圆顺时针旋转，到达两个实轴交点。', 'Clockwise rotation from the complex load along its constant-reflection-magnitude circle to both real-axis intersections.')),
+        P('d',0,'求与你选择的实阻抗相配的四分之一波变换线阻抗 Z₀T。','Find the quarter-wave transformer impedance Z₀T for your selected real input resistance.',[
+          S('先写原表四分之一波长变换公式；变换线的负载是前段线路呈现的纯电阻。', 'Begin with the crib quarter-wave equation; the transformer load is the real input resistance presented by the preceding line.', 'Z_{\\mathrm{in},T}=\\frac{Z_{0T}^2}{R_{\\mathrm{in},d}}', ['quarter']),
+          S('要求变换线向馈线呈现 50 Ω，先移项得到平方根公式。', 'Require a 50 Ω input to the feedline and rearrange to obtain the square-root formula.', '50\\,\\Omega=\\frac{Z_{0T}^2}{R_{\\mathrm{in},d}}\\quad\\Longrightarrow\\quad Z_{0T}=\\sqrt{(50\\,\\Omega)R_{\\mathrm{in},d}}', []),
+          S('若 c) 选择较小电阻分支，代入 14.8371295 Ω。', 'For the smaller-resistance branch in c), insert 14.8371295 Ω.', 'Z_{0T,1}=\\sqrt{50(14.8371295)}\\,\\Omega=\\sqrt{741.856476}\\,\\Omega\\approx27.2370\\,\\Omega', []),
+          S('若选择较大电阻分支，必须相应改用 168.4962038 Ω。', 'For the larger-resistance branch, use its corresponding 168.4962038 Ω.', 'Z_{0T,2}=\\sqrt{50(168.4962038)}\\,\\Omega=\\sqrt{8424.81019}\\,\\Omega\\approx91.7868\\,\\Omega', []),
+          S('任选一组即可；将 Z₀T² 除以对应电阻会恢复 50 Ω，验证馈线匹配。', 'Either branch works. Dividing Z₀T² by its corresponding resistance returns 50 Ω and verifies the feedline match.', 'Z_{0T}=27.2370\\,\\Omega\\ \\text{or}\\ 91.7868\\,\\Omega', [])],r'Z_{0T}=27.2370\,\Omega\ \text{or}\ 91.7868\,\Omega',9),
+        P('e',0,'整体匹配后，哪些界面仍有反射？','After overall matching, which interfaces still have reflections?',[
+          S('先写局部界面反射公式。这里比较界面两侧的行波特性阻抗；它与整个网络的净输入反射不是同一量。', 'Begin with local interface reflection. Compare traveling-wave characteristic impedances on the two sides; this differs from the net input reflection of the whole network.', '\\Gamma_{\\mathrm{local}}=\\frac{Z_{\\mathrm{right}}-Z_{\\mathrm{left}}}{Z_{\\mathrm{right}}+Z_{\\mathrm{left}}}', ['reflection']),
+          S('选项 a：50 Ω 馈线接到 Z₀T 的变换线，两侧特性阻抗不同，因此存在局部反射。', 'Option a: the 50 Ω feedline meets the Z₀T transformer. The different characteristic impedances give a local reflection.', '\\Gamma_a^{\\mathrm{local}}=\\frac{Z_{0T}-50}{Z_{0T}+50}\\ne0', []),
+          S('选项 b：变换线接回 50 Ω 主线，阻抗差也非零。', 'Option b: the transformer meets the 50 Ω main line, again with a nonzero impedance step.', '\\Gamma_b^{\\mathrm{local}}=\\frac{50-Z_{0T}}{50+Z_{0T}}\\ne0', []),
+          S('选项 c：主线接到 150−j50 Ω 的复负载，也仍然存在负载反射。', 'Option c: the main line meets the complex load 150−j50 Ω and still has load reflection.', '\\Gamma_c=\\frac{(150-j50)-50}{(150-j50)+50}=\\frac{9-2j}{17}\\ne0', []),
+          S('整体匹配表示多次反射返回馈线的相量恰好抵消，使净输入反射为零；不能据此删掉 a 的局部反射。', 'Overall matching means the multiple reflected phasors returning into the feedline cancel, giving zero net input reflection; it does not remove the local reflection at a.', 'Z_{\\mathrm{in,network}}=50\\,\\Omega,\\qquad\\Gamma_{\\mathrm{feed,net}}=\\frac{50-50}{50+50}=0', ['quarter']),
+          S('所以按标准答案的“哪些界面有反射”问法，选 a、b、c，选项 d 不成立。', 'Thus, for the official question about interfaces with reflections, select a, b and c; option d is false.', '\\text{Interfaces (a), (b) and (c)}', [])],'\\text{Interfaces (a), (b) and (c)}',9,answerText=L('选 a、b、c。三个阻抗突变处都有局部反射；整体匹配使这些返回馈线的反射相量抵消，净输入反射为零。', 'Select a, b and c. Each impedance discontinuity has a local reflection; overall matching cancels the returning reflected phasors at the feedline, giving zero net input reflection.'))
+      ],caption=('左侧为匹配链路，右侧 Smith 图显示负载及两个实轴交点，采用给定负载的精确数值。','Matching network and Smith chart with the load and both real-axis intersections, computed from the given load.'))
+    return E(f,1,('秋季','Fall'),2026,32,[basics,damage,matching,smith],questionsOnly=False)

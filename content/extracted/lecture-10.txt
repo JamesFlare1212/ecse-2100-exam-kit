@@ -1,0 +1,570 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 10
+Gauss’s Law
+                                   Alex Patterson
+           Electrical, Computer, and Systems Engineering Department
+                         Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                    Fields and Waves I                            2
+
+--- PAGE 3 ---
+Overview
+
+•  Gauss’s Law
+
+
+
+
+
+                                                                   3
+
+--- PAGE 4 ---
+Review
+Gauss’s Law
+
+•  Points that contain charge have a non-zero divergence, whereas the points with no
+  charge have a divergence of zero.
+                 This is the differential form of Gauss’s Law.
+
+
+
+
+•  The electric field flux through a closed surface is determined by the amount of charge
+   inside. This can be rewritten as:
+                  This is the integral form of Gauss’s Law.
+
+
+
+
+                                                                   4
+
+--- PAGE 5 ---
+Electrostatics
+
+• Show that the electric field of a point charge satisfies Gauss’ Law by
+
+   integrating            over the surface of a sphere of radius 𝑎.
+
+
+
+
+
+                              𝑄
+                     𝐸=           ෠𝑅
+                                      4𝜋𝜖0𝑟2
+
+
+
+
+                                                                   5
+
+--- PAGE 6 ---
+Electrostatics
+
+
+                        𝑄
+               𝐸=           ෝ𝒂𝑟
+                             4𝜋𝜖0𝑟2
+            Q
+
+
+
+
+
+                                                                   6
+
+--- PAGE 7 ---
+ Electrostatics:
+Coulomb’s Law
+
+--- PAGE 8 ---
+Electrostatics
+Coulomb’s Law
+Coulomb’s Law gives the force between two, stationary, charged particles
+
+
+                      𝑄1
+                            ,of Q1 is            ෠𝑅
+                    4𝜋𝜀0𝑅2
+                                        Unit vector pointing
+                               away from Q1
+
+
+
+                   Then,
+
+
+                                                                   8
+
+--- PAGE 9 ---
+Electrostatics
+Coulomb’s Law
+
+                                           𝑄1𝑄2
+                             =           ෠𝑅                                                             Ԧ𝐹12
+       (force), between point charges                                           4𝜋𝜀0𝑅2
+                                                 (force on Charge 2 by Charge 1)
+
+
+
+                         Q1
+                                                            Unit vector in r-direction
+                                                         ෠𝑅
+
+                         R
+
+                                            Q2
+
+
+                                                                   9
+
+--- PAGE 10 ---
+Electrostatics
+
+
+       , is a VECTOR Field          How do we represent it?
+
+
+ The electric field points in the direction that a +q test charge would move
+
+
+          Represent using Arrows : Direction and Length
+
+
+                                                                           Proportional to
+                                                    Point charge         magnitude or strength of
+                                                                              E-Field
+
+
+
+                                                                  10
+
+--- PAGE 11 ---
+Electrostatics
+• To compute E-fields from multiple charges, apply superposition of fields.
+
+
+
+
+
+                              Q1
+
+
+
+
+
+                                                                  11
+
+--- PAGE 12 ---
+Electrostatics
+• To compute E-fields from multiple charges, apply superposition of fields.
+
+
+
+
+                                          Q2
+
+
+
+
+                              Q1
+
+
+
+
+
+                                                                  12
+
+--- PAGE 13 ---
+Electrostatics
+• To compute E-fields from multiple charges, apply superposition of fields.
+
+
+
+
+                                          Q2
+
+
+
+
+                              Q1
+
+
+
+
+
+                                                                  13
+
+--- PAGE 14 ---
+Do Lecture 10 Exercise 1 in groups of up to 4.
+
+
+
+
+
+                                                   14
+
+--- PAGE 15 ---
+Electrostatics
+          More examples of electric fields and charge distributions
+
+
+
+
+
+                                                                                                        http://shinliang.blogspot.com/2009/04/21-coulombs-law.html
+
+                                                                  15
+
+--- PAGE 16 ---
+Electrostatics
+                                                                        •  Note, in the upper right figure,
+                                                   that four times as many field lines
+                                                leave the +4 positive charge as
+                                                leave the +1 charge.
+
+
+
+                                                             •  All of the field lines end at
+                                                              infinity, as they do with a single
+                                                     positive charge (E field is defined
+                                                         in allspace).                                                          http://people.seas.harvard.edu/~jones/cscie129/nu_lectures/lecture6/field_vis/e_vis.html
+
+
+                                                                  16
+
+--- PAGE 17 ---
+Electrostatics
+
+  •  Sketch the electric field lines for the electric quadrupole shown. Sketch the
+    planes for which you expect the field to be symmetric. Aftercompletingyour
+   sketch,verify your result with the applet at
+    https://davidawehr.com/projects/electric_field.html
+
+
+
+                    +Q              -Q
+
+
+
+
+                           -Q          +Q
+
+
+
+                                                                  17
+
+--- PAGE 18 ---
+Electrostatics:
+ Gauss’s Law
+
+--- PAGE 19 ---
+Gauss’s Law
+
+
+•  Previously we said:               = 𝑄𝑒𝑛𝑐
+
+
+• Can we understand this in terms of electric field lines?
+
+
+
+
+
+                                                                  19
+
+--- PAGE 20 ---
+Gauss’s Law
+
+
+                                         • What would the electric field be at an arbitrary
+                                   point suspended over an infinite surface of
+                                uniform charge per area (𝜌𝑠in C/area)?
+
+                                         •  First question: what direction will the field point
+                                     in?
+
+                                         • The +z direction since all non-z components will
+                                    cancel.
+
+                  𝐸= 𝐸𝑧𝑧  Ƹ𝑧
+
+
+                                                                  20
+
+--- PAGE 21 ---
+Gauss’s Law
+
+
+                                         • Second question: should the field be uniform
+                              everywhere above the surface at the same z?
+
+
+
+                              Yes! (more on this later)
+
+   𝐸= 𝐸𝑧𝑧  Ƹ𝑧
+
+
+
+
+                                                                  21
+
+--- PAGE 22 ---
+Gauss’s Law
+
+
+
+                                     •  Third question: If we make a Gaussian surface
+                          and measure the flux through it, which surfaces
+                           have a non-zero net flux?
+
+
+                             Theends!
+
+
+
+
+
+                                                                  22
+
+--- PAGE 23 ---
+Gauss’s Law
+
+
+                                      •  Fourth question: Are there any lines we forgot to
+                           draw?
+
+
+                       Yes,theequalandoppositeonesonthe
+                                      underside!
+
+
+
+
+
+                                                                  23
+
+--- PAGE 24 ---
+Gauss’s Law
+
+
+                                     •  Fifth question: What is the electric field as
+                                calculated by Gauss’s law for this surface?
+
+
+
+
+
+                                                                  24
+
+--- PAGE 25 ---
+Gauss’s Law
+
+
+
+
+
+                                                                  25
+
+--- PAGE 26 ---
+Gauss’s Law
+
+
+                                      •  This is an interesting answer because we know
+                                 that field strength generally falls of with distance,
+                          and this expression has no dependence on
+                                distance at all. Does this make sense?
+
+
+                     Yes…iftheplaneistrulyinfinite,itshouldlook
+                            exactlythesamenomatterhowhighaboveityou
+       𝜌            arebecausethereisaninfinitelylargedistribution
+  𝐸=        Ƹ𝑧                       ofcharge.
+       2𝜀0
+
+
+                                                                  26
+
+--- PAGE 27 ---
+Gauss’s Law
+
+
+                                        •  Sixth question: Will this be the same for any
+                              Gaussian surface we choose?
+
+
+                                      Yes!
+
+
+
+
+
+                                                                  27
+
+--- PAGE 28 ---
+Gauss’s Law
+
+ Steps to solve problems using Gauss’s Law
+
+ 1. Recognize the coordinate system.
+
+ 2. Using symmetry, determine which components of the field exist.
+
+ 3. Identify a Gaussian surface for which the sides are either parallel to or
+    perpendicular to the field components. This surface is arbitrary in size.
+
+ 4. Determine the total charge within that surface. The charges can be
+    distributed on lines, surfaces or in volumes.
+
+
+
+
+
+                                                                  28
+
+--- PAGE 29 ---
+Gauss’s Law
+
+5. To evaluate the electric flux passing through the Gaussian surface.
+
+     •  If the field is parallel to the surface ∮𝐃⋅d𝐒= 0
+
+     •  If the field is constant and perpendicular to the surface (surface area A),
+
+             ∮𝐃⋅d𝐒= 𝐷𝑖∮d𝐴𝑖= 𝐷𝑖𝐴𝑖
+
+     where the subscript refers to the direction of the surface normal.
+
+     •  Note that a high level of symmetry is necessary to make these
+      simplifications.
+
+
+                                                                  29
+
+--- PAGE 30 ---
+Gauss’s Law
+
+6. Now equate the two sides of Gauss’ Law to find E:
+
+            𝐷𝑖𝐴𝑖= ∮𝐃⋅d𝐒= ∫𝜌d𝑉= 𝑄𝑒𝑛𝑐
+
+
+
+
+
+                                                                                               Slido!                                                                  30
+
+--- PAGE 31 ---
+Gauss’s Law
+
+• Examples of typical Gaussian surfaces
+
+
+
+
+
+                                                                                           Ulaby
+
+                                                                  31
+
+--- PAGE 32 ---
+Gauss’s Law
+Full Gauss’ Law Solution
+A charge distribution with cylindrical symmetry is shown. The inner cylinder has
+a uniform volumetric charge density 𝝆𝒗[𝑪/𝒎𝟑]
+
+The outer shell has a surface charge density 𝝆𝒔[𝑪/𝒎𝟐] such that the total
+charge on the outer shell is the negative of the total charge in the inner cylinder.
+Ignore end effects.
+
+
+
+
+
+                                                                  32
+
+--- PAGE 33 ---
+Gauss’s Law
+
+1. Find the electric field for all r.
+
+
+2. Check your answer by evaluating the divergence and curl of the electric field.
+
+
+
+3. What is the closed line integral of the electric field around the contour shown?
+
+
+
+
+
+                                                                  33
+
+--- PAGE 34 ---
+Gauss’s Law
+
+
+
+
+
+                                                                  34
+
+--- PAGE 35 ---
+Gauss’s Law
+
+•  Divergence and curl expressions for cylindrical
+  coordinates:
+
+
+
+                                                                 1                                                    𝑟𝜕𝜌𝑣𝑟22
+                        0 < 𝑟< 𝑎:∇⋅𝜖0𝐸=                                   = 𝜌𝑣•  Divergence of 𝐷:                                                          𝜕𝑟
+
+                                                                 1                                                   𝑟𝜕𝜌𝑣𝑎22
+                𝑎≤𝑟≤𝑏:∇⋅𝜖0𝐸=     = 0                                                          𝜕𝑟
+
+                                                            1
+                                         𝑟𝜕0                 𝑟> 𝑏:∇⋅𝜖0𝐸=      0                           𝜕𝑟=
+
+
+•  Curl of 𝐷 :for the curl to be non-zero, the Ƹ𝑟component of our electric field
+  would need to contain a dependence on the coordinate 𝜙or 𝑧. Since it does
+   not, the curl is zero.
+
+                                                                  35
+
+--- PAGE 36 ---
+Wrap-Up
+•  HW4 due Wednesday
+
+
+
+
+
+                                                                  37

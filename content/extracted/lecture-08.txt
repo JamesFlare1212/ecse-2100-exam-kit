@@ -1,0 +1,715 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 8
+Fields & Math I
+                                              Alex Patterson
+                            Electrical, Computer, and Systems Engineering Department
+                                       Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+  ▪Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+ ▪J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+ ▪Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+  ▪Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+  ▪Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+  ▪Jeffrey Braunstein – ECE Department, University at Albany
+ ▪James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+ ▪James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+  ▪Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                                                             2
+
+--- PAGE 3 ---
+Overview
+
+•  Orthogonal Coordinate Systems
+
+•  Multidimensional Integrals
+
+
+
+
+
+                                                                        3
+
+--- PAGE 4 ---
+Field Math
+
+•  In our treatment of transmission lines so far, we have been able to
+   derive voltage and current everywhere on the line using an extension
+   of circuit theory.
+
+•  But to understand the more general picture, we need Maxwell’s
+  Equations. Now we enter the “fields” portion of the class.
+
+
+
+
+
+                                                                         4
+
+--- PAGE 5 ---
+Field Math
+
+
+
+
+
+                             ...but what is a field, anyway?
+
+
+
+
+
+                                                                         5
+
+--- PAGE 6 ---
+Field Math
+ ...but what is a field, anyway? A field:
+
+ • Has a value at every point in space
+ •  Could be a scalar field, where every point has scalar quantity (i.e. electric
+   potential)
+ •  Could be a vector field, where every point has a vector (i.e. electric field,
+   magnetic field)
+ •  Scalar and vector fields are often related through gradients
+
+
+
+
+
+                                                                         6
+
+--- PAGE 7 ---
+Field Math
+
+
+
+
+
+                          Electric potential field (left) and corresponding electric field (vector field, right) for a charged
+                       droplet (Lauricella)
+
+
+                                                                         7
+
+--- PAGE 8 ---
+Field Math
+Which of these are represented mathematically by fields? Why or why
+not?
+
+     • Wind velocity
+     •  Energy density
+     • Temperature
+     •  Friction force
+
+
+
+
+
+                                                                         8
+
+--- PAGE 9 ---
+Orthogonal Coordinate Systems
+
+--- PAGE 10 ---
+Field Math
+
+•  3 Types of coordinate systems we will use for fields:
+    • Rectangular
+    •  Cylindrical
+    •  Spherical
+
+•  Examples of when to use them:
+    • Conductive sheets (rectangular)
+    • Wires and cables (cylindrical)
+    • Spheres (spherical)
+
+•  By choosing our coordinate systems for symmetry reasons, we can make the math
+   easier. For instance, both cables and the cylindrical coordinate system have radial
+  symmetry.
+
+
+
+                                                                         10
+
+--- PAGE 11 ---
+Field Math
+Rectangular / Cartesian Coordinates Definition
+                                         General Vector A in Rectangular Coordinates:
+                              Ԧ𝐴=                                   𝐴𝑥ො𝑥+ 𝐴𝑦ො𝑦+ 𝐴𝑧Ƹ𝑧
+                                                                                          Ƹ𝑧                      Unit Vector
+                                                                                                   Representation
+                                                                                                                   for Rectangular
+                                                                                                    Coordinate
+                                                                                           System
+                                                                                       ො𝑦                                                                        ො𝑥
+
+
+                                                       The Unit Vectors imply:
+
+                                                                                     Points in the direction of increasing x                                                              ො𝑥
+
+                                                                                     Points in the direction of increasing y                                                           ො𝑦
+
+                                                                                     Points in the direction of increasing z                                                                    Ƹ𝑧
+
+                                                                         11
+
+--- PAGE 12 ---
+Field Math
+Rectangular / Cartesian Coordinates Dot Product
+
+•  Definition of Dot Product (Scalar Product)
+
+            Ԧ𝐴⋅𝐵= Ԧ𝐴𝐵cos                                𝜃𝐴𝐵
+            Ԧ𝐴⋅𝐵=                 𝐴𝑥𝐵𝑥+ 𝐴𝑦𝐵𝑦+ 𝐴𝑧𝐵𝑧
+
+             Ԧ𝐴=  Ԧ𝐴⋅Ԧ𝐴=   𝐴𝑥2 + 𝐴𝑦2 + 𝐴𝑧2   Magnitudeofvector
+
+• Meaning of dot product
+
+
+
+                                     Ԧ𝐴⋅𝐵= 0
+
+                                                                         12
+
+--- PAGE 13 ---
+Field Math
+Rectangular / Cartesian Coordinates Dot Product
+
+•  What’s the dot product of A and B?
+
+               A measure of how aligned
+                two vectors are
+
+
+
+
+
+                                                               Note: we can denote vectors
+                                                                      either by putting an arrow
+                                                              over their letters or by                          45
+                                                                   writing their letters in bold.
+                           °
+                 𝐀= 3
+
+           Ԧ𝐴⋅𝐵= Ԧ𝐴𝐵cos 𝜃= 3 ⋅5 ⋅cos 45° = 10.6
+
+                                                                         13
+
+--- PAGE 14 ---
+Field Math
+Rectangular / Cartesian Coordinates Cross Product
+
+•  Definition of Cross Product (Vector Product)
+                                             ො𝑥      ො𝑦       Ƹ𝑧
+              Ԧ𝐴× 𝐵= 𝐴𝑥  𝐴𝑦  𝐴𝑧
+                       𝐵𝑥  𝐵𝑦  𝐵𝑧
+                                                                  Gives the area of a
+• Meaning of the cross product                            parallelogram with sides
+                                                                   defined by A and B
+
+
+
+                                          Ԧ𝐴× 𝐵= 0
+
+
+                                                                         14
+
+--- PAGE 15 ---
+Field Math
+Rectangular / Cartesian Coordinates Cross Product
+
+•  What’s the cross product of A and B?
+
+
+
+
+
+                          45
+                           °
+                                  |A| = 3
+
+          Ԧ𝐴× 𝐵= Ԧ𝐴𝐵sin 𝜃ො𝑛= 3 ⋅5 ⋅sin 45° ො𝑛= 10.6ො𝑛
+
+
+                                                                         15
+
+--- PAGE 16 ---
+Field Math
+The Right Hand Rule
+
+
+
+
+
+                                                                              Study.com
+
+                                                                         16
+
+--- PAGE 17 ---
+Field Math
+Cylindrical Coordinates Definition
+
+
+                                                                  Cylindrical Coordinates
+                                                                                          •  𝒓: radial coordinate
+                                                                         (length of vector in x-y
+                                                                       plane)
+                                                                                          •  𝝓: angle between vector
+                                                            and x-axis in x-y plane
+                                                                                          •  𝒛: z in Cartesian
+                                                                       coordinates
+
+              Note: cylindrical                                                                          Note: there is no vector length
+              coordinates                                                                 component for φ: r is the
+             sometimes uses ρ                                                                            length of the vector in the x-y
+               instead of r for the                                                                          plane and the direction of ris
+                radial direction                                                                     dependent on φ
+                                                                         Ulaby
+             Position Vector R in Cylindrical Coordinates:
+           𝑂𝑃= 𝐫= 𝑟1ො𝒓+ 𝑧1ො𝒛                                                                       17
+
+--- PAGE 18 ---
+Field Math
+Cylindrical Coordinates Unit Vector
+                                        General Vector A in Cylindrical Coordinates:
+                                               Ƹ𝑧
+                        z                             Ԧ𝐴=                                           ෠𝜙          𝐴𝑟ො𝒓+ 𝐴𝜙෡𝝓+ 𝐴𝑧ො𝒛                                           r
+                                         The Unit Vectors imply :
+                                                                     Ƹ𝑟         Points in the direction of                   P                                                              increasing r (outward                                                                Ƹ𝑟
+                                     z                        from 0)
+                                                              Points in the direction of                                                ෠𝜙
+                                                              increasing ϕ (moving
+              x       φ                  y                                                            counter-clockwise from
+                                                          the x-axis)
+                                                                    Ƹ𝑧         Points in the direction of
+                                                              increasing z
+
+
+                   In cylindrical coordinates, both Ƹ𝑟and ෠𝜙are functions of 𝜙
+                                                                         18
+
+--- PAGE 19 ---
+Field Math
+Cylindrical Coordinates Unit Vector
+•  What are the unit vectors Ƹ𝑟, ෠𝜙, and Ƹ𝑧of cylindrical coordinates in terms of
+   Cartesian Coordinates?
+        • What is Ƹ𝑧?
+
+        • What is Ƹ𝑟?                            What is ෠𝜙?
+
+                             y                                                    y
+
+
+
+
+
+                                         x                                                    x
+
+
+
+
+
+                                                                         19
+
+--- PAGE 20 ---
+Field Math
+Spherical Coordinates Definition
+
+      Ulaby
+
+                                                 Spherical Coordinates
+                                                                 •   ො𝒓: radial coordinate (length of vector)
+
+                                                                 •  ෡𝜽: angle between vector and +z-axis
+
+                                                                 •  ෡𝝓: angle between vector and x-axis in x-y
+                                                  plane
+
+
+
+
+
+                         Position Vector R in Spherical Coordinates:
+              𝑂𝑃= 𝐫= 𝑟1ො𝒓 for 𝑃(𝑅1, 𝜃1, 𝜙1)                                                                        20
+
+--- PAGE 21 ---
+Field Math
+Spherical Coordinates Unit Vector
+                                         General Vector A in Spherical Coordinates:
+                              Ԧ𝐴=                                    𝐴𝑟ො𝒓+ 𝐴𝜃෡𝜽+ 𝐴𝜙෡𝝓
+                     z                                    ෠𝜙
+                                                       Ƹ𝑟
+                         θ   P                 The Unit Vectors imply :
+                                                                     Ƹ𝑟        Points in the direction of
+                                         r                                     increasing r
+                                           ෠𝜃                                                              Points in the direction of                                                          መ𝜃
+                                                              increasing θ (as measured
+              φ                y                         from the +z axis)             x
+                                                              Points in the direction of                                                ෠𝜙
+                                                              increasing ϕ (as measured
+                                                     from the +x axis)
+
+
+                        In spherical coordinates, Ƹ𝑟 , መ𝜃 ,and ෠𝜙are functions of 𝜙and 𝜃
+                                                                          21
+
+--- PAGE 22 ---
+Field Math
+Spherical Coordinates Unit Vector
+•  What are the unit vectors Ƹ𝑟, መ𝜃, and ෠𝜙of spherical coordinates in
+   terms of Cartesian Coordinates?
+
+       •  What is ෠𝜙?
+
+       •  What is መ𝜃?                               What is Ƹ𝑟?
+
+                                z                                                          z
+
+
+                                                                                            y
+
+
+
+                                         x                                                    x
+
+
+
+
+
+                                                                         22
+
+--- PAGE 23 ---
+Field Math
+Vector Representation
+
+               RECTANGULAR        CYLINDRICAL        SPHERICAL
+                     Coordinate            Coordinate           Coordinate
+                     System              System             System
+
+                    (ො𝑥, ො𝑦, Ƹ𝑧)        ( Ƹ𝑟, ෠𝜙, Ƹ𝑧)        ( Ƹ𝑟, መ𝜃, ෠𝜙)
+
+
+
+
+                                         NOTE THE ORDER!
+                                                        r, φ, z          r, θ ,φ
+
+
+
+           Note: We do not emphasize transformations between coordinate systems in this
+                      course, but it is sometimes necessary for solving problems.
+                                                                          24
+
+--- PAGE 24 ---
+Field Math                       Ԧ𝐴= 𝐴𝑟Ƹ𝑟+ 𝐴𝜙෠𝜙+ 𝐴𝑧Ƹ𝑧= 𝐴𝑥ො𝑥+ 𝐴𝑦ො𝑦+ 𝐴𝑧Ƹ𝑧= ⋯
+Orthogonal Coordinate Systems
+ •  Regardless of the orthogonal coordinate system, the following relationships
+   are always true:
+     • The dot product of a unit vector with itself is always 1
+                              Ƹ𝑟⋅Ƹ𝑟= ෠𝜙⋅෠𝜙= Ƹ𝑧⋅Ƹ𝑧= ො𝑥⋅ො𝑥= ො𝑦⋅ො𝑦= 1
+     • The dot product of a unit vector with any other unit vector in the coordinate system is
+     always 0 (orthogonality)
+                        Ƹ𝑟⋅෠𝜙= Ƹ𝑟⋅Ƹ𝑧= ෠𝜙⋅Ƹ𝑧= ො𝑥⋅ො𝑦= ො𝑦⋅Ƹ𝑧= ො𝑥⋅Ƹ𝑧= 0
+
+     • The dot product between two vectors is the sum of the products of the individual vector
+     components in each coordinate
+                  Ԧ𝐴⋅𝐵= 𝐴𝑟𝐵𝑟+ 𝐴𝜃𝐵𝜃+ 𝐴𝜙𝐵𝜙= 𝐴𝑥𝐵𝑥+ 𝐴𝑦𝐵𝑦+ 𝐴𝑧𝐵𝑧= ⋯
+
+     • The magnitude of a vector is the square root of the dot product of the vector with itself
+
+                                                     2                                       +                                          + 𝐴𝑧2 = ⋯                   Ԧ𝐴=  Ԧ𝐴⋅Ԧ𝐴=   𝐴𝑟2                               + 𝐴𝑧2 =   𝐴𝑥2                                                                                  𝐴𝑦2                            + 𝐴𝜙
+                                                                          25
+
+--- PAGE 25 ---
+Multidimensional Integrals
+
+--- PAGE 26 ---
+Field Math
+Differential Calculus
+
+
+                                             •  Integration = adding up differential elements
+                                    (infinitesimally small pieces.)
+
+                                             •  These differential elements have some specific
+                           geometry depending on dimensions/coordinates
+
+                                             •  At left, we’re integrating infinitesimal slices of y(x)
+
+                ∫𝑓𝑥𝑑𝑥
+
+
+
+
+
+                   Wikipedia
+                                                                          27
+
+--- PAGE 27 ---
+Field Math
+Differential Calculus
+
+        y                                                             •  For 2D Cartesian integrals, we have a
+                                                  square differential element.
+                                                                     6  7
+          6                                          Area = න න 1𝑑𝑥𝑑𝑦= 16
+                                                                    2  3
+
+                                                                          •  Or if we wanted to integrate some function
+          2                                                   over this area:
+
+
+                                                                 6  7
+                                      x                      3           7                      Area = න න 𝑓(𝑥, 𝑦)𝑑𝑥𝑑𝑦= 16
+                                                                2  3
+
+
+
+                     Integration over 2 “delta” distances                     dy
+                      (2 dimensions – differential area)
+                                                                            dx
+                                                                          28
+
+--- PAGE 28 ---
+Field Math
+Differential Calculus
+
+•  For integration in three dimensions, we use a triple integral with a differential
+  volume element.
+
+           ∭𝑓𝐫𝑑𝑉
+
+• You can visualize this differential volume element by visualizing the volume that
+   is traced out if you allow a point to “wiggle” a small amount in all three
+   directions specified in the coordinate system.
+
+
+
+
+
+                                                                         29
+
+--- PAGE 29 ---
+Field Math
+Differential Calculus
+•  In Cartesian coordinates, the differential element is a cube with size
+   lengths d𝑥, d𝑦and d𝑧and volume d𝑥d𝑦d𝑧.
+
+
+                    ∭𝑓𝑥, 𝑦, 𝑧𝑑𝑥𝑑𝑦𝑑𝑧
+
+
+                                                                   (Recall that we can change the order of
+                                                                 integration if we want.)
+
+                    ∭𝑓𝑥, 𝑦, 𝑧𝑑𝑧𝑑𝑥𝑑𝑦
+
+
+
+                                                                         30
+
+--- PAGE 30 ---
+Field Math
+Differential Calculus
+•  In cylindrical coordinates, the differential element will be a wedge.
+
+
+
+
+                    ∭𝑓𝑟, 𝜙, 𝑧𝑟𝑑𝑟𝑑𝜙𝑑𝑧
+
+
+
+
+
+                                                                         31
+
+--- PAGE 31 ---
+Field Math
+Differential Calculus
+
+• You can find the volume of this cylinder as follows:
+
+
+
+                                         ℎ  2𝜋   𝑟
+                      න න න 𝑟𝑑𝑟𝑑𝜙𝑑𝑧
+                                           0  0   0
+
+
+
+
+
+                                                                          32
+
+--- PAGE 32 ---
+Field Math
+Differential Calculus
+• You can find the volume of this cylinder as follows:
+
+
+
+
+
+                                                                                 the volume of this
+
+
+
+                                                                      (the volume of the differential wedge looks like that
+                                                                         of a rectangular prism. We don’t need to worry
+                                                               about curvature due to its infinitesimal size!)
+
+
+                                                                         33
+
+--- PAGE 33 ---
+Field Math
+Differential Calculus
+•  In spherical coordinates, two of the wedge dimensions are proportional to r.
+
+
+
+
+                  ∭𝑓𝑟, 𝜃, 𝜙𝑟2𝑠𝑖𝑛𝜃𝑑𝑟𝑑𝜙𝑑𝜃
+
+
+
+
+
+                                                                         34
+
+--- PAGE 34 ---
+Field Math
+Differential Calculus
+
+•  Representation of differential lengths dl  in the three coordinate systems
+
+
+
+              Rectangular  𝑑Ԧ𝑙= 𝑑𝑥⋅ො𝑥+ 𝑑𝑦⋅ො𝑦+ 𝑑𝑧⋅Ƹ𝑧
+
+                 Cylindrical   𝑑Ԧ𝑙= 𝑑𝑟⋅Ƹ𝑟+ 𝑟𝑑𝜙⋅෠𝜙+ 𝑑𝑧⋅Ƹ𝑧
+
+
+               Spherical                    𝑑Ԧ𝑙= 𝑑𝑟⋅Ƹ𝑟+ 𝑟𝑑𝜃⋅መ𝜃+ 𝑟sin 𝜃𝑑𝜙⋅෠𝜙
+
+
+
+
+                                                                         35
+
+--- PAGE 35 ---
+Field Math
+Differential Surfaces and Volumes
+•  Example of surface area differentials
+
+                 dԦ𝑠= d𝑥d𝑦Ƹ𝑧       or   dԦ𝑠= 𝑟d𝜙d𝑧Ƹ𝑟
+
+
+•  Representation of differential surface element:
+
+
+
+                 Vector is NORMAL                          dԦ𝑠= 𝑟d𝜙d𝑧Ƹ𝑟                       to surface
+
+
+•  Differential volume (a scalar)
+
+
+                  d𝑉= d𝑥d𝑦d𝑧
+
+                                                                          36
+
+--- PAGE 36 ---
+Field Math
+Differential Surfaces and Volumes
+
+• When doing surface and volume integrals we must consider:
+
+    • What is the right system of coordinates ?
+
+    • What is kept constant?
+
+    • What integral limits do we use?
+
+    • What differential element do we use?
+
+
+
+
+
+                                                                         37
+
+--- PAGE 37 ---
+Field Math
+Differential Surfaces and Volumes
+
+• To visualize a dS element:
+    • Take the direction that the surface’s normal vector points in and hold it constant (i.e. z)
+
+    • Sweep the other two coordinates through all possible values (i.e. xand y)
+
+    • What shape is traced out by this process? This shape is made of all the dS elements for the
+      vector you specified.
+
+
+
+
+
+                                                                          38
+
+--- PAGE 38 ---
+Field Math
+
+
+
+
+
+                                                                          39
+
+--- PAGE 39 ---
+Field Math
+Differential Surfaces and Volumes
+
+
+
+
+
+          Do Lecture 08 Exercise in groups of up to 4.
+
+
+
+
+
+                                                                        40
+
+--- PAGE 40 ---
+Wrap-Up
+• Exam 1 on Monday
+    • Includes material from Lecture 1 – Lecture 7
+    • Crib sheet is available on LMS
+    • You will be allowed a non-communicating graphic calculator
+    • You may bring your own ruler to use with a Smith chart. A Smith chart
+     and a paper ruler will be provided.
+
+
+
+
+
+                                                                          41

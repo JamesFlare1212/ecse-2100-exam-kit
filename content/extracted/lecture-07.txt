@@ -1,0 +1,738 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 7
+Impedance Matching with Transmission Line Stubs
+
+                                               Alex Patterson
+                            Electrical, Computer, and Systems Engineering Department
+                                       Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                    Fields and Waves I                           2
+
+--- PAGE 3 ---
+Overview
+
+ •  Single Stub Matching
+
+ •  Project 1 Introduction
+
+
+
+
+
+                                  Fields and Waves I                           3
+
+--- PAGE 4 ---
+Review
+
+• The Smith Chart allows for the graphical solution of the transmission line
+  equation for Z.
+
+• The Chart gives a direct conversion between Γ and Z
+
+
+
+
+
+                                   Fields and Waves I                           4
+
+--- PAGE 5 ---
+                                                   solutions of      solutions of
+Review                                                 constant 𝑥𝐿       constant 𝑟𝐿
+           open circuit point
+               (infinite impedance)
+
+             unity impedance z =1
+            (match point)
+
+              short circuit point
+             (zero impedance)
+
+             purely real impedances are
+            along the horizontal center line
+
+             purely imaginary impedances
+             are along the periphery                                                                                                     Ulaby
+
+                                     length = |Γ|   angle with respect to x-axis
+                                                   (counterclockwise) = ∠Γ
+
+                                                                                               5
+
+--- PAGE 6 ---
+Review
+We can match a load to a transmission line using:
+1. A specific length of t-line 𝑙attached to the load that makes the input
+   impedance looking down the t-line REAL
+2. A 𝜆/4 transformer attached to the input of the t-line in (1) to make the input
+   impedance looking down the series combination equal to the impedance we
+   want to match (𝑍0 here)
+
+
+
+
+
+                                                           = 𝟕𝟓+ 𝒋𝟕𝟓
+
+
+
+
+
+                                                                                               6
+
+--- PAGE 7 ---
+Review
+
+                  • We can use the Smith chart to find the length of line 𝐿required
+                to give a certain input impedance.
+                  • We start at the normalized load impedance, travel along a
+                   circle towards the generator, and stop at the input impedance
+           we want to provide
+                  • Where we stop is the input impedance of the t-line of
+              length 𝑳. But how do we read off this length?
+                  • There are two scales on the periphery (in wavelengths)
+                          - 1 towards generator (clockwise)
+                          - 1 towards load (counterclockwise)
+                  • Read off the distance (in wavelengths) you traveled from the
+                      initial impedance to the final impedance. This is the line length 𝐿.
+                  • Note that once around the whole chart is a total length of λ/2                                                                                                                   7
+                                                                                  UQ
+
+--- PAGE 8 ---
+                                                                                               •  What length of line 𝑙presents aReview                                                         real input impedance, when 𝑍0 =
+                                                          75Ω and 𝑍𝐿= 75 + 𝑗75 Ω?
+
+
+
+
+
+1. Plot the normalized load impedance 𝑧𝐿on the Smith chart
+2. Draw a circle of constant radius through the plotted impedance (centered at
+   origin of Smith chart) – VSWR circle
+3. Find where the circle intersects the x-axis of the chart – these are all the
+   possible real input impedances
+4. Choose a real input impedance and read off the required 𝑙                                8
+
+--- PAGE 9 ---
+Review
+
+                                                0.162𝜆              •  Read the normalized input
+                                     𝒍= 𝟎. 𝟎𝟖𝟖𝝀        resistance from the Smith chart
+                                        and convert it to its actual input
+                                                   resistance.
+
+
+
+
+                                                              0.25𝜆                             𝑟= 2.6 →
+                           𝑅= 2.6 ⋅75Ω = 195Ω
+
+--- PAGE 10 ---
+Review
+
+                                                0.162𝜆           •  Choose a real input impedance
+                                      𝒍= 𝟎. 𝟎𝟖𝟖𝝀     and read off the required 𝑙
+                                                                       • (1) Draw a line from the origin through
+                                                       the load impedance to the edge of the
+                                                              chart. Read off the number on the
+                                                    “Wavelengths toward generator” scale.
+                                                              0.25𝜆       • (2) Do the same for your chosen real
+                                                          input impedance.
+                                                                       • Calculate the total distance required to
+                                                               travel from (1) to (2)
+
+--- PAGE 11 ---
+                                                                                                •  What characteristic impedance
+                                                                         𝑍𝑂𝑇will match the inputReview
+                                                                 impedance of the line of length 𝑙
+                                                                                               (𝑍𝑖𝑛,𝑙) to 𝑍0 = 75Ω?
+
+
+
+
+
+                                                           𝒁𝒊𝒏, 𝒍
+                                       𝒁𝒊𝒏, 𝒕𝒐𝒕
+
+           1. Read the normalized input resistance from the Smith chart
+           and convert it to its actual input resistance.
+                                      = 75Ω           2. Calculate 𝑍𝑂𝑇that is required to match 𝑍𝑖𝑛,𝑙to 𝑍0
+
+                          2
+                    𝑍𝑂𝑇
+              𝑍𝑖𝑛,𝑡𝑜𝑡=   →𝑍𝑂𝑇=  𝑍𝑖𝑛,𝑡𝑜𝑡⋅𝑍𝐿=  75Ω ⋅195Ω = 𝟏𝟐𝟎. 𝟗𝛀
+                      𝑍𝐿
+                                                                                               11
+
+--- PAGE 12 ---
+Review
+
+
+
+
+
+                 𝒁𝟎= 𝟕𝟓𝛀
+
+
+
+                                     𝒁𝒊𝒏,𝒍= 𝟏𝟗𝟓𝛀
+
+                         𝒁𝒊𝒏,𝒕𝒐𝒕= 𝟕𝟓𝛀
+                                  0.25𝜆   𝑙= 0.088𝜆
+
+
+              We have matched the feedline with
+                𝟕𝟓𝛀to a load impedance    𝟕𝟓+ 𝒋𝟕𝟓𝛀!           𝒁𝟎=                  𝒁𝑳=
+
+                                                                                               12
+
+--- PAGE 13 ---
+Review
+
+•  Let’s say you only have one type of cable and can’t design a quarter-
+  wavelength transformer with arbitrary Z0. How do you match then?
+
+• You could add inductors or capacitors to the network in order to match
+  impedance. But in practice, we can’t always get the L and C values that we
+  need to match properly.
+
+• Another approach is to use a parallel stub of cable: this is called
+
+
+                         Single-stub matching
+
+
+
+
+                                  Fields and Waves I                           16
+
+--- PAGE 14 ---
+Single-Stub Impedance Matching
+
+--- PAGE 15 ---
+Single Stub Matching
+•  Instead of using a t-line to provide a real input impedance, then using a quarter
+  wave transformer, we are going to cancel out the imaginary part of 𝑍𝐿by
+   placing a short length of t-line (a stub) in parallel with the load
+
+
+
+                                           But how does this
+                                             work?
+
+
+
+
+
+                                                                                                                 18
+
+--- PAGE 16 ---
+Single Stub Matching
+
+•  Reminder: admittances are very useful when working with parallel circuit
+  elements because parallel admittances simply add together.
+•  If we want to find   =       ,we have to use the following equation:                    Zeq   𝑍𝐿||𝑍𝑖𝑛
+
+
+
+
+
+                                           •  However, if we consider their admittances, they just add:
+
+
+
+
+
+                                  Fields and Waves I                           19
+
+--- PAGE 17 ---
+Single Stub Matching
+
+•  The idea: we first convert our load impedance to a load admittance YL
+•  Next, we find a length of t-line 𝑑that gives an input admittance of the form:
+
+
+   This means the real part of our input
+  admittance, 𝑌𝑑, is matched to the
+   characteristic admittance of our
+                  1
+   feedline:  =            𝑌0
+                   𝑍0
+•  To complete the match, we just need
+   to find a length of t-line (a stub) with
+   input admittance:
+
+
+•   If we place the stub in parallel with the first t-line of length 𝑑, the admittances
+  add, giving a total input admittance:                                                  This is a match!                                                                                                                     20
+
+--- PAGE 18 ---
+Single Stub Matching
+•  First, we need to learn how to use the
+  Smith chart to find admittances
+  instead of impedances
+
+• What do you notice about the
+   relationship between these two real         𝑟= 0.38              𝑟= 2.6
+  impedances’ magnitudes and positions
+  on the Smith Chart?
+
+
+
+
+
+                                   Fields and Waves I                           21
+
+--- PAGE 19 ---
+Single Stub Matching
+
+• Any point reflected through the center point converts impedance (Z) to
+  admittance (Y) and vice versa.
+
+
+                Top Half: inductive reactance
+                                  or
+                        capacitive susceptance
+
+
+              usually marked on charts
+
+
+                Bottom Half: capacitive reactance
+                                  or
+                         inductive susceptance
+
+
+                                                                                                       Ulaby
+
+                                   Fields and Waves I                           22
+                                                                                  UQ
+
+--- PAGE 20 ---
+Single Stub Matching
+
+•  Consider this example. The blue dot represents the input impedance at the
+  end of a λ/8 transmission line. How do we find the input admittance?
+
+
+
+
+
+                                                                                               23
+
+--- PAGE 21 ---
+Single Stub Matching
+
+•  Consider this example. The blue dot represents the input impedance at the
+  end of a λ/8 transmission line. How do we find the input admittance?
+
+
+
+
+
+                                                                                               24
+
+--- PAGE 22 ---
+Single Stub Matching
+
+• Load of 50 + j50 Ohms on 50 Ohm Transmission Line
+      • What is the normalized impedance? Plot it on the Smith chart
+
+
+      • What is the normalized admittance? Plot it on the Smith chart
+
+
+•  Note! Once we cross the center of the chart to enter the “admittance domain”
+   all numbers on the Smith chart are to be considered admittances
+      •  What is the admittance of a short circuit? Where is it on the Smith chart?
+
+
+      •  What is the admittance of an open circuit? Where is it on the Smith chart?
+
+                                                                         25
+
+--- PAGE 23 ---
+Single Stub Matching
+
+• Now that we know how to find admittances on the Smith chart, let’s return
+   to single stub matching
+•  If we normalize our admittances from a couple of slides ago (divide them
+  by the characteristic admittance 𝑌0), we have:
+                                 𝑦𝑑= 1 + 𝑗𝑏
+                                    𝑦𝑠= −𝑗𝑏
+
+                                       𝑦𝑖𝑛= 1
+                                                       Match!
+                                  Our task is then to:
+                                          1. Find the length 𝑑that gives     1 + 𝑗𝑏                                              𝑦𝑑=
+                                          2. Find the length 𝑙that gives     −𝑗𝑏                                                  𝑦𝑠=
+                                                                         26
+
+--- PAGE 24 ---
+Single Stub Matching
+•  Consider this circle on the Smith
+   chart. Its leftmost edge touches the
+   origin of the chart and its rightmost
+  edge touches the rightmost edge of
+   the chart.
+
+• The impedances that land on this
+   circle are all those impedances of
+  form 1+jx (i.e. Z0 plus some
+   reactive impedance.)
+
+• We call this the matching circle,
+   since 𝑅𝐿is matched to 𝑍0 at every
+   point on the circle.
+
+
+
+                                                                                               27
+
+--- PAGE 25 ---
+Single Stub Matching
+•  It works for admittances as well.
+
+• On this circle, if 𝑧= 𝑟+ 𝑗𝑥, then
+ 𝑟= 1 and  =       (matched)            𝑍0   𝑅𝑒{𝑍𝐿}
+
+             1
+•  Likewise,  =         which is                1/𝑅𝑒{𝑍𝐿},
+               𝑍0
+  equivalent to               𝑌0 = 𝑅𝑒{𝑌𝐿}, meaning
+  the real parts of 𝑍and 𝑌are matched
+   to the load on the matching circle
+
+• That leaves the reactance (𝑥) and
+  susceptance (𝑏) as the only terms left
+   to match. On this circle, admittances
+  are of the form 𝑦= 1 + 𝑗𝑏.
+
+  We can cancel 𝒋𝒃with a stub.                                                                                               28
+
+--- PAGE 26 ---
+Single Stub Matching
+•  This means that this circle
+  contains all admittances that can
+  be matched to  (𝑦= 1) by                  𝑌0
+  adding a stub:
+
+    𝑦𝑖𝑛= 𝑦𝑑+ 𝑦𝑠
+     = 1 + 𝑗𝑏+ −𝑗𝑏
+     = 1
+
+•  If we can find a length of t-line that
+   will put us on the matching circle, we
+   just need to add a length of t-line (a
+  stub) in parallel with the input that
+  cancels out 𝑗𝑏
+
+                                                                                               29
+
+--- PAGE 27 ---
+Single Stub Matching
+• We already know how to find a length of t-line that provides us with a certain
+   input impedance, given the load impedance.
+• The process is the same for admittances:
+    1.  Plot the normalized load admittance                                                 𝑦𝑙
+    2. Draw the VSWR circle
+    3.  Travel along the VSWR circle from the load admittance towards the
+      generator to a location on the matching circle (𝑦= 1 + 𝑗𝑏)
+    4. Read off the input admittance 𝑦𝑑and line length 𝑑from the Smith chart
+
+
+    What about this “stub”? How do we find a length of t-line that gives us an
+                             input admittance     −𝑗𝑏?                                𝑦𝑠=
+
+
+                                                                                               30
+
+--- PAGE 28 ---
+Single Stub Matching
+•  Recall that at any given frequency, by choosing the length 𝑙, we can cause a
+   length of t-line with either a short circuit or an open circuit at the end to have
+  any reactive input impedance we want:
+
+                   𝑠𝑐=    tan(𝛽𝑙)                         𝑍𝑖𝑛   𝑗𝑍0
+
+                   𝑜𝑐=      cot(𝛽𝑙)                         𝑍𝑖𝑛   −𝑗𝑍0
+• The same is also true of admittance. We can use a short- or open-circuited
+   stub with a specific length to add an arbitrary susceptance (imaginary
+   admittance) to a network:
+
+                   𝑠𝑐=      cot(𝛽𝑙)                            𝑌𝑖𝑛   −𝑗𝑌0
+
+                  𝑜𝑐=    tan(𝛽𝑙)                            𝑌𝑖𝑛    𝑗𝑌0
+
+                                                                                               31
+
+--- PAGE 29 ---
+Single Stub Matching
+• We now have all the tools we need to perform matching with a single stub.
+  Here is the procedure:
+
+ 1. Convert the load impedance 𝑍𝐿to an equivalent normalized admittance 𝑦𝐿=
+    1/𝑧𝐿.
+ 2. Use a length of line of characteristic impedance 𝑍𝑜to transform 𝑦𝐿to
+     𝟏+ 𝒋𝒃.   𝒚𝒅=
+    Note: theterm“1”meanswehavematchedtherealpartof𝑍𝐿to 𝑍0
+ 3. Add a stub in parallel with 𝑦𝑑which has an input admittance 𝒚𝒔= −𝒋𝒃.
+
+ 4. Therefore, the total admittance at the input to the parallel combination of
+   𝑦𝑑and 𝑦𝑠is:
+    𝒚𝒊𝒏= 𝒚𝒅+ 𝒚𝒔= 𝟏+ 𝒋𝒃+ −𝒋𝒃= 𝟏→𝒀𝒊𝒏= 𝒀𝟎and 𝒁𝒊𝒏= 𝒁𝟎
+                               Match!
+                                                                                               32
+
+--- PAGE 30 ---
+Single Stub Matching
+Let’s do an example:
+• Load of     100 + 𝑗100 Ω connected to a  = 50Ω transmission line       𝑍𝐿=                            𝑍0
+• The frequency is 𝑓=1 GHz = 1×109 Hz
+
+• We want to place an open circuit stub somewhere on the line to match the
+   load to the source.
+
+•  First, we must determine where to place the stub on the t-line connected to
+   the load. Then, we choose the length of the open circuit stub to attach that
+  matches the source to the load.
+
+
+
+
+
+                                                                            Open stub
+                                                                         33
+
+--- PAGE 31 ---
+ Single Stub Matching
+
+•  Normalized load
+  impedance:
+       𝑍𝐿
+  𝑧𝐿=  = 2 + 𝑗2
+       𝑍0
+
+
+
+
+
+             What is the normalized admittance corresponding to the
+               normalized impedanceFields2+j2?and Waves I       34                                                                           34
+
+--- PAGE 32 ---
+Single Stub Matching
+ • How much t-line do we need to transform the admittance y = 0.25 −𝑗0.25 into
+   the admittance 𝑦= 1 + 𝑗𝑏?
+
+
+
+
+
+                                  Fields and Waves I       35                                                                         35
+
+--- PAGE 33 ---
+Single Stub Matching
+
+
+
+
+
+         How much t-line do we need to transform the admittance
+        𝑦= 0.25 −𝑗0.25 intoFieldsthe admittanceand Waves𝑦=I 1 + 𝑗𝑏?36                                                                         36
+
+--- PAGE 34 ---
+Single Stub Matching
+ • How much t-line do we need to transform the admittance y = 0.25 −𝑗0.25 into
+   the admittance y = 1 + 𝑗𝑏?
+
+
+
+
+ •  This means that we need a stub of admittance -j1.6 to match. If it’s an open
+    circuit stub, what length does it need to be?
+
+
+
+
+
+                                  Fields and Waves I                                                                         37
+
+--- PAGE 35 ---
+This means that we need a stub of admittance -j1.6 to match. If
+it’s an open circuit stub, what length does it need to be?
+
+
+
+
+
+                                                              38
+
+--- PAGE 36 ---
+Single Stub Matching
+• We said that this circuit is operating at 1GHz. How do we figure out the actual
+  length 0.34λ of stub? Assume the velocity factor of the t-line is 0.66.
+
+
+
+
+
+                                                                         39
+
+--- PAGE 37 ---
+Single Stub Matching
+• A single-stub matching network design can lead to 4 possible solutions. In the
+  example just completed, we could have selected:
+    •     1 + 𝑗1.6 OR     𝟏−𝒋𝟏. 𝟔(two different locations on matching circle)    𝒚𝒅=         𝒚𝒅=
+    • a short circuit terminated stub OR an open circuit terminated stub
+
+
+
+
+
+                                                                         40
+
+--- PAGE 38 ---
+Single Stub Matching
+• Which you choose depends upon practical considerations:
+    • Can I use open or short circuit terminations in the transmission line I am using?
+    • Does it matter if there is a voltage maximum on the line between the stub and the load
+      termination?
+    •  Is the physical length of line between the stub and the load termination too short/long?
+
+
+• As an engineer, these are the decisions you must be able to make!
+
+
+
+
+
+                                                                         41
+
+--- PAGE 39 ---
+Single Stub Matching
+•  Single stubs also have a disadvantage: they must be a specific distance from
+   the load in order to work. This isn’t always practical.
+
+•  Furthermore, what if the frequency or load changes? In practice, this would
+  mean completely disassembling and reassembling the line in order to match it
+   correctly.
+
+•  Is there a better way?
+
+
+
+
+
+                        Yes: the double stub.
+
+
+                                                                         42
+
+--- PAGE 40 ---
+Double Stub Matching
+
+                                                                            In essence: Use the first
+                                                                           stub to transform ZL into
+                                                                 an impedance that can
+                                                           be matched by the
+                                                                second stub.
+
+
+
+
+
+                                                 A double stub can match most
+                                                              impedances. To match all
+                                                               impedances, you need a
+                                                                             triple stub.
+
+--- PAGE 41 ---
+Project 1: Channel Blocker
+
+--- PAGE 42 ---
+Project 1
+•  Stubs can be for more than just matching.
+  They can be used as filters too.
+• The quarter-wavelength open circuit stub
+  has zero admittance at the load and
+   infinite admittance at the input. (It’s a
+   short circuit.)
+
+•  This also works for a half-wavelength short circuit stub.
+•  This only works at one specific frequency. But there’s something useful we can
+  do with this: when we have a band of frequencies on a t-line, we can use the
+   stub to “short” (filter out) one specific frequency.
+
+
+
+
+                                                                          45
+
+--- PAGE 43 ---
+Project 1
+•  In practice, this also attenuates frequencies near the blocked frequency (for
+  which the stub has a non-infinite but very large admittance.)
+
+
+
+
+
+                                                                            amateurtele.com
+
+
+                                                                          46
+
+--- PAGE 44 ---
+Project 1
+•  In Project 1, which starts the Studio Session after Exam 1, you will explore this.
+
+• You will attempt to block TV cable and radio channels using a stub of coaxial
+   cable.
+
+
+
+
+
+                          rfcafe.com
+
+
+
+                                                                          47
+
+--- PAGE 45 ---
+Wrap-Up
+
+•  Instead of a Studio Session on Wednesday, we will have an extra set of office
+  hours in the lab JEC 4107.
+•  For those who are interested in learning about more advanced stub-matching
+   techniques, there is a supplemental lecture on LMS.
+
+
+
+
+
+                                                                          48

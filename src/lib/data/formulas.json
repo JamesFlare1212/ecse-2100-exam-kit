@@ -1,0 +1,660 @@
+[
+  {
+    "id": "wave",
+    "title": {
+      "zh": "波长与相位常数",
+      "en": "Wavelength & phase constant"
+    },
+    "math": "\\beta=\\frac{\\omega}{u},\\qquad \\lambda=\\frac{2\\pi}{\\beta}=\\frac{u}{f}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.185,
+        0.76,
+        0.075
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "velocity",
+    "title": {
+      "zh": "波速",
+      "en": "Wave velocity"
+    },
+    "math": "u=\\frac{1}{\\sqrt{lc}}=\\mathrm{vf}\\,u_c",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.5,
+        0.539,
+        0.38,
+        0.072
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "impedance",
+    "title": {
+      "zh": "无损线特性阻抗",
+      "en": "Characteristic impedance"
+    },
+    "math": "Z_0=\\frac{V_0^+}{I_0^+}=-\\frac{V_0^-}{I_0^-}=\\sqrt{\\frac{l}{c}}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.456,
+        0.38,
+        0.08
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "reflection",
+    "title": {
+      "zh": "反射系数",
+      "en": "Reflection coefficient"
+    },
+    "math": "\\Gamma_L=\\frac{V_0^-}{V_0^+}=\\frac{Z_L-Z_0}{Z_L+Z_0}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.5,
+        0.456,
+        0.38,
+        0.08
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    },
+    "note": {
+      "zh": "在负载参考面使用 ΓL；其他参考面需包含传播相位。",
+      "en": "Use ΓL at the load reference plane; include propagation phase at other planes."
+    }
+  },
+  {
+    "id": "phasor",
+    "title": {
+      "zh": "电压行波相量",
+      "en": "Traveling-wave voltage"
+    },
+    "math": "\\widetilde V(z)=V^+e^{-j\\beta z}+V^-e^{j\\beta z}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.5,
+        0.353,
+        0.38,
+        0.101
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "swr",
+    "title": {
+      "zh": "电压驻波比",
+      "en": "Voltage standing-wave ratio"
+    },
+    "math": "\\mathrm{SWR}=\\frac{|V_0^+|+|V_0^-|}{|V_0^+|-|V_0^-|}=\\frac{1+|\\Gamma|}{1-|\\Gamma|}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.539,
+        0.38,
+        0.072
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "zin",
+    "title": {
+      "zh": "传输线输入阻抗",
+      "en": "Line input impedance"
+    },
+    "math": "Z_{\\mathrm{in}}=Z_0\\frac{Z_L+jZ_0\\tan(\\beta L)}{Z_0+jZ_L\\tan(\\beta L)}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.613,
+        0.38,
+        0.073
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "power",
+    "title": {
+      "zh": "时间平均功率",
+      "en": "Time-average power"
+    },
+    "math": "P_{\\mathrm{av}}=\\frac{|V_0^+|^2}{2Z_0}(1-|\\Gamma|^2)",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.5,
+        0.613,
+        0.38,
+        0.073
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "open",
+    "title": {
+      "zh": "开路传输线",
+      "en": "Open-circuited line"
+    },
+    "math": "Z_{\\mathrm{in}}=-jZ_0\\cot(\\beta L)",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.687,
+        0.38,
+        0.049
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "half",
+    "title": {
+      "zh": "半波线重复负载",
+      "en": "Half-wave impedance repeat"
+    },
+    "math": "L=\\frac{\\lambda}{2}\\;\\Longrightarrow\\;Z_{\\mathrm{in}}=Z_L",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.12,
+        0.737,
+        0.38,
+        0.075
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "quarter",
+    "title": {
+      "zh": "四分之一波长变换",
+      "en": "Quarter-wave transformation"
+    },
+    "math": "L=\\frac{\\lambda}{4}\\;\\Longrightarrow\\;Z_{\\mathrm{in}}=\\frac{Z_0^2}{Z_L}",
+    "source": {
+      "doc": "crib",
+      "page": 1,
+      "region": [
+        0.5,
+        0.737,
+        0.38,
+        0.075
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 1 页",
+        "en": "Original crib · p. 1"
+      }
+    }
+  },
+  {
+    "id": "attenuation",
+    "title": {
+      "zh": "低损耗衰减",
+      "en": "Low-loss attenuation"
+    },
+    "math": "\\alpha=\\frac{r}{2Z_0}",
+    "source": {
+      "doc": "crib",
+      "page": 2,
+      "region": [
+        0.5,
+        0.3,
+        0.38,
+        0.07
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 2 页",
+        "en": "Original crib · p. 2"
+      }
+    },
+    "note": {
+      "zh": "原表的简化式采用可忽略的并联漏电导 g；一般低损耗式还含 gZ₀/2。",
+      "en": "The crib simplification assumes negligible shunt conductance g; the general low-loss expression also includes gZ₀/2."
+    }
+  },
+  {
+    "id": "lossy-wave",
+    "title": {
+      "zh": "有损线行波",
+      "en": "Lossy traveling wave"
+    },
+    "math": "\\widetilde V(z)=V^+e^{-\\gamma z}+V^-e^{\\gamma z},\\qquad\\gamma=\\alpha+j\\beta",
+    "source": {
+      "doc": "crib",
+      "page": 2,
+      "region": [
+        0.12,
+        0.115,
+        0.76,
+        0.09
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 2 页",
+        "en": "Original crib · p. 2"
+      }
+    }
+  },
+  {
+    "id": "bounce",
+    "title": {
+      "zh": "初始入射波与时延",
+      "en": "Launched wave & transit time"
+    },
+    "math": "V_1^+=V_g\\frac{Z_0}{Z_g+Z_0},\\qquad T=\\frac{d}{u}",
+    "source": {
+      "doc": "lecture-04",
+      "page": 31,
+      "region": [
+        0.1,
+        0.63,
+        0.73,
+        0.36
+      ],
+      "label": {
+        "zh": "Lecture 04 · 第 31 页",
+        "en": "Lecture 04 · p. 31"
+      }
+    },
+    "note": {
+      "zh": "公式表第 2 页给出反弹图；初始分压公式直接引用 Lecture 04 的原式。",
+      "en": "Crib p. 2 contains the bounce diagram; this launch equation is quoted directly from Lecture 04."
+    }
+  },
+  {
+    "id": "geometry",
+    "title": {
+      "zh": "柱、球坐标体积元",
+      "en": "Cylindrical & spherical volume elements"
+    },
+    "math": "d\\mathcal V=r\\,dr\\,d\\phi\\,dz\\quad\\text{or}\\quad r^2\\sin\\theta\\,dr\\,d\\theta\\,d\\phi",
+    "source": {
+      "doc": "crib",
+      "page": 3,
+      "region": [
+        0.045,
+        0.532,
+        0.93,
+        0.054
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 3 页",
+        "en": "Original crib · p. 3"
+      }
+    }
+  },
+  {
+    "id": "gauss",
+    "title": {
+      "zh": "高斯定律",
+      "en": "Gauss’s law"
+    },
+    "math": "\\oiint\\mathbf D\\cdot d\\mathbf S=\\iiint\\rho\\,d\\mathcal V=Q_{\\mathrm{enc}}",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.12,
+        0.509,
+        0.76,
+        0.033
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "constitutive",
+    "title": {
+      "zh": "电位移与电场",
+      "en": "Electric displacement"
+    },
+    "math": "\\mathbf D=\\epsilon\\mathbf E",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.12,
+        0.568,
+        0.76,
+        0.027
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "conservative",
+    "title": {
+      "zh": "静电场无旋",
+      "en": "Conservative electrostatic field"
+    },
+    "math": "\\oint\\mathbf E\\cdot d\\mathbf l=0,\\qquad\\nabla\\times\\mathbf E=0",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.12,
+        0.54,
+        0.76,
+        0.029
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "coulomb",
+    "title": {
+      "zh": "点电荷电场与力",
+      "en": "Coulomb’s law"
+    },
+    "math": "\\mathbf E=\\frac{q}{4\\pi\\epsilon r^2}\\,\\hat{\\mathbf r},\\qquad\\mathbf F_{12}=\\frac{q_1q_2}{4\\pi\\epsilon r^2}\\,\\hat{\\mathbf r}",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.12,
+        0.624,
+        0.76,
+        0.075
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "potential",
+    "title": {
+      "zh": "电势差",
+      "en": "Potential difference"
+    },
+    "math": "V(b)-V(a)=-\\int_a^b\\mathbf E\\cdot d\\mathbf l",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.5,
+        0.724,
+        0.38,
+        0.057
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "gradient",
+    "title": {
+      "zh": "由电势求电场",
+      "en": "Electric field from potential"
+    },
+    "math": "\\mathbf E=-\\nabla V",
+    "source": {
+      "doc": "crib",
+      "page": 4,
+      "region": [
+        0.12,
+        0.724,
+        0.38,
+        0.057
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 4 页",
+        "en": "Original crib · p. 4"
+      }
+    }
+  },
+  {
+    "id": "boundary",
+    "title": {
+      "zh": "静电边界条件",
+      "en": "Electrostatic boundary conditions"
+    },
+    "math": "D_{1n}-D_{2n}=\\rho_s,\\qquad E_{1t}=E_{2t}",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.12,
+        0.09,
+        0.76,
+        0.142
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    },
+    "note": {
+      "zh": "沿用原表法向 n₂₁，从材料 2 指向材料 1。无自由面电荷时 D₁ₙ=D₂ₙ。",
+      "en": "The original normal n₂₁ points from material 2 to material 1. With no free surface charge, D₁ₙ=D₂ₙ."
+    }
+  },
+  {
+    "id": "capacitance",
+    "title": {
+      "zh": "电容定义",
+      "en": "Capacitance"
+    },
+    "math": "C=\\frac{Q}{V}",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.12,
+        0.28,
+        0.38,
+        0.065
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    },
+    "note": {
+      "zh": "固定空间电荷存在时采用小信号定义 dQ/dV，见 S26 Exam 2 第 3(d) 小问。",
+      "en": "With fixed space charge, use differential capacitance dQ/dV; see S26 Exam 2, 3(d)."
+    }
+  },
+  {
+    "id": "energy",
+    "title": {
+      "zh": "电场能量",
+      "en": "Electric field energy"
+    },
+    "math": "W_e=\\frac12\\iiint\\epsilon|\\mathbf E|^2\\,d\\mathcal V=\\frac12 CV^2",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.12,
+        0.346,
+        0.76,
+        0.066
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    }
+  },
+  {
+    "id": "laplace",
+    "title": {
+      "zh": "拉普拉斯方程",
+      "en": "Laplace’s equation"
+    },
+    "math": "\\nabla^2 V=0",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.12,
+        0.459,
+        0.38,
+        0.058
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    }
+  },
+  {
+    "id": "poisson",
+    "title": {
+      "zh": "泊松方程",
+      "en": "Poisson’s equation"
+    },
+    "math": "\\nabla^2 V=-\\frac{\\rho}{\\epsilon}",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.5,
+        0.459,
+        0.38,
+        0.058
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    }
+  },
+  {
+    "id": "ohm",
+    "title": {
+      "zh": "微观欧姆定律",
+      "en": "Microscopic Ohm’s law"
+    },
+    "math": "\\mathbf J=\\sigma\\mathbf E",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.12,
+        0.63,
+        0.38,
+        0.067
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    }
+  },
+  {
+    "id": "resistance",
+    "title": {
+      "zh": "电阻定义",
+      "en": "Resistance"
+    },
+    "math": "R=\\frac{V}{I}",
+    "source": {
+      "doc": "crib",
+      "page": 5,
+      "region": [
+        0.5,
+        0.63,
+        0.38,
+        0.067
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 5 页",
+        "en": "Original crib · p. 5"
+      }
+    }
+  },
+  {
+    "id": "current",
+    "title": {
+      "zh": "电流密度的通量",
+      "en": "Current-density flux"
+    },
+    "math": "I_c=\\iint\\mathbf J_c\\cdot d\\mathbf S=\\iint\\sigma\\mathbf E\\cdot d\\mathbf S",
+    "source": {
+      "doc": "crib",
+      "page": 7,
+      "region": [
+        0.12,
+        0.712,
+        0.38,
+        0.075
+      ],
+      "label": {
+        "zh": "原始公式表 · 第 7 页",
+        "en": "Original crib · p. 7"
+      }
+    }
+  }
+]

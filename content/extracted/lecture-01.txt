@@ -1,0 +1,633 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+
+Lecture 1 – Why Study E&M?
+Introduction to Fields and Waves
+
+                                           Alex Patterson
+                           Electrical, Computer, and Systems Engineering Department
+                                      Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following people:
+
+  ▪Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY (Emeritus)
+  ▪J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+  ▪Thomas P. Crowley – National Institute of Standards and Technology, Boulder, CO
+  ▪Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY (Emeritus)
+  ▪Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+  ▪Jeffrey Braunstein – ECE Department, University at Albany
+  ▪James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+  ▪James Dylan Rees - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+  ▪Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+
+
+
+
+
+    Materials from other sources are referenced where they are used. Those listed as Ulaby are figures from Ulaby’s textbook.
+                                                                      2
+
+--- PAGE 3 ---
+What is Electrical Engineering?
+
+• My definition:
+
+
+        Manipulating electromagnetic energy to
+
+                   “do stuff”
+
+
+
+
+                   Electromagnetic energy? What kind of stuff?
+
+                                                                      3
+
+--- PAGE 4 ---
+What is Electrical Engineering?
+
+                 Manipulating electromagnetic signals (or
+                 charge) to process data and make
+                 decisions
+
+
+
+
+  Using electromagnetic signals as                                                                           Manipulating electromagnetic
+  feedback and instructions for                                                               waves to convey information
+  automating systems
+
+
+
+
+  Designing electronic systems to                                                                            Manipulating electromagnetic
+  process instructions and data                                                                waves to transmit power
+  (charge)
+
+
+
+
+                                                        Manipulating electrons or photons to
+                                                     enable other technologies in hardware
+                                                                      4
+
+--- PAGE 5 ---
+Why study electromagnetism?
+
+
+
+
+          But why study electromagnetism?
+
+               Can’t we just simulate it?
+
+
+
+
+
+                                                                      5
+
+--- PAGE 6 ---
+Why study electromagnetism?
+                                                                 • When the switch closes at t = 0, does the voltage                                           t = 0
+                                                           travel instantaneously down the wire?
+                                                                 • When can we assume it does?
+                                                                 •   If not, how do we describe the voltage and current in
+                                                    the wire?
+                                                                 • How is power transmitted in circuits?
+                                                                 •  What are resistance, capacitance, and inductance
+                                                      physically?
+                                                                 •  What about the geometry and materials of R, C, and
+                                           L gives them their specific numerical values?
+                                                                 • How do we design R, C, and L to have specific
+                                                 values?
+                                                                 • How do electromagnetic waves travel through
+                                             space?
+                                                                 • How does the medium affect the properties of the
+                                           waves?
+                                                                 •  What happens when the wave hits the boundary
+ Encyclopedia Brittanica                                    between two materials?
+                                                                      6
+
+--- PAGE 7 ---
+Why use “fields” and “waves”?
+
+•  Field: mathematical construct representing a physical quantity – has a value at
+   every point in space and time
+
+
+    Examples: temperature (scalar), wind velocity (vector)
+
+
+
+
+
+    For this class:
+      •  Scalar: voltage
+      •  Vector: current density, electric field, magnetic field
+                                                                      7
+
+--- PAGE 8 ---
+Why use “fields” and “waves”?
+
+• Wave: propagating disturbance of a physical quantity
+
+
+
+
+
+    For this class:
+      •  Scalar: voltage, current
+      •  Vector: electric field, magnetic field
+                                                                      8
+
+--- PAGE 9 ---
+ How does this fit into our course?
+
+
+
+
+            Unit 1                        Unit 2 and Unit 3                       Unit 4
+
+
+                                                           Electrostatics                            Propagating
+        Transmission Lines                                     & Magnetostatics                      Electromagnetic Waves
+
+
+
+
+      Voltage & Current Waves                    Electric & Magnetic Fields               Electric & Magnetic Fields & Waves
+
+
+
+
+
+https://www.allaboutcircuits.com/uploads/articles/sta           https://brilliant.org/problems/interactions-between-             https://www.researchgate.net/figure/FDTD-
+    nding-waves-on-open-transmission-line.png                                 charges/                            simulation-of-the-36-GHz-TM1-wave-incident-at-45-
+                                                                                                                o-across-the-GM-interface-of-a-2D_fig3_228926662
+
+                                                                        9
+
+--- PAGE 10 ---
+ Why Study Electromagnetism (E&M)?
+
+•  Electromagnetism is the most fundamental theory of electrical engineering:
+   the one that tells us how electric magnetic fields and related concepts (such as
+   current and voltage) actually work and relate to each other.
+
+•  This means that by understanding E&M, you will also understand how electrical
+  systems work at a fundamental level.
+
+•  You will also understand the limits of other theories such as circuit theory (i.e.
+  where these theories break down).
+
+
+
+
+
+                                                                      10
+
+--- PAGE 11 ---
+Why Study Electromagnetism (E&M)?
+  Relationship with Circuit Theory
+
+  Circuit theory uses simplified (lumped) models of components. The model,
+ however, does not include:
+
+   •  Details on how the components actually work
+
+   •  Distributed properties (such as transmission lines)
+
+   •  Electromagnetic waves (such as microwaves, radio waves, and optics)
+
+   •  Noise
+
+
+
+
+                                                                     11
+
+--- PAGE 12 ---
+ Why Study Electromagnetism (E&M)?
+   Relationship with Circuit Theory
+
+
+
+
+
+•  In circuit theory, you learn equations for the current and voltage behavior of a
+   capacitor.
+
+•  But what are the physical phenomena that causea capacitor to behave this way?
+
+                                                                      12
+
+--- PAGE 13 ---
+Why Study Electromagnetism (E&M)?
+  Relationship with Circuit Theory
+
+
+
+
+
+Displacement current (unit 4) is the current that flows into and out of a capacitor. It is not
+due to any connection between the two plates but due to the time-varying electric field
+between them.
+
+                                                                     13
+
+--- PAGE 14 ---
+Why Study Electromagnetism (E&M)?
+ Relationship with Circuit Theory
+•  Digital circuits typically process pulses having clock rates below 4 GHz. “Via
+   pins” provide electrical connections between the circuit planes.
+•  Circuit operation is nominallynot based upon electromagnetic wave effects.
+   However, these circuits consist of:
+     • Densely packed, multiple planes of metal traces
+      providing flow paths for the signals
+     • DC power feeds
+     • ground returns
+                                                                                                                    https://www.circuits-diy.com/facts-about-multilayer-pcb/
+•  Kirchoff’s current and voltage laws failin most high-speed circuits, which
+  must be analyzed using E&M theory, as signal power flows are not confined to
+   the intended metal wires or circuit paths.
+
+
+                                                                     14
+
+--- PAGE 15 ---
+Crosstalk: when electromagnetic signals from one circuit or transmission line interfere with nearby
+circuits or transmission lines
+
+Crosstalk occurs due to the mutual capacitance and inductance between conductors, which allows
+for the transfer of electromagnetic energy between them.
+
+
+
+
+
+                                                                        15
+
+--- PAGE 16 ---
+Why Study Electromagnetism (E&M)?
+
+Electromagnetic wave propagation devices, such as antennas, fundamentally
+cannot be described using traditional circuit theory.
+
+We must take into account the geometry of the device, the materials and
+propagation media involved, and - most importantly - to think of electric
+phenomena as being composed of waves.
+
+
+
+
+
+                                                                     16
+
+--- PAGE 17 ---
+Maxwell’s Equations mathematically describe the relationship between the electric and magnetic
+fields, as well has how they move through media
+
+
+
+
+
+                                                                        17
+
+--- PAGE 18 ---
+Why Study Electromagnetism (E&M)?
+ The “Waves” Part of Fields & Waves
+
+ Electromagnetic fields propagate as waves. They are governed by the
+ electromagnetic wave equations, which are derived from Maxwell’s Equations and
+ can be written as:
+
+
+
+
+
+ where c is the speed of light / EM waves. (Note that c
+ depends on the medium the wave is propagating
+ through!)
+                                                                                                                           Source:
+                                                                                                                                     https://en.wikipedia.org/wiki/Electromagnetic_radiati
+                                                                                                           on
+
+
+                                                                     18
+
+--- PAGE 19 ---
+Why Study Electromagnetism (E&M)?
+
+ Maxwell’s Equations
+
+
+                  𝜌
+         ∇⋅𝐄=
+                       𝜀0
+         ∇⋅𝐁= 0
+       ∇× 𝐄= −𝜕𝐁
+                      𝜕𝑡
+                 𝜕𝐃
+       ∇× 𝐇= 𝐉+
+                       𝜕𝑡
+
+
+These four equations fundamentally describe all of electromagnetism.
+
+The rest is a question of applications (i.e. this course, all of electrical engineering, etc.)
+                                                                      20
+
+--- PAGE 20 ---
+Why Study Electromagnetism (E&M)?
+
+ Maxwell’s Equations
+
+
+
+   ∇⋅𝐃= 𝜌
+
+
+
+
+
+                                                                                   Source: spectrumscientifics.wordpress.com
+
+
+ Gauss’ Law: Electric charge gives rise to an electric field.
+
+
+                                                                     21
+
+--- PAGE 21 ---
+Why Study Electromagnetism (E&M)?
+Maxwell’s Equations
+
+                                            When they ask you where your magnetic monopoles are
+
+
+
+     ∇⋅𝐁= 0
+
+
+
+
+
+ Magnetic Monopoles: “Magnetic charges” don’t exist.* Only electric charges do.
+                                         * except maybe in very esoteric branches of particle physics
+                                                                     22
+
+--- PAGE 22 ---
+Why Study Electromagnetism (E&M)?
+Maxwell’s Equations
+
+
+   ∇× 𝐄= −𝜕𝐁
+               𝜕𝑡
+
+
+
+
+
+                                                                                 Source: Wikimedia Commons
+
+
+ Faraday’s Law: A changing magnetic field gives rise to an electric field.
+
+                                                                     23
+
+--- PAGE 23 ---
+Why Study Electromagnetism (E&M)?
+Maxwell’s Equations
+
+
+
+
+            𝜕𝐃
+   ∇× 𝐇= 𝐉+
+                𝜕𝑡
+
+
+
+
+
+                                                                                 Source: https://simple.wikipedia.org/wiki/Electromagnet
+
+
+ Ampere’s Law: Current gives rise to a magnetic field.
+
+                                                                     24
+
+--- PAGE 24 ---
+The propagation of electromagnetic waves depends on the media through which they are traveling.
+Applying Maxwell’s equations at the boundaries of different media yields boundary conditions which govern the
+behavior of the waves.
+
+Simulation of EM waves propagating through the air and hitting a sphere with water-like permittivity
+
+
+
+
+
+                                                                        25
+
+--- PAGE 25 ---
+Why Study Electromagnetism (E&M)?
+Back to electrical engineering. What does this all mean?
+   • When you have voltage (V), you have an electric field intensity (E in V/m)
+   • When you have current (I), you have a magnetic flux density (B in Wb/m2).
+
+ Also:
+   • When you have a change in B, a voltage is generated
+   • When you have a change in E, a current is generated
+
+
+
+
+
+                                                                     26
+
+--- PAGE 26 ---
+Syllabus and Course Details
+
+--- PAGE 27 ---
+Tips and Best Practices
+ •  There is a lot of math in this course: complex functions; multivariable vector
+    calculus; different coordinate systems… Make sure you have a good basis in these.
+ •  Conceptual understanding is critical. The main problem students have in this
+    course is not the math, it's the conceptualunderstanding.
+     The bridge between the problem statement and the math is the conceptual understanding –
+     you need it to start the problem. You cannot just look at a problem in this course and “math”
+      through it.
+ • The homework is meant to prepare you for exams. Do not take shortcuts or the
+   exams will be a lot less fun.
+ •  Start the homework early. It is time consuming to struggle with problems to learn,
+    but it is necessary.
+ • When you get stuck on a problem, stop and try to pinpoint what you don’t
+   understand. It will help you focus your learning and help us help you in office hours.
+ •  Preparation for lecture: at least skim the lecture slides and reading assignment
+    (posted on course calendar) to know what the topics for the lecture are.          28
+
+--- PAGE 28 ---
+Lecture 1 Exercise
+
+                 Get to know your classmates!
+
+•  Form a group of up to 4 and do Lecture 01 Exercise on
+   Gradescope.
+
+•  Only 1 of you needs to submit, but include the names of
+   everyone in your group.
+
+•  We’ll reconvene in 10 minutes and share.
+
+
+
+
+
+                                                                    29
+
+--- PAGE 29 ---
+Transmission Lines
+
+--- PAGE 30 ---
+Transmission Lines
+Think about circuits. What are the main assumptions we make about wires?
+
+1. Zero transit time from one end to
+   the other (speed = ∞)
+
+2. Zero resistance
+    (infinite conductivity)
+
+3. Zero mutual capacitance
+   between the wire and other
+   conductors
+
+
+                                                                                                         https://www.learnrobotics.org/blog/how-to-wire-a-breadboard/4.  Air has zero conductance
+   (zero leakage current)
+                                          None of these are true, but are a good approximation
+5. Zero self-inductance (changes in       for short wires and low frequencies – for everything
+                                                                  else, we need transmission line theory
+   current do not generate an EMF)
+
+                                                                      31
+
+--- PAGE 31 ---
+Transmission Line History
+
+ •  Circuit theory was developed in the
+   18th and 19th centuries.
+
+ • One of the first practical applications
+   was the telegraph (Francis Ronalds,
+   1816)
+
+ •  Following this discovery, more and
+   more long conductors were built for
+   telegraphy
+
+
+
+
+                                                                     32
+
+--- PAGE 32 ---
+Transmission Line History
+
+ •  As telegraphy expanded, there was demand for longer and
+    longer cables
+
+ •  First working undersea telegraph line laid across the
+    English Channel in 1851, followed by other European
+   undersea cables. The work of building a transatlantic cable
+   began in the mid 1850s.
+
+ •  These cables suffered from problems:
+     •  Voltage drop due to resistance
+     •  Signal delay
+     •  Signal distortion
+
+                                                                                                          English Channel cable
+
+                                                                     33
+
+--- PAGE 33 ---
+Transmission Line History
+•  Several scientists and engineers worked to develop a
+  formal electrical model of long conductors
+
+•  The equations that made up this model became known
+   as the Telegrapher’s Equations
+                                                                                                                     Oliver Heaviside
+•  These equations allowed for intercontinental telegraph
+   lines to develop, and they are used today for many
+   “new” applications such as CPU microstrip lines
+
+
+
+
+
+                                                                                                        Lord Kelvin
+                                                                     34
+
+--- PAGE 34 ---
+Transmission Line Model
+
+ •  The purpose of a transmission line is to transmit a signal and/or power from
+   one place to another.
+ •  Examples include:
+     •  Power Lines (60Hz)
+     •  Coaxial Cables
+     •  Twisted Pairs
+     •  Interconnects inside a computer
+
+ •  Note that these all have two conductors.
+ •  In transmission line theory, we represent a transmission line as having certain
+    properties per unit length.
+ •  Under certain conditions, we can model a short section of transmission line using
+    circuit elements like resistors, inductors and capacitors.
+                                                                  35
+
+--- PAGE 35 ---
+Transmission Line Model
+
+
+
+          Model of a short section:
+
+
+
+
+          Model the full length as:
+
+
+
+                                                                            ….etc.
+
+
+
+                            This is where we will pick up on Monday
+                                                                  36
+
+--- PAGE 36 ---
+For Next Class
+
+ •  Reading assignment to be done prior to each lecture listed on course
+   calendar (see LMS)
+
+ •  First studio session next Wednesday in JEC 4107. Bring your laptop and
+   have LTspice installed!
+
+ • Homework 0 due next Wednesday at 11:59pm
+
+
+
+
+
+                                                                     37

@@ -1,0 +1,897 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 6
+Impedance Matching & Smith Charts
+
+                                           Alex Patterson
+                       Electrical, Computer, and Systems Engineering Department
+                                  Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                    Fields and Waves I                           2
+
+--- PAGE 3 ---
+• Much of the following slides were written by Prof. Nick Shuley from the
+   University of Queensland (UQ). The books he uses the most are:
+
+    • Fundamentals of Engineering Electromagnetics (Cheng)
+
+    • Fundamentals of Applied Electromagnetics (Ulaby)
+
+    • Microwave Engineering (David Pozar)
+
+
+
+
+
+                                Fields and Waves I                           3
+
+--- PAGE 4 ---
+Overview
+
+
+  • Impedance Matching
+
+  •  Smith Charts
+
+
+
+
+
+                                    Fields and Waves I       4
+
+--- PAGE 5 ---
+Review
+Power on Lossless T-Lines
+
+ •  General definition:
+
+ •  Instantaneous incident power:
+
+
+
+
+ •  Instantaneous reflected power:
+
+
+
+ •  Time-average net power:
+
+
+
+                                                                                                5
+
+--- PAGE 6 ---
+Review
+Lossy T-Lines
+ •  For a lossless system, Z0 represents
+
+
+                                          +      −             𝑗𝜔𝑙                                               𝑉0
+                                        =                              = −𝑉0       𝑍0                                          +      −            𝑗𝜔𝑐                                                          𝐼0       𝐼0
+
+
+ • To get the result for lossy t-lines:
+
+         Replace jωl with r+jωl            Replace jωcwith g+jωc
+
+
+              Characteristic
+           Impedance
+
+--- PAGE 7 ---
+Review
+Lossy T-Lines
+
+•  For lossless systems:
+
+•  For lossy systems:
+
+
+• The phasors now have the factor:
+
+
+
+
+
+                                    Fields and Waves I       7
+
+--- PAGE 8 ---
+Review
+Lossy T-Lines
+• The attenuation factor α is due to ohmic losses on the line.
+•  Looking at a plot like the one below, how do you find α and β?
+
+
+
+                               V(z)
+
+                                           V(z)
+                                                                 y(2)V(2)== 7.5,7.5, V(4)y(4)==5 5
+
+
+
+
+
+                                                                                 Adapted from Ulaby
+
+                                    Fields and Waves I       8
+
+--- PAGE 9 ---
+Review
+Lossy T-Lines
+ •   If 𝑟is small compared to 𝜔𝐿(and 𝑔= 0): we have a low-loss t-line
+ •  Low-loss lines have the following properties:
+
+
+
+
+
+                      𝜔                𝑙     𝛼= 𝑟c             𝛽= 𝜔𝑙𝑐=      𝑍0 =                       𝑙                            𝑢           𝑐
+
+
+
+
+                                    Fields and Waves I       9
+
+--- PAGE 10 ---
+Review
+Distortionless T-Lines
+•  For practical lines, the conductance per unit length gis negligible. What can
+  we do to eliminate the frequency dependence of Z0?
+
+
+
+                        𝑟  𝑔
+                𝑙= 𝑐
+
+
+
+
+                   This is called the Heaviside condition
+
+                                    Fields and Waves I       10
+
+--- PAGE 11 ---
+Impedance Matching
+
+--- PAGE 12 ---
+Impedance Matching
+•  For a transmission line to work well, we must not only engineer the line
+  parameters properly but also match it to its load.
+•  Reflections lead to variations in the input impedance of the line. The input
+  impedance changes with line length and frequency.
+
+• Power is wasted. An impedance match provides maximum power transfer to
+  the load.
+
+• A VSWR > 1 means there will be voltage maxima on the line. These can
+  lead to voltage breakdown at high power levels.
+
+
+
+
+
+                                   Fields and Waves I                           12
+                                                                                  UQ
+
+--- PAGE 13 ---
+Impedance Matching
+
+•  If we match the load to 𝑍0, the input impedance remains constant at the
+   value   (no reflection).        𝑍0
+•  In this case, the input impedance is independent of line length and
+  frequency (over the bandwidth of the matching network).
+
+• VSWR = 1. Therefore there are no voltage peaks on the line.
+
+• Maximum power transfer to the load is achieved.
+
+
+
+
+
+                                   Fields and Waves I                           13
+                                                                                  UQ
+
+--- PAGE 14 ---
+Impedance Matching
+•  Consider a lossless quarter-wavelength of line terminated by a resistance 𝑅𝐿:
+
+
+
+
+
+                                   Fields and Waves I                           14
+                                                                                  UQ
+
+--- PAGE 15 ---
+Impedance Matching
+
+                               𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝑙           Assuming the line is lossless:                            𝑍𝑖𝑛= 𝑍0
+                                          𝑍0 + 𝑗𝑍𝐿tan 𝛽𝑙
+
+                           2𝜋 𝜆       𝜋
+                  and  tan 𝛽𝑙= tan     = tan   = ∞
+                               𝜆 4       2
+
+
+                                                   2
+                                        𝑗𝑍0   𝑍0
+                            so 𝑍0 tan 𝛽𝑙= 𝑍0   =  = 𝑍𝑖𝑛
+                                         𝑗𝑍𝐿   𝑅𝐿
+
+                                         𝜆/4 line allows us to            Note that Zin is purely real, so the
+              transform one resistance value to another resistance.
+             We can exploit this to impedance match.
+
+                                   Fields and Waves I                           15
+                                                                                  UQ
+
+--- PAGE 16 ---
+Impedance Matching
+Key Properties of λ/4 Lines
+
+• Normalized impedance is a way to express impedances as a ratio with
+   the characteristic impedance.
+
+
+                                                𝑅𝐿           𝑍𝐿   𝑍𝐿𝑒𝑗𝜃𝐿    𝑍𝐿                                                                 if    real: 𝑧=  + 𝑗𝑋𝐿     𝑧=  =     =     𝑒𝑗(𝜃𝐿−𝜃0)  𝑍0
+                       𝑒𝑗𝜃0                           𝑍0    𝑍0           𝑍0   𝑍0        𝑍0
+
+•  In normalized terms, a matched impedance would be 1. (This will be useful
+   soon.)
+      •  If Z0 = 25Ω , what is the impedance 50+j75 Ω expressed in normalized
+     terms?
+
+
+                                   Fields and Waves I                           16
+
+--- PAGE 17 ---
+Impedance Matching
+Key Properties of λ/4 Lines
+• A mismatched load can be matched to a t-line line using a 𝜆/4 transformer of
+   suitable characteristic impedance.
+•  Example: match a 100 Ω resistor to a 50 Ω line.
+
+
+
+∴the transformer characteristic impedance ZOT must be:
+
+
+
+
+
+                                   Fields and Waves I                           17
+                                                                                  UQ
+
+--- PAGE 18 ---
+                                              𝑍𝐿+ 𝑗𝑍0 tan𝛽𝑙
+                                             𝑍𝑖𝑛= 𝑍0Impedance Matching                                                               𝑍0 + 𝑗𝑍𝐿tan 𝛽𝑙
+
+•  If ZL is not real, a length of line (with characteristic impedance ZO) may be
+  used to transform ZL to a real impedance (2)
+•  That can then be converted to ZO by the quarter-wave transformer, of
+   characteristic impedance ZOT. (1)
+
+
+                        (1)           (2)
+
+
+                           = 𝟓𝟎          = 𝟕𝟓                 = 𝟕𝟓+ 𝒋𝟕𝟓
+
+
+
+
+
+                                   Fields and Waves I                           18
+                                                                                  UQ
+
+--- PAGE 19 ---
+Impedance Matching
+ • How do we find a length of line that makes
+   the input impedance of that first segment
+   real?
+
+ • We know that the input impedance is
+   periodic in λ/2 with line length. But the math
+    is tedious.
+
+ • What if we had a system where we could
+  map a load impedance onto a circle, rotate it
+  by βL like we rotate a clock, and read out the
+   input impedance?
+
+ •  There’s a chart that does this, and it’s called
+  a Smith Chart.
+
+
+                                   Fields and Waves I                           19
+
+--- PAGE 20 ---
+Impedance Matching
+
+•  Invented by American engineer Philip
+  Hagar Smith in 1939 for antenna input
+  impedance matching
+
+•  Also invented in parallel by Japanese
+   engineer Mizuhashi Tosaku in 1937 (the
+   chart is also called the Mizuhashi Chart
+   or Smith-Mizuhashi Chart)
+
+•  Allows us to graphically solve the
+   relation between reflection coefficients
+  and load impedance and/or find input                         Philip H. Smith
+  impedance, saving us time.                           Alternative: solve this eq. for l every time
+                                𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝑙
+                              𝑍𝑖𝑛= 𝑍0
+                                            𝑍0 + 𝑗𝑍𝐿tan 𝛽𝑙
+                                   Fields and Waves I                           20
+
+--- PAGE 21 ---
+Impedance Matching
+
+
+
+
+
+                                   Fields and Waves I                           21
+
+--- PAGE 22 ---
+Mizuhashi Chart
+                                                                  Source: Wayback Machine
+
+
+
+
+
+             Note that both US and
+               Japanese versions use
+                the same curved
+               coordinate system
+
+
+
+
+
+                                   Fields and Waves I                           22
+
+--- PAGE 23 ---
+Impedance Matching
+
+•  Recall: reflection coefficient is a complex quantity in general:
+
+
+
+
+• We can thus plot reflection coefficients in the complex Γ plane.
+• The components are:
+
+
+
+
+
+                                   Fields and Waves I                           23
+                                                                                  UQ
+
+--- PAGE 24 ---
+Smith Chart - Complex Γ-plane
+
+
+
+       𝑧= 𝑟+ 𝑗𝑥
+
+         𝑧−1                                                                            •  For Z0 real:          Γ =
+          𝑧+ 1
+                                                            𝑅𝐿                                     𝑧=  + 𝑗𝑋𝐿
+                                                              𝑍0    𝑍0
+
+
+                                                                   Let’s orient ourselves in
+                                                        the complex 𝝘plane
+
+
+
+
+
+                                                                               Ulaby
+                                    Fields and Waves I                           24
+                                                                                   UQ
+
+--- PAGE 25 ---
+Smith Chart
+
+• We need to relate impedances to reflection coefficients:
+
+•  First, we normalize all impedances with respect to the characteristic
+  impedance of the line:
+
+
+
+
+                                          Γ :•  For some impedance ZR, expressing in terms of
+
+
+
+
+
+                                   Fields and Waves I                           25
+                                                                                  UQ
+
+--- PAGE 26 ---
+Smith Chart
+
+ • Now since the normalized impedance can be written as:
+
+
+
+• we set (6.3) equal to (6.2) using the real and imaginary parts of  (6.1). This
+   gives:
+
+
+
+
+• We can then solve for the rRand xR in terms of Γ. Graphical families of all
+   possible solutions to this equation constitute the Smith Chart.
+
+
+                                   Fields and Waves I                           26
+                                                                                  UQ
+
+--- PAGE 27 ---
+Smith Chart – Normalized Impedance
+
+
+
+
+
+                                                                                  This allows easy conversion
+                                                                        between normalized
+                                                                          impedance z and Γ
+    A Smith chart is therefore
+    a polar plot of Γ, with
+     contours of real and                                                                        1 + Γ
+     imaginary parts of z                                          𝑟𝐿+ 𝑗𝑥𝐿=
+                                                                        1 −Γ    superimposed on top.
+
+                                                                                                           •  Where is 𝑧𝐿= 1 + 𝑗?
+                                                                                                            •  Where is 𝑧𝐿= 1 −𝑗?
+                                                                                                           •  Where is 𝑧𝐿= −𝑗0.5?
+
+                                                                                 Ulaby
+                                   Fields and Waves I                           27
+                                                                                  UQ
+
+--- PAGE 28 ---
+Smith Chart
+
+ •  A Smith chart printout is available on LMS (Smith Charts)
+ •  This chart is designed to be printed out and done by hand with
+   a ruler
+ •  However, you can also use it on your computer using digital
+    tools
+
+
+
+
+
+                                   Fields and Waves I                           28
+
+--- PAGE 29 ---
+Smith Chart
+ •  Example:
+     •  Let’s say that a t-line has a characteristic impedance of 40Ω and a load
+      impedance of 20+40jΩ.
+     •  What is the magnitude and phase of the reflection coefficient?
+
+
+
+
+
+                                   Fields and Waves I                           30
+
+--- PAGE 30 ---
+Smith Chart
+
+
+• The reflection coefficient is      𝑍= 0.5 + 𝑗
+proportional to the length of
+the radial vector on the chart.
+
+• The length of the vector to the
+periphery corresponds to Γ = 1
+
+• The phase angle of the reflection
+coefficient is measured from the
+positive direction of the horizontal axis
+
+
+
+                                   Fields and Waves I                           31
+                                                                                  UQ
+
+--- PAGE 31 ---
+Smith Chart
+
+
+
+
+          All impedances in the top
+        half are inductive e.g. 1+j
+
+
+
+
+
+        All impedances in the bottom
+       half are capacitive e.g. 1-2j
+
+
+                                   Fields and Waves I                           32
+                                                                                  UQ
+
+--- PAGE 32 ---
+Smith Chart
+
+
+
+
+
+         purely real impedances are
+        along the horizontal center line
+
+
+
+
+         purely imaginary impedances
+         are along the periphery
+                                   Fields and Waves I                           33
+                                                                                  UQ
+
+--- PAGE 33 ---
+Smith Chart
+
+
+
+
+          open circuit point
+              (infinite impedance)
+
+
+            unity impedance z =1
+          (match point)
+
+
+            short circuit point
+            (zero impedance)
+
+
+                                   Fields and Waves I                           34
+                                                                                  UQ
+
+--- PAGE 34 ---
+Smith Chart
+• What do you notice about the angle between the open and short circuit on
+  the Smith Chart?
+
+
+
+• What length of transmission line is required to make an open circuit look
+   like a short circuit or vice versa?
+
+
+
+• Thus,theangleonaSmithchartisalsomeasuredinwavelength(oftheAC
+  inputsignal).
+
+
+
+                                   Fields and Waves I                           37
+                                                                                  UQ
+
+--- PAGE 35 ---
+Smith Chart
+ • We can use the Smith chart to find the length of line 𝐿required
+   to give a certain input impedance.
+ • We start at the normalized load impedance, travel along a
+    circle towards the generator, and stop at the input impedance
+  we want to provide
+ • Where we stop is the input impedance of the t-line of
+   length 𝑳. But how do we read off this length?
+ • There are two scales on the periphery (in wavelengths)
+         - 1 towards generator (clockwise)
+         - 1 towards load (counterclockwise)
+ • Read off the distance (in wavelengths) you traveled from the
+    initial impedance to the final impedance. This is the line length 𝐿.
+ • Note that once around the whole chart is a total length of λ/2                                                                                                  39
+                                                                   UQ
+
+--- PAGE 36 ---
+Smith Chart
+
+
+
+
+
+   • What length of line 𝑙presents a real input impedance, when  = 75Ω                                                            𝑍0
+    and     75 + 𝑗75 Ω?      𝑍𝐿=
+
+   1. Plot the normalized load impedance 𝑧𝐿on the Smith chart
+
+
+
+                                                                                                40
+
+--- PAGE 37 ---
+Smith Chart
+
+                                                      1. Plot the normalized load
+                                               impedance 𝑧𝐿on the Smith
+                                                       chart
+
+
+
+
+
+                                                                                                41
+
+--- PAGE 38 ---
+                                                                                               •  What length of line 𝑙presents aSmith Chart                                                                       real input impedance, when 𝑍0 =
+                                                          75Ω and 𝑍𝐿= 75 + 𝑗75 Ω?
+
+
+
+
+
+  1. Plot the normalized load impedance 𝑧𝐿on the Smith chart
+  2. Draw a circle of constant radius through the plotted impedance (centered
+     at origin of Smith chart) – VSWR circle
+
+
+
+
+                                                                                                42
+
+--- PAGE 39 ---
+Smith Chart
+
+                                                     2. Draw a circle of constant
+                                                          radius, centered at the
+                                                            origin of the Smith chart,
+                                                  through the plotted
+                                                impedance.
+
+                                                      This is called the VSWR
+                                                       circle
+
+
+
+
+
+                                                                                                43
+
+--- PAGE 40 ---
+                                                                                               •  What length of line 𝑙presents aSmith Chart                                                                       real input impedance, when 𝑍0 =
+                                                          75Ω and 𝑍𝐿= 75 + 𝑗75 Ω?
+
+
+
+
+
+  1. Plot the normalized load impedance 𝑧𝐿on the Smith chart
+  2. Draw a circle of constant radius through the plotted impedance (centered at
+     origin of Smith chart) – VSWR circle
+  3. Find where the circle intersects the x-axis of the chart – these are all the
+     possible real input impedances
+
+                                                                                                44
+
+--- PAGE 41 ---
+Smith Chart
+
+                                                     3. Find where the circle
+                                                          intersects the x-axis of the
+                                                       chart – these are all the
+                                                possible real input
+                                         impedances
+
+
+
+
+
+                                                                                                45
+
+--- PAGE 42 ---
+                                                                                               •  What length of line 𝑙presents aSmith Chart                                                                       real input impedance, when 𝑍0 =
+                                                          75Ω and 𝑍𝐿= 75 + 𝑗75 Ω?
+
+
+
+
+
+  1. Plot the normalized load impedance 𝑧𝐿on the Smith chart
+  2. Draw a circle of constant radius through the plotted impedance (centered at
+     origin of Smith chart) – VSWR circle
+  3. Find where the circle intersects the x-axis of the chart – these are all the
+     possible real input impedances
+  4. Choose a real input impedance and read off the required 𝑙                            46
+
+--- PAGE 43 ---
+Smith Chart
+
+                                                              0.162𝜆        4. Choose a real input
+                                               𝒍= 𝟎. 𝟎𝟖𝟖𝝀    impedance and read off the
+                                                      required 𝑙
+                                                                              •   (1) Draw a line from the origin
+                                                           through the load impedance to the
+                                                       edge of the chart. Read off the
+                                                                            0.25𝜆                                                    number on the “Wavelengths
+                                                          toward generator” scale.
+                                                                              •   (2) Do the same for your chosen
+                                                                       real input impedance.
+                                                                              •   Calculate the total distance
+                                                                required to travel from (1) to (2)
+
+--- PAGE 44 ---
+Smith Chart
+We can match a load to a transmission line using:
+1. A specific length of t-line 𝑙attached to the load that makes the input
+   impedance looking down the t-line real DONE
+2. A 𝜆/4 transformer attached to the input of the t-line in (1) to make the input
+   impedance looking down the series combination equal to the impedance we
+   want to match (𝑍0 here) NEXT
+
+
+
+
+
+                                                           = 𝟕𝟓+ 𝒋𝟕𝟓
+
+
+
+
+
+                                                                                                                     48
+
+--- PAGE 45 ---
+Do Lecture 6 Exercise on Gradescope in
+          groups of up to 4.
+
+
+
+
+
+              Fields and Waves I                           49
+
+--- PAGE 46 ---
+Smith Chart
+
+
+
+
+
+                                                            𝒁𝒊𝒏, 𝒍
+                                       𝒁𝒊𝒏, 𝒕𝒐𝒕
+
+• What characteristic impedance 𝑍𝑂𝑇will match the input impedance of the line
+               = 75Ω?   of length 𝑙(𝑍𝑖𝑛,𝑙) to 𝑍0
+1. Read the normalized input resistance from the Smith chart and convert it to its
+   actual input resistance.
+
+
+
+                                                                                                50
+
+--- PAGE 47 ---
+Smith Chart
+
+                                                              0.162𝜆        1. Read the normalized input
+                                               𝒍= 𝟎. 𝟎𝟖𝟖𝝀     resistance from the Smith
+                                                       chart and convert it to its
+                                                        actual input resistance.
+
+
+
+
+                                                                            0.25𝜆
+
+
+
+                               𝑟= 2.6 →
+                            𝑅= 2.6 ⋅75Ω = 195Ω
+
+--- PAGE 48 ---
+                                                                       match the inputSmith Chart                                                              •  What𝑍𝑂𝑇willcharacteristic impedance
+                                                                 impedance of the line of length 𝑙
+                                                                                                (𝑍𝑖𝑛,𝑙) to 𝑍0 = 75Ω?
+
+
+
+
+
+                                                            𝒁𝒊𝒏, 𝒍
+                                       𝒁𝒊𝒏, 𝒕𝒐𝒕
+
+1. Read the normalized input resistance from the Smith chart and convert it to its
+   actual input resistance.
+                               = 75Ω2. Calculate 𝑍𝑂𝑇that is required to match 𝑍𝑖𝑛,𝑙to 𝑍0
+
+                          2
+                    𝑍𝑂𝑇
+              𝑍𝑖𝑛,𝑡𝑜𝑡=   →𝑍𝑂𝑇=  𝑍𝑖𝑛,𝑡𝑜𝑡⋅𝑍𝐿=  75Ω ⋅195Ω = 𝟏𝟐𝟎. 𝟗𝛀
+                      𝑍𝐿
+                                                                                                52
+
+--- PAGE 49 ---
+Smith Chart
+
+
+
+
+
+                 𝒁𝟎= 𝟕𝟓𝛀
+
+
+
+                                     𝒁𝒊𝒏,𝒍= 𝟏𝟗𝟓𝛀
+
+                         𝒁𝒊𝒏,𝒕𝒐𝒕= 𝟕𝟓𝛀
+                                  0.25𝜆   𝑙= 0.088𝜆
+
+              We have matched the feedline with
+                𝟕𝟓𝛀to a load impedance    𝟕𝟓+ 𝒋𝟕𝟓𝛀!           𝒁𝟎=                  𝒁𝑳=
+
+
+                                                                                                53
+
+--- PAGE 50 ---
+Smith Chart
+Summary
+
+•  The Smith Chart allows the graphical solution of the transmission line
+   equation for Z.
+
+•  The Chart gives direct conversion between Γ and Z.
+
+
+
+
+
+                                   Fields and Waves I                           54
+                                                                                  UQ
+
+--- PAGE 51 ---
+Wrap-Up
+
+•  Studio Session 2 due Friday (tomorrow)
+
+• HW 2 due Monday
+
+
+
+
+
+                                    Fields and Waves I                           55

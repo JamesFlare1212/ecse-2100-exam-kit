@@ -1,0 +1,321 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                                Exam 1
+
+                                              Fall 2025
+
+
+
+                        1                 /10
+
+                        2                 /10
+
+                        3                 /10
+
+                        4                 /10
+
+                         Total               /40
+
+
+
+
+                                    Name _______________________________
+
+
+                                      RIN _______________________________
+
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for numbers that appear without justification. Partial credit will
+be awarded where possible, so show your work so that we can follow your thought process. Use
+the backs of pages if there is not enough room on the front. If you do, please indicate that there is
+more work on the back of the page.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers and include
+units with all numerical answers.
+
+At least skim through the entire exam before you begin and then start with the problems you
+know best.
+
+--- PAGE 2 ---
+Problem 1: Cable TV Connection [10 pts]
+
+You want to connect your television to a cable TV feed point located on the opposite side of your house.
+The only coaxial cable (T1) you have available for this purpose has the following properties:
+    •   Length: 30 m
+    •   Characteristic impedance: 75 Ω
+    •   Velocity factor: 0.85
+
+The cable TV feed point consists of a voltage source 𝑉𝑔 with an amplitude of 1 V, source impedance 𝑅𝑔
+of 75 Ω and frequency 𝑓 of 250 MHz. The television’s load impedance 𝑅𝐿 is also 75 Ω. A circuit diagram
+illustrating this setup is shown below.
+
+
+
+
+
+a)  [2 pts] If you use the provided cable to connect the cable TV feed point to your television, will there
+   be a reflection at the load? Explain why or why not.
+
+    Since the load impedance is matched to the characteristic impedance, the reflection coefficient Γ = 0
+                                 and there will be no reflection.
+
+b)  [2 pts] What is the time delay of the coaxial cable?
+
+                      𝐿        30 m
+              𝑇𝑑= 𝑢= 0.85 ∗3 × 108 m/s = 1.176 × 10−7s = 𝟏𝟏𝟕. 𝟔 𝐧𝐬
+
+c)  [2 pts] What is the wavelength of the signal on the coaxial cable?
+
+                           𝑢   0.85 ∗3 × 108 m/s
+                  𝜆= 𝑓=   250 × 106 Hz  = 𝟏. 𝟎𝟐 𝐦
+
+d)  [3 pts] Assuming that the coaxial cable can be considered low-loss and has a per-length series
+    resistance of 𝑟= 1 Ω/m, calculate the amplitude of the incident voltage wave at the load.
+
+                                  𝑟    1 Ω/m
+                𝛼=   =     = 6.667 × 10−3 m−1
+                              2𝑍0  2 ∗75Ω
+
+                               75Ω
+                            𝑉0+ = 1V       = 0.5V = 𝑉(𝑧= 0m)
+                             75Ω + 75Ω
+          𝑉(𝑧= 30m) = 𝑉(𝑧= 0m)𝑒−𝛼𝑧= 0.5V ∗𝑒−6.667×10−3m−1∗30m = 𝟎. 𝟒𝟎𝟗 𝐕
+
+
+
+
+
+                                          1
+
+--- PAGE 3 ---
+e)  [1 pt] If the coaxial cable’s characteristic impedance were instead 50Ω, what is the minimum length
+    of coaxial cable (𝐿> 0) needed to ensure maximum power transfer from the source to the load?
+                                       If 𝐿= 𝜆/2, 𝑍𝑖𝑛= 𝑍𝐿, so 𝐿= 1.02 m = 𝟎. 𝟓𝟏 𝐦                                                            2
+
+
+
+
+
+                                          2
+
+--- PAGE 4 ---
+Problem 2: Transmission Lines and Superconducting Qubits [10 pts]
+
+In superconducting quantum computers, microwave voltage pulses are sent down transmission lines to
+perform operations on qubits. Consider one such transmission line with the following parameters:
+    •   Per-length inductance: 𝑙= 400 nH/m
+    •   Per-length capacitance: 𝑐= 160 pF/m
+    •   Transit time (delay): 𝑇𝑑= 10 ns
+At time 𝑡= 0, the voltage source sends a single DC pulse with amplitude 3 V and duration 1 ns down the
+transmission line toward the load. As a result of damage to the circuit, the values of the source impedance
+and load impedance have increased from their originally designed values to 𝑅𝑔= 100 Ω and 𝑅𝐿=
+200 Ω, as shown in the circuit schematic below.
+
+
+
+
+
+a)  [1 pt] Calculate the characteristic impedance of the transmission line.
+
+                  𝑍0 = √𝑙/𝑐= √(400 × 10−9 H/m)/(160 × 10−12 F/m) = 𝟓𝟎 𝛀
+
+b)  [2 pts] What is the initial amplitude of the voltage pulse 𝑉1+ that makes it onto the transmission line?
+                          +       𝑍0          50 Ω
+                             𝑉1 = 𝑉𝑔     = 3V        = 𝟏 𝐕
+                        𝑅𝑔+ 𝑍0     100 Ω + 50 Ω
+
+c)  [6 pts] Sketch a bounce diagram for the voltage amplitude of the pulse for time 0 ≤𝑡< 4𝑇. Be sure
+    to label both traveling voltage amplitudes and the amplitudes that would be measured at the load and
+    the source during reflection. You do not need to calculate the total voltage at the source for 𝑡= 4𝑇𝑑.
+                          Reflection coefficient at the load: Γ𝐿= 200 Ω−50 Ω = 0.6                                                               200 Ω+50 Ω
+                      Reflection coefficient at the generator: Γ𝑔= 100 Ω−50 Ω = 0.333                                                                100 Ω+50 Ω
+
+
+
+
+
+                                          3
+
+--- PAGE 5 ---
+                                                𝑽𝑳ሺ𝟑𝑻𝒅ሻ= 𝟎. 𝟑𝟐𝑽
+
+
+
+          𝑽𝒈ሺ𝟐𝑻𝒅ሻ= 𝟎. 𝟖𝑽
+
+
+                                                𝑽𝑳ሺ𝑻𝒅ሻ= 𝟏. 𝟔𝑽
+
+
+             𝚪𝒈= 𝟎. 𝟑𝟑𝟑                       𝚪𝑳= 𝟎. 𝟔
+
+
+
+d)  [1 pt] What will be the voltage on the transmission line after an infinite number of bounces (t→∞)?
+
+ The voltage on the transmission line will be 0 V, since the pulse will transmit voltage to the source and
+            load resistances on each reflection until the amplitude of the pulse becomes zero.
+
+
+
+
+
+                                          4
+
+--- PAGE 6 ---
+Problem 3: Quarter Wave Transmission Lines [10 pts]
+The transmission line in the circuit below has a characteristic impedance 𝑍0 = 50Ω and length 𝐿= 𝜆4. The
+amplitude of the sinusoidal source voltage is 𝑉𝑔= 10 V, its wavelength is 𝜆= 20 m and its frequency is
+𝑓= 100 kHz.
+
+
+
+
+
+a)  [1 pt] Calculate the input impedance of the transmission line.
+
+                                                                                                  𝑍02    (50 Ω)2
+                 Since this is a quarter-wave transformer, 𝑍𝑖𝑛= 𝑍𝐿= 125Ω = 𝟐𝟎 𝛀
+
+b)  [4 pts] Write down the phasor for the total voltage wave 𝑉̃(z) on the transmission line.
+
+                                     𝑉̃ = 𝑉0+𝑒−𝑗𝛽𝑧+ 𝑉0−𝑒𝑗𝛽𝑧= 𝑉0+(𝑒−𝑗𝛽𝑧+ Γ𝐿𝑒𝑗𝛽𝑧)
+                                    50Ω
+                                 𝑉0+ = 10𝑉       = 5 V
+                                 50Ω + 50Ω
+
+                                125 Ω −50 Ω
+                        Γ𝐿=        = 0.429
+                                125 Ω + 50 Ω
+
+                              2𝜋   2𝜋
+                   𝛽= 𝜆= 20 m = 0.314 m
+
+                𝑉̃(𝑧) = 5(𝑒−𝑗0.314𝑧+ 0.429𝑒𝑗0.314𝑧) V = 𝟓𝒆−𝒋𝟎.𝟑𝟏𝟒𝒛+ 𝟐. 𝟏𝟒𝟓𝒆𝒋𝟎.𝟑𝟏𝟒𝒛 𝐕
+
+c)  [2 pts] Convert your expression for 𝑉̃(z) to the time domain 𝑣(𝑧, 𝑡).
+
+                 𝑣(𝑧, 𝑡) = Re[𝑉̃(𝑧)𝑒𝑗𝜔𝑡] = Re[(5𝑒−𝑗0.314𝑧+ 2.145𝑒𝑗0.314𝑧)𝑒𝑗6.28×105𝑡 V]
+
+        = 𝟓𝐜𝐨𝐬(𝟔. 𝟐𝟖× 𝟏𝟎𝟓𝒕−𝟎. 𝟑𝟏𝟒𝒛) + 𝟐. 𝟏𝟒𝟓𝐜𝐨𝐬(𝟔. 𝟐𝟖× 𝟏𝟎𝟓𝒕+ 𝟎. 𝟑𝟏𝟒𝒛) 𝐕
+
+d)  [2 pts] In order to deliver maximum power to the load with a transmission line of length 𝐿= 𝜆/4, you
+   would need a transmission line with a different characteristic impedance. What would the
+    characteristic impedance of this new transmission line need to be?
+                         𝑍02           𝑍02
+                𝑍𝑖𝑛=  →50 Ω =    →𝑍0 = √50Ω ∗125Ω = 𝟕𝟗. 𝟎𝟔 𝛀
+                         𝑍𝐿         125 Ω
+
+
+
+
+
+                                          5
+
+--- PAGE 7 ---
+e)  [1 pt] Even though the transmission line you chose in part (d) delivers maximum power to the load in
+    steady state, reflections will still occur on the transmission line at the load. How can there be
+   maximum power transfer, but also reflections on the transmission line?
+
+    In steady state, the total voltage and current waves on the transmission line result from the sum of the
+    incident and reflected waves, which interfere with each other to create an impedance that varies along
+    the transmission line. By choosing the transmission line length appropriately, the input impedance 𝑍𝑖𝑛
+      can be made to be 50 Ω, enabling the source to deliver maximum power to the load, even though
+                                        reflections still occur at the load.
+
+
+
+
+
+                                          6
+
+--- PAGE 8 ---
+Problem 4: Single-Stub Matching [10 pts]
+
+You have been asked to match the load impedance 𝑍𝐿= 150 + 𝑗75 Ω to a feedline with characteristic
+impedance 𝑍0 = 75 Ω by using an open-circuited transmission line stub. A diagram of the single-stub
+matching circuit is shown below. A Smith chart is attached to the back of your exam for recording your
+answers. A ruler will also be provided.
+
+
+
+
+
+                                         𝑍𝐿= 150 + 𝑗75 Ω
+
+
+
+
+
+a)  [2 pts] Calculate the normalized load impedance and plot it on the Smith chart.
+
+                                       150+𝑗75 Ω                                    𝑍𝐿
+                 𝑧=                     =                            = 𝟐+ 𝒋 (see Smith chart)
+                                       𝑍0      75 Ω
+
+b)  [2 pts] Plot the normalized load admittance on the Smith chart and show how you determined it from
+    the plotted normalized load impedance. Write down the normalized load admittance you found from
+    the Smith chart.
+
+                   𝒚= 𝟎. 𝟒−𝒋𝟎. 𝟐 (see Smith chart)
+
+c)  [3 pts] Calculate the distance 𝑑1 (in terms of wavelength) from the load where the open-circuited stub
+    should be placed, and give the input admittance 𝑦𝑑 of the transmission line at that point. Show all
+    necessary work on the Smith chart for how you determined this value.
+
+            𝑑= (0.5𝜆−0.463𝜆) + 0.162𝜆= 𝟎. 𝟏𝟗𝟗𝝀 (see Smith chart)
+
+d)  [3 pts] Calculate the length 𝑙1 (in terms of wavelength) of the stub needed to match the source, and
+    give the input admittance 𝑦𝑠 of the open-circuited stub of that length. Show all necessary work on the
+   Smith chart for how you determined this value.
+
+                       𝑙= 𝟎. 𝟑𝟕𝟓𝝀 (see Smith chart)
+
+
+
+
+
+                                          7
+
+--- PAGE 9 ---
+                                                                                               c) 0.162𝜆
+
+
+
+
+
+                                         c) 𝑑= 0.199𝜆                                                                            c) 𝑦= 1 + 𝑗
+
+
+                                                                                      a) 𝑧= 2 + 𝑗
+
+
+
+
+
+                  b) 𝑦= 0.4 −𝑗0.2
+
+
+
+
+
+c) 0.463𝜆
+
+
+
+
+
+                                                             d) 0.375𝜆
+
+
+
+
+
+                                                8

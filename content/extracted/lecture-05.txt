@@ -1,0 +1,751 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 5
+Power on Lossless Transmission Lines & Lossy Transmission Lines
+
+
+                                           Alex Patterson
+                        Electrical, Computer, and Systems Engineering Department
+                                   Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+
+  ▪Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+ ▪J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+ ▪Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+  ▪Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+  ▪Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+  ▪Jeffrey Braunstein – ECE Department, University at Albany
+ ▪James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+ ▪James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+  ▪Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+ Those listed as Ulaby are figures from Ulaby’s textbook.
+                    Fields and Waves I                            2
+
+--- PAGE 3 ---
+Overview
+
+•  Power Analysis on Lossless
+   Transmission Lines
+•  Lossy Transmission Lines
+•  Low-Loss Transmission Lines
+•  Distortionless Transmission Lines
+
+
+
+
+
+                                    Fields and Waves I       3
+
+--- PAGE 4 ---
+Review
+
+
+
+
+
+                                                        +
+                                                                 𝑉1
+
+
+
+
+                                                 +
+                                                         𝑉1
+
+                                              𝑍𝐿−𝑍0             𝑍𝑔−𝑍0                                                                ΓL =               Γg =                                                    +                                             𝑍𝐿+ 𝑍0             𝑍𝑔+ 𝑍0                          𝑉1
+
+                                 𝑇= 𝑑/𝑢                                                 +
+                                                        𝑉1
+
+              Source side                                 Load side
+
+                   𝑍0          +
+          𝑉1 = 𝑉𝑔                                    Fields and Waves I       4            𝑍𝑔+ 𝑍0
+
+--- PAGE 5 ---
+Review
+
+ Some things in common between transient and steady state analysis:
+ •  Reflection at either end of the line is governed by the reflection coefficient.
+
+ •  Both forward- and backward-traveling waves can be present in general.
+
+ •  Z0 is needed to understand the relationship between current and voltage on
+   the line.
+
+ A major difference between transient and steady state analysis:
+ •  In transient analysis, there is no backwards-traveling wave until enough time
+   has passed for a reflection to occur at the end of the line.
+
+  Without forward- and backward-traveling waves on the line at the same time, a
+    lot of our steady-state concepts (standing wave ratio, phase-shifted reflection
+                            coefficient) become meaningless.
+                                                                         5
+
+--- PAGE 6 ---
+     Power Analysis on Lossless
+         Transmission Lines
+
+
+
+
+
+https://grist.org/energy/massive-transmission-line-will-send-wind-power-                            https://en.wikipedia.org/wiki/Transmon
+from-wyoming-to-california/
+
+--- PAGE 7 ---
+Power Analysis (Lossless T-Line)
+
+
+• How do we define power in EE?
+•  Basic definition:
+
+
+                                                                                for resistive
+                                                                      elements
+
+•  We can find instantaneous power on the transmission
+    line in the same way:
+
+
+
+
+
+                                    Fields and Waves I                            7
+
+--- PAGE 8 ---
+Power Analysis (Lossless T-Line)
+
+•  To find instantaneous incident power at a location z=-d on the t-line (i.e. we
+  do not consider reflection yet):
+
+              𝑉𝑑, 𝑡= Re ෨𝑉𝑒𝑗𝜔𝑡= Re ෨𝑉+𝑒𝑗𝜔𝑡+ Re ෨𝑉−𝑒𝑗𝜔𝑡
+
+
+  Incident Voltage:           +                +           𝑡=    cos 𝜔𝑡+ 𝛽𝑑=    𝑒𝑗𝜙+ cos 𝜔𝑡+ 𝛽𝑑                𝑉𝑖𝑑,     𝑉0                 𝑉0
+                                          +                           =     cos 𝜔𝑡+ 𝛽𝑑+ 𝜙+                                               𝑉0
+                         +
+                            𝑉0
+  Incident Current:   𝑡=     cos 𝜔𝑡+ 𝛽𝑑+ 𝜙+                  𝐼𝑖𝑑,
+                          𝑍0
+                          + 2
+                            𝑉0
+  Incident Power:    𝑡=      cos2 𝜔𝑡+ 𝛽𝑑+ 𝜙+                𝑃𝑖𝑑,
+                           𝑍0
+
+                                    Fields and Waves I                            8
+
+--- PAGE 9 ---
+Power Analysis (Lossless T-Line)
+
+•  To find instantaneous reflected power at a location z=-d on the t-line (i.e.
+  we do not consider the incident wave):
+
+              𝑉𝑑, 𝑡= Re ෨𝑉𝑒𝑗𝜔𝑡= Re ෨𝑉+𝑒𝑗𝜔𝑡+ Re ෨𝑉−𝑒𝑗𝜔𝑡
+
+
+
+  Reflected Voltage:                           +           𝑡=  −cos 𝜔𝑡−𝛽𝑑=    𝑒𝑗𝜙+ Γ 𝑒𝑗𝜃𝑟cos 𝜔𝑡−𝛽𝑑                𝑉𝑟𝑑,     𝑉0                 𝑉0
+                                          +                           =     cos 𝜔𝑡−𝛽𝑑+ 𝜙+ +                                               𝑉0                      𝜃𝑟
+                            +                              Γ  Reflected Current:   𝑡= −𝑉0    cos 𝜔𝑡−𝛽𝑑+ 𝜙+ +                 𝐼𝑟𝑑,                                   𝜃𝑟
+                              𝑍0
+                            + 2   2                               Γ  Reflected Power:   𝑡= −𝑉0      cos2 𝜔𝑡−𝛽𝑑+ 𝜙+ +                𝑃𝑟𝑑,                                      𝜃𝑟
+                               𝑍0
+
+
+                                    Fields and Waves I                            9
+
+--- PAGE 10 ---
+Power Analysis (Lossless T-Line)
+
+  •  To find time-averaged incident power:
+
+
+
+
+
+                                    Fields and Waves I                           10
+
+--- PAGE 11 ---
+Power Analysis (Lossless T-Line)
+
+ •  To find time-averaged reflected power:
+
+
+
+
+
+                                               L
+
+
+
+
+
+                                                                   L                     L
+
+
+
+                                    Fields and Waves I                           11
+
+--- PAGE 12 ---
+Power Analysis (Lossless T-Line)
+
+
+
+•  The time-average power transmitted to the load:
+
+
+                          + 2
+                             𝑉0
+          𝑖+ 𝑟=      1         𝑃𝑎𝑣= 𝑃𝑎𝑣   𝑃𝑎𝑣       −Γ𝐿2
+                          2𝑍0
+
+
+
+
+
+                                    Fields and Waves I                                               12
+
+--- PAGE 13 ---
+Do Lecture 5 Exercise on Gradescope. You may
+         work in groups of up to 4.
+
+
+
+
+
+                  Fields and Waves I                           13
+
+--- PAGE 14 ---
+Lossy Transmission Lines
+
+
+
+Voltage
+
+
+
+
+
+                     Distance from Generator
+
+--- PAGE 15 ---
+Lossy T-Lines
+
+•  In our discussion of transmission lines so far, we have assumed that the lines
+   are lossless – capacitors and inductors exchange energy, but they don’t
+   dissipateit
+
+•  How much attenuation (voltage loss) did you see on the long spool of cable in
+   studio session 2?
+
+•  Real transmission lines are never lossless. So how do we generalize what
+   we’ve learned to “lossy” lines?
+
+•  What is missing from our lumped element model?
+
+
+
+
+
+                                   Fields and Waves I       15
+
+--- PAGE 16 ---
+Lossy T-Lines
+•  Lossless Model of t-line has no R or G (R’=G’=0):
+
+
+                                                    Loss effects due to Resistances:
+                                                 R - resistance of conductors
+                                                G – conductance of insulators
+                                                                                           - both are ideally small
+
+
+•  Lossy Model of t-line:
+
+
+
+
+
+                                   Fields and Waves I       16
+
+--- PAGE 17 ---
+Lossy T-Lines
+
+•  What is the difference between impedance and admittance?
+
+
+
+•  When we say that R’=G’=0 for a lossless transmission line, what does that
+   physically mean?
+
+
+
+
+
+                                   Fields and Waves I                           17
+
+--- PAGE 18 ---
+Lossy T-Lines
+Lossy Telegrapher Equations: Phasor Domain
+
+             −𝑑෨𝑉𝑧 = 𝑟+ 𝑗𝜔𝑙ሚ𝐼(𝑧)
+                  𝑑𝑧
+
+              −𝑑ሚ𝐼𝑧 = 𝑔+ 𝑗𝜔𝑐෨𝑉(𝑧)
+                 𝑑𝑧
+
+
+
+
+                                   Fields and Waves I                           18
+
+--- PAGE 19 ---
+Lossy T-Lines
+Lossy Telegrapher Equations: Phasor Domain
+
+
+
+
+
+                 Alternatively:
+
+
+
+
+
+              where
+
+                                   Fields and Waves I                           19
+
+--- PAGE 20 ---
+Lossy T-Lines
+Lossy Telegrapher Equations: Phasor Domain
+
+
+
+
+
+                    For a lossless line, α=0 because r=g=0.
+
+                                   Fields and Waves I                           20
+
+--- PAGE 21 ---
+Lossy T-Lines
+Lossy Telegrapher Equations: Phasor Domain
+
+
+       ෨𝑉𝑧=                +𝑒−𝛾𝑧+                      −𝑒+𝛾𝑧=                                   + 𝑒−𝛾𝑧+ Γ𝐿𝑒+𝛾𝑧                   𝑉0                            𝑉0                                       𝑉0
+                 +        −         +
+                   𝑉0                   𝑉0        ሚ𝐼𝑧=   𝑒−𝛾𝑧−𝑉0 𝑒+𝛾𝑧=                                     𝑒−𝛾𝑧−Γ𝐿𝑒+𝛾𝑧
+                  𝑍0       𝑍0        𝑍0
+
+               where
+
+        𝛾= 𝛼+ 𝑗𝛽
+
+
+
+
+
+                                   Fields and Waves I       21
+
+--- PAGE 22 ---
+Lossy T-Lines
+                     𝜔
+•  For lossless systems: 𝛽= 𝜔𝑙𝑐=
+                           𝑢
+
+•  For lossy systems:
+
+
+• The phasors now have the factor:
+
+
+
+
+
+                                   Fields and Waves I                  22
+
+--- PAGE 23 ---
+Lossy T-Lines
+•  For a lossless system, Z0 represents
+
+
+                                         +      −             𝑗𝜔𝑙                                              𝑉0
+                                        =                              = −𝑉0       𝑍0                                         +      −            𝑗𝜔𝑐                                                         𝐼0       𝐼0
+
+
+• To get the result for lossy t-lines:
+
+        Replace jωl with r+jωl            Replace jωcwith g+jωc
+
+
+              Characteristic
+           Impedance
+
+
+                                   Fields and Waves I       24
+
+--- PAGE 24 ---
+Lossy T-Lines
+
+• The attenuation factor α is due to ohmic losses on the line.
+•  Looking at a plot like the one below, how do you find α and β?
+
+
+
+
+                              V(z)
+
+                                          V(z)
+                                                                  y(2)V(2)== 7.5,7.5, V(4)y(4)==5 5
+
+
+
+
+
+                                                                                Adapted from Ulaby
+                  Generator
+
+                                   Fields and Waves I       25
+
+--- PAGE 25 ---
+Lossy T-Lines
+•  General expression for voltage on the t-line
+             ෨𝑉𝑧=                          + 𝑒−𝛾𝑧+ Γ𝐿𝑒+𝛾𝑧                             𝑉0
+•  Allowing 𝛾to be complex now introduces a decaying factor to the wave
+
+
+• The case below shows the effect of this decaying factor on a sinusoid
+              ෨𝑉𝑧=  + cos 𝛽𝑧𝑒−𝛼𝑧                              𝑉0
+
+
+
+
+
+                                                                          26
+
+--- PAGE 26 ---
+Lossy T-Lines: Solving for 𝛼
+• Choose 2 convenient points on the voltage envelope
+
+
+
+• Plug in chosen values and solve for 𝛼
+
+
+
+
+
+                                                       ?
+
+
+
+
+
+                                   Fields and Waves I       27
+
+--- PAGE 27 ---
+Lossy T-Lines: Solving for 𝛽
+
+
+
+
+
+                                                       ?
+
+
+
+
+
+                                   Fields and Waves I       28
+
+--- PAGE 28 ---
+Low-Loss Transmission Lines
+
+--- PAGE 29 ---
+Low-Loss Lines
+
+  •  Although real transmission lines are not lossless, in practice the loss of a well-
+    engineered t-line is quite low.
+
+
+  •  Example: Assume the following:
+     • 𝑓= 1 MHz
+     •  standard RG58 coaxial cable parameters (the ones in lab)
+     • rper unit length of 0.1 Ohm per meter
+
+
+  • The wave is seen to attenuate markedly in 2000meters.
+  • How do we model low-loss transmission lines, then?
+
+
+                                    Fields and Waves I       30
+
+--- PAGE 30 ---
+Low-Loss Lines
+
+• We can derive an expression for Z0 in the case of a low-losstransmissionline
+
+                                         𝑥
+•  Using the Taylor Series  1 + 𝑥≈1 +  for x~0.
+                                          2
+
+
+
+
+
+                                    Fields and Waves I       31
+
+--- PAGE 31 ---
+Low-Loss Lines
+
+                                               𝑙                 =   −𝑗𝑟                        𝑍0  𝑐1   2𝜔𝑙
+
+• Note that in the low-loss case, the following will be true:
+
+
+
+
+
+•  For low-loss lines,     is then the same as for lossless lines.                   𝑍0
+•  This equation is sufficient when you do not care about the phase of Z0,
+   since this angle is small and can often be ignored in practice.
+
+
+                                    Fields and Waves I       32
+
+--- PAGE 32 ---
+Low-Loss Lines
+
+•  What happens to the propagation and attenuation coefficients when the line
+    is low-loss?
+
+
+
+•  The propagation and attenuation constants become
+
+
+
+
+
+                                    Fields and Waves I       33
+
+--- PAGE 33 ---
+Low-Loss Lines
+
+•  Assume the following: 𝑓= 1 MHz & standard RG58 cable parameters & rper
+    unit length of 0.1 Ohm per meter, the wave is seen to attenuate markedly in
+  2000meters.Calculate 𝛼and 𝛽for this low-loss line. Vf = 0.66
+
+
+
+
+
+                                     Fields and Waves I       34
+
+--- PAGE 34 ---
+Other T-Line Parameters
+
+•  Aside from attenuation (loss of amplitude), what other problems could you
+   have with your signal after running it through a very long transmission line
+   with losses?
+
+
+
+
+
+                                    Fields and Waves I       35
+
+--- PAGE 35 ---
+Other T-Line Parameters
+
+Dispersion: A dispersive transmission line will have frequency-dependent
+impedance behavior, leading to distortion of signals. (Keep in mind that a square
+pulse is composed of a series of harmonic frequencies)
+
+
+
+
+
+                                                                       Square wave frequency spectrum
+
+
+
+
+
+                                                                                                                             https://upload.wikimedia.org/wikipedia/commons/b/b5/Spectrum_squ
+                                                                                                                                             are_oscillation.jpg
+
+
+
+                                    Fields and Waves I       36
+
+--- PAGE 36 ---
+Other T-Line Parameters
+
+• Note that the propagation constant varies with frequency
+
+
+• Zo is also frequency dependent and not purely resistive
+
+
+
+• Can we fix this somehow so that our signals are not distorted?
+
+
+
+
+
+                                    Fields and Waves I       37
+
+--- PAGE 37 ---
+Distortionless Transmission Lines
+
+--- PAGE 38 ---
+Distortionless Lines
+
+ •   Distortion in a transmission line limits its useful length.
+ •  Attenuation can be addressed by adding amplification, however, distorted
+    signals cannot generally be undistorted, so a method needed to be found to
+    eliminate it.
+
+ •  Remarkably, lines can be made distortionless by adding loss. That is, we can
+    trade additional attenuation for clarity of signal.
+
+
+
+
+
+                                    Fields and Waves I       39
+
+--- PAGE 39 ---
+Distortionless Lines
+ •  For practical lines, the conductance per unit length gis negligible. What can we
+   do to eliminate the frequency dependence of Z0?
+
+
+
+
+
+    This is called the Heaviside condition and it can be achieved with periodic
+                         lumped shunt resistors.
+
+
+
+                                    Fields and Waves I       40
+
+--- PAGE 40 ---
+Distortionless Lines
+
+•  For this combination of parameters
+
+
+
+
+
+                      𝜔                𝑙     𝛼= 𝑟c             𝛽= 𝜔𝑙𝑐=      𝑍0 =                       𝑙                            𝑢           𝑐
+
+
+
+
+                                    Fields and Waves I       41
+
+--- PAGE 41 ---
+Distortionless Lines
+ •  Consider a “bad RG-58” cable, which has
+
+                                                                    𝒍= 𝟎. 𝟐𝟓𝝁𝑯/𝒎     •   L = 50m,
+     •  l= 0.25μH/m,                                                  𝒓= 𝟎. 𝟐𝛀/𝒎
+     • c= 100pF/m                                                                          𝒄= 𝟏𝟎𝟎𝒑𝑭/𝒎
+     •  r= 0.2Ω/m.
+ •  What g is required to make it distortionless?
+
+
+
+
+
+                                    Fields and Waves I       42
+
+--- PAGE 42 ---
+Distortionless Lines
+
+•  In the early days of telephony, Heaviside proposed making lines
+    distortionless. This was done by adding inductance rather than conductance
+   since the losses were not increased significantly.
+
+
+
+             𝑟  𝑔
+        𝑙= 𝑐
+
+
+
+
+                                                                                         http://www.du.edu/~jcalvert/tech/cable.htm
+
+
+
+                                    Fields and Waves I       44
+
+--- PAGE 43 ---
+Distortionless Lines
+
+•  Adding these components made it possible for phone calls to go
+  from NY to Chicago.
+
+•  Then in the 1850s an even more impressive engineering feat was
+   achieved: the first transatlantic undersea cable. This would not
+  have been possible without knowledge of the Heaviside
+   Condition.
+
+
+
+
+
+                                    Fields and Waves I       45
+
+--- PAGE 44 ---
+Distortionless Lines
+
+
+
+
+
+                                    Fields and Waves I       46
+
+--- PAGE 45 ---
+Distortionless Lines
+
+ Modern submarine cable with repeaters – counteracts attenuation
+
+
+
+
+
+                                                                                                                                                 prog.world
+                                    Fields and Waves I       47
+
+--- PAGE 46 ---
+Wrap-Up
+
+  Studio Session #3 Wednesday•
+
+
+
+
+
+                                   Fields and Waves I       48

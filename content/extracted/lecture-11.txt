@@ -1,0 +1,823 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 11
+Electric Potential & Electric Materials
+                                               Alex Patterson
+                            Electrical, Computer, and Systems Engineering Department
+                                       Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+
+                                                               2
+
+--- PAGE 3 ---
+Overview
+
+•  Electric Potential
+
+•  Electric Materials – Dielectrics
+
+•  Electric Materials – Conductors
+
+
+
+
+
+                                                                                                                                                          https://www.ic-components.com/blog/capacitor-fundamentals-part-4-
+                                                                                                                                                                                    dielectric-polarization.jsp
+
+
+
+
+                                                                           3
+
+--- PAGE 4 ---
+Review
+
+ Steps to solve problems using Gauss’s Law
+ 1. Recognize the coordinate system.
+
+ 2. Using symmetry, determine which components of the field exist.
+
+ 3. Identify a Gaussian surface for which the sides are either parallel to or
+    perpendicular to the field components. This surface is arbitrary in size.
+
+ 4. Determine the total charge within that surface. The charges can be
+    distributed on lines, surfaces or in volumes.
+
+
+
+
+
+                                                                            4
+
+--- PAGE 5 ---
+Review
+ 5. To evaluate the electric flux passing through the Gaussian surface.
+    •  If the field is parallel to the surface                     ∮𝐃⋅d𝐒= 0
+
+    •  If the field is constant and perpendicular to the surface (surface area A),
+
+             ∮𝐃⋅d𝐒= 𝐷𝑖∮d𝐴𝑖= 𝐷𝑖𝐴𝑖
+      where the subscript refers to the direction of the surface normal.
+
+ 6. Now equate the two sides of Gauss’ Law to find E:
+
+           𝐷𝑖𝐴𝑖= ∮𝐃⋅d𝐒= ∫𝜌d𝑉= 𝑄𝑒𝑛𝑐
+
+
+
+
+                                                                            5
+
+--- PAGE 6 ---
+Electric Potential
+
+
+
+
+
+                                               6
+
+--- PAGE 7 ---
+Electric Potential
+
+
+
+
+
+      If the electric field looks like this (right), how do we derive the electric potential (left)? (Lauricella)
+
+
+                                                                             7
+
+--- PAGE 8 ---
+Electric Potential
+ •  Circuits use electrical energy to do work
+ • How much work 𝑊is done by an electric field 𝐸
+   that moves a single charge 𝑞along a path 𝑙?
+
+                                         𝑟2              𝑟2
+                                                                                     𝐸
+          𝑊= න  Ԧ𝐹⋅𝑑Ԧ𝑙= න  𝑞𝐸⋅𝑑Ԧ𝑙                                            𝑟2
+                                        𝑟1              𝑟1
+                                                                                                                       𝑟1
+ •  This could be a complicated path integral                                                                                                                                                 𝑑Ԧ𝑙
+
+                                          𝑡2
+          𝑊= 𝑞න 𝐸𝑟𝑡  ⋅𝑑Ԧ𝑙𝑡
+                                         𝑡1
+ •  Is there a simpler way?
+ • Yes! Let’s look at a useful vector calculus identity for help
+
+
+                                                                             8
+
+--- PAGE 9 ---
+Electric Potential
+ •  For any scalar field 𝑓: ∇× ∇𝑓= 0
+ •  Looking at Maxwell’s equations for electrostatics in differential form, we have:
+
+                          Gauss’s law:                      ∇⋅𝐷= 𝜌
+                           Faraday’s law:                      ∇×𝐸= 0
+ •  This means that we can define some scalar field 𝑽
+   such that 𝐸= −∇𝑉which satisfies ∇×(−∇𝑉) = 0
+ • 𝑽is called the electrostatic potential
+ • Our equation for work then simplifies to:
+
+                                     𝑟2
+        𝑊= −𝑞න  ∇𝑉⋅𝑑Ԧ𝑙=            = −𝑞Δ𝑉                      −𝒒𝑽𝒓𝟐−𝑽𝒓𝟏
+                                    𝑟1
+
+                 Advantage #1: we no longer have to perform a path integral –          Advantage #2: we have a 2nd field we can use in
+                𝑊only depends on the end points, not the path the charge takes.          electrostatics calculations and it is a scalar field →this
+                      In electrostatics 𝐸is a conservative field, due to ∇×𝐸= 0.                  is mathematically simpler to work with than a vector field
+                                                                             9
+
+--- PAGE 10 ---
+Electric Potential
+
+•  Example: Use case of point charge at origin and obtain the potential everywhere
+  from the E-field
+
+
+    Point charge
+      at (0,0,0)            IntegrationPath                         𝑞                                                                       Spherical
+                                                         Symmetry  𝐸=               Ƹ𝑟
+                       r                                     4𝜋𝜖0𝑟2                                                         infinity
+
+
+                                          Reference:
+                                V=0 at infinity
+
+
+
+
+
+                                                                           10
+
+--- PAGE 11 ---
+Electric Potential
+
+• The integral for computing the potential of the point charge is:
+
+
+                                           𝑟
+      𝑉𝑟−𝑉𝑟= ∞= −න   𝐸⋅𝑑Ԧ𝑙
+                              𝑟=∞
+                           0
+                                  𝑟
+        ∴𝑉𝑟= −න  𝐸⋅𝑑𝑟′
+                                                                                Potential at a point
+                        𝑟=∞                                                                       charge a distance r
+                                                             away from the charge
+
+
+
+
+
+                                                                           11
+
+--- PAGE 12 ---
+Electric Potential
+ • What is the potential expression for this E-field from a shielded conductor with
+   a grounded exterior?
+
+
+
+
+
+                                                                           12
+
+--- PAGE 13 ---
+Electric Potential
+
+
+
+
+
+                                                                           13
+
+--- PAGE 14 ---
+Electric Potential
+
+                                                                                     V4
+                                                                                           V3
+                                                                                               V2
+
+                                                                                                  V1
+
+
+
+
+
+•  Gradient points in the direction of largest change
+•  Therefore, E-field lines are perpendicular (normal) to constant V surfaces
+•  In terms of elevation, lines of constant V are lines of constant elevation and the
+  E field points in the direction of steepest descent
+
+
+                                                                           14
+
+--- PAGE 15 ---
+Electric Potential
+
+•  Plot a set of equipotentials for this quadrupole.
+
+
+
+
+
+                                                   E-field
+
+
+                                                                           15
+
+--- PAGE 16 ---
+Electric Potential
+
+
+
+
+
+                          http://ocw.mit.edu/NR/rdonlyres/Electrical-Engineering-and-Computer-Science/6-013Electromagnetics-
+                       and-ApplicationsFall2002/922D1A06-9AC9-4076-B1F5-066EE896043C/0/Rec11Notes.pdf
+
+
+
+
+                                                                           16
+
+--- PAGE 17 ---
+Electric Potential
+Potential of a single charge
+
+•  For the case of a point charge:
+
+
+
+
+
+           𝒓   is the field point where we are measuring/calculating V
+                                     (observation point)
+
+               𝒓′  is the location of charge contributing to the potential
+
+
+                                                                           17
+
+--- PAGE 18 ---
+Electric Potential
+
+•  For a charge distribution:
+
+
+
+                                                              Charge density at a
+                                                                          location r’                    Potential at
+                   observation point r
+
+                                                  Volume charge distribution
+
+                              Result: integral over volume,
+                           adding up the potential
+                            contributed by charge density                          Distance between r’ and
+                             at each point r’
+                                                                       observation point r
+
+                                                             Line charge distribution
+
+
+                              Result: integral over line, adding
+                        up the potential contributed by
+                           charge density at each point r’
+                           along the line dl’
+
+                                                                           18
+
+--- PAGE 19 ---
+Electric Materials
+
+
+
+
+
+                                              19
+
+--- PAGE 20 ---
+Electric Materials
+
+•  Previously we said:
+
+
+
+
+
+• What about situations in which 𝛆=          ?                                      𝜖𝑟𝜖0 ≠𝛆0
+
+•  Materials other than free space can have a wide range of 𝛆.
+
+
+
+
+                                                                          20
+
+--- PAGE 21 ---
+Electric Materials
+
+
+             Superconductors                Semiconductors
+                σ ~ ∞                          mid σ’s                        Perfect
+                                                                                                  dielectric                                         σ (for Germanium) ~ 2.2 S/m
+
+           ∞                                                                            0
+
+             σ
+                                                                           Dielectrics                             Conductors
+            Perfect                                    Low conductivities;                          High conductivities;
+         Conductor                                   σ (for Rubber) ~ 1x10-15 S/m                      σ (for Copper) ~ 5.8x107 S/m
+
+                                                                           Permittivities, ε = 1-100ε0
+
+
+
+             Note:ε0 isthepermittivityoffreespace/vacuum=8.854x10-12 F/m
+
+                                                                          21
+
+--- PAGE 22 ---
+Electric Materials
+
+
+
+
+                                                                     Polarisation or Electric Polarisation | Physics4students
+
+                                              A nonpolar molecule is one in which the centre of gravity of the positive charges (protons) coincide with the centre of gravity of the negative charges
+                                                                        (electrons). Example: O2, N2, H2. The nonpolar molecules do not have a permanent dipole moment. If a non polar dielectric is placed in an electric field, the
+                                                                centre of charges get
+                                                                    displaced. The molecules are then said to be polarized and are called induced dipoles. They acquire induced dipole moment p in the direction of electric field.
+
+                                              A polar molecule is one in which the centre of gravity of the positive charges is separated from the centre of gravity of the negative charges by a finite
+                                                                    distance. Examples : N2O, H2O, HCL, NH3. They have a permanent dipole moment. In the absence of an external field, the dipole moments of polar
+                                                            molecules orient themselves in
+                                                    random directions. Hence no net dipole moment is observed in the dielectric. When an electric field is applied, the dipoles orient themselves in the direction
+                                                                  of electric field. Hence a net dipole moment is produced.
+
+                                                     The alignment of the dipole moments of the permanent or induced dipoles in the direction of applied electric field is called polarisation or electric
+                                                                        polarisation.
+
+
+
+
+
+                                    Physics4Students
+
+
+                                                                          22
+
+--- PAGE 23 ---
+Electric Materials
+• When an electric field is applied to a dielectric:
+     •  Electrons (bound to their positively-charged cores) move towards the + side of the E field
+     • The positive core moves towards the – side of the E field
+
+
+
+
+
+                                        -   E   +                            -   E   +
+
+                           This forms many dipoles in the material
+
+                                                                          23
+               LibreTexts
+
+--- PAGE 24 ---
+Electric Materials
+Dipoles
+
+                                                                   • When two opposite charges are
+                                                    very close together relative to
+                                          some much larger distance d
+                                               from which we measure their
+                                                                     field, we call them an electric
+                                                           dipole.
+
+
+
+
+
+                       Wikipedia
+                                                                          24
+
+--- PAGE 25 ---
+Electric Materials
+Dipoles
+
+                                                            •  Superposition allows us to
+                                                  write an expression for the
+                                                         electric field caused by two
+                                                opposite-value point charges,
+                                             separated by distance d, at a
+                                                distance R away.
+
+
+
+
+                                                                     Note: here, we will use bold letters to
+                                                                       represent vectors.
+
+                                                            Which coordinate system is this?
+
+     Ida
+
+                                                                          25
+
+--- PAGE 26 ---
+Electric Materials
+Dipoles
+
+
+
+
+
+     … after some algebra, infinite series math and limits, we can write
+
+
+
+
+           We let 𝐩= 𝑄𝐝 and call p the dipole moment.
+
+             d points from the negative charge to the positive.
+                                                                          26
+
+--- PAGE 27 ---
+Electric Materials
+Dipoles
+                      A few things to note:
+                                           • This is an inverse cube expression instead of
+                                 the standard inverse square expression of
+                                Coulomb’s Law
+                                           • Field intensity is maximum at points aligned
+                                  with the dipole and minimum perpendicular to
+                                  the dipole
+                                           • Field intensity is proportional the distance
+                              between the charges
+                                           • Anything that causes the charges to move
+                                   apart will proportionally increase their dipole
+                                           field
+          Wikipedia
+                                                                          27
+
+--- PAGE 28 ---
+Electric Materials
+
+
+
+
+       Define:  Ԧ𝑝= 𝑞Ԧ𝑑 = dipole moment
+
+
+                                                                                                                𝐄𝑟𝑒𝑠𝑝
+
+
+
+
+
+                                                                          28
+
+--- PAGE 29 ---
+Electric Materials
+
+•  Different materials have different permittivities
+•  Permittivities will also depend on field frequency, temperature, humidity, and
+   other factors
+
+
+                              Material                Relative Permittivity (𝝐𝒓)
+
+                                Paper                                1.4
+
+                                Concrete                              4.5
+
+                                        Silicon                            11.68
+
+                               Water                            50-90
+
+                             Titanium dioxide                      86-173
+
+                         Calcium copper titanate                  >250,000
+
+                         Wikipedia
+
+                                                                          29
+
+--- PAGE 30 ---
+Electric Materials
+
+                                                                                    StackExchange
+
+
+                                                        𝝐𝒂                                     𝝐𝒂
+
+
+
+                                                                  𝝐𝒃
+                                   𝝐𝒃
+
+
+
+               a.)            𝜀𝑏> 𝜀𝑎
+               b.)            𝜀𝑏< 𝜀𝑎
+
+                   Note the effect on relative E-field density.
+
+                                                                          30
+
+--- PAGE 31 ---
+Do Lecture 11 Exercise 1 in groups of up to 4 on Gradescope
+
+
+
+
+
+                                                             31
+
+--- PAGE 32 ---
+Electric Materials - Dielectrics
+
+
+
+
+
+                                                       32
+
+--- PAGE 33 ---
+Dielectrics
+
+
+
+                ∮𝐷⋅𝑑Ԧ𝑠= ∫𝜌𝑑𝑉= 𝑄𝑒𝑛𝑐
+
+
+
+
+
+                   •  But in dielectrics, we also encounter something called bound charge
+
+
+                                                                          33
+
+--- PAGE 34 ---
+Dielectrics
+•  Consider a parallel plate capacitor with a material of electric permittivity 𝜖
+    inside and    outside.              𝜖0
+          𝜖0  +++                            1. We apply an electric field 𝐸across the plates.                 𝝐𝟎𝑬
+
+                                              -
+                          +
+                   𝑷   𝑫          𝜖                                  2. Polarization causes the formation of a                                              -
+                          +                       polarization density field 𝑃that opposes 𝐸
+          𝜖0                                  - - -
+                                                   3. The electric displacement field 𝐷arises due to
+                                              the remaining net charge density in the dielectric
+       𝜖0𝐸+ 𝑃= 𝐷
+
+                        ∇⋅𝜖0𝐸+ 𝑃= ∇⋅𝐷= 𝜌𝑓   𝜌𝑓+ 𝜌𝑏= 𝜖0∇⋅𝐸
+
+                                                                          34      −∇⋅𝑃
+
+--- PAGE 35 ---
+Dielectrics
+
+
+
+
+
+                  Watch until ~6 mins: https://www.youtube.com/watch?v=rHO4JdliwFg&ab_channel=DrBenYelverton
+
+                                                                          35
+
+--- PAGE 36 ---
+Dielectrics
+•  If the electric field intensity is high enough in a dielectric, electrons will
+   eventually become unbound from their atoms
+
+•  This creates a conductive path through the material, which can become
+  permanent if it changes the material composition
+
+•  This is known as dielectric breakdown and is usually bad, since dielectrics
+   are used as electric insulators
+
+
+
+
+
+                                                                          36
+
+--- PAGE 37 ---
+Dielectrics
+
+• A dielectric will break down if
+
+
+
+•  As electrons begin to flow, they collide with
+  and dislodge more electrons, leading to more
+   current in an avalanche process.
+
+•  For two cables separated by an air gap, this
+  breakdown field value is 30kV/cm.
+
+
+
+
+
+                                                                                                  “Jacob’s Ladder” (Gifer)
+
+                                                                          37
+
+--- PAGE 38 ---
+Electric Materials - Conductors
+
+
+
+
+
+                                                        38
+
+--- PAGE 39 ---
+Conductors
+
+• Why aren’t any metals listed in the table of dielectric constants?
+
+•  Because metals aren’t dielectrics; they’re conductors
+
+•  In dielectrics, E-fields cause electrons and nuclei to “flex” and form dipoles, but
+  the electrons generally remain bound to the nuclei.
+
+•  In conductors, that isn’t the case - a large number of electrons are free to
+  move around under the influence of a field.
+
+
+
+
+
+                                                                          39
+
+--- PAGE 40 ---
+Conductors
+
+• The inside of a perfect conductor is an equipotential region, which means that
+  the potential is the same everywhere.
+
+
+
+
+
+• What are the consequences of this?
+
+
+
+•  Therefore, in a perfect conductor, 𝑬= 𝟎
+
+                                                                          40
+
+--- PAGE 41 ---
+Conductors
+
+ •  Let’s return to the permittivity 𝜀. What can we conclude about its value in
+   perfect conductors now?
+
+
+
+
+
+•  Since the E-field is zero in an ideal conductor, 𝜺is effectively infinite!
+•  Hence, permittivity isn’t a meaningful measurement for conductors
+
+
+
+                                                                          41
+
+--- PAGE 42 ---
+Conductors
+
+                                                          •  Previously we looked at a charge
+                                     suspended over an infinite plane.
+
+                                                          • What if that plane is a conductor?
+                              How will the plane behave in this
+                                           scenario?
+
+
+
+
+
+        Physics LibreTexts
+
+                                                                          42
+
+--- PAGE 43 ---
+Conductors
+
+                                                           • The plane will accumulate charge
+                                        near the surface that completely
+                                        negates the E-field of the (+) charge.
+
+                                                           • How do we draw field lines for a
+                                                situation like this? We need to take
+                                                             all charges and charge distributions
+                                               into account
+
+
+
+
+
+             -   -  -   -   -  - -  -  - -  -   -   -   -   -
+
+        Physics LibreTexts
+
+                                                                          43
+
+--- PAGE 44 ---
+Conductors
+
+                                   • The conductor’s surface charge influences the
+                                    field in the exact same way as if we removed the
+                            conductive plan and added a “mirror image” of
+                            the (+) charge at the same distance from the
+                             surface and with opposite charge.
+
+                                   • We can use this to our advantage to solve for
+                                  electric fields near perfect conductors
+
+
+
+
+
+        Physics LibreTexts
+                                                                          44
+
+--- PAGE 45 ---
+Conductors
+
+                                       •  All fields and forces will be the same as if this were the
+                          case above the plane, and this works for distributions of
+                          charge as well.
+
+                  F
+                                       • When solving problems this way, we call it the
+                     “method of images”.
+                                    1. Add equal and opposite charge distributions an
+                               equal distance from the conductor
+                  F
+                                    2.  Calculate the E-field from each charge distribution
+                                    3. Use superposition to find the E-field in the region
+                                outside the conductor (inside the conductor it’s 0)
+
+        Physics LibreTexts
+                                                                          45
+
+--- PAGE 46 ---
+Do Lecture 11 Exercise 2 in groups of up to 4 on Gradescope
+
+
+
+
+
+                                                               46
+
+--- PAGE 47 ---
+Wrap-Up
+
+•  HW5 posted yesterday
+
+
+
+
+
+                                                                         47

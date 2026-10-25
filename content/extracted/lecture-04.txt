@@ -1,0 +1,831 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 4
+Transient Analysis of Transmission Lines
+
+                                           Alex Patterson
+                       Electrical, Computer, and Systems Engineering Department
+                                  Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   •  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   •   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   •  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   •  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   •  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   •   Jeffrey Braunstein – ECE Department, University at Albany
+   •  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   •  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   •  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                    Fields and Waves I                           2
+
+--- PAGE 3 ---
+Outline
+
+
+ •  Transients On Transmission Lines
+
+  • Bounce Diagrams
+
+
+
+
+
+                                  Fields and Waves I                           3
+
+--- PAGE 4 ---
+Review
+
+
+                                  ෩𝑽+ 𝒛=  +𝒆−𝒋𝜷𝒛                                𝑽𝟎
+
+
+
+
+
+                   ෩𝑽−𝒛=  −𝒆+𝒋𝜷𝒛                                𝑽𝟎
+
+ • How much gets reflected?
+
+                                𝑍𝐿−𝑍0                +                      Γ =       −=          V0   Γ𝑉0                                𝑍𝐿+𝑍0
+
+                                               Reflection Coefficient
+
+                                                                                                                   4
+
+--- PAGE 5 ---
+Review
+
+•  If there is reflection at the load, the total voltage on the t-line is now the
+  sum of the incident and reflected waves
+
+                ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+   +𝑒+𝑗𝛽𝑧                                  𝑉0        Γ𝑉0
+• This means that the voltage wave is no longer a pure traveling wave, but is
+  partially a standing wave as well
+                                                         Standing Wave Pattern
+•  If we are given a standing wave pattern, we
+  can determine several useful quantities
+     •  Voltage wavelength
+     • SWR (standing wave ratio)
+     •  Reflection coefficient
+     • Load impedance
+
+
+         SWR =                                                                               5
+
+--- PAGE 6 ---
+Review
+
+ •  If the ratio of the voltage to the current gives an
+  impedance, we can define an impedance based on the
+   voltage and current at a certain point on the
+   transmission line 𝑧= −𝑑:
+
+                      ෩𝑉𝑑
+          Z𝑑=                                  ሚ𝐼(𝑑)
+
+                                                                                ෩𝑉𝐿 •  If we evaluate this ratio at the load (z=0): where 𝑍𝐿is                              Z𝐿=   the load impedance at the end of the t-line                                          ሚ𝐼𝐿
+
+ •  If we evaluate this ratio at the input to the transmission                                                                                ෩𝑉𝑖𝑛
+   line (z=-L), we get the input impedance of the t-line     Z𝑖𝑛=  + load                                                                                     ሚ𝐼𝑖𝑛
+                                  Fields and Waves I                           6
+
+--- PAGE 7 ---
+Review
+• In a circuit containing a t-line + load, we can replace the t-line + load with 𝒁𝒊𝒏:
+
+
+
+
+
+                                        z = -L         z = 0
+
+
+• The full expression for 𝒁𝒊𝒏:        𝑍𝑖𝑛𝐿= 𝑍0 𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝐿                                                             𝑍0 + 𝑗𝑍𝐿tan 𝛽𝐿
+
+                                𝑜𝑐𝐿= −𝑗𝑍0cot(𝛽𝐿)• For an open-circuit load:                 𝑍𝑖𝑛
+
+                                 𝑠𝑐𝐿= 𝑗𝑍0tan(𝛽𝐿)• For a short-circuit load:                   𝑍𝑖𝑛
+
+                          𝑛𝜆                  𝜆/2
+                            𝐿= 𝑍𝐿• For a line of length 𝐿=   :              𝑍𝑖𝑛
+                            2
+                          𝑛𝜆                  𝜆/4                        Transforms load impedance to• For a line of length 𝐿=   :              𝑍𝑖𝑛                            𝐿= 𝑍02/𝑍𝐿             look like a different impedance                            4
+                                                                                                                 7
+
+--- PAGE 8 ---
+Review
+
+The transmission line impedance transformer has some limitations:
+•  Input signal needs to be one frequency (different impedance for different
+  frequencies)
+•  Only works at steady state (calculated Zin is a steady state result only) – does
+  not work with transient signals
+
+
+
+
+ To better understand transmission lines, we need to broaden our understanding
+                         to include transient behavior.
+
+
+
+                                  Fields and Waves I                           10
+
+--- PAGE 9 ---
+Transients on Lossless Transmission Lines
+
+--- PAGE 10 ---
+Transients On T-Lines
+
+What do transient signals do on a lossless t-line?
+
+•  Pulses will look the same at the t-line input and output except for a delay (no
+   dispersion/distortion)
+
+•  This is independent of the shape of the pulse.
+
+                                    Ulaby pg. 115
+
+
+
+
+
+                                   Fields and Waves I       12
+
+--- PAGE 11 ---
+Transients On T-Lines
+
+              Basic simulated transmission line with pulsed source
+
+
+
+
+
+       How do we understand the voltage drop across R6?
+
+
+                                   Fields and Waves I                           13
+
+--- PAGE 12 ---
+Transients On T-Lines
+
+
+                                    Ulaby pg. 115
+
+
+
+
+
+  Consider the circuit above. At t=0, the switch closes and a voltage pulse
+  begins moving forward down the line.
+    •  Is there a backwards traveling wave at this moment (t = 0+)?
+    •  Are there any standing waves?
+    • What is the ratio of voltage to current on the line at this moment?
+
+                                   Fields and Waves I       14
+
+--- PAGE 13 ---
+Transients On T-Lines
+
+
+
+
+
+                                                                      Ulaby pg. 115
+•  At t=0+, the t-line circuit therefore behaves equivalently to this circuit and the
+  voltage and current on the t-line are:
+
+
+
+•  But what are the current and voltage expressions at the load?
+
+                                   Fields and Waves I       15
+
+--- PAGE 14 ---
+Transients On T-Lines
+
+• When it reaches the load, the voltage pulse still reflects at the load as
+  governed by the reflection coefficient.
+
+                     −=   +                                    𝑉1    Γ𝐿𝑉1
+
+                            𝑍𝐿−𝑍0
+                         Γ𝐿=
+                           𝑍𝐿+ 𝑍0
+
+                                    −     −
+                                         𝑉1                           = −𝐼1                         Γ𝐿=                                    +     +
+                                         𝑉1       𝐼1
+
+                                   Fields and Waves I       16
+
+--- PAGE 15 ---
+Transients On T-Lines
+
+
+                             Rg
+
+                         Vs                                    RL
+
+
+
+
+
+           +
+            𝑉1                      The pulse travels down the line
+
+
+              hits the load, reflects if there is an impedance mismatch
+
+
+                            −    the reflection goes back toward the source.                                𝑉1
+
+
+                                   Fields and Waves I       17
+
+--- PAGE 16 ---
+Transients On T-Lines
+
+
+
+
+                                                     Z0 = 50
+
+
+
+
+•  The model t-line circuits we have considered thus far have had a source
+  impedance, and that source impedance has tended to be equal to the
+   characteristic impedance of the line.
+
+                    Why is this?
+
+
+                                   Fields and Waves I       18
+
+--- PAGE 17 ---
+Transients On T-Lines
+
+                           Rg
+
+                       Vs                                    RL
+
+
+
+
+Mathematically, there is no difference between a signal hitting a load impedance
+and a signal hitting a source impedance. In both cases, the behavior will be
+governed by the reflection coefficient.
+                                                       Rg
+
+                       RL                                        Vs
+
+                                       𝑍𝑔−𝑍0
+                                   Γ𝑔=
+                                     𝑍𝑔+ 𝑍0
+                                                                                                               Reflection coefficient at the                                   Fields and Waves I
+                                                                                                                        generator
+
+--- PAGE 18 ---
+Transients On T-Lines
+
+      What happens when both the source and load impedance are mismatched?
+
+                         Time for another simulation!
+
+
+
+
+
+                                                          Code:
+
+                                                             n 5 5
+                                                             n 15 5
+                                                             n 35 5
+                                                             n 42 5
+                                                             g 5 15
+                                                             g 15 15
+                                                             g 35 15
+                                                             g 42 15
+                                                                    v 5:-1 p:5000:20:60 4 0
+                                                                                              r 25 0 1
+                                                                            z 50 25 1 2 5 6
+                                                                            s 2 3
+                                                                                              r 25 7 3
+
+
+
+                                   Fields and Waves I       20
+
+--- PAGE 19 ---
+Transients On T-Lines
+
+                                                          Rg
+
+                   RL                                                Vs
+
+
+
+
+                         −
+                          Γ𝐿  𝑉1
+
+        After reflecting at the load, our backwards-traveling hits the source and
+                                        reflects again!
+
+
+                                             +
+                                                  𝑉2                                                          Γ𝑔
+
+
+
+
+                                   Fields and Waves I       21
+
+--- PAGE 20 ---
+Transients On T-Lines
+
+                      Rg
+
+                 Vs                                            RL
+
+
+
+
+
+                         +
+                         Γ𝑔  𝑉2
+
+  … then the reflected wave from the source (forward-moving) reflects again at
+                                   the load!
+
+
+                                             −
+                                                  𝑉2                                                             Γ𝐿
+
+
+
+                                   Fields and Waves I       22
+
+--- PAGE 21 ---
+Transients On T-Lines
+
+ In the case of the t-line with an impedance mismatch at both the source and
+the load, how long should the circuit take (in principle) to reach steady state?
+
+
+
+
+
+ •  In principle the pulse will continue bouncing between the source and the load
+   without limit.
+ •  In practice the pulse will fall within the measurement error of a steady-state
+   solution after a finite number of reflections.
+
+                                   Fields and Waves I       23
+
+--- PAGE 22 ---
+Transients On T-Lines
+DC Source (on for t > 0)
+
+• Now that we know what happens to the signal at the load and source
+  impedances, let’s look at DC circuit theory
+•  If we turn on a DC voltage source at 𝑡= 0 and allow the circuit to reach
+  steady state (𝑡→∞), what is the voltage drop across:
+      •  The generator/source impedance                                  𝑅𝑔
+                                                                     Ulaby pg. 115
+      •  The load impedance                        𝑅𝐿
+      •  The transmission line
+
+
+
+
+
+                                   Fields and Waves I       24
+
+--- PAGE 23 ---
+Transients On T-Lines
+DC Source (on for t > 0)
+
+
+                                                         V∞is the steady-state
+                                                                    voltage or voltage reached
+                                                                           after t→∞
+
+
+
+                                                                                     Ulaby pg. 117
+
+
+
+
+
+                                                                                              (for |x| < 1 )
+
+
+                                   Fields and Waves I       25
+
+--- PAGE 24 ---
+Transients On T-Lines
+DC Source (on for t > 0)
+
+ •  So even if our pulse theoretically bounces around forever, it does
+   converge to a voltage, and that voltage is:
+
+                                      From converged series result
+
+ •  Using our earlier equations:
+
+
+
+ • We can write:
+
+                              = DC circuit theory
+
+
+                                   Fields and Waves I       26
+
+--- PAGE 25 ---
+Transients On T-Lines                                  V=V0 +
+DC Source (on for t > 0)                                                                          V=0
+
+
+                                                 • As time increases, this t-line approaches
+                                   a state in which it effectively doesn’t exist
+                                   anymore.
+
+
+
+                                                 • The voltage that we put on the line is DC
+                                         (doesn’t change after t=0). Why don’t we
+                                     see this same steady-state behavior
+                              when using a sinusoidal source voltage?
+
+
+                                   Fields and Waves I       27
+
+--- PAGE 26 ---
+Transients On T-Lines
+DC Source (on for t > 0)
+
+
+
+
+
+           Keep the lumped model of the T-line in mind!
+
+ Apply a DC voltage to this line:
+ • What happens to the inductor impedance?
+ • What happens to the capacitor impedance?
+ • What does the lumped element model then simplify to?
+
+     For a sinusoidal input voltage, an excitation is continually applied to the
+          inductors and capacitors → they never reach steady state.
+                                                                                                                    28
+
+--- PAGE 27 ---
+Transients On T-Lines
+
+Some things in common between transient and steady state analysis:
+•  Reflection at either end of the line is governed by the reflection coefficient.
+
+•  Both forward- and backward-traveling waves can be present in general.
+
+•  Z0 is needed to understand the relationship between current and voltage on
+   the line.
+
+A major difference between transient and steady state analysis:
+•  In transient analysis, there is no backwards-traveling wave until enough time
+  has passed for a reflection to occur at the end of the line.
+
+ Without forward- and backward-traveling waves on the line at the same time, a
+   lot of our steady-state concepts (standing wave ratio, phase-shifted reflection
+                           coefficient) become meaningless.
+                                                                        29
+
+--- PAGE 28 ---
+Transients On T-Lines
+
+           Example - Square pulse, mismatched source and load
+
+
+
+
+
+• There is a systematic method for applying this information using what is called
+  a bounce diagram or lattice diagram
+
+• Space and time information are both included in the diagram
+
+                                   Fields and Waves I                           30
+
+--- PAGE 29 ---
+Bounce Diagrams
+
+--- PAGE 30 ---
+Bounce Diagram
+                                                  Scope connected to t-                             Scope                                                                     line output
+                              connected to
+                                         t-line input
+
+                                          T=d/uis the time to
+                                                                   transit from one end of
+                                                         the t-line to the other
+
+
+
+
+
+                                                                  Note: Another change of
+                                                                  notation here: input to t-line is
+                                                  now z=0 and load is at z=d
+
+
+                                  Fields and Waves I       32
+
+--- PAGE 31 ---
+Bounce Diagram
+
+
+
+
+
+                                                     +
+                                                              𝑉1
+
+
+
+
+                                              +
+                                                      𝑉1
+
+                                             𝑍𝐿−𝑍0            𝑍𝑔−𝑍0                                                              ΓL =             Γg =                                                 +                                           𝑍𝐿+ 𝑍0           𝑍𝑔+ 𝑍0                          𝑉1
+
+                                 𝑇= 𝑑/𝑢                                              +
+                                                     𝑉1
+
+            Source side                                Load side
+                 𝑍0        +
+        𝑉1 = 𝑉𝑔                                  Fields and Waves I       33           𝑍𝑔+ 𝑍0
+
+--- PAGE 32 ---
+Bounce Diagram
+               What about when the source and load impedances are matched?
+
+
+
+                                                     +
+                                                              𝑉1
+
+
+
+
+                                              +
+                                                      𝑉1
+
+
+
+
+
+                                                  +
+                                                           𝑉1
+
+
+
+
+                                              +
+                                                     𝑉1
+
+            Source side                                Load side
+                 𝑍0        +
+        𝑉1 = 𝑉𝑔                                  Fields and Waves I       34           𝑍𝑔+ 𝑍0
+
+--- PAGE 33 ---
+Bounce Diagram
+
+•  If the pulse width is much less than the transit time T, then only a single
+   incident and reflected pulse will be present at the load or source at a given
+  time
+
+•  This is much simpler to consider.
+
+
+
+
+
+                        𝒕= 𝟎                     𝒕= 𝑻𝒅
+
+
+                                  Fields and Waves I       35
+
+--- PAGE 34 ---
+Bounce Diagram
+
+• Zooming in allows us to see how reflection occurs in detail
+
+
+
+
+
+                           Incident
+
+
+
+
+
+                                  Fields and Waves I       36
+
+--- PAGE 35 ---
+Bounce Diagram
+                                   As soon as the front edge of the incident
+                                      pulse reaches the load (i.e. at 𝑡= 𝑇𝑑), it is
+                                                reflected and begins moving backwards, added to
+                                           the incident pulse where they overlap in space
+
+
+
+                                     Reflected
+
+                                     Incident
+
+
+
+
+
+                                  Fields and Waves I       37
+
+--- PAGE 36 ---
+Bounce Diagram
+
+
+
+
+
+                        Reflected
+
+
+
+
+
+                                  Fields and Waves I       38
+
+--- PAGE 37 ---
+Bounce Diagram
+                                   As soon as the front edge of the reflected pulse
+                                      reaches the source, it is reflected and begins
+                                   moving forwards again and is added to the
+                                           reflected pulse where they overlap in space
+
+
+
+
+                                Reflected
+                              Incident
+
+
+
+
+
+                                  Fields and Waves I       39
+
+--- PAGE 38 ---
+Bounce Diagram
+
+
+
+
+
+                                            Incident
+
+
+
+
+
+                                  Fields and Waves I       40
+
+--- PAGE 39 ---
+                                        Again, expanding the pulse for clarity, we see
+Bounce Diagram             that incident and reflected pulses exist
+                                        simultaneously
+
+                                t                                  t
+
+
+
+
+
+                             3T                                 3T
+
+
+
+
+                             2T                                 2T          gamma = -0.6
+
+
+
+                                               Leading Edge
+                       T                          T gamma = 1
+                                             Trailing Edge
+
+
+
+                                     8.3v  z=0                              z=d
+
+                                  Fields and Waves I       41
+
+--- PAGE 40 ---
+Bounce Diagram Example 1 (Short Pulse)
+
+
+
+
+                t                          t
+
+                                                                         ●  8V short input pulse (5μs)
+                                                                         ●  25Ω source and load impedance
+                                                                         ●  50Ω characteristic impedance
+              3T                         3T
+                                                                         ●  10 microsecond T-line time delay
+
+
+
+              2T                         2T
+
+
+
+
+           T                    T
+
+
+
+
+                 z=0                       z=d
+
+
+
+                                    Fields and Waves I       42
+
+--- PAGE 41 ---
+Bounce Diagram Example 1 (DC Input)
+
+
+
+
+                t                          t
+                                     -0.20V
+                                                                     ●  8V switches on at t=0 (remains on)
+                                                                     ●  25Ω source and load impedance
+                                                                     ●  50Ω characteristic impedance              3T                         3T
+                                                                     ●  10 microsecond time delay                                    0.59V
+                                                                     ●  Γ = -0.3333 (source and load)
+
+              2T                         2T
+                                     -1.78V
+
+
+           T                    T
+                                    5.33V
+
+
+
+                 z=0                       z=d
+
+
+
+                                    Fields and Waves I       45
+
+--- PAGE 42 ---
+Do Lecture 4 Exercise on Gradescope. You may
+         work in groups of up to 4.
+
+
+
+
+
+                  Fields and Waves I                           46
+
+--- PAGE 43 ---
+Wrap-Up
+  •  Full schedule of office hours is posted on the calendar
+
+  •  Studio Session 1 due tomorrow
+
+
+
+
+
+                                  Fields and Waves I                           47

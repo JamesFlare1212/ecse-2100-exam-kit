@@ -1,0 +1,349 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 14
+Current & Resistance
+
+                                                  Alex Patterson
+                                  Electrical, Computer, and Systems Engineering Department
+                                            Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+   Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                                                                     2
+
+--- PAGE 3 ---
+Overview
+
+ •  Current
+
+ •  Resistance
+
+
+
+
+
+                                                                            https://www.comsol.com/support/learning-center/course/introduction-to-modeling-resistive-
+                                                                             and-capacitive-devices-132/introduction-to-modeling-resistive-and-capacitive-devices-27591
+
+
+
+                                                                             3
+
+--- PAGE 4 ---
+Laplace and Poisson Equations
+Review
+
+• We can directly calculate the potential from the charge density 𝜌using:
+
+
+
+•  Laplace’s Equation:               ∇2𝑉= 0
+
+
+
+•  Poisson’s Equation               ∇2𝑉= −𝜌
+                               𝜖
+
+
+
+                                                                            4
+
+--- PAGE 5 ---
+Laplace and Poisson Equations
+Review - Boundary Conditions
+
+  •  Dielectric-Dielectric
+
+                  Normal To Boundary      Tangential To Boundary
+
+
+
+          Fields           𝐷1𝑛= 𝐷2𝑛      𝐸1𝑡= 𝐸2𝑡
+
+
+              𝜕𝑉1     𝜕𝑉2       Potential                                   𝑉1 = 𝑉2              𝜖1 𝜕𝑛= 𝜖2 𝜕𝑛
+
+
+
+                                                                            5
+
+--- PAGE 6 ---
+Laplace and Poisson Equations
+Review - Boundary Conditions
+
+  •  Dielectric-Conductor
+
+                  Normal To Boundary      Tangential To Boundary
+
+
+
+          Fields           𝐷1𝑛= 𝜌𝑠        𝐸1𝑡= 0
+
+
+               𝜕𝑉1
+       Potential                                          𝑉1 = 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡               𝜖1 𝜕𝑛= 𝜌𝑠
+
+
+
+
+                                                                            6
+
+--- PAGE 7 ---
+Current and Resistance
+
+--- PAGE 8 ---
+Current and Resistance
+ •  We have been considering electrostatics - the case in which
+    there are no moving charges.
+
+ •   This obviously doesn’t hold in general. When charges move, we
+   have current.
+
+ •  We will consider two parameters:
+
+     •   Current 𝐼(measured in amperes)
+
+     •   Current Density Ԧ𝐽(measured in amperes per unit area)
+
+
+
+
+
+                                                                            9
+
+--- PAGE 9 ---
+Current and Resistance
+
+•  Current (I) is the flux integral of current density ( Ԧ𝐽) [Amperes/area]:
+
+
+
+
+
+                                                                           10
+
+--- PAGE 10 ---
+Current and Resistance
+
+
+
+
+
+                                                                           11
+
+--- PAGE 11 ---
+Current and Resistance
+
+• Where does the relationship Ԧ𝐽= 𝜎𝐸come from? What is 𝜎physically?
+
+
+
+
+
+                                                                           12
+
+--- PAGE 12 ---
+Current and Resistance
+
+
+
+
+
+                                                   (μ=electronmobility,not
+                                                                           permeability)
+
+
+
+
+
+                                                                           13
+
+--- PAGE 13 ---
+Current and Resistance
+• How can we calculate the resistance of a cylindrical wire with constant
+   current density?
+                    𝑉
+            𝑅=
+                                 𝐼
+
+
+
+
+
+                                                                           15
+
+--- PAGE 14 ---
+Current and Resistance
+
+• However, current density is rarely constant.
+
+•  For example, in conductors, current tends to flow in increasingly thin
+   surface sheets at higher frequencies (the “skin effect”)
+
+
+
+
+                               Current flow
+                               region
+
+
+                           a
+                                             But,
+
+
+
+
+
+                                                                           16
+
+--- PAGE 15 ---
+Current and Resistance
+•  Note that for this current distribution, there is much more current in
+  the outer shell. This is a combination of the increased density and the
+   larger area of each shell.
+
+
+
+
+
+                                                                           17
+
+--- PAGE 16 ---
+Current and Resistance
+
+              𝑙
+• 𝑅= 𝜎𝐴is only valid when Ԧ𝐽and 𝐴are constant
+•  Therefore, in general, we must use the following equation:
+
+
+
+
+                        𝑉  −∫𝐸⋅𝑑Ԧ𝑙   −∫𝐸⋅𝑑Ԧ𝑙
+               𝑅= 𝐼=      =                                    ∬Ԧ𝐽⋅𝑑Ԧ𝑠   𝜎∬𝐸⋅𝑑Ԧ𝑠
+
+
+
+
+
+                                                                           19
+
+--- PAGE 17 ---
+Current and Resistance
+• Let’s return to the example of a wire at higher frequencies:
+
+
+
+
+
+                                                                           22
+
+--- PAGE 18 ---
+Do Lecture 14 Exercise in groups of up to 4.
+
+
+
+
+
+                                                          23
+
+--- PAGE 19 ---
+Current and Resistance
+•  Example: calculate the resistance of the cylindrical structure below.
+
+
+
+
+
+       𝜎
+
+
+
+
+
+                                                                           26
+
+--- PAGE 20 ---
+Current and Resistance
+
+
+
+
+
+                                                                           27
+
+--- PAGE 21 ---
+Numerical Methods for Current
+
+•  Since current density is proportional to (and parallel to) the electric field, we
+  can represent Ԧ𝐽in finite element and finite difference analysis similarly to
+  how we would represent 𝐸
+    •  In finite difference, just multiply 𝐸by the 𝝈of the cell to get Ԧ𝐽
+
+
+
+• To calculate resistance, note that we are addressing the flow of electrons
+   (current) across equi-potentials (E field perpendicular to equipotential lines)
+
+    •  In finite difference, calculate the total current 𝐼(from Ԧ𝐽) and divide by the
+       potential difference 𝑉to get R for a geometry
+
+
+
+                                                                           28
+
+--- PAGE 22 ---
+Numerical Methods for Current
+                                   𝑉= −∫𝐸⋅𝑑Ԧ𝑙
+
+          𝑉  −∫𝐸⋅𝑑Ԧ𝑙
+     𝑅=                                                V=10        𝐼=                 ∬Ԧ𝐽⋅𝑑Ԧ𝑠
+
+
+
+
+
+                                                                         V=0
+         𝐼= ∬Ԧ𝐽⋅𝑑Ԧ𝑠
+                                                                         Current vector field represented by pink arrows;
+                                                                      red lines are equi-potentials
+
+                                              Why is vector field pointing from low to high
+                                                                voltage?
+
+                                                                           29
+
+--- PAGE 23 ---
+Wrap Up
+
+ • Homework 6 due Wednesday
+
+ •  Extra office hours instead of studio session on Wednesday
+
+ • Exam 2 next Monday
+
+
+
+
+
+                                                                           31

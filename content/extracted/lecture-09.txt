@@ -1,0 +1,712 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 9
+Fields & Math II
+                                              Alex Patterson
+                            Electrical, Computer, and Systems Engineering Department
+                                       Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+  Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+
+                                                             2
+
+--- PAGE 3 ---
+Overview
+
+   • Divergence
+
+   •  Curl
+
+   • Gradient
+
+  • Electrostatics
+
+
+
+
+
+                                                                         3
+
+--- PAGE 4 ---
+Field Math
+
+  • As mentioned in the previous lecture, we have now entered the
+    “fields” portion of the class.
+  • We discussed three coordinate systems that we will use often this
+    semester: cartesian (rectangular), cylindrical and spherical
+  • Now we must discuss the vector operators: divergence, curl and gradient
+  • Note: the form of each differs by coordinate system!
+
+
+
+
+
+                                                                        4
+
+--- PAGE 5 ---
+Divergence
+
+--- PAGE 6 ---
+Field Math
+
+Gauss’ Law: Electric charge gives
+rise to an electric field.
+
+Differential Form:
+
+
+
+
+Integral Form:
+        Q
+඾ 𝐄⋅d𝐀=
+  𝑺         𝜖0                                                     Source: spectrumscientifics.wordpress.com
+
+
+                                                                        7
+
+--- PAGE 7 ---
+Field Math
+
+
+
+
+
+   What does the field an electric point charge gives rise to actually look like?
+
+                https://davidawehr.com/projects/electric_field.html
+
+
+
+
+
+                                                                        8
+
+--- PAGE 8 ---
+Field Math
+
+•  Points of electric charge are sources or sinks of electric field lines.
+
+•  In mathematical terms, we say that the divergence of an electric field at a
+   point is proportional to how much charge it has.
+
+
+                Notation:                     NOTaDOTproductbuthassimilarfeatures            𝑑𝑖𝑣Ԧ𝐴= ∇⋅Ԧ𝐴
+
+
+                         Result is a SCALAR, composed of derivatives
+
+
+                     𝜕𝐴𝑥   𝜕𝐴𝑦  𝜕𝐴𝑧                                                          in Cartesian coordinates          ∇⋅Ԧ𝐴=              𝜕𝑥+ 𝜕𝑦+ 𝜕𝑧
+
+
+                                                                        9
+
+--- PAGE 9 ---
+Field Math
+
+Divergence Theorem:
+
+
+
+
+
+                                                     Volumeintegralonrightis
+                                                      volumeenclosedbysurfaceon
+                                                      theleft
+
+ In plain English:
+
+    “The amount and magnitude of field sources or sinks inside a volume will
+            determine the net flux through the volume’s surface.”
+
+
+                                                                        10
+
+--- PAGE 10 ---
+Field Math
+
+             z                              • An important property in field calculations is flux:
+                       how muchfield is flowing through a surface.
+              dx
+                                           • Whenever we have a vector field, we can
+                                 calculate a flux by taking the following integral:
+         dz
+
+                         y
+
+     x
+
+
+  •  Note that the total flux will depend on the area of the surface through
+   which the field is flowing, the magnitude of the field, and the angle
+   between the field vectors and the surface normal.
+
+--- PAGE 11 ---
+Field Math
+                             Surface integrals and flux
+
+
+
+
+
+                                      ~no flux
+
+                                         (+)                (-)
+                                                 flux               flux
+
+                                      ~no flux
+
+
+
+
+
+               What is the net flux through the box in the image above?
+
+                                  Zero. But how do we know?                          12
+
+--- PAGE 12 ---
+Field Math
+
+            Imagine that this plot is a vector field of water flow in 2D
+
+
+
+
+
+                                        No divergence at this
+                                                      point
+
+
+
+                 Positive divergence at
+                   this point = source                                                                             Negative divergence
+                                                                                        at this point = sink
+
+
+
+
+
+                                                                          13
+
+--- PAGE 13 ---
+Field Math
+
+                    Flux = magnitude of flow through a surface
+
+                              Positive flux through this                    Negative flux through this
+                                  circle – amount of water                          circle – amount of water
+                            flowing out of the circle                      flowing into the circle
+
+
+
+
+
+                                    How much net flux
+                                               through this circle?
+
+
+
+                                                                          14
+
+--- PAGE 14 ---
+Field Math
+
+
+
+
+
+      •  You can see that the flux through any of these three circles has a relationship to the amount of
+       “charge” (source or sink of vector field) inside.
+
+      •  Conservation laws stipulate that the amount of water entering or leaving through the boundaries
+        of the the circle per unit time has to be equal to the total change in the amount of water inside
+      the circle per unit time.                                                   15
+
+--- PAGE 15 ---
+Field Math
+
+        Divergence = degree to which a given point is a source or a sink
+
+
+
+                                    Measures flux through any surface              ∫Ԧ𝐴⋅dԦ𝑆
+            “Global”
+             quantities
+                                    Measures flux through closed surfaces              ∮Ԧ𝐴⋅dԦ𝑆
+
+
+
+
+
+                                    is a “local” measure of flux through an infinitesimal volume        ∇⋅Ԧ𝐴
+
+
+                                                                          16
+
+--- PAGE 16 ---
+Field Math
+
+
+
+
+
+             https://web.mit.edu/6.013_book/www/chapter1/1.3.html
+
+
+  One last important point:
+   The source of flux could be a singlepoint with a nonzero divergence, or
+   the divergence could come from a line, surface or volume. This parallels the
+    fact that  electric charges can be treated as points, but  it  is often more
+   accurate to speak of a regionofchargedistribution.
+
+
+                                                                          17
+
+--- PAGE 17 ---
+Field Math
+
+Divergence operator simulation:
+
+                  https://em8e.eecs.umich.edu/jsmodules/ch3/mod3_3.html
+
+Plot the divergence of the field: 𝑨= 𝒙𝟐ෝ𝒙+ 𝒚𝟐ෝ𝒚
+
+
+
+
+•  Is the divergence proportional to where the change in the field is largest?
+
+•  Is the divergence zero anywhere? Does this make sense in terms of the “local”
+   flux interpretation of divergence?
+
+
+
+                                                                        19
+
+--- PAGE 18 ---
+Curl
+
+--- PAGE 19 ---
+Field Math
+
+
+              What’s the difference between these two whirlpools?
+
+
+
+
+
+                                                                        21
+
+--- PAGE 20 ---
+Field Math
+
+
+              What’s the difference between these two whirlpools?
+
+
+
+
+
+                          Circulation in opposite directions.
+                     Their velocity fields have opposing curl.
+
+                                                                        22
+
+--- PAGE 21 ---
+Field Math
+
+•  Curl can be calculated at a point using the following expression for Cartesian
+  coordinates (Ulaby pg. 158).
+
+•  Similar expressions exist for the other coordinate systems. Curl direction is
+  given by right-hand rule.
+
+
+
+
+
+                                                                        23
+
+--- PAGE 22 ---
+Field Math
+
+• The curl operator
+
+
+                    NOTATION:                                                   Result of this operation is a VECTOR
+
+                                 This is NOT a CROSS-PRODUCT
+
+•  Stokes’s theorem:
+
+                   (      )⋅
+
+
+                 Surfaceintegralonrightissurface
+                 enclosedbylineontheleft
+
+
+                                                                        24
+
+--- PAGE 23 ---
+Field Math
+
+
+
+
+           In plain English:
+
+           “The amount of B pointing in a loop around the outside of
+          surface ds is determined by the total curl of field B inside ds.”
+
+                              OR
+
+               “If you drop a ball near a whirlpool, the stronger the whirlpool is, the
+             faster the ball will travel around it.”
+
+
+
+
+                                                                        25
+
+--- PAGE 24 ---
+Field Math
+
+
+                  NOTATION      Implies a CLOSED LOOP Integral
+                               :
+
+                                                 measures circulation
+          4                                                             (related to Curl)
+         1 3
+
+          2                  Example of a uniform field B in the x direction
+
+
+
+
+
+                     1           2           3           4
+                                                                        26
+
+--- PAGE 25 ---
+Field Math
+
+
+
+
+
+  • The eye of the whirlpool is a place where the curl is nonzero.
+
+   Whereas the point charges were sourcesor sinksof field lines, the whirlpool
+   eye is a point that causes circulationof a vector field (velocity) around it.
+
+  • What is the curl inside the yellow circle? If you drop a “paddlewheel” into the
+   center of the yellow circle, will it rotate?
+
+                                                                        27
+
+--- PAGE 26 ---
+Field Math
+
+
+
+
+
+                           What is the curl of the field inside these two circles?
+
+
+                                                                        28
+
+--- PAGE 27 ---
+Field Math
+
+ One last note on whirlpools:
+
+                                           • We previously mentioned that flux is often
+                             due to a distributionof divergence.
+
+                                           • Circulation of a vector field in practice is
+                                   often due to a distributionof curl - that is,
+                                  the vector field acts less like it has one
+                                    whirlpool and more like it has a distribution
+                                of infinitesimally-small whirlpools.
+
+
+
+
+
+                                                                        29
+
+--- PAGE 28 ---
+Field Math
+
+Curl operator simulation:
+
+          https://em8e.eecs.umich.edu/jsmodules/ch3/mod3_4.html
+
+Plot the curl of the field: 𝑨= 𝒚𝟐ෝ𝒙+ 𝒙𝟐ෝ𝒚
+
+
+
+•  Is the curl higher in regions in which the field lines seem to rotate more?
+
+•  Is the curl zero anywhere? Does this make sense in terms of the “local”
+   rotation interpretation of curl?
+
+
+
+                                                                        30
+
+--- PAGE 29 ---
+Gradient
+
+--- PAGE 30 ---
+Field Math
+
+
+
+
+
+       What is the relationship between the potential field (left) and the
+                                    electric field (right)?
+
+      The electric field is defined by the gradient of the potential
+                                        field.                                 32
+
+--- PAGE 31 ---
+Field Math
+
+• The gradient operator
+
+      GRADIENT measures CHANGE in a SCALAR FIELD
+
+               •  The result is a VECTOR pointing in the direction of greatest increase
+               •  For a Cartesian system:
+
+                           𝜕𝑓   𝜕𝑓    𝜕𝑓
+                             ∇f = 𝜕𝑥ො𝑥+ 𝜕𝑦ො𝑦+ 𝜕𝑧Ƹ𝑧
+
+• Main property
+
+            Youwillfindthat          ALWAYS
+
+
+                                                                        33
+
+--- PAGE 32 ---
+ Field Math
+
+ Gradient operator simulation:
+
+ https://em8e.eecs.umich.edu/jsmodules/ch3/mod3_2.html
+
+ Plot the gradient of the field: A = x2 + y2
+
+•  Is the magnitude of the gradient proportional to the change in the length of
+  the vectors?
+
+•  Is the gradient zero anywhere? Does this make sense in terms of the “local”
+   rate of change of the field magnitude?
+
+
+
+                                                                         34
+
+--- PAGE 33 ---
+Field Math
+
+• Divergence
+    • Measures the flux of a vector field through a surface
+
+
+                                                              Result is a SCALAR
+
+•  Curl
+    • Measures the circulation of a vector field
+
+                                                             Result is a VECTOR
+
+• Gradient
+    • Measures the change in a scalar field
+
+                                                             Result is a VECTOR
+
+                                                                        36
+
+--- PAGE 34 ---
+Do Lecture 9 Exercise in groups of up to 4.
+
+
+
+
+
+                                                       37
+
+--- PAGE 35 ---
+Electrostatics
+
+--- PAGE 36 ---
+Electrostatics
+ We will now begin applying the field math to solving Maxwell’s equations. But
+ given the complexity of this task, we will start with a simplified case:
+ electrostatics.
+
+     • Charges do not move
+
+     • No current
+
+     • As a consequence, there is no magnetic field; only an electric field
+
+
+
+
+
+                                                                         39
+
+--- PAGE 37 ---
+Electrostatics
+
+Full Version of Maxwell’s Equations
+
+               Integral Form                         Differential Form
+
+
+
+
+
+                                                                         40
+
+--- PAGE 38 ---
+Electrostatics
+Electrostatic Version of Maxwell’s Equations
+
+
+
+               Integral Form                          Differential Form
+
+
+
+
+
+           These equations represent Gauss’s Law (just written
+                                in a different form)
+                                                                         41
+
+--- PAGE 39 ---
+Electrostatics
+
+
+                Integral Form                         Differential Form
+
+
+
+
+
+          These equations tell you that in electrostatics, the E-
+                 field has no curl (and there are no net voltages
+                           around loops).
+
+                                                                         42
+
+--- PAGE 40 ---
+Electrostatics
+
+           There are 2 different ways of referring to the electric field.
+
+                  (often called just called “electric field” or “E-field”)
+            has units of volts per meter (V/m). Thus it has a direct
+               relationship with voltage.
+
+                  (often called “electric displacement field”), has units of
+            coulombs per square meter (C/m2) and thus has a direct
+               relationship with charge or charge density.
+
+          The two quantities are related by:
+
+           𝜺represents permittivity, a property of the medium that the
+              electric field is present in/propagating through.
+                                                                         43
+
+--- PAGE 41 ---
+Electrostatics
+
+
+
+
+
+        Recall these three circles containing different amounts of charge.
+
+                                                                         44
+
+--- PAGE 42 ---
+Electrostatics
+
+
+
+
+
+ We had stated that the points that contain charge have a non-zero divergence,
+         whereas the points with no charge have a divergence of zero.
+
+              This is the differential form of Gauss’s Law.
+
+
+                                                                         45
+
+--- PAGE 43 ---
+Electrostatics
+                                                                                          This could take the form of
+                                                                                              point charges or line,
+                                                                                              surface, or volume charge
+                                                                                             density
+
+
+
+ The integral form of Gauss’s Law states that the flux through the circles is
+  determined by the amount of charge inside. This can be rewritten as:
+
+
+
+
+
+                 This is the integral form of Gauss’s Law.
+
+                        for empty space, ϵ = ϵ0  (8.85e-12 farads per meter)
+                                                                         46
+
+--- PAGE 44 ---
+Wrap-Up
+
+• Homework 4 released yesterday
+
+• Next 2 studio sessions: Project 1
+
+
+
+
+
+                                 Fields and Waves I                           47

@@ -1,0 +1,357 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                            Exam 2 Solutions
+
+                                              Fall 2025
+
+
+
+                        1                 /12
+
+                        2                   /8
+
+                        3                 /12
+
+                        4                 /10
+
+                         Total               /42
+
+
+
+
+                                    Name _______________________________
+
+
+
+                                      RIN _______________________________
+
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for numbers that appear without justification. Partial credit will
+be awarded where possible, so show your work so that we can follow your thought process. Use
+the backs of pages if there is not enough room on the front. If you do, please indicate that there is
+more work on the back of the page.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers. Ensure that
+your calculator is set to use radians for trigonometric functions (and not degrees) and include
+units with all numerical answers.
+
+At least skim through the entire quiz before you begin and then start with the problems you know
+best.
+
+--- PAGE 2 ---
+Problem 1: Gauss’s Law with Spherical Symmetry [12 pts]
+
+In this problem, you will use Gauss’s law to solve for the electric field in each region.
+
+The system below consists of:
+    •  A sphere of constant volumetric charge density 𝜌0 and radius 𝑎.
+    •  A conducting shell of radius 𝑏 and surface charge density 𝜌𝑠𝑏.
+
+The total charge on the conducting shell is equal in magnitude to the total charge contained in the sphere,
+but opposite in sign. The region 𝑎< 𝑟< 𝑏 contains no free charge 𝜌 and the permittivity is 𝜀0.
+
+Note: All diagrams must include the shape and position of the Gaussian surface used in your solution.
+
+
+
+
+
+a)  [1 pt]  Draw the diagram you will use for finding the electric field in the region 0 < 𝑟< 𝑎.
+
+                                 b
+                               𝜀0             𝜌𝑠𝑏
+                                   a
+
+                            R
+                                             𝜌𝑠𝑎
+
+
+
+b)  [3 pts] Find the electric field in the region 0 < 𝑟< 𝑎.
+
+                                      ∯𝐷⃗⃗ ⋅𝑑𝑠 = 𝑄𝑒𝑛𝑐
+
+                      2𝜋  𝜋
+         ∯𝐷⃗⃗ ⋅𝑑𝑠 = ∫  ∫𝜀0𝐸⃗ (𝑅) ⋅𝑅2 sin𝜃d𝜃d𝜙 = (2𝜋)(2)(𝜀0𝑅2𝐸(𝑅)) = 4𝜋𝜀0𝑅2𝐸(𝑅)
+                       0   0
+
+                        2𝜋  𝜋  𝑅                               4            𝑄𝑒𝑛𝑐= ∫ ∫∫𝜌0𝑟2 sin𝜃d𝑟d𝜃d𝜙 = (2𝜋)(2)𝜌0 (𝑅3 ) =  𝜋𝑅3𝜌0
+                         0   0  0                           3    3
+                            Solving for the electric field: 𝑬⃗⃗(𝒓) = 𝝆𝟎                                                                    𝟑𝜺𝟎𝒓𝒓̂
+
+
+
+
+                                          1
+
+--- PAGE 3 ---
+c)  [1 pt]  Draw the diagram you will use for finding the electric field in the region 𝑎≤𝑟≤𝑏.
+
+                                 b
+                               𝜀0                                        𝜌𝑠𝑎        𝜌𝑠𝑏
+                                   a
+
+                            R
+
+
+
+
+d)  [3 pts] Find the electric field in the region 𝑎≤𝑟≤𝑏.
+
+                                      ∯𝐷⃗⃗ ⋅𝑑𝑠 = 𝑄𝑒𝑛𝑐
+
+                2𝜋  𝜋
+        ∫  ∫𝜀0𝐸⃗ (𝑅) ⋅𝑅2 sin𝜃d𝜃d𝜙 = (2𝜋)(2)(𝜀0𝑅2𝐸(𝑅)) = 4𝜋𝜀0𝑅2𝐸(𝑅)
+                 0   0
+
+                        2𝜋  𝜋  𝑎                               4            𝑄𝑒𝑛𝑐= ∫ ∫∫𝜌0𝑟2 sin 𝜃d𝑟d𝜃d𝜙 = (2𝜋)(2)𝜌0 (𝑎3 ) =  𝜋𝑎3𝜌0
+                         0   0  0                           3    3
+
+                                                                   𝝆𝟎  𝒂𝟑
+                          Solving for the electric field: 𝑬⃗⃗(𝒓) = 𝟑𝜺𝟎( 𝒓𝟐) 𝒓̂
+
+e)  [1 pt]  Draw the diagram you will use for finding the electric field in the region 𝑟> 𝑏.
+
+
+                                 b
+                               𝜀0                                        𝜌𝑠𝑎        𝜌𝑠𝑏
+                                   a
+
+
+                               R
+
+
+
+f)  [1 pt]  Find the electric field in the region 𝑟> 𝑏.
+
+                                      ∯𝐷⃗⃗ ⋅𝑑𝑠 = 𝑄𝑒𝑛𝑐
+
+                      Since 𝑄𝑒𝑛𝑐= 𝑄𝑖𝑛𝑛𝑒𝑟+ 𝑄𝑜𝑢𝑡𝑒𝑟= 0, 𝑬⃗⃗(𝒓⃗) = 𝟎 for 𝒓> 𝒃.
+
+g)  [2 pts]  If you were to replace the material in the region 𝑎≤𝑟≤𝑏 by a dielectric with 𝜀> 𝜀0, how
+   would this affect the potential difference between 𝑟= 𝑏 and 𝑟= 𝑎? Explain this change in the
+    context of electric materials and polarization.
+
+ Placing a dielectric in this region would reduce the potential difference between the two locations, since
+    the electric field in this region would be lower due to polarization - the formation of dipoles in the
+
+
+                                          2
+
+--- PAGE 4 ---
+dielectric would cause a response field to form that opposes the direction of the applied field and reduces
+                                the total field magnitude in the material.
+
+
+
+
+
+                                         3
+
+--- PAGE 5 ---
+Problem 2: Parallel Plate Capacitor with Two Dielectrics [8 pts]
+
+In the system below, the space between two conducting plates located at 𝑥= 0 and 𝑥= 𝐿 is filled with
+two different dielectrics:
+    •  Region 1 occupies the space where 𝐻 < 𝑧≤𝐻 and has permittivity 𝜀1.                                          2
+    •  Region occupies the space where 0 ≤𝑧< 𝐻/2 and has permittivity 𝜀2.
+The plate at 𝑥= 0 is held at a constant potential 𝑉0, while the plate at 𝑥= 𝐿 is held at a constant potential
+𝑉1. The plates have height 𝐻 in the z-dimension and depth 𝑊 in the y-direction.
+The electric field in region 1 is given by 𝐸⃗1(𝑥) = 𝑉1−𝑉0 𝑥̂.                                                    𝐿
+
+
+
+
+
+a)  [2 pts] Find the electric field, 𝐸⃗2(𝑥), and displacement field, 𝐷⃗⃗2(𝑥), in region 2. Ignore fringing
+    effects.
+
+ Since the dielectric-dielectric interface is parallel to the x-y plane, the electric field in region 1 is tangent
+                      to the interface. Therefore 𝐸⃗1 = 𝐸⃗1𝑡= 𝐸⃗2𝑡= 𝑬⃗⃗𝟐(𝒙) = 𝑽𝟏−𝑽𝟎 𝒙̂                                                                             𝑳
+                The displacement field is given by 𝑫⃗⃗𝟐= 𝜺𝟐𝑬⃗⃗𝟐(𝒙) = 𝜺𝟐 𝑽𝟏−𝑽𝟎 𝒙̂                                                                             𝑳
+
+b)  [4 pts] Using your results from part a), find the total electric energy stored in the region between the
+    conducting plates.
+  The total energy stored between the plates is given by 𝑊𝑒= 1 ∭(𝐷⃗⃗1 ⋅𝐸⃗1)𝑑𝑉1 + 1 ∭(𝐷⃗⃗2 ⋅𝐸⃗2)𝑑𝑉2                                                            2                   2
+
+                                                                                  2                               1 𝐻 𝑊  𝐿    𝑉1−𝑉0    𝑉1−𝑉0            1    𝑉1−𝑉0
+              ∫∫𝐻          For region 1: 𝑊𝑒1 =                               2                                    0 ∫(𝜀10       𝐿  ) ⋅(  𝐿  ) d𝑥d𝑦d𝑧 = 4 𝜀1 (  𝐿  ) 𝐻𝑊𝐿                                        2
+
+
+                             𝐻                                               2                               1                      𝑊  𝐿    𝑉1−𝑉0    𝑉1−𝑉0            1    𝑉1−𝑉0                                         2               ∫∫          For region 2: 𝑊𝑒2 =                               2                                 0  0 ∫(𝜀20       𝐿  ) ⋅(  𝐿  ) d𝑥d𝑦d𝑧 = 4 𝜀2 (  𝐿  ) 𝐻𝑊𝐿
+
+
+                                                         𝟐
+                        Total stored energy: 𝑾𝒆= 𝟏 𝑽𝟏−𝑽𝟎 ) (𝜺𝟏+ 𝜺𝟐)𝑯𝑾𝑳                                       𝟒(  𝑳
+
+
+
+
+
+                                          4
+
+--- PAGE 6 ---
+c)  [2 pts] Find the capacitance of the system using the total stored electric energy method.
+
+                          −𝑉0 2                       2 (1 (𝑉1    ) (𝜀1 + 𝜀2)𝐻𝑊𝐿 )
+       1         2𝑊𝑒     4    𝐿                𝑯𝑾   𝐻𝑊   𝐻𝑊
+  𝑊𝑒=  𝐶𝑉2 →𝐶=   =                   = (𝜺𝟏+ 𝜺𝟐)        𝜀1       𝜀2       2          𝑉2              (𝑉1 −𝑉0)2            𝟐𝑳=  2𝐿+   2𝐿
+
+d)  [2 pts]   Bonus     : Does your result in part c) agree with how parallel capacitances combine
+    according to circuit theory? Explain.
+
+   Yes, capacitances in parallel sum directly and the capacitance of this system is the sum of the
+                     capacitance of region 1 plus the capacitance of region 2.
+
+
+
+
+
+                                          5
+
+--- PAGE 7 ---
+Problem 3: Coaxial Cable – Laplace’s Equation [12 pts]
+
+The coaxial cable below consists of a grounded, inner conductor of radius 𝑎 and an outer conducting shell
+of radius 𝑏, which is held at a constant potential −𝑉0. The space between the conductors 𝑎< 𝑟< 𝑏 has
+no free charge and is filled by a dielectric with permittivity 𝜀.
+
+
+
+
+
+a)  [6 pts] Use Laplace’s or Poisson’s equation to find 𝑉(𝑟 ) in the region 𝑎≤𝑟≤𝑏.
+
+                                    ∇2𝑉(𝑟 ) = 0
+
+   General solution:
+                   1 𝜕 (𝑟𝜕𝑉 = 0 → 𝑟𝜕𝑉   𝐶0 →𝑽(𝒓) = 𝑪𝟎𝐥𝐧𝒓+ 𝑪𝟏                       𝑟 𝜕𝑟   𝜕𝑟)      𝜕𝑟=
+
+   Boundary conditions:
+
+    (1) 𝑉1(𝑟= 𝑎) = 𝟎= 𝑪𝟎𝐥𝐧𝒂+ 𝑪𝟏
+    (2) 𝑉2(𝑟= 𝑏) = −𝑽𝟎= 𝑪𝟎𝐥𝐧𝒃+ 𝑪𝟏
+    (1) – (2): 𝑉0 = 𝐶0 ln (𝑎 →𝐶0 =  𝑉0                     𝑏)          ln(𝑎                                           𝑏)
+    Plugging into (1): 0 =  𝑉0  ln 𝑎+ 𝐶1 →𝐶1 = −  𝑉0  ln 𝑎                              ln(𝑎                         ln(𝑎                                𝑏)                         𝑏)
+
+    Particular solution:
+
+            𝑉0          𝑉0       −𝑽𝟎   𝑉(𝑟) =       ln 𝑟−       ln 𝑎=      𝐥𝐧(𝒓                                     𝒂)            ln (𝑎        ln (𝑎      𝐥𝐧(𝒃            𝑏)        𝑏)        𝒂)
+
+b)  [2 pts] Find the displacement field 𝐷⃗⃗ (𝑟 ) in the region 𝑎≤𝑟≤𝑏.
+
+
+                               −𝜀𝑉0           𝜀𝑉0            𝜺𝑽𝟎       𝐷⃗⃗ (𝑟) = 𝜀𝐸⃗ (𝑟) = −𝜀∇𝑉(𝑟) = −𝑑         ln (𝑟  =      (𝑎 (1   𝑟̂ =      (𝟏  𝒓̂                           𝑑𝑟[         𝑎)]         𝑟) 𝑎)          𝒓)                                 ln(𝑏            ln (𝑏           𝐥𝐧(𝒃                                 𝑎)           𝑎)             𝒂)
+
+c)  [2 pts] Find the charge density on the inner and outer conductors.
+
+    For the inner conductor: 𝐷1𝑛−𝐷2𝑛= 𝜌𝑠𝑎→𝜌𝑠𝑎= 𝐷1𝑛= 𝜺𝑽𝟎 (𝟏                                                                         𝐥𝐧(𝒃  𝒂)                                                                         𝒂)
+
+
+                                          6
+
+--- PAGE 8 ---
+    For the outer conductor: 𝐷1𝑛−𝐷2𝑛= 𝜌𝑠𝑏→𝜌𝑠𝑏= −𝐷2𝑛= − 𝜺𝑽𝟎 (𝟏                                                                              𝐥𝐧(𝒃  𝒃)                                                                              𝒂)
+
+d)  [2 pts] Find the capacitance per unit length of the coaxial cable.
+
+
+       𝑄   𝐴𝜌𝑠𝑎   2𝜋𝑎𝜌𝑠𝑎   2𝜋𝑎 𝜀𝑉0  1     𝟐𝝅𝜺
+  𝐶= 𝑉= 𝑉0𝐿=   𝑉0  =  𝑉0 ln(𝑏 (𝑎) = 𝐥𝐧(𝒃                                       𝑎)           𝒂)
+
+
+
+
+
+                                          7
+
+--- PAGE 9 ---
+Problem 4: Superposition of Electric Fields [10 pts]
+
+Two conducting spheres of radius 𝑎 are located on the x-axis: One sphere is located at 𝑥= −𝑑 and has
+total surface charge 𝑄, while the other sphere is located 𝑥= 𝑑 and has total surface charge −𝑄.
+A diagram of this system is shown below.
+
+
+
+
+
+a)  [2 pts] First, consider a conducting sphere of radius 𝑎 and total surface charge 𝑄 located at the origin.
+    Find the electric field due to this sphere for 𝑟> 𝑎 (outside the sphere).
+
+   Using Gauss’s law ∬𝐷⃗⃗ ⋅𝑑𝑠 = 𝑄𝑒𝑛𝑐 and a Gaussian sphere of radius 𝑅> 𝑎:
+
+                   2𝜋  𝜋
+       ∬𝐷⃗⃗ ⋅𝑑𝑠 = ∫                  ∫𝐸(𝑅)𝑟̂                          ⋅𝑅2 sin𝜃d𝜃d𝜙𝑟̂ = 4𝜋𝐸(𝑅)𝑅2 and 𝑄𝑒𝑛𝑐= 𝑄                    0                        0
+       Solving for the electric field: 𝑬⃗⃗(𝒓) =  𝑸                                              𝟒𝝅𝜺𝟎𝒓𝟐𝒓̂
+
+b)  [4 pts] Find the total electric field due to both of the conducting spheres in the figure above at the
+    observation point 𝑃= (0,0, 𝑧). You must express your answer in terms of cartesian coordinates.
+
+    Vector pointing from origin to observation point P: 𝑟 =< 0,0, 𝑧>
+
+    Electric field of sphere with charge Q
+
+       Vector pointing from origin to sphere with charge Q: 𝑟0+ =< −𝑑, 0,0 >
+
+       Vector pointing from center of sphere with charge Q to P: 𝑟+′ =< 𝑑, 0, 𝑧>
+
+                  𝑄         𝑄          𝑸
+                     𝐸⃗+(𝑟) =                     𝑟̂+′ =          3 𝑟+′ =               𝟑 < 𝒅, 𝟎, 𝒛>
+                                                                      𝟐                      4𝜋𝜀0|𝑟+ ′|2     4𝜋𝜀0|𝑟+ ′|     𝟒𝝅𝜺𝟎(𝒅𝟐+ 𝒛𝟐)
+
+    Electric field of sphere with charge -Q
+
+       Vector pointing from origin to sphere with charge -Q: 𝑟0−=< 𝑑, 0,0 >
+       Vector pointing from center of sphere with charge -Q to P: 𝑟−′ =< −𝑑, 0, 𝑧>
+
+                −𝑄       −𝑄         𝑸
+                     𝐸⃗−(𝑟) =                       𝑟̂−′ =          3 𝑟−′ =               𝟑 < 𝒅, 𝟎, −𝒛>
+                                                                     𝟐                     4𝜋𝜀0|𝑟− ′|2     4𝜋𝜀0|𝑟− ′|     𝟒𝝅𝜺𝟎(𝒅𝟐+ 𝒛𝟐)
+
+
+
+
+
+                                          8
+
+--- PAGE 10 ---
+    Total electric field due to both spheres
+
+                                       𝑸𝒅
+                                                        𝑬⃗⃗𝒕𝒐𝒕(𝒓) = 𝑬⃗⃗+(𝒓) + 𝑬⃗⃗−(𝒓) =               𝟑 𝒙̂
+                                         𝟐𝝅𝜺𝟎(𝒅𝟐+ 𝒛𝟐)𝟐
+
+
+c)  [1 pt] A point charge with charge −𝑄 is now placed at observation point 𝑃. What is the force on the
+    point charge due to the two conducting spheres?
+
+                                𝑄𝑑             𝑸𝟐𝒅
+             𝐹 (𝑟) = 𝑞𝐸⃗ (𝑟) = −𝑄∗               3 𝑥̂ = −               𝟑 𝒙̂
+                                   2𝜋𝜀0(𝑑2 + 𝑧2)2     𝟐𝝅𝜺𝟎(𝒅𝟐+ 𝒛𝟐)𝟐
+
+d)  [2 pts] Set up an integral for calculating the potential difference between the origin 𝑂= (0,0,0) and
+    the observation point 𝑃= (0,0, 𝑧). You do not need to solve it!
+
+                                                   𝒛    𝑸𝒅
+                    𝑽(𝑷) −𝑽(𝑶) = −∫                          𝒙̂ ⋅𝒅𝒛𝒛̂ = 𝟎                                                            𝟑
+                                           𝟎 𝟐𝝅𝜺𝟎(𝒅𝟐+ 𝒛𝟐)𝟐
+
+e)  [1 pt] In electrostatics, does the path of integration matter when calculating potential differences?
+   Which of Maxwell’s equations for electrostatics tells us this?
+
+   No, the path does not matter. ∮𝑬⃗⃗ ⋅𝒅𝒍 = 𝟎 tells us that we can take any path we want, but only
+    the evaluation of the integral at the end points matters.
+
+
+
+
+
+                                          9

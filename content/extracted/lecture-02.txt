@@ -1,0 +1,679 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 2
+Sine Waves on Transmission Lines I
+                                          Alex Patterson
+                     Electrical, Computer, and Systems Engineering Department
+                                 Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+
+   ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   ▪  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   ▪   Jeffrey Braunstein – ECE Department, University at Albany
+   ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+   Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+                    Fields and Waves I                           2
+
+--- PAGE 3 ---
+Overview
+
+
+•  Transmission Line History
+•  Transmission Line Model
+•  Telegrapher’s Equations: Time
+  Domain
+•  Traveling Waves
+•  Telegrapher’s Equations: Phasor
+  Domain
+
+
+
+                                Fields and Waves I                           3
+
+--- PAGE 4 ---
+Transmission Line History Review
+
+• One of the first practical applications of circuit theory was the telegraph (1816)
+•  Long telegraph cables suffered from problems:
+    •  Voltage drop due to resistance
+    •  Signal delay
+    •  Signal distortion
+ •  The equations that made up this model became known as the Telegrapher’s
+   Equations
+ •  These equations allowed for intercontinental telegraph lines to develop, and they
+   are used for many modern applications such as CPU microstrip lines
+
+
+
+
+                                Fields and Waves I                           4
+
+--- PAGE 5 ---
+Transmission Line Model
+
+--- PAGE 6 ---
+Transmission Line Model
+
+•  The purpose of a transmission line is to transmit signal and/or
+  power from one place to another.
+
+•  Examples include:
+    •  Power Lines (60Hz)
+    •  Coaxial Cables
+    •  Twisted Pairs
+    •  Interconnects inside a computer
+
+•  Note that these all have two conductors.
+
+•  In transmission line theory, we represent a transmission line as having
+   certain properties per unit length.
+
+
+                                 Fields and Waves I                           6
+
+--- PAGE 7 ---
+Transmission Line Model (2-Port Network)
+
+
+
+
+
+                                  Transmission
+                                      Line
+                                      (T-Line)
+
+
+
+
+
+                                 Fields and Waves I                           7
+
+--- PAGE 8 ---
+Transmission Line Model
+
+
+              Cables have both Land C:
+
+            2 wire example:
+
+         C                                       C between                                                                            conductors
+
+
+
+
+
+                                                                          L is a series           L                                                                                            effect
+
+
+
+                                 Fields and Waves I                           8
+
+--- PAGE 9 ---
+Transmission Line Model
+
+
+                                                  𝑙
+  Model of a short section:
+                                         𝑐
+
+
+
+
+  Model the full length as:
+
+                           𝑙            𝑙            𝑙            𝑙
+
+                                                                  ….etc.                        𝑐        𝑐        𝑐        𝑐
+
+
+
+                                 Fields and Waves I                           9
+
+--- PAGE 10 ---
+Transmission Line Model
+
+
+SinceLand Care distributed through the length of the cable rather than discrete lumps of
+inductance/capacitance,
+
+                 𝒍and 𝒄are defined per unit length of cable
+
+
+
+If Δz represents a length of cable:
+
+               𝑙⋅𝛥𝑧
+                              = inductance/length                                                 𝑙
+                    𝑐⋅𝛥𝑧                                 𝑐  = capacitance/length
+
+
+
+                                  Fields and Waves I                           10
+
+--- PAGE 11 ---
+Transmission Line Model
+
+
+
+
+
+  •   If transmission lines have no losses → treat them as a “black box” with just two
+     quantities: the time delay, and the characteristic impedance.
+  •  Time delay: how long a signal takes to propagate through the line. (Keep in mind
+     that for higher frequency AC signals, a small time delay can mean a big phase
+    change).
+  •  Characteristic impedance: the voltage-to-current ratio for a signal on the line, or,
+    what the impedance of the line “looks like” to a signal entering the line when there
+      is no signal on it
+
+                                 Fields and Waves I                           11
+
+--- PAGE 12 ---
+Transmission Line Model
+
+
+
+ •  This simple “black box” analysis is good enough for some purposes, such as
+    calculating how long a signal will take to reach its destination.
+
+ •  Complete analysis of transmission lines means being able to calculate the voltage
+   and current anywhere on the line at any time. We do this using the Telegrapher’s
+   Equations.
+
+
+
+
+
+                                 Fields and Waves I                           12
+
+--- PAGE 13 ---
+Transmission Line Model
+
+ •  Heaviside et. al. derived the telegrapher’s
+    equations by thinking of the lumped-element
+    transmission line and letting the length that each
+   element represented approach zero.
+
+
+
+ •  This is a bit like the rectangle area approximation
+   method of integrals in calculus.
+
+
+
+
+
+                                 Fields and Waves I                           13
+
+--- PAGE 14 ---
+Telegrapher’s Equations: Time Domain
+
+--- PAGE 15 ---
+Telegrapher’s Equations
+
+
+                                    Applying Kirchhoff’s voltage law:
+
+        𝑙
+  z                   z + Δz
+                                    Rearranging:
+               𝑐
+
+
+
+                                       Letting Δz → 0:
+
+
+
+
+
+                                 Fields and Waves I       15
+
+--- PAGE 16 ---
+Telegrapher’s Equations
+
+
+                                    Applying Kirchhoff’s current law:
+        𝑙                      𝐼𝑧, 𝑡−𝑐Δ𝑧𝜕𝑉𝑐         Δ𝑧, 𝑡= 0                          𝜕𝑡−𝐼𝑧+
+  z                   z + Δz
+                   𝐼𝑧+ Δ𝑧, 𝑡−𝐼𝑧, 𝑡              𝑡)            𝑰𝒛+ 𝚫𝐳, 𝒕      𝑰𝒛, 𝒕                          = −𝑐𝜕𝑉𝑐(𝑧,
+               𝑐                Δ𝑧                𝜕𝑡
+                                         Similarly letting Δz → 0:                 𝑰𝒄
+
+                            𝜕𝐼𝑧, 𝑡              𝑡)                        = −𝑐𝜕𝑉𝑐(𝑧,     𝐶𝑑𝑉𝑐 𝐼𝑐=                              𝜕𝑧          𝜕𝑡       𝑑𝑡
+
+
+
+                                 Fields and Waves I       16
+
+--- PAGE 17 ---
+Telegrapher’s Equations
+
+
+        𝜕        𝑡= −𝑙𝜕   𝑡−𝑟𝐼𝑧, 𝑡       𝜕𝑧𝑉𝑧,       𝜕𝑡𝐼𝑧,
+        𝜕       𝑡= −𝑐𝜕    𝑡−𝑔𝑉(𝑧, 𝑡)       𝜕𝑧𝐼𝑧,      𝜕𝑡𝑉𝑧,
+
+
+           These equations are clearly coupled… so how do we
+                          actually find V(z,t) and I(z,t)?
+
+
+                                 Fields and Waves I                           17
+
+--- PAGE 18 ---
+Telegrapher’s Equations
+
+  To find the solution, combine the two equations:
+
+                                             𝜕2              𝜕          Differentiate (1) with respect to z:         𝑉𝑧, 𝑡= −𝑙𝜕         𝑡)                                             𝜕𝑧2           𝜕𝑧  𝜕𝑡𝐼(𝑧,
+
+
+                                             𝜕2              𝜕         Plug in (2):                              𝐼𝑧, 𝑡= −𝑐𝜕          𝑡                                             𝜕𝑧2          𝜕𝑧 𝜕𝑡𝑉𝑧,
+
+
+  We obtain the following PDE:
+
+                        𝜕2                       𝑉𝑧, 𝑡= 𝑙𝑐𝜕2 𝑉(𝑧, 𝑡)
+                       𝜕𝑧2           𝜕𝑡2
+
+                                  This is a wave equation!
+
+                                 Fields and Waves I                           18
+
+--- PAGE 19 ---
+Traveling Waves
+
+--- PAGE 20 ---
+Traveling Waves
+
+ The “Waves” Part of Fields & Waves
+
+ Electromagnetic fields propagate as waves. They are governed by the electromagnetic
+wave equations, which are derived from Maxwell’s Equations and can be written as:
+
+
+
+
+
+ where c is the speed of light / EM waves. (Note that c
+ depends on  the medium  the wave  is  propagating
+
+                                                                                                                                       Source: through!)                                                                                                                            https://en.wikipedia.org/wiki/Electrom
+                                                                                                                                                 agnetic_radiation
+
+
+                                 Fields and Waves I                           20
+
+--- PAGE 21 ---
+Traveling Waves
+
+ • Rearranging our equation:
+
+         𝜕2𝑉              𝜕2𝑉   1 𝜕2𝑉       𝜕2𝑉     𝜕2𝑉         = 𝑙𝑐𝜕2𝑉        =            = 𝑢2
+          𝜕𝑧2     𝜕𝑡2         𝜕𝑡2    𝑙𝑐 𝜕𝑧2         𝜕𝑡2     𝜕𝑧2
+
+
+     In this standard form of the wave equation, urepresents velocity. So for
+                     our transmission line voltage waves,
+
+                        1
+              𝑢=
+                                   𝑙𝑐
+
+
+                                 Fields and Waves I                           21
+
+--- PAGE 22 ---
+Traveling Waves
+
+ Sinusoids represent a solution to these equations:
+           𝑣𝑧, 𝑡= 𝐴cos 𝜔𝑡∓𝜔    𝐴cos 𝜔𝑡∓𝛽𝑧                𝑢𝑧=
+
+                             𝜔
+                       𝛽=         𝜔= 2𝜋𝑓
+                                    𝑢
+
+
+
+                    phase constant                                                                             angular velocity
+                                                                (change in phase per unit time)
+                     (change in phase per unit length)                     =
+                                                                wave velocity
+                                                                                   (unit length per unit time)
+
+                                 Fields and Waves I                           22
+
+--- PAGE 23 ---
+Traveling Waves
+
+ Sinusoids represent a solution to these equations:
+          𝑣𝑧, 𝑡= 𝐴cos 𝜔𝑡∓𝜔    𝐴cos 𝜔𝑡∓𝛽𝑧                𝑢𝑧=
+
+                             𝜔
+                       𝛽=         𝜔= 2𝜋𝑓
+                                    𝑢
+
+   Also note that the sign in front of the phase constant (and therefore the wave velocity)
+   can be either positive or negative. This represents the fact that the wave can be traveling
+                                    either forward or backward.
+
+   •   If the phase constant has a + sign in front of it, the wave is traveling in the “-z” direction
+   •   If the phase constant has a – sign in front of it, the wave is traveling in the “+z” direction
+
+                                 Fields and Waves I                           23
+
+--- PAGE 24 ---
+Traveling Waves
+
+                               Traveling wave (depends on t and z in the
+                              argument of one sinusoid)
+
+                                  𝐴cos(𝜔𝑡∓𝛃𝑧)
+
+                                         in other words you can relate t and z with u.
+
+
+                            Standing wave (depends on t and z but as
+                             two different terms)
+
+                                           𝐴sin(𝜔𝑡)cos(𝛃𝑧)
+
+                           No relationship between t and z.
+
+
+                                 Fields and Waves I                           25
+
+--- PAGE 25 ---
+Traveling Waves
+
+                          𝐴cos(𝛃𝑧)
+
+
+
+
+
+                                                                                                  z
+              A static sine wave varies in space but not time.
+
+
+                  What would A sin(ωt) look like?
+
+          Does not vary in space: value that increases and decreases
+              sinusoidally everywhere at the same time – not a wave in
+                              the physical sense
+
+
+                                 Fields and Waves I                           26
+
+--- PAGE 26 ---
+Traveling Waves
+
+                cos 𝜔𝑡−𝜔    cos(2𝜋𝑓𝑡−2𝜋𝑓             𝑢𝑧=        𝑢𝑧)
+
+•  Consider one other property. What is the distance required to change
+  the phase of this expression by 2𝜋?
+
+
+•  In other words, this is an expression for wavelength.
+
+
+
+
+
+                                 Fields and Waves I       27
+
+--- PAGE 27 ---
+Traveling Waves
+Some Properties Summarized
+Solutions look like 𝐴cos(𝜔𝑡∓𝛽𝑧)
+
+
+
+ Phase constant
+
+
+
+ Frequency
+
+
+
+ Wavelength
+
+                                                                                         Figure from http://www.emc.maricopa.edu/
+
+
+ Velocity
+
+
+                                 Fields and Waves I       28
+
+--- PAGE 28 ---
+Traveling Waves
+
+
+
+
+
+               Do Lecture 02 Exercise on Gradescope
+
+
+
+
+
+                                 Fields and Waves I       29
+
+--- PAGE 29 ---
+Telegrapher’s Equations: Phasor Domain
+
+--- PAGE 30 ---
+Phasor Notation
+
+• What are phasors?
+•  In short, they are the periodically time-variant version of vectors.
+•  Working in phasor domain temporarily collapses the periodic time-variant
+  component, allowing a linear expression to be written.
+•  This is useful for solving current or voltage expressions in linear circuits (see
+  Ulaby pg. 38-41… see ECSE 2010)
+•  Especially useful in power engineering, where electric grids can contain many
+   different time-varying voltages/currents
+                             ~
+
+
+
+                                 Fields and Waves I       31
+
+--- PAGE 31 ---
+Phasor Notation
+
+•  At right is a visualization of phasor addition.
+
+•  Working in phasor domain allows you to add these two
+   sinusoidal functions together easily without dealing
+   with sine and cosine addition formulas, etc.
+
+• Many useful properties can be derived for converting
+  between phasor and time domain (see Ulaby pg. 40)
+
+
+
+
+
+                                                                                                   https://en.wikipedia.org/wiki/File:Sumafasores.gif
+
+                                 Fields and Waves I       32
+
+--- PAGE 32 ---
+Phasor Notation
+
+• To convert to phasor form from space-time form, phase shift to obtain a
+   cosine, drop the time-component of the phase, then write the remaining
+  phase in a complex exponential
+
+        𝑓𝑧, 𝑡= 𝐴cos 𝜔𝑡∓𝛽𝑧+ 𝜃= 𝐴𝑒𝑗∓𝛽𝑧+𝜃
+
+
+•  If A is complex,
+                𝐴= 𝐴𝑒𝑗𝜙
+
+       𝑓𝑧, 𝑡= 𝐴cos 𝜔𝑡∓𝛽𝑧+ 𝜃= |𝐴|𝑒𝑗∓𝛽𝑧+𝜃+𝜙
+
+                                 Fields and Waves I       33
+
+--- PAGE 33 ---
+Phasor Notation
+
+• To convert to space-time form from the phasor form, multiply by 𝑒𝑗𝜔𝑡
+  and take the real part.
+                  ~
+
+
+•  If A is complex,
+
+                        ሚ𝐴= ሚ𝐴𝑒𝑗𝜃
+               ~            ~
+
+
+
+
+                                 Fields and Waves I       34
+
+--- PAGE 34 ---
+Phasor Notation
+Example
+
+A phasor voltage is given by:
+
+• How do we find V(z,t)?
+
+
+
+
+
+                                 Fields and Waves I       35
+
+--- PAGE 35 ---
+Telegrapher’s Equations: Phasor Notation
+
+ •  In phasor form, the 1st order differential equations from KVL and KCL are:
+
+
+
+
+ • We have the following phasor property:
+
+    𝑑
+              𝑡     𝑗𝜔෨𝑉   𝑑𝑡𝑉𝑧,
+
+ •  Therefore:
+
+
+
+
+                                 Fields and Waves I       36
+
+--- PAGE 36 ---
+Telegrapher’s Equations: Phasor Notation
+
+•  Combining the two equations, we get two wave equations:
+
+
+
+
+
+ •  We make a substitution:
+
+         𝑢2 = (𝑗𝜔𝑙)(𝑗𝜔𝑐)                  𝑢= 𝑗𝜔𝑙𝑐= 𝑗𝛽
+
+
+                                 Fields and Waves I       37
+
+--- PAGE 37 ---
+Telegrapher’s Equations: Phasor Notation
+•  General solutions of these wave equations (from differential equations):
+
+
+
+
+
+ •  Combining these with our earlier equations...
+
+
+
+ … we can now derive:
+
+
+                                                                               -
+
+
+                                 Fields and Waves I       38
+
+--- PAGE 38 ---
+Telegrapher’s Equations: Phasor Notation
+
+• Our two phasor expressions are now related....
+
+
+
+
+
+                                                                                  -
+
+• … such that the voltage/current ratio for a given traveling wave is a constant.
+   (In other words, we have an expression for impedance!)
+
+
+      𝑍0 =
+
+
+
+                                 Fields and Waves I       39
+
+--- PAGE 39 ---
+Telegrapher’s Equations: Phasor Notation
+•  As we discussed earlier, one high-level property of transmission lines is their
+  characteristic impedance, Z0.
+
+
+                                                           𝑙
+                                𝑍0 =
+                                         𝑐
+
+•  Characteristic impedance can be described in a few ways:
+    • The impedance that a signal “sees” at the input of transmission line when
+      the load is far away (no signal on it)
+    • The ratio of voltage and current amplitudes for a signal propagating on
+      the line (think Ohm’s Law)
+
+
+                                 Fields and Waves I       40
+
+--- PAGE 40 ---
+Wrap-Up
+
+ •  Studio session #1 on Wednesday. Bring your laptops with
+    LTspice installed!
+
+ • My office hours: Tuesdays, 4pm – 6pm
+
+
+
+
+
+                                 Fields and Waves I       41

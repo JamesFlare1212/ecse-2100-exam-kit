@@ -1,0 +1,961 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 3
+Sine Waves on Transmission Lines II
+
+                                            Alex Patterson
+                       Electrical, Computer, and Systems Engineering Department
+                                   Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following
+people:
+
+   •  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   •   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+   •  Thomas P. Crowley – National Institute of Standards and Technology,
+     Boulder, CO
+   •  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY (Emeritus)
+   •  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+   •   Jeffrey Braunstein – ECE Department, University at Albany
+   •  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy,
+    NY
+   •  James Dylan Rees - ECSE Department, Rensselaer Polytechnic
+      Institute, Troy, NY
+   •  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute,
+     Troy, NY
+
+   Materials from other sources are referenced where they are used.
+  Those listed as Ulaby are figures from Ulaby’s textbook.
+                    Fields and Waves I                           2
+
+--- PAGE 3 ---
+Outline
+
+•  Reflections on Transmission Lines
+
+•  Reflection and Standing Waves
+
+•  Generalized Impedance
+
+•  Input Impedance
+
+
+
+
+
+                                 Fields and Waves I       3
+
+--- PAGE 4 ---
+Review
+
+ Model the full length of lossless transmission line as:
+                      𝑙            𝑙            𝑙            𝑙
+
+                                                              ….etc.                     𝑐        𝑐        𝑐        𝑐
+
+
+ Using KVL and KCL, we derived two differential equations in terms of
+ voltage and current on the transmission line
+
+           𝜕          𝑡= −𝑙𝜕     𝑡          𝜕𝑧𝑉𝑧,       𝜕𝑡𝐼𝑧,                                                  𝜕2                                             𝑉𝑧, 𝑡= 𝑙𝑐𝜕2 𝑉(𝑧, 𝑡)
+           𝜕                                 𝜕𝑧2           𝜕𝑡2          𝑡= −𝑐𝜕      𝑡           𝜕𝑧𝐼𝑧,      𝜕𝑡𝑉𝑧,                                                        This is a wave equation!
+
+                                 Fields and Waves I                           4
+
+--- PAGE 5 ---
+Review
+
+ •  The solutions take the form of traveling waves:
+                                                                               Figure from http://www.emc.maricopa.edu/
+             𝐴cos(𝜔𝑡∓𝛽𝑧)                                                          Phase constant
+
+ •  Another way to write this equation is:
+
+                                                             Frequency               𝐴cos 𝜔𝑡∓𝛽𝑧
+
+
+ •  T is the time period, λ is the wavelength
+                                                           Wavelength
+
+ •  Therefore the first term in the argument tells
+   us how rapidly the wave changes in time. The
+                                                                       Velocity
+   second tells us how rapidly it changes in space.
+
+                                 Fields and Waves I                           5
+
+--- PAGE 6 ---
+Review
+In the phasor domain, the solutions to the Telegrapher’s equations take the form:
+
+
+
+
+
+                                                                                 -
+
+
+… such that the voltage/current ratio for a given traveling wave is a constant. (This is the
+expression for characteristic impedance - The impedance that a signal “sees” at the input
+of transmission line when the load is far away (when there is no signal on it)
+
+     𝑍0 =
+
+
+                                 Fields and Waves I       6
+
+--- PAGE 7 ---
+Wave Reflection
+
+--- PAGE 8 ---
+Wave Reflection
+
+
+
+
+
+  • When light enters a prism, some light will be transmitted and some will be
+     reflected. This is because the impedance of the prism to light is different to
+    that of air.
+
+  •  Likewise, a signal that travels down a transmission line will reflect at the load
+       if the characteristic impedance of the line and the impedance of the
+   load are not the same.
+                                                                              8
+
+--- PAGE 9 ---
+Wave Reflection
+
+
+
+
+                        Incident Wave
+
+                                    MismatchedLoadZL
+             TransmissionLineZ0                                         ZL≠Z0
+
+                        Reflected Wave
+
+
+
+ These two waves interfere with each other and can produce a standing wave.
+
+
+
+                                  Fields and Waves I       9
+
+--- PAGE 10 ---
+Wave Reflection
+
+
+
+
+
+ These two waves interfere with each other and can produce a standing wave.
+
+
+
+                                  Fields and Waves I       10
+
+--- PAGE 11 ---
+Wave Reflection
+
+•  With a reflected wave term, the total voltage phasor on the line is:
+
+
+
+                                         0                  0
+
+
+
+                             TIME DOMAIN
+
+• The forward- and backward-moving waves will interfere on the line:
+
+     Vmax occurs when forward and backward waves are in phase
+                 CONSTRUCTIVEINTERFERENCE
+     Vmin occurs when forward and backward waves are out of phase
+                  DESTRUCTIVEINTERFERENCE
+                                                                        11
+
+--- PAGE 12 ---
+                                                 +Wave Reflection                                              𝑽𝟎
+•  So, how much gets reflected?
+
+•  Define the Reflection Coefficient 𝝘:
+                              −=   +                                           𝑽𝟎   𝚪𝐕𝟎
+
+
+
+•  This can be done in terms of either current or voltage:
+
+                        -
+
+
+
+
+                                  Fields and Waves I       12
+
+--- PAGE 13 ---
+Wave Reflection
+
+• We can define load impedance as follows:
+
+
+
+• Meanwhile we previously said (general solution to Telegrapher’s Equations):
+
+         ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+  −𝑒+𝑗𝛽𝑧                      𝑉0         𝑉0
+
+          ሚ𝐼𝑧=                          𝐼0+𝑒−𝑗𝛽𝑧−𝐼0−𝑒+𝑗𝛽𝑧
+
+
+
+
+                                  Fields and Waves I       13
+
+--- PAGE 14 ---
+Wave Reflection                                      ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+  −𝑒+𝑗𝛽𝑧                                                                      𝑉0         𝑉0
+ • When z=0 (i.e. we are at the load), we get:     ሚ𝐼𝑧=           −𝑒+𝑗𝛽𝑧                                                                                      𝐼0+𝑒−𝑗𝛽𝑧−𝐼0
+
+                                                                                            +                       ++           ෨𝑉𝐿= ෨𝑉𝑧=          −                                 𝑉0                   0 = 𝑉0
+                                                                                                    Z0        VL    ZL
+                         +    −                                                                                                                                                                 -                           𝑉0             ሚ𝐼𝑧= 0 =   −𝑉0            ሚ𝐼𝐿=
+                          𝑍0   𝑍0                             z=-L                   z=0
+ •  Calculating ZL:
+
+                      +    −                +                   ෨𝑉𝐿         𝑉0   𝑉0
+         = 𝑍𝐿=   +   −𝑍0                        ሚ𝐼𝐿          𝑉0 −𝑉0
+                                                Reflection Coefficient •  Doing some algebra...
+                                       𝑍𝐿−𝑍0
+                            Γ =
+                                       𝑍𝐿+𝑍0
+                                  Fields and Waves I       14
+
+--- PAGE 15 ---
+Wave Reflection
+
+•  At short circuit, load impedance is zero.
+
+                                                                                           +
+                                                                                                    Z0       VL   𝒁𝑳= 𝟎
+                                                                                                                                                                -
+
+                                                                                     z=-L                   z=0
+
+
+•  At open circuit, load impedance is verybig.
+
+
+
+                                                                                             +
+                                                                                                      Z0        VL  𝒁𝑳→∞
+                                                                                                                                                                    -
+
+                                                                                       z=-L                   z=0
+
+
+                                  Fields and Waves I       15
+
+--- PAGE 16 ---
+Reflection and Standing Waves
+
+--- PAGE 17 ---
+Reflection and Standing Waves
+
+
+
+
+
+                                Fields and Waves I       17
+
+--- PAGE 18 ---
+Reflection and Standing Waves
+Deriving a Standing Wave Expression
+
+•  Voltage general wave solution (as a phasor):
+
+           ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+  −𝑒+𝑗𝛽𝑧                         𝑉0         𝑉0
+
+•  Using the reflection coefficient:
+           ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+   +𝑒+𝑗𝛽𝑧                         𝑉0        Γ𝑉0
+
+
+
+
+
+                                Fields and Waves I       18
+
+--- PAGE 19 ---
+Reflection and Standing Waves
+Short Circuit Load Case
+                   𝑍𝐿−𝑍0  0 −𝑍0
+•  For ZL=0, we have     Γ =     =    = −1
+                  𝑍𝐿+ 𝑍0  0 + 𝑍0
+
+•  Plugging in Γ = 1 and converting to the sinusoidal form:
+      ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+   +𝑒+𝑗𝛽𝑧=  +(𝑒−𝑗𝛽𝑧−𝑒+𝑗𝛽𝑧)                 𝑉0        Γ𝑉0         𝑉0
+                𝑒+𝑗𝛽𝑧= cos(𝛽𝑧) + 𝑗sin 𝛽𝑧
+
+                𝑒−𝑗𝛽𝑧= cos(𝛽𝑧) −𝑗sin 𝛽𝑧
+
+              ෨𝑉𝑧=     + sin 𝛽𝑧                           −𝑗2𝑉0
+
+                                Fields and Waves I       19
+
+--- PAGE 20 ---
+Reflection and Standing Waves
+Short Circuit Load Case
+
+•  Convert to space-time form
+            ෨𝑉𝑧, 𝑡= 𝑅𝑒෨𝑉𝑒𝑗𝜔𝑡=         +sin(𝛽𝑧)𝑒𝑗𝜔𝑡                          𝑅𝑒−𝑗2𝑉0
+
+
+
+
+                  ෨𝑉𝑧, 𝑡=   + sin 𝛽𝑧sin 𝜔𝑡                         2𝑉0
+
+•  Is this is a standing wave? How do we know?
+
+
+
+                                Fields and Waves I       20
+
+--- PAGE 21 ---
+Reflection and Standing Waves
+Short Circuit Load Case
+
+                             We can characterize the extent to
+                                         which a wave has non-traveling-
+                                        wave properties via its
+                                         Standing Wave Ratio
+
+
+                                    SWR =
+
+
+
+
+
+                                                Load
+
+  This is a voltage standing wave plot - a plot of the maximum magnitude
+  of the sum of the forward and backward moving waves at each position along
+                      the transmission line :max | ෨𝑉(𝑧)|                    21
+
+--- PAGE 22 ---
+Reflection and Standing Waves
+Short Circuit Load Case
+
+• What are the voltage maxima and minima of the standing wave pattern?
+              𝑉𝑧, 𝑡= 2𝑉+ sin 𝛽𝑧sin 𝜔𝑡
+
+•  Voltage minima: 𝛽z = 0, 𝝿, 2𝝿, etc. (where sin = 0)
+      Since 𝛽=2𝝿/λ,
+       z = 0, λ/2, λ, 3λ/2, etc.
+
+•  Voltage maxima: 𝛽z = 𝝿/2, 3𝝿/2, etc. (where sin = 1)
+       z = λ/4, 3λ/4, 5λ/4, etc.
+
+In general, standing wave patterns will repeat every half wavelength of
+   the input signal, and every quarter wavelength they will alternate
+                 between maxima and minima.
+                                                                      22
+
+--- PAGE 23 ---
+Reflection and Standing Waves
+
+• The standing wave pattern is the envelope of the total voltage
+   or current function - a graph of its maximum magnitude at each
+   point on the z-axis (over time)
+
+
+
+
+
+                           t = t1                                                            t = t4
+
+
+
+
+                           t = t2                                                            t = t5
+
+
+
+
+                                                                                             t = t6                          t = t3
+
+                                Fields and Waves I       23
+
+--- PAGE 24 ---
+ Reflection and Standing Waves
+
+
+                                              Z0 = 50Ω
+                                                                  •  First, what is the SWR?
+
+
+
+
+
+Let’s say that you’re given a standing wave graph like the one above and Z0 of the line, but no
+other information. How do you extract key wave / line parameters?
+                                 Fields and Waves I       24
+
+--- PAGE 25 ---
+Reflection and Standing Waves
+
+•  Next, what is the reflection coefficient? Z0 = 50 Ω
+
+
+
+
+
+                                Fields and Waves I       25
+
+--- PAGE 26 ---
+Reflection and Standing Waves
+
+
+                                              Z0 = 50Ω
+                                 1
+                             Γ = ±
+                                 2
+                                        To figure out the sign of Γ,
+
+                                                  look at whether the load end
+                                                      of the graph is a maximum
+                                           or a minimum.
+
+
+
+                                Fields and Waves I       26
+
+--- PAGE 27 ---
+Reflection and Standing Waves
+•  Let’s look at the expression for voltage at the load again to help us out:
+
+         𝑉𝑧=  +𝑒−𝑗𝛽𝑧+    +𝑒+𝑗𝛽𝑧                           𝑉0         ΓL𝑉0
+
+                                        At the load,
+                         +     +
+           𝑉0 = 𝑉0 + Γ𝐿𝑉0
+
+Therefore:
+•  If the load is not matched to the line, and it’s a resistive load, there will be
+   either a voltage maximum or voltage minimum at the load.
+•  If the load has a voltage maximum (meaning V(0) >  +), then 𝚪is positive                                                         𝑉0
+•  If the load has a voltage minimum (meaning V 0 <  +), then 𝚪is negative                                                         𝑉0
+
+                                Fields and Waves I       27
+
+--- PAGE 28 ---
+Reflection and Standing Waves
+
+
+                                              Z0 = 50Ω
+                                 1
+                             Γ = ±
+                                 2
+                                         So what is Γ for this line?
+
+
+
+
+
+                                Fields and Waves I       28
+
+--- PAGE 29 ---
+Reflection and Standing Waves
+• We can now calculate the load impedance:
+
+
+
+
+
+                                Fields and Waves I       29
+
+--- PAGE 30 ---
+ Reflection and Standing Waves
+
+ Short-Circuit Load Standing Wave    Open-Circuit Load Standing Wave
+
+
+
+
+
+                                      Load                                                    Load
+
+•  Note that standing wave patterns of pure standing waves have an SWR of
+   infinity since Vmin = 0.
+•  The standing wave patterns are identical except for a quarter-wavelength
+                                                                          30  phase shift.
+
+--- PAGE 31 ---
+Reflection and Standing Waves
+• What will the standing wave pattern look like on a matched
+  transmission line Z0 = ZL ?
+
+
+
+
+
+                                Fields and Waves I       31
+
+--- PAGE 32 ---
+Reflection and Standing Waves
+•  In most practical applications, we try to minimize standing wave ratio
+   since this represents power reflected away from the load
+
+•  If the voltage maxima created by a standing wave pattern exceed the rated
+  voltage of a transmission line, it can also cause the transmission line to fail.
+
+• The SWR of real lines can be measured using several different devices and
+  methods
+
+                    Directional Coupler         Spectrum Analyzer
+
+
+
+
+
+                                                                                                               aliexpress.com
+                                                krytar.com
+                                                                    34
+
+--- PAGE 33 ---
+Form into group of up to 4 and do Lecture 03 Exercise 1
+                 on Gradescope.
+
+
+
+
+
+                   Fields and Waves I       35
+
+--- PAGE 34 ---
+Generalized Impedance
+  (Wave Impedance)
+
+
+
+
+
+                             36
+
+--- PAGE 35 ---
+Generalized Impedance (Wave Impedance)
+ • We already saw that:
+
+                                                      ሚ𝐼(𝑧= −𝑑)
+
+                                    +          +
+                                                   VI   ෨𝑉(𝑧= −𝑑) Z0                  ෨𝑉𝐿   ZL     ሚ𝐼𝐿
+                                    −          −
+
+                                                       z=-d          z=0
+
+ •  But we should also be able to
+   state more generally for any z=d,
+   where “d” is some distance away
+   from the load end of the t-line:
+
+ •  It’s not clear yet what an impedance like this actually represents.
+
+                                Fields and Waves I       37
+
+--- PAGE 36 ---
+Generalized Impedance (Wave Impedance)
+
+
+
+
+
+                                          Phase-shifted voltage
+                                               reflection coefficient
+
+
+
+
+                                Fields and Waves I       38
+
+--- PAGE 37 ---
+Generalized Impedance (Wave Impedance)
+
+ •  Looking at the voltage standing wave pattern on the line, what trends
+   do we see vs. distance from the load?
+
+
+
+
+                                       Open Circuit                                                                                  Short Circuit
+
+
+
+
+
+                                                                                      Load                                        Load                                                  d                                          d
+
+
+
+                                Fields and Waves I       39
+
+--- PAGE 38 ---
+Generalized Impedance (Wave Impedance)
+
+
+
+
+• We see that going backward a quarter wavelength from an open circuit load
+  produces the same voltage pattern you would see if there were a short circuit
+  load located just to the right of that point.
+•  In other words, as you move backward from the load, it begins to “look like” a
+   different load.
+• The expression for Γ(z), the phase-shifted reflection coefficient, takes into
+  account the load as well as the distance from it.
+•  If we travel all the way back to the beginning of the transmission line, we can
+   figure out what load the source circuit sees when we connect a t-line to it.
+  This is called the input impedance of the transmission line.
+                                                                        40
+
+--- PAGE 39 ---
+Input Impedance
+
+--- PAGE 40 ---
+Input Impedance
+•  Consider a transmission line of length 𝐿.
+•  If we know 𝑍(𝑧= −𝐿) (also known as 𝑍𝑖𝑛), we can replace our t-line
+  and load with a single element, 𝑍𝑖𝑛:
+
+
+
+
+
+                                z = -L            z = 0
+
+         We can replace the entire transmission line and the load
+                     impedance in a circuit with just                                                           𝑍𝑖𝑛
+
+
+                                  Fields and Waves I       42
+
+--- PAGE 41 ---
+                                                                                                                                               ሚ𝐼𝑖𝑛
+                                                                    ZS
+                                                   +               +Input Impedance                             Vs             ෨𝑉𝑖𝑛         Z0                  ෨𝑉𝐿    ZL     ሚ𝐼𝐿
+                                                   −               −
+
+                                                                              z=-L                 z=0
+ •  If the distance on the transmission line away from the load changes what the
+   load impedance “looks like”, then what does the impedance looking into the
+   input of the transmission line (Zin),
+                                                      look like?
+
+ • To figure this out, we can start by using our expression for the phase-shifted
+    reflection coefficient.
+
+
+
+
+                                                                               if z = 0 at the LOAD
+
+                                  Fields and Waves I       43
+
+--- PAGE 42 ---
+Input Impedance
+
+•  Previously, we have seen:
+
+         ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+  −𝑒+𝑗𝛽𝑧                      𝑉0         𝑉0
+             →෨𝑉𝑧= −𝑑=                                  + 𝑒𝑗𝛽d + Γ𝐿𝑒−𝑗𝛽d                                     𝑉0
+                     =  +𝑒𝑗𝛽d 1 +                                     𝑉0          Γ𝑑
+
+• What about I?
+
+                    +         −
+                      𝑉0          ሚ𝐼𝑧=   𝑒−𝑗𝛽𝑧−𝑉0 𝑒+𝑗𝛽𝑧
+                    𝑍0        𝑍0
+                                       +
+                                               𝑉0              →ሚ𝐼𝑧= −𝑑=   𝑒𝑗𝛽d 1                                  −Γ𝑑                                            𝑍0
+
+
+                                  Fields and Waves I       44
+
+--- PAGE 43 ---
+Input Impedance
+
+
+
+  • From the ratio (the generalized impedance):
+
+                                  1+Γ𝑑(−𝑑)           −𝑑=           where      =         𝑍𝑑𝑧=       𝑍0                Γ𝑑(−𝑑)   Γ𝐿𝑒−𝑗2𝛽𝑑
+                                  1−Γ𝑑(−𝑑)
+
+  • We are primarily interested in the z=-L value – this is the impedance
+    at the input to the transmission line
+
+                                    1+Γ𝑑(−𝐿)                                    where             ෨𝑍𝑖𝑛𝑧=            −𝐿= 𝑍0                                             Γ𝑑(−𝐿) = Γ𝐿𝑒−𝑗2𝛽𝐿
+                                    1−Γ𝑑(−𝐿)
+
+
+
+                                  Fields and Waves I       45
+
+--- PAGE 44 ---
+Input Impedance
+
+• Using algebra and trigonometry (Ulaby pg. 72), we can write this as:
+
+                        𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝐿
+             𝑍𝑖𝑛𝑧= −𝐿= 𝑍0
+                                 𝑍0 + 𝑗𝑍𝐿tan 𝛽𝐿
+
+
+
+
+
+                                                                       46
+
+--- PAGE 45 ---
+Input Impedance
+Special Case: ZL=0 (Short Circuit)
+                           0 + 𝑗𝑍0 tan 𝛽𝐿
+          𝑍𝑖𝑛𝑧= −𝐿= 𝑍0                 𝑗𝑍0tan(𝛽𝐿)                     + 𝑗0 tan 𝛽𝐿=                              𝑍0
+ •  For this case, this impedance is imaginary (reactive) and you can vary the t-line
+   length (and also 𝜷of the wave) to achieve any imaginary impedance you want!
+                                                            𝑍𝑖𝑛                                                   • When       0, impedance at the input                         𝑗>
+                                             of the t-line looks like an inductor
+                                                            𝑍𝑖𝑛                                                   • When       0, impedance at the input                         𝑗<
+                                             of the t-line looks like a capacitor
+
+                                                   • We can make the t-line look like any
+                                        reactive component by varying its
+                                         length
+                                                              47
+
+--- PAGE 46 ---
+Input Impedance
+Special Case: ZL →∞(Open Circuit)
+
+              ∞+ 𝑗𝑍0 tan 𝛽𝐿
+        𝑍𝑖𝑛𝑧= −𝐿= 𝑍0                 −𝑗𝑍0cot(𝛽𝐿)                   + 𝑗∞tan 𝛽𝐿=                          𝑍0
+
+
+         Like the short circuit case, we can make the open-circuited t-line
+             look like any reactive component by varying its length
+
+
+
+
+
+                                  Fields and Waves I       48
+
+--- PAGE 47 ---
+Input Impedance
+Special Case: L=0 (No Transmission Line)
+
+•  Recall that the standing wave pattern repeated every half wavelength. We
+  expect that this will also happen for Zin. First, consider the trivial case L=0.
+
+            𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝐿    𝑍𝐿+ 𝑗𝑍0 tan 0
+       𝑍𝑖𝑛= 𝑍0                  𝑍0          = 𝑍𝐿             +    𝛽𝐿=    +       0                 𝑍0   𝑗𝑍𝐿tan         𝑍0   𝑗𝑍𝐿tan
+
+
+         If the transmission line has length L = 0, there is no transmission line
+       and the input impedance 𝒁𝒊𝒏is that of the load impedance 𝒁𝑳
+
+
+
+
+                                  Fields and Waves I       49
+
+--- PAGE 48 ---
+Input Impedance
+Special Case: L =𝑛𝜆/2 (Half-Wavelength Line)
+
+• Now let the line be a half wavelength long
+                        2𝜋 𝜆
+            𝑍𝐿+ 𝑗𝑍0 tan                                                tan 𝜋                           𝜆 2     𝑍𝐿+ 𝑗𝑍0
+       𝑍𝑖𝑛= 𝑍0            = 𝑍0                 𝑍𝐿                        2𝜋 𝜆      +    𝜋=                                      𝑍0   𝑗𝑍𝐿tan                𝑍0 + 𝑗𝑍𝐿tan                           𝜆 2
+
+   When a transmission line is half a wavelength long, it “looks” as if there
+                         is no transmission line there at all.
+
+   The source only “sees” the load impedance even
+    though the t-line’s characteristic impedance is not              ෨𝑉𝑖𝑛     ෨𝑉𝐿
+                                   =
+   matched to the load impedance (𝑍0 ≠𝑍𝐿). This is due           ሚ𝐼𝑖𝑛      ሚ𝐼𝐿
+     to wave interference effects at the input to the t-line.
+                                                                       50
+
+--- PAGE 49 ---
+Input Impedance
+Special Case: L =𝑛𝜆/2 (Half-Wavelength Line)
+
+•  Thus, for a line that is exactly an integer number of half wavelengths long
+
+                      𝑍𝑖𝑛= 𝑍𝐿
+
+•  If you have a transmission line with the wrong characteristic impedance, you
+  can match the load to the source by selecting a length equal to a half
+  wavelength.
+
+
+
+
+
+                                  Fields and Waves I                             51
+
+--- PAGE 50 ---
+Input Impedance
+Special Case: L =𝑛𝜆/4 (Quarter-Wavelength Line)
+
+•  If the line is an odd multiple of a quarter wavelength, we also get an
+   interesting result:
+                         2𝜋 𝜆                                           𝜋
+             𝑍𝐿+ 𝑗𝑍0 tan                    tan                             𝑍𝐿+ 𝑗𝑍0                     2                             𝜆 4                                                           𝑍0   𝑍0                                              2
+        𝑍𝑖𝑛= 𝑍0            = 𝑍0          = 𝑍0  =                                           𝜋                         2𝜋 𝜆                          𝑍𝐿   𝑍𝐿             +                  𝑍0 + 𝑗𝑍𝐿tan                  𝑍0  𝑗𝑍𝐿tan                                              2                             𝜆 4
+                                        or
+                                      𝑍𝑖𝑛   𝑍0
+                        =
+                                  𝑍0   𝑍𝐿
+      Such a transmission line works like an impedance transformer. In
+   applications, a quarter-wave t-line can be useful when you want to make one
+                     impedance look like another one
+
+                                  Fields and Waves I       52
+
+--- PAGE 51 ---
+                                             2
+                                     𝑍0Input Impedance        𝑍𝑖𝑛=
+                                      𝑍𝐿
+Special Case: L =𝑛𝜆/4 Example
+                                             • A lossless transmission line (Z01=50Ω) is to be
+                               matched to a resistive load impedance with
+                              ZL=100Ω via a quarter wave section.
+                                             •  Find the required characteristic impedance Z02
+                                        of the quarter-wave transformer
+
+
+
+
+
+                                                                        53
+
+--- PAGE 52 ---
+Input Impedance
+
+• We’ve seen that we can use Zin to represent the effect of both the t-line and
+  load in a circuit, but haven’t mentioned the voltage source or generator
+  impedance yet.
+
+
+
+
+
+                                 z = -L            z = 0
+
+•  So, how do we relate 𝑉𝑔and 𝑉𝑖𝑛to the t-line voltage wave parameters V0 +,Γ,
+  𝛽, etc.?
+
+
+                                  Fields and Waves I       54
+
+--- PAGE 53 ---
+Input Impedance
+
+1. What is ෨𝑉𝑖𝑛(𝑧) in terms of the what we know about
+   the voltage on the t-line?
+
+     • General expression for t-line voltage                                                                                                  z = -L          z = 0
+         ෨𝑉𝑧=  +𝑒−𝑗𝛽𝑧+  −𝑒𝑗𝛽𝑧                     𝑉0         𝑉0
+
+     • 𝑉𝑖𝑛is the voltage at the input to the t-line (z=-L)
+
+     ෨𝑉𝑖𝑛= ෨𝑉−𝐿= 𝑉0+𝑒𝑗𝛽𝐿+ 𝑉0−𝑒−𝑗𝛽𝐿= 𝑉0+ 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿
+
+     • Solve for  +: we will use this later               𝑉0
+                                     ෨𝑉𝑖𝑛             +
+              𝑉0 =
+                𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿
+                                  Fields and Waves I       55
+
+--- PAGE 54 ---
+Input Impedance
+
+2. What is ෨𝑉𝑖𝑛(𝑧) in terms of the voltage and impedances of the simplified circuit?
+
+      •  ෨𝑉𝑖𝑛is the voltage divider of ෨𝑉𝑔between 𝑍𝑔and 𝑍𝑖𝑛:
+                                     𝑍𝑖𝑛
+                        ෨𝑉𝑖𝑛= ෨𝑉𝑔
+                         𝑍𝑖𝑛+ 𝑍𝑔
+
+
+3. Plugging the expression for ෨𝑉𝑖𝑛into the expression for 𝑉0+:
+
+                                   𝑍𝑖𝑛        1                    +                      𝑉0 = ෨𝑉𝑔
+                        𝑍𝑖𝑛+ 𝑍𝑔 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿
+
+
+
+                                  Fields and Waves I       56
+
+--- PAGE 55 ---
+Input Impedance
+
+4. Plug the expression for  + into our general t-line voltage expression ෨𝑉(𝑧) to                           𝑉0
+    give the voltage everywhere on the t-line as a function of 𝑽𝒈and 𝒁𝒈:
+
+                       𝑒−𝑗𝛽𝑧+              𝑍𝐿+ 𝑗𝑍0 tan 𝛽𝐿                       𝑍𝑖𝑛           Γ𝐿𝑒𝑗𝛽𝑧
+           ෨𝑉(𝑧) = ෨𝑉𝑔                      𝑍𝑖𝑛= 𝑍0
+               𝑍𝑖𝑛+ 𝑍𝑔 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿             𝑍0 + 𝑗𝑍𝐿tan 𝛽𝐿
+
+
+
+
+
+                                                    Zin
+
+                                                   z = -L            z = 0
+
+
+                                  Fields and Waves I       57
+
+--- PAGE 56 ---
+Input Impedance
+
+
+• Now, let’s look at some special cases to see what this expression predicts
+
+                        𝑍𝑖𝑛                       𝑒−𝑗𝛽𝑧+ Γ𝐿𝑒𝑗𝛽𝑧               𝑍𝑖𝑛        1                                                +                                  = ෨𝑉𝑔            ෨𝑉(𝑧) = ෨𝑉𝑔                              𝑉0
+                𝑍𝑖𝑛+ 𝑍𝑔 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿         𝑍𝑖𝑛+ 𝑍𝑔 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿
+
+
+
+                                                                     At the load: •  At the load:
+                                                                                                         • 𝝘=-1 (short circuit) –> V = 0 = Vmin
+                                                                                                                                         + = Vmax                       𝑍𝑖𝑛       1 + ΓL                                    • 𝝘=+1 (open circuit) –> V = 2V0
+   ෨𝑉𝑧= 0 = ෨𝑉𝑔                                                                          • 𝝘=0 (matched load) –> V = V0 +: no reflection             𝑍𝑔+ 𝑍𝑖𝑛 𝑒𝑗𝛽𝐿+ Γ𝐿𝑒−𝑗𝛽𝐿                                                                  Matches T-line theory!
+
+ •  At the T-line input:
+                                                                      At t-line input:
+                         𝑍𝑖𝑛                                                           •  Matches voltage divider between 𝑍𝑖𝑛and 𝑍𝑔
+                                                                                                          •     If L = 0 (no t-line), 𝑍𝑖𝑛= 𝑍𝐿→voltage divider   ෨𝑉𝑧= −𝐿= ෨𝑉𝑔
+              𝑍𝑔+ 𝑍𝑖𝑛                                       between 𝑍𝑔and 𝑍𝐿
+
+                                                                       58
+
+--- PAGE 57 ---
+Do Lecture 03 Exercise 2 on Gradescope before the
+             beginning of next class.
+
+--- PAGE 58 ---
+Wrap-Up
+
+• No class on Monday (Labor Day)
+•  Studio Session 2 next Wednesday

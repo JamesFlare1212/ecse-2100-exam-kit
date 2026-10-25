@@ -1,0 +1,736 @@
+
+--- PAGE 1 ---
+Fields and Waves I
+
+Lecture 12
+Electric Boundary Conditions & Capacitance
+                                                        Alex Patterson
+                                           Electrical, Computer, and Systems Engineering Department
+                                                  Rensselaer Polytechnic Institute, Troy, NY
+
+--- PAGE 2 ---
+These slides were prepared through the work of the following people:
+    ▪  Kenneth A. Connor – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+      (Emeritus)
+    ▪   J. Darryl Michael – GE Global Research Center, Niskayuna, NY
+    ▪  Thomas P. Crowley – National Institute of Standards and Technology, Boulder, CO
+    ▪  Sheppard J. Salon – ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+      (Emeritus)
+    ▪  Lale Ergene – ITU Informatics Institute, Istanbul, Turkey
+    ▪   Jeffrey Braunstein – ECE Department, University at Albany
+    ▪  James Lu - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+    ▪  James Dylan Rees - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+    ▪  Alex Patterson - ECSE Department, Rensselaer Polytechnic Institute, Troy, NY
+
+
+
+
+
+   Materials from other sources are referenced where they are used. Those listed as
+  Ulaby are figures from Ulaby’s textbook.
+
+                            Fields and Waves I                           2
+
+--- PAGE 3 ---
+Overview
+
+ •  Electric Boundary Conditions
+
+ • Capacitance
+
+
+
+
+
+                                                                         3
+
+--- PAGE 4 ---
+Review: Electric Materials
+
+           •  In free space:  𝐃= 𝜖0𝐄              ϵ = ϵ0
+
+           •  In a dielectric:  𝐃= 𝜖0𝐄+ 𝐏         ϵ = ϵrϵ0
+
+                         𝐄applied      𝐏= 𝜖0𝜒𝐄= 𝜌𝑏𝐝
+
+
+
+
+
+                                       Ulaby                                            5
+
+--- PAGE 5 ---
+Review: Electric Materials
+
+Consider a parallel plate capacitor with a material of electric permittivity 𝜖inside and 𝜖0 outside.
+
+             𝜖0   +++                                 1. We apply an electric field 𝐸                     𝝐𝟎𝑬                                                    across the plates.
+                                                          -
+                                 +                                                            2. Polarization causes the                       𝑷     𝑫            𝜖                                                          -
+                                                       formation of a polarization density                                 +
+                                                                     field 𝑃that opposes 𝐸
+             𝜖0                                            - - -                                                            3. The electric displacement field
+                                                 𝐷arises due to the remaining net
+        𝜖0𝐸+ 𝑃 = 𝐷          charge density in the dielectric
+
+  𝜌𝑓+ 𝜌𝑏= 𝜖0∇⋅𝐸             𝑃= ∇⋅𝐷=                        ∇⋅𝜖0𝐸+            𝜌𝑓
+
+    −∇⋅𝑃                                                              6
+
+--- PAGE 6 ---
+Electric Boundary Conditions
+
+--- PAGE 7 ---
+Boundary Conditions
+
+
+
+
+
+       Look at this picture again. How do electric fields behave at the boundary
+      between two different dielectrics?
+
+
+                                                                         13
+
+--- PAGE 8 ---
+Boundary Conditions
+
+                                                        • We know that
+
+
+
+
+
+                                                                                                Curl of E = 0
+
+                                                        •  This will hold for any loop we
+                                           choose, so we can choose Δh
+                     → 0 so that the contributions
+                                                 of segments bc and da go to
+                                                zero.
+                                                        •  Note that we have chosen መ𝑙1
+                                      and መ𝑙2 tangent to the surface.
+              Ulaby
+
+
+                                                                         14
+
+--- PAGE 9 ---
+Boundary Conditions
+
+
+                                                       • We can then write
+                                           𝑏           𝑑
+                                      = 0                      න 𝐸1 ⋅dመ𝑙1                              + න 𝐸2 ⋅dመ𝑙2
+                                        𝑎              𝑐
+
+
+
+
+
+              Ulaby
+
+
+                                                                         15
+
+--- PAGE 10 ---
+Boundary Conditions
+
+
+                                                       •  Note that we can easily
+                                     decompose any E-field vector
+                                                 into its tangent and normal
+                                      components relative to the
+                                              material boundary
+
+
+
+
+
+                                                                         16
+
+--- PAGE 11 ---
+Boundary Conditions
+
+
+                                                       •  Therefore we can write
+
+
+
+
+                                region
+
+
+
+
+
+                                region
+
+
+
+
+
+                                                                         17
+
+--- PAGE 12 ---
+Boundary Conditions
+Tangential Component  Tangential Component
+
+                                                       •  This equation:
+                                           𝑏           𝑑
+                                      = 0                      න 𝐸1 ⋅dመ𝑙1                              + න 𝐸2 ⋅dመ𝑙2
+                                        𝑎              𝑐
+
+                                                       •  then becomes:
+
+
+                                      because
+
+
+
+              Ulaby
+
+
+                                                                         18
+
+--- PAGE 13 ---
+Boundary Conditions
+
+
+                                                          • We chose መ𝑙1 and መ𝑙2 such that
+
+
+
+
+                                                          • Now we simplify:
+
+
+
+
+
+              Ulaby
+
+
+                                                                         19
+
+--- PAGE 14 ---
+Boundary Conditions
+Tangential Component
+
+
+
+
+                                                      • So the component of the E-field
+                                       that is tangent to a media
+                                       boundary is continuous across it.
+                                                      • What about normal to the
+                                       boundary?
+
+
+
+
+              Ulaby
+
+
+                                                                         20
+
+--- PAGE 15 ---
+Boundary Conditions         • We will use Gauss’s law to determine the normal
+Normal Component                         boundary condition
+                          ∮𝐃⋅𝑑𝐒= 𝑄𝑒𝑛𝑐𝑙𝑜𝑠𝑒𝑑                                   ෝ𝐧
+  Region 1                   Top       a                   •  At the interface between the two materials, there
+                                  h            is in general a surface charge density                                                                                        𝜌𝑠
+                         𝜌𝑠                                                               Assuming ℎ≪𝑎(thin disk)
+                              Bottom  Region 2
+                  −ෝ𝐧                          𝑄𝑒𝑛𝑐𝑙𝑜𝑠𝑒𝑑= 𝜌𝑠𝐴
+       Gaussian                                    •  Performing the flux integrals of Gauss’s law:        Surface
+                     ∮𝐃⋅𝑑𝐒= ∮𝐃1 ⋅𝑑𝐒top + ∮𝐃2 ⋅𝑑𝐒bot
+
+                       = 𝐴[𝐃1 ⋅ෝ𝐧] + 𝐴[𝐃2 ⋅−ෝ𝐧]
+
+                       = 𝐴D1n −𝐴D2n = 𝜌𝑠𝐴
+
+                                          Therefore:    D1n −D2n = 𝜌𝑠
+                                                                         21
+
+--- PAGE 16 ---
+Boundary Conditions
+Conductors vs. Dielectrics
+
+       Case 1:  REGION 2 is a CONDUCTOR, D2 = E2 = 0
+
+
+                                                             Material 1
+
+                                                             Material 2
+                                                        conductor
+
+                                                                           Can only really get
+                                                                                                            ρs with conductors:
+       Case 2:  REGIONS 1 & 2 are DIELECTRICS with ρs = 0                      free charge
+
+
+                                                              Material 1
+                                                                     dielectric
+
+                                                              Material 2
+                                                                     dielectric
+
+                                                                         22
+
+--- PAGE 17 ---
+Boundary Conditions
+Summary
+
+                                  Ulaby
+
+
+
+
+
+                         Ƹ𝐭+           𝐄= Et                               Enෝ𝐧    𝐃= Dt Ƹ𝐭+ Dnෝ𝐧
+
+     Tangential component: parallel to boundary
+
+                                       TangentialEfieldcomponentmustbecontinuousacrossboundary         𝐸1𝑡= 𝐸2𝑡
+
+     Normal component: perpendicular to boundary
+
+                                 NormalDfieldcomponentfluxmustbecontinuousacrossboundary       𝐷1𝑛−𝐷2𝑛= 𝜌𝑠
+                                                                         23
+
+--- PAGE 18 ---
+Boundary Conditions
+ Consider the two parallel plate geometries below. Assume that the plate dimensions are large
+ compared to the separation dand ignore fringe effects. For the two figures, the electric field in the
+ air region, (specified by εo) is given by:
+
+
+                                  V0  2𝜖𝑟                                                                                ොz                       figure on left                   𝐸𝑎𝑖𝑟= −
+                                 d  1+𝜖r
+                                  V0                                                                   ොz                             figure on right                   𝐸𝑎𝑖𝑟= −                                 d
+
+
+
+
+            ොz
+
+
+
+
+                                                                         24
+
+--- PAGE 19 ---
+Boundary Conditions
+
+1. For both cases, find E in the dielectric region. Find D in both regions. Within a
+   given region, D and E do not vary with position.
+
+2. Find the charge density on the plates at all locations.
+
+
+
+
+
+                                                                         25
+
+--- PAGE 20 ---
+Boundary Conditions
+Case #1
+
+
+
+
+
+                 2𝜖𝑟   𝐸air = −V0             ොz           d  1+𝜖r
+
+
+
+
+
+                                                                         26
+
+--- PAGE 21 ---
+Boundary Conditions
+Case #2
+
+
+
+
+    𝐸air = −V0 ොz
+          d
+
+
+
+
+
+                                                                         27
+
+--- PAGE 22 ---
+Boundary Conditions
+
+
+
+
+
+              Do Lecture 12 Exercise 1 in groups of up to 4.
+
+
+
+
+
+                                                                         28
+
+--- PAGE 23 ---
+Capacitance
+
+--- PAGE 24 ---
+Capacitance
+
+  •  In earlier EE classes you did analysis on circuits containing capacitors, which
+   have a property called capacitance. What is capacitance?
+
+
+
+
+
+                                                                          30
+
+--- PAGE 25 ---
+Capacitance
+
+ •  Capacitance describes how much the stored charge in a system changes (ΔQ)
+   when there is a change in potential difference in the system (ΔV)
+
+ •  There are two types of capacitance: self-capacitance and mutual capacitance.
+
+
+
+
+
+                                                                          31
+
+--- PAGE 26 ---
+Capacitance
+
+•  Self-capacitance describes how much charge is required to increase the
+    electric potential of some conductor by 1V
+•  In this case there is noparallelplate. We just need a reference point from
+   which to define the voltage of the conductor.
+
+
+
+
+
+                         add charge
+
+              0V                              1V
+
+
+
+                                                                          32
+
+--- PAGE 27 ---
+Capacitance
+
+  •  Mutual capacitance: the charge-voltage relationship between two
+    conductors. (This applies to the parallel plate capacitors that you are familiar
+     with.)
+  •  In this case, the charge in the capacitance equation is an equal and opposite
+    charge on bothplates, and the voltage is betweenthem.
+
+
+
+            +1V, +q
+
+
+                      2V
+
+              -1V, -q
+
+
+                                                                          33
+
+--- PAGE 28 ---
+Capacitance
+
+       Area 𝐴
+                                                                  Parallel Plate Capacitance
+      +Q
+
+                                                                                  • increase A                 This is how
+      𝜀          𝑉                                                     • increase ε                     electrolytics                    To get large C,                                                                                  • decrease d                 increase C
+        -Q
+
+                                                                             charge on 1 conductor
+                                        Define:
+                                                                ΔV between conductors
+
+
+                        Note that:
+
+
+
+                                                                          34
+
+--- PAGE 29 ---
+Capacitance
+
+  •  The energy stored in capacitors is stored in the electric field
+
+  •  The stored electrical energy is:
+
+                                1
+                                𝐶𝑉2                     𝑊𝑒=
+                                2
+
+  •   If we substitute values of C and V for a parallel plate capacitor:
+
+
+                   1      1               2  1      2                    𝐶𝑉2 = ⋅𝜀𝐴  𝐸𝑑  =  ⋅𝜀𝐸  ⋅𝐴𝑑           𝑊𝑒=
+                   2      2   𝑑          2
+                                                                       Energy  Volume
+                                                                                 density
+
+
+
+                                                                          35
+
+--- PAGE 30 ---
+Capacitance
+
+•  In general, we can write the total stored energy as:
+
+
+                   1            ∭𝜀𝐸 2𝑑𝑉           𝑊𝑒=
+                   2
+
+                                        or
+
+                   1
+           𝑊𝑒= ∭𝐷⋅𝐸𝑑𝑉
+                   2
+
+
+
+                                                                          36
+
+--- PAGE 31 ---
+Capacitance
+
+•  Use the energy formulation to compute C for the parallel plate capacitor
+
+            We know that 𝐸= −𝑉0 Ƹ𝑧     (we need 𝐸in terms of V0)
+                             𝑑
+
+
+                              1• Compute total energy              𝑊𝑒= ∫𝐷⋅𝐸𝑑𝑉                              2
+
+
+                          1        𝑉0         𝑉0              𝐴𝑑 𝑉02
+           𝑊𝑒= ∫ −𝜖                       𝜖                          2    𝑑Ƹ𝑧⋅− 𝑑Ƹ𝑧d𝑥d𝑦d𝑧=   2 𝑑2
+
+
+
+                             𝐴𝑑      1            𝝐𝑨                                                   𝑉02        2
+                            𝜖   =  𝐶𝑉0 →𝑪=                                  2 𝑑2   2            𝒅
+
+
+                                                                          37
+
+--- PAGE 32 ---
+Capacitance
+ •  Consider a coaxial cable with inner radius, a, and outer radius, b, length l.
+
+ • The outer conductor is grounded, and inner conductor has voltage V = V0.
+
+ • The relation between surface charge density on the inner conductor and V0 is
+
+
+                                                𝜖𝑉0
+                             𝜌𝑠=                                           𝑏
+                                         𝑎ln                                          𝑎
+
+          1.  Find the capacitance using 𝐶= 𝑄/𝑉(or 𝐶= 𝑑𝑄/𝑑𝑉for differential capacitance).
+
+          2.  Find the stored energy in the system by integrating the energy density over the
+            system volume.
+
+          3.  Find the capacitance using the stored energy from part b.
+                                                                          38
+
+--- PAGE 33 ---
+Capacitance
+
+
+
+                                                            •  For a coaxial cable:
+
+                                                            𝜌𝑠𝑎   𝑏
+                                            𝑉𝑎𝑏= 𝜖ln 𝑎
+
+                       a
+
+                     b                                 • The electric field is given by                                    inner conductor
+                                                                   𝑉0
+                                 𝐄=               ො𝐫               outer conductor                                                         𝑏
+                                                          𝑟ln                                                       𝑎
+
+
+
+
+                                                                          39
+
+--- PAGE 34 ---
+Capacitance
+
+
+
+
+
+                                                                          40
+
+--- PAGE 35 ---
+Capacitance
+ • Any 2 conductors have capacitance (such as wires on a breadboard)
+
+ • How do we estimate the capacitance of a system like this?
+
+
+
+
+
+                                                                          41
+
+--- PAGE 36 ---
+Capacitance
+ The objective of this problem is to determine the capacitance between 2
+ conducting wires.
+We will assume there are uniform surface charge densities of equal magnitude
+ and opposite sign on the two wires.
+ •  What is the potential difference between the wires?
+ •  What is the capacitance ?
+
+
+
+
+                        −𝜌𝑠                             𝜌𝑠
+
+
+
+
+
+                                                                          42
+
+--- PAGE 37 ---
+Capacitance
+ •  Electric field at observation point 𝑥= 𝑥and 𝑦= 𝑦for a single wire located at
+  𝑥=   and 𝑦= 0       𝑥0
+
+
+
+
+
+                                                                          43
+
+--- PAGE 38 ---
+Capacitance
+
+
+
+
+
+                                                                          44
+
+--- PAGE 39 ---
+Capacitance
+
+ •  Estimate the capacitance of the setup below, assuming the wires have length
+  𝑙= 10𝑐𝑚and 𝑑= 3𝑎
+
+
+                                                                                    conductor
+                                                         𝑎
+
+
+
+                                                                                                  insulation                                                          𝑑
+
+                                                                      𝜋𝜀0𝑙
+                                   𝐶=      ≈8 pF
+                                         𝑑−𝑎
+                                                                           ln                                                           𝑎
+
+
+
+
+
+                                                                          45
+
+--- PAGE 40 ---
+Capacitance
+
+ •  In Ulaby, capacitance is generally described between two isolated conductors
+   separated by a dielectric. But it also occurs between different parts of a single
+   conductor.
+ •  In circuit design, this unwanted effect is called “parasitic capacitance.”
+ •  Circuit designers choose wire geometries to reduce this effect (and other
+   effects)
+
+
+
+
+                                                                        capacitance
+
+
+
+
+
+                                                                                    bjpcjp.github.io
+                                                                          46
+
+--- PAGE 41 ---
+Capacitance
+
+ •  In Ulaby, capacitance is generally described between two isolated conductors
+   separated by a dielectric. But it also occurs between different parts of a single
+   conductor.
+ •  In circuit design, this unwanted effect is called “parasitic capacitance.”
+ •  Circuit designers choose wire geometries to reduce this effect (and other
+   effects)
+
+
+
+
+
+                                                                                    bjpcjp.github.io
+                                                                          47
+
+--- PAGE 42 ---
+Capacitance
+
+•  This has inspired changes in circuit design, such as the 45-degree angles in the
+  PCB at right.
+•  This effect can be relevant for precise timing / digital circuit applications but is
+   often overestimated
+
+
+
+
+
+                                                                   Hackaday
+
+
+
+                                                                          48
+
+--- PAGE 43 ---
+Wrap-Up
+• HW6 out yesterday
+
+
+
+
+
+                                                                         50

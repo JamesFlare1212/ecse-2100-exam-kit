@@ -1,0 +1,48 @@
+{
+	"name": "ecse-2100-backexams",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"packageManager": "bun@1.4.3",
+	"scripts": {
+		"dev": "vite dev --host 127.0.0.1",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test": "bun test",
+		"content:build": "python3 scripts/build_content.py",
+		"assets:prepare": "python3 scripts/prepare_sources.py && python3 scripts/build_formulas.py && python3 scripts/generate_figures.py"
+	},
+	"devDependencies": {
+		"@fontsource-variable/inter": "^5.3.0",
+		"@fontsource-variable/noto-sans-sc": "^5.3.1",
+		"@internationalized/date": "^3.12.0",
+		"@lucide/svelte": "^1.61.0",
+		"@sveltejs/adapter-static": "^4.0.0",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"@tailwindcss/vite": "^4.3.0",
+		"@types/katex": "^0.16.8",
+		"@types/three": "^0.186.0",
+		"bits-ui": "^2.20.0",
+		"cn": "^0.5.0",
+		"shadcn-svelte": "^1.7.1",
+		"svelte": "^5.57.1",
+		"svelte-check": "^4.6.0",
+		"tailwind-variants": "^3.3.1",
+		"tailwindcss": "^4.3.0",
+		"tw-animate-css": "^1.4.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.0"
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"katex": "^0.19.1",
+		"three": "^0.186.1"
+	}
+}
