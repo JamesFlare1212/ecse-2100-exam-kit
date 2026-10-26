@@ -1,8 +1,8 @@
 <script lang="ts">
   import {onMount,tick,untrack} from 'svelte';
-  import {goto} from '$app/navigation';
+  import {navigate} from 'astro:transitions/client';
+  import {BitsConfig} from 'bits-ui';
   import * as Tabs from '#lib/components/ui/tabs';
-  import * as ToggleGroup from '#lib/components/ui/toggle-group';
   import * as Accordion from '#lib/components/ui/accordion';
   import * as Sheet from '#lib/components/ui/sheet';
   import * as Tooltip from '#lib/components/ui/tooltip';
@@ -10,7 +10,6 @@
   import {Button,buttonVariants} from '#lib/components/ui/button';
   import {Badge} from '#lib/components/ui/badge';
   import {Separator} from '#lib/components/ui/separator';
-  import BookOpen from '@lucide/svelte/icons/book-open';
   import FileText from '@lucide/svelte/icons/file-text';
   import Moon from '@lucide/svelte/icons/moon';
   import Sun from '@lucide/svelte/icons/sun';
@@ -23,7 +22,6 @@
   import PanelRight from '@lucide/svelte/icons/panel-right';
   import PanelLeft from '@lucide/svelte/icons/panel-left';
   import GraduationCap from '@lucide/svelte/icons/graduation-cap';
-  import NotebookPen from '@lucide/svelte/icons/notebook-pen';
   import Layers from '@lucide/svelte/icons/layers';
   import ChevronsUp from '@lucide/svelte/icons/chevrons-up';
   import Info from '@lucide/svelte/icons/info';
@@ -40,10 +38,9 @@
   import {provideFormulaPreviews} from '#lib/formula-preview.svelte';
   import {createCatalog} from '#lib/catalog';
   import {problemPath} from '#lib/problem-navigation';
-  import type {SourceRef} from '#lib/types';
-  import type {PageProps} from './$types';
+  import type {SourceRef,StudyPageData} from '#lib/types';
 
-  let {data}:PageProps=$props();
+  let {data}:{data:StudyPageData}=$props();
   const formulaPreviews=provideFormulaPreviews();
   const catalog=$derived(createCatalog(data.examIndex,data.documents));
   const assetBase=$derived(data.assetBase);
@@ -72,13 +69,19 @@
   $effect(()=>{study.selected=problem.id;openParts=[];view='learn';formulaPreviews.active=null;});
   $effect(()=>{const serialized=study.serialize();if(study.ready)study.persist(serialized);});
   $effect(()=>{if(study.ready){document.documentElement.classList.toggle('dark',dark);document.documentElement.lang=study.locale==='zh'?'zh-CN':'en';document.documentElement.style.colorScheme=dark?'dark':'light';document.documentElement.dataset.navigation=study.navigationOpen?'open':'closed';document.documentElement.dataset.references=study.referencesOpen?'open':'closed';}});
+  $effect(()=>{
+    if(!study.ready)return;
+    document.title=`${problem.title[study.locale]} · Fieldnotes · ECSE 2100`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content',t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`));
+    void tick().then(()=>delete document.documentElement.dataset.localePending);
+  });
 
   function library(kind:string){libraryKind=kind;libraryOpen=true;navOpen=false;}
   function openSource(ref:SourceRef){source=ref;railOpen=false;}
   async function select(id:string,part?:string){
     if(!catalog.problemIds.has(id))return;
     navOpen=false;view='learn';
-    await goto(problemPath(id),{reset:false});await tick();
+    await navigate(problemPath(id));await tick();
     if(part){openParts=[part];await tick();document.querySelector(`[data-part="${part}"]`)?.scrollIntoView({block:'start',behavior:'instant'});}
     else{window.scrollTo({top:0,behavior:'instant'});document.getElementById('problem-title')?.focus({preventScroll:true});}
   }
@@ -86,7 +89,6 @@
     if(openParts.length){openParts=[];return;}
     openParts=problem.parts.map(p=>p.id);
   }
-  function changeMode(mode:string){if(mode==='study'||mode==='practice'){study.mode=mode;openParts=[];}}
   function focusOutsidePanel(id:string,toggle:string){
     if(document.getElementById(id)?.contains(document.activeElement))
       document.querySelector<HTMLElement>('[data-sidebar-toggle="'+toggle+'"]')?.focus({preventScroll:true});
@@ -117,8 +119,8 @@
   });
 </script>
 
-<svelte:head><title>{problem.title[study.locale]} · Fieldnotes · ECSE 2100</title><meta name="description" content={t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`)}/></svelte:head>
 <a class="skip-link" href="#main-content">{t('跳至题目','Skip to problem')}</a>
+<BitsConfig defaultPortalTo="#fieldnotes-overlays">
 <Tooltip.Provider delayDuration={250}>
   <div class="app-shell" data-navigation={study.navigationOpen?'open':'closed'}>
     <aside id="exam-navigation" class="desktop-navigation" aria-label={t('试卷导航','Exam navigation')} aria-hidden={compactNavigation||!study.navigationOpen} inert={compactNavigation||!study.navigationOpen}><Navigation {study} onselect={select} onlibrary={library}/></aside>
@@ -143,7 +145,7 @@
           <div class="problem-meta"><Badge variant="outline">Exam {exam.number}</Badge><span>{exam.term[study.locale]} {exam.year}</span><span class="metadata-dot">·</span><span>{problem.points} {t('分','points')}</span><span class="metadata-dot">·</span><span>{problem.parts.length} {t('小问','parts')}</span></div>
           <div class="problem-title-row"><div><p class="problem-kicker">{t('题目','PROBLEM')} {String(problem.number).padStart(2,'0')}</p><h1 id="problem-title" lang={study.locale==='zh'?'zh-CN':'en'} tabindex="-1">{problem.title[study.locale]}</h1></div><Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'outline',size:'icon'})} onclick={()=>study.bookmarks[problem.id]=!study.bookmarks[problem.id]} aria-label={t(study.bookmarks[problem.id]?'取消收藏':'收藏此题',study.bookmarks[problem.id]?'Remove bookmark':'Bookmark problem')} aria-pressed={Boolean(study.bookmarks[problem.id])}>{#if study.bookmarks[problem.id]}<BookmarkCheck aria-hidden="true"/>{:else}<Bookmark aria-hidden="true"/>{/if}</Tooltip.Trigger><Tooltip.Content>{t(study.bookmarks[problem.id]?'已收藏':'留待再次练习',study.bookmarks[problem.id]?'Saved':'Save for another attempt')}</Tooltip.Content></Tooltip.Root></div>
           <p class="problem-subtitle">{problem.topic[study.locale]}<span>·</span>{t('先写方程，再代入数值。','Start with the equation. Then work through the numbers.')}</p>
-          <div class="study-options"><div class="lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>Number(l.doc.slice(-2))))] as number(number)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>Number(l.doc.slice(-2))===number)!)}>Lecture {String(number).padStart(2,'0')}</Button>{/each}</div><ToggleGroup.Root type="single" variant="outline" size="sm" value={study.mode} onValueChange={changeMode} aria-label={t('学习模式','Study mode')}><ToggleGroup.Item value="study"><BookOpen aria-hidden="true"/>{t('精读','Learn')}</ToggleGroup.Item><ToggleGroup.Item value="practice"><NotebookPen aria-hidden="true"/>{t('练习','Practice')}</ToggleGroup.Item></ToggleGroup.Root></div>
+          <div class="problem-lectures lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>Number(l.doc.slice(-2))))] as number(number)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>Number(l.doc.slice(-2))===number)!)}>Lecture {String(number).padStart(2,'0')}</Button>{/each}</div>
           {#if study.storageError}<Alert.Root><Info aria-hidden="true"/><Alert.Title>{t('浏览器存储暂不可用','Browser storage is unavailable')}</Alert.Title><Alert.Description>{t('本次仍可练习，但学习进度和收藏可能无法保存。','You can keep working, but progress and bookmarks may not be saved.')}</Alert.Description></Alert.Root>{/if}
           <Tabs.Root bind:value={view} class="problem-tabs">
             <Tabs.List variant="line" class="problem-tab-list"><Tabs.Trigger value="learn"><Layers aria-hidden="true"/>{t('题目与推导','Problem & solution')}</Tabs.Trigger><Tabs.Trigger value="source"><FileText aria-hidden="true"/>{t('试卷原页','Source pages')}</Tabs.Trigger></Tabs.List>
@@ -152,7 +154,6 @@
               {#if !problem.figureAtParts}<Figure {assetBase} name={problem.figure} locale={study.locale} {dark} caption={problem.figureCaption} original={problem.originalFigure} onsource={openSource}/>{/if}
               <section class="worked-solution" aria-label={t('分步解答','Worked solution')}><div class="solution-section-heading"><div class="section-label"><span>02</span>{t('一步一步推导','WORK IT THROUGH')}</div><Button variant="ghost" size="sm" onclick={toggleSolutions} aria-controls="worked-parts" aria-expanded={openParts.length>0}>{#if openParts.length}{t('收起全部推导','Collapse all steps')}<ChevronsUp data-icon="inline-end" aria-hidden="true"/>{:else}{t('展开全部推导','Reveal all steps')}<Layers data-icon="inline-end" aria-hidden="true"/>{/if}</Button></div>
                 <ProblemOverview {problem} locale={study.locale} onsource={openSource}/>
-                {#if study.mode==='practice'}<p class="solution-intro">{t('在自己的本子上练习，需要时点击小问查看完整解答。','Work in your notebook, then open a part to view its full solution when you need it.')}</p>{/if}
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
               {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
@@ -174,3 +175,4 @@
   <Library bind:open={libraryOpen} bind:kind={libraryKind} {study} onsource={openSource} onselect={select}/>
   <SourceViewer {source} {documents} locale={study.locale} onclose={()=>source=null}/>
 </Tooltip.Provider>
+</BitsConfig>

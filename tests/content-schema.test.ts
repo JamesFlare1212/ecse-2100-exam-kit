@@ -3,7 +3,7 @@ import { exams, formulas, documents } from '../content/catalog.server';
 import { parseContent } from '../content/schema';
 import type { Exam } from '../content/types';
 
-describe('Authored JSON validation', () => {
+describe('Authored question and metadata validation', () => {
   test('uses the source objects without rewriting question or solution data', () => {
     const input = structuredClone(exams);
     const before = JSON.stringify(input);
@@ -14,11 +14,11 @@ describe('Authored JSON validation', () => {
   const cases: [string, (exam: Exam) => void, RegExp][] = [
     ['missing translation', e => { Reflect.deleteProperty(e.problems[0].statement, 'zh'); }, /statement\.zh/],
     ['unescaped TeX control character', e => { e.problems[0].statement.en += '\b'; }, /control character/],
-    ['literal Unicode escape in a translation', e => { e.problems[0].parts[0].steps[0].text.zh += ' \\u58F3'; }, /literal Unicode escape/],
-    ['bare current-density symbol', e => { e.problems[0].parts[0].steps[0].text.zh += ' 电流密度 J'; }, /KaTeX delimiters/],
+    ['literal Unicode escape in a translation', e => { e.problems[0].parts[0].steps[0].text!.zh += ' \\u58F3'; }, /literal Unicode escape/],
+    ['bare current-density symbol', e => { e.problems[0].parts[0].steps[0].text!.zh += ' 电流密度 J'; }, /KaTeX delimiters/],
     ['Unicode math in prose', e => { e.problems[0].parts[0].note = {zh:'密度 ρ₀',en:'Density $\\rho_0$'}; }, /KaTeX delimiters/],
     ['broken inline equation', e => { e.problems[0].guide.known.en += ' $\\frac{$'; }, /guide\.known\.en.*invalid TeX/],
-    ['unclosed math delimiter', e => { e.problems[0].parts[0].steps[0].text.en += ' $J'; }, /unmatched math delimiter/],
+    ['unclosed math delimiter', e => { e.problems[0].parts[0].steps[0].text!.en += ' $J'; }, /unmatched math delimiter/],
     ['invalid equation', e => { e.problems[0].parts[0].steps[0].math = '\\frac{'; }, /steps\[0\]\.math.*invalid TeX/],
     ['unknown formula reference', e => { e.problems[0].parts[0].steps[0].refs.push('missing-formula'); }, /unknown formula missing-formula/],
     ['duplicate part ID', e => { e.problems[0].parts.push(structuredClone(e.problems[0].parts[0])); }, /duplicate ID/],
@@ -36,5 +36,11 @@ describe('Authored JSON validation', () => {
     const input = structuredClone(formulas);
     input[0].note = {zh: '关系 $\\frac{$', en: 'Relation $a$'};
     expect(() => parseContent(exams, input, documents)).toThrow(/formulas\[0\]\.note\.zh.*invalid TeX/);
+  });
+
+  test('validates visible Markdown prose without treating syntax or link destinations as equations', () => {
+    const input = structuredClone(exams);
+    input[0].problems[0].guide.approach.en += '\n\n> **Recall** [the lecture](/sources/lecture.pdf?page=2).\n\n- Check the boundary.';
+    expect(parseContent(input, formulas, documents).exams).toBe(input);
   });
 });

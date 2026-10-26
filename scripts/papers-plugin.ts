@@ -10,7 +10,7 @@ export function papersPlugin(): Plugin {
       const root = resolve('content') + '/';
       let timer: ReturnType<typeof setTimeout> | undefined;
       const refresh = (path: string) => {
-        if (!path.startsWith(root) || (!path.endsWith('.json') && !path.includes('/assets/'))) return;
+        if (!path.startsWith(root) || (!path.endsWith('.json') && !path.endsWith('.md') && !path.includes('/assets/'))) return;
         clearTimeout(timer);
         timer = setTimeout(() => {
           try {

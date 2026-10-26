@@ -1,7 +1,8 @@
-"""Locate canonical paper JSON and assets for offline image tools."""
+"""Read paper metadata and Markdown frontmatter for offline asset verification."""
 import json
 import re
 from pathlib import Path
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER_NAME = re.compile(r'exam[1-9]\d*_[fs]\d{2}')
@@ -11,8 +12,17 @@ def papers():
     result = []
     for directory in sorted((ROOT / 'content').iterdir()):
         if directory.is_dir() and PAPER_NAME.fullmatch(directory.name):
-            result.append({'name': directory.name, 'directory': directory,
-                           'exam': json.loads((directory / 'paper.json').read_text())})
+            exam = json.loads((directory / 'paper.json').read_text())
+            # Only asset/citation metadata is needed here. Python never parses,
+            # authors or compiles the Markdown question/solution body.
+            exam['problems'] = []
+            for question in sorted((directory / 'questions').glob('*.md')):
+                source = question.read_text()
+                header = re.match(r'\A---\n(.*?)\n---(?:\n|$)', source, re.DOTALL)
+                if not header:
+                    raise ValueError(f'{question}: missing YAML frontmatter')
+                exam['problems'].append(yaml.safe_load(header.group(1)))
+            result.append({'name': directory.name, 'directory': directory, 'exam': exam})
     return result
 
 

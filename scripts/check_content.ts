@@ -22,4 +22,4 @@ for (const paper of papers) {
 
 const problems = exams.flatMap(exam => exam.problems);
 const parts = problems.flatMap(problem => problem.parts);
-console.log(`Content verified directly from JSON: ${exams.length} exams / ${problems.length} problems / ${parts.length} parts / ${parts.reduce((sum, part) => sum + part.steps.length, 0)} steps / ${formulas.length} formulas / ${Object.keys(documents).length} documents.`);
+console.log(`Content verified from Markdown: ${exams.length} exams / ${problems.length} problems / ${parts.length} parts / ${parts.reduce((sum, part) => sum + part.steps.length, 0)} steps / ${formulas.length} formulas / ${Object.keys(documents).length} documents.`);

@@ -1,4 +1,8 @@
 import katex from 'katex';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { math } from 'micromark-extension-math';
+import { mathFromMarkdown } from 'mdast-util-math';
+import type { Root, RootContent, PhrasingContent, ListItem } from 'mdast';
 
 export function renderMath(tex: string, displayMode = false) {
   return katex.renderToString(tex, {displayMode, throwOnError:false, strict:'ignore', trust:false, output:'htmlAndMathml'});
@@ -7,15 +11,43 @@ function escape(text: string) {
   return text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 }
 export function renderText(text: string) {
-  const pattern = /(\$\$[\s\S]*?\$\$|\$[^$\n]+\$)/g;
-  let result = '', offset = 0;
-  for (const match of text.matchAll(pattern)) {
-    result += escape(text.slice(offset, match.index)).replaceAll('\n','<br>');
-    const display = match[0].startsWith('$$');
-    result += renderMath(match[0].slice(display ? 2 : 1, display ? -2 : -1), display);
-    offset = match.index! + match[0].length;
+  const tree = fromMarkdown(text, { extensions: [math()], mdastExtensions: [mathFromMarkdown()] });
+  return renderMarkdownNode(tree, text);
+}
+
+/** Phrasing-safe Markdown also works inside accordion buttons and captions. */
+function renderMarkdownNode(node: Root | RootContent | PhrasingContent | ListItem, source: string): string {
+  const render = (child: RootContent | PhrasingContent | ListItem) => renderMarkdownNode(child, source);
+  const children = () => 'children' in node ? node.children.map(render).join('') : '';
+  switch (node.type) {
+    case 'root': return node.children.map(render).join('<br><br>');
+    case 'paragraph': case 'listItem': return children();
+    case 'text': return escape(node.value).replaceAll('\n', '<br>');
+    case 'inlineMath': return renderMath(node.value, source.slice(node.position?.start.offset ?? 0).startsWith('$$'));
+    case 'math': return renderMath(node.value, true);
+    case 'emphasis': return `<em>${children()}</em>`;
+    case 'strong': return `<strong>${children()}</strong>`;
+    case 'inlineCode': return `<code>${escape(node.value)}</code>`;
+    case 'code': return `<code class="markdown-code-block">${escape(node.value)}</code>`;
+    case 'break': return '<br>';
+    case 'link': {
+      const url = node.url.trim();
+      const safe = !/[\u0000-\u001f]/.test(url) && !url.startsWith('//')
+        && (!/^[a-z][a-z\d+.-]*:/i.test(url) || /^(?:https?:|mailto:)/i.test(url));
+      return safe ? `<a href="${escape(url)}"${node.title ? ` title="${escape(node.title)}"` : ''}>${children()}</a>` : children();
+    }
+    case 'list': return `<span class="markdown-list" role="list">${node.children.map((item, index) =>
+      `<span class="markdown-list-item" role="listitem"><span aria-hidden="true">${node.ordered ? `${(node.start ?? 1) + index}.` : '•'}</span><span>${render(item)}</span></span>`,
+    ).join('')}</span>`;
+    case 'blockquote': return `<span class="markdown-quote">${children()}</span>`;
+    case 'heading': return `<strong>${children()}</strong>`;
+    case 'html': return escape(node.value);
+    case 'image': case 'imageReference': return escape(node.alt ?? '');
+    case 'linkReference': return children();
+    case 'thematicBreak': return '<span class="markdown-rule" role="separator"></span>';
+    case 'definition': return '';
   }
-  return result + escape(text.slice(offset)).replaceAll('\n','<br>');
+  return 'value' in node ? escape(String(node.value)) : children();
 }
 
 /** Text alternatives use KaTeX's Unicode MathML, without spoken TeX commands. */

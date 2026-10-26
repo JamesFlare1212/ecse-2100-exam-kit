@@ -1,16 +1,16 @@
 // Optional end-to-end QA. Install Playwright separately, or point PLAYWRIGHT_MODULE
 // at an isolated install. Run against `bun run preview --host 127.0.0.1`.
 import assert from 'node:assert/strict';
-import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {checkI18n} from './browser-i18n-qa.mjs';
+import {loadContent} from '../content/papers.server.ts';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const destination=process.env.QA_ARTIFACTS??resolve(root,'artifacts');
 const base=process.env.QA_URL??'http://localhost:4173';
-const examDirectory=resolve(root,'content');
-const exams=await Promise.all((await readdir(examDirectory)).filter(name=>/^exam[1-9]\d*_[fs]\d{2}$/.test(name)).sort().map(async name=>JSON.parse(await readFile(resolve(examDirectory,name,'paper.json'),'utf8'))));
+const {exams}=loadContent(resolve(root,'content'));
 await mkdir(destination,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'light',reducedMotion:'reduce'});
@@ -56,6 +56,7 @@ try {
   await goto('e2-s26-q1');
   await page.evaluate(()=>{
     const data=JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1'));
+    data.mode='practice';
     data.revealed={'e2-s26-q1-a':20,'e2-s26-q2-a':1,'e2-s26-q2-b':0};
     localStorage.setItem('ecse2100-fieldnotes-v1',JSON.stringify(data));
   });
@@ -75,7 +76,10 @@ try {
   }
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
   assert.equal((await stored()).revealed['e2-s26-q2-b'],0);
-  record('Every part opens its full solution regardless of legacy saved step counts');
+  assert.equal((await stored()).mode,'practice');
+  assert.equal(await page.getByRole('group',{name:'学习模式',exact:true}).count(),0);
+  assert.equal(await page.getByRole('radio',{name:/^(精读|练习|Learn|Practice)$/}).count(),0);
+  record('One solution view replaces reading modes while preserving the retired preference and reveal records');
 
   await goto('e2-s26-q3');
   await page.evaluate(()=>window.__fieldnotesDocument='same-page');
@@ -188,6 +192,8 @@ try {
       const actual=renderedSteps.find(item=>item.id===part.id);
       assert.equal(actual.count,part.steps.length,part.id);
       assert.equal(actual.firstEquation,part.steps[0].math,part.id);
+      const refs=await page.locator(`[data-part="${part.id}"] .solution-step`).evaluateAll(nodes=>nodes.map(node=>node.querySelectorAll('.derivation-line .equation-references .formula-link').length));
+      assert.deepEqual(refs,part.steps.map(step=>step.refs.length),part.id);
       stepCount+=actual.count;
     }
     for(const result of await page.locator('[data-answer]').evaluateAll(nodes=>nodes.map(node=>({box:Boolean(node.querySelector('.fbox')),background:getComputedStyle(node).backgroundColor,border:getComputedStyle(node).borderTopWidth})))) {
@@ -326,12 +332,15 @@ try {
   await page.getByRole('radio',{name:'矢量复刻',exact:true}).click();
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('.svg'));
   record('Original figure / Matplotlib SVG switch');
-  await page.getByRole('radio',{name:'练习',exact:true}).click();
+  const solutionToggle=page.locator('.solution-section-heading button');
+  if(await solutionToggle.getAttribute('aria-expanded')==='true')await solutionToggle.click();
+  await page.waitForFunction(()=>document.querySelector('.solution-section-heading button')?.getAttribute('aria-expanded')==='false'
+    && [...document.querySelectorAll('.solution-step')].every(element=>!element.checkVisibility()));
   assert.equal(await page.locator('[data-answer]:visible').count(),0);
   assert.equal(await page.locator('.solution-step:visible').count(),0);
   assert.equal(await page.locator('.worked-solution textarea').count(),0);
   assert.equal(await page.locator('[id^="attempt-"]').count(),0);
-  record('Practice uses a notebook workflow with no per-part text entry');
+  record('The unified solution view has no mode switch or per-part text entry');
   const practicePart=page.locator('[data-part="e2-s26-q3-a"]');
   const expectedPracticeSteps=exams.flatMap(e=>e.problems).find(q=>q.id==='e2-s26-q3').parts[0].steps.length;
   await practicePart.locator('.part-trigger').click();
@@ -340,7 +349,7 @@ try {
   assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
   await page.getByRole('button',{name:'标记已掌握',exact:true}).first().click();
-  record('Practice starts collapsed and opens full solutions; mastery and legacy records remain independent');
+  record('Solutions collapse and reopen in full; mastery and legacy records remain independent');
   assert.equal(await page.getByRole('tab',{name:'我的笔记',exact:true}).count(),0);
   assert.equal(await page.locator('textarea').count(),0);
   await page.getByRole('button',{name:'收藏此题',exact:true}).click();
@@ -355,7 +364,6 @@ try {
   assert.ok(await page.locator('html').evaluate(e=>e.classList.contains('dark')));
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('-dark.svg'));
   record('Locale, theme, mastery and bookmarks persist after reload without a notes UI');
-  await page.getByRole('radio',{name:'Learn',exact:true}).click();
   await revealAll();
   await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:resolve(destination,'desktop-dark-en.png')});
   await page.getByRole('button',{name:'Switch to light mode',exact:true}).click();
@@ -374,7 +382,7 @@ try {
   await page.getByRole('dialog').getByRole('tab',{name:'Exam 1',exact:true}).click();
   await page.waitForFunction(()=>JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')).selected==='e1-f26-q1');
   await page.getByRole('dialog').waitFor({state:'detached'});
-  assert.equal(await page.getByRole('dialog').count(),0);record('Mobile navigation drawer selects an exam and closes');
+  assert.equal(await page.getByRole('dialog').count(),0);record('Mobile navigation drawer selects an exam after client navigation and closes');
   await page.getByRole('button',{name:'打开公式与课件',exact:true}).click();
   await page.getByRole('dialog').waitFor();await page.keyboard.press('Escape');record('Mobile formula / lecture drawer works');
   await page.getByRole('button',{name:'Lecture 02',exact:true}).click();

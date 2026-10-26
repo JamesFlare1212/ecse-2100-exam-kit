@@ -4,13 +4,11 @@ import { DEFAULT_PROBLEM_ID } from './problem-navigation';
 import { STORAGE_KEY } from './locale';
 
 export { STORAGE_KEY } from './locale';
-export type Mode = 'study' | 'practice';
 const problemRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*$/;
 const partRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*-[a-z0-9]+$/;
 export class StudyState {
   locale = $state<Locale>('zh');
   theme = $state<'light' | 'dark' | 'system'>('system');
-  mode = $state<Mode>('study');
   selected = $state(DEFAULT_PROBLEM_ID);
   navigationOpen = $state(true);
   referencesOpen = $state(true);
@@ -18,6 +16,8 @@ export class StudyState {
   bookmarks = $state<Record<string, boolean>>({});
   // Compatibility only: retain previously saved text without a note-taking UI.
   private legacyNotes?: Record<string, string>;
+  // Retain the retired preference without exposing or applying reading modes.
+  private legacyMode?: 'study' | 'practice';
   // Compatibility only: retain saved step counts; accordions reveal full solutions.
   revealed = $state<Record<string, number>>({});
   ready = $state(false);
@@ -35,7 +35,7 @@ export class StudyState {
       if (data.version !== 1) return;
       if (data.locale === 'zh' || data.locale === 'en') this.locale = data.locale;
       if (['light','dark','system'].includes(data.theme)) this.theme = data.theme;
-      if (data.mode === 'study' || data.mode === 'practice') this.mode = data.mode;
+      if (data.mode === 'study' || data.mode === 'practice') this.legacyMode = data.mode;
       if (problemIds.has(data.selected)) this.selected = data.selected;
       if (typeof data.sidebars?.navigation === 'boolean') this.navigationOpen = data.sidebars.navigation;
       if (typeof data.sidebars?.references === 'boolean') this.referencesOpen = data.sidebars.references;
@@ -56,10 +56,11 @@ export class StudyState {
     } catch { this.storageError = true; }
   }
   serialize() {
-    return JSON.stringify({version:1, locale:this.locale, theme:this.theme, mode:this.mode, selected:this.selected,
+    return JSON.stringify({version:1, locale:this.locale, theme:this.theme, selected:this.selected,
       completed:this.completed, bookmarks:this.bookmarks, revealed:this.revealed,
       sidebars:{navigation:this.navigationOpen,references:this.referencesOpen},
-      ...(this.legacyNotes ? {notes:this.legacyNotes} : {})});
+      ...(this.legacyNotes ? {notes:this.legacyNotes} : {}),
+      ...(this.legacyMode ? {mode:this.legacyMode} : {})});
   }
   persist(serialized: string) {
     try { localStorage.setItem(STORAGE_KEY, serialized); this.storageError = false; }

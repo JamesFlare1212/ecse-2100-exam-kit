@@ -9,7 +9,8 @@ export interface Formula {
   source: SourceRef;
   note?: Localized;
 }
-export interface Step { text: Localized; math?: string; refs: string[] }
+/** An equation group, optionally annotated; logical symbols belong in its TeX. */
+export interface Step { math: string; refs: string[]; text?: Localized }
 export interface OriginalFigure { doc:string; page:number; region:Region }
 export interface ProblemGuide {
   concept: Localized;
@@ -70,4 +71,11 @@ export type ExamIndex = ExamInfo & { problems: ProblemIndex[] };
 export interface SourceDocument {
   id: string; title: string; kind: string; pages: number; pdf: string;
   pageBase: string; sizes: number[][]; original: string; sha256: string;
+}
+export interface StudyPageData {
+  examIndex: ExamIndex[];
+  documents: Record<string, SourceDocument>;
+  exam: ExamInfo;
+  problem: Problem;
+  assetBase: string;
 }

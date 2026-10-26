@@ -1,4 +1,7 @@
 import katex from 'katex';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { math } from 'micromark-extension-math';
+import { mathFromMarkdown } from 'mdast-util-math';
 import type { Exam, Formula, SourceDocument } from './types.ts';
 
 type Rule = (value: unknown, path: string) => void;
@@ -7,8 +10,8 @@ function fail(path: string, message: string): never {
 }
 const text: Rule = (value, path) => {
   if (typeof value !== 'string' || !value.trim()) fail(path, 'expected nonempty text');
-  if (/[\u0000-\u0008\u000b-\u001f]/.test(value)) fail(path, 'contains a control character; check JSON TeX escapes');
-  if (/\\u[\da-f]{4}/i.test(value)) fail(path, 'contains a literal Unicode escape; write the actual character in JSON');
+  if (/[\u0000-\u0008\u000b-\u001f]/.test(value)) fail(path, 'contains a control character; check TeX escapes');
+  if (/\\u[\da-f]{4}/i.test(value)) fail(path, 'contains a literal Unicode escape; write the actual character');
 };
 const natural: Rule = (value, path) => {
   if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) fail(path, 'expected a nonnegative integer');
@@ -38,10 +41,16 @@ const tex: Rule = (value, path) => {
 };
 const richText: Rule = (value, path) => {
   text(value, path);
-  const prose = (value as string).replace(/\$\$([\s\S]*?)\$\$|\$([^$\n]+)\$/g, (_, display, inline) => {
-    tex(display ?? inline, path);
-    return ' ';
-  });
+  const runs: string[] = [];
+  interface Node { type: string; value?: string; children?: Node[] }
+  function visit(node: Node) {
+    if (node.type === 'math' || node.type === 'inlineMath') { tex(node.value, path); return; }
+    if (node.type === 'code' || node.type === 'inlineCode') return;
+    if (node.value) runs.push(node.value);
+    node.children?.forEach(visit);
+  }
+  visit(fromMarkdown(value as string, { extensions: [math()], mdastExtensions: [mathFromMarkdown()] }));
+  const prose = runs.join(' ');
   if (prose.includes('$')) fail(path, 'unmatched math delimiter');
   if (/[α-ωΑ-Ωℓ₀-₉ₙᵢ⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺′∝≤≥∫×−≈̂≪=<>°%]|\bJ\b/u.test(prose)) {
     fail(path, 'mathematical symbols must use KaTeX delimiters');
@@ -55,9 +64,9 @@ const region: Rule = (value, path) => {
 };
 const originalFigure = object({ doc: text, page: positive, region });
 const source = object({ doc: text, page: positive, label: localized }, { region });
-const step = object({ text: localized, math: tex, refs: array(text) });
+const step = object({ math: tex, refs: array(text) }, { text: localized });
 const part = object({
-  id: text, label: text, points: natural, prompt: localized, steps: array(step, 3),
+  id: text, label: text, points: natural, prompt: localized, steps: array(step, 1),
   answer: tex, sourcePage: positive, solutionPage: positive,
 }, {
   answerText: localized, note: localized, figure: text, figureCaption: localized,
@@ -85,7 +94,7 @@ const document = object({
   sha256: (value, path) => { if (typeof value !== 'string' || !/^[a-f0-9]{64}$/.test(value)) fail(path, 'expected SHA-256 provenance'); },
 });
 
-/** Validate the authored JSON directly. No generated JSON or content rewriting. */
+/** Validate authored content in memory, without rewriting Markdown or generating JSON. */
 export function parseContent(rawExams: unknown, rawFormulas: unknown, rawDocuments: unknown) {
   array(exam, 1)(rawExams, 'exams');
   array(formula, 1)(rawFormulas, 'formulas');
