@@ -3,15 +3,14 @@
   import { Button } from '#lib/components/ui/button';
   import { Input } from '#lib/components/ui/input';
   import SourceOverview from './SourceOverview.svelte';
-  import { documents } from '#lib/catalog';
   import ChevronLeft from '@lucide/svelte/icons/chevron-left';
   import ChevronRight from '@lucide/svelte/icons/chevron-right';
   import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
   import ZoomIn from '@lucide/svelte/icons/zoom-in';
   import ZoomOut from '@lucide/svelte/icons/zoom-out';
   import Download from '@lucide/svelte/icons/download';
-  import type { SourceRef, Locale } from '#lib/types';
-  let {source,locale,onclose}: {source:SourceRef|null;locale:Locale;onclose:()=>void}=$props();
+  import type { SourceRef, Locale, SourceDocument } from '#lib/types';
+  let {source,locale,documents,onclose}: {source:SourceRef|null;locale:Locale;documents:Record<string,SourceDocument>;onclose:()=>void}=$props();
   let page=$state(1);
   let zoom=$state(100);
   let pageInput=$state('1');

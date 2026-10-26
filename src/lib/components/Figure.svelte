@@ -6,15 +6,15 @@
   import FileSearch from '@lucide/svelte/icons/file-search';
   import SphericalFigure from './SphericalFigure.svelte';
   import type { Locale, Localized, SourceRef } from '#lib/types';
-  let {name,locale,dark=false,caption,original,onsource,interactive=false}: {name:string;locale:Locale;dark?:boolean;caption?:Localized;original?:{doc:string;page:number;region:[number,number,number,number]};onsource?:(s:SourceRef)=>void;interactive?:boolean}=$props();
+  let {name,assetBase,locale,dark=false,caption,original,onsource,interactive=false}: {name:string;assetBase:string;locale:Locale;dark?:boolean;caption?:Localized;original?:{doc:string;page:number;region:[number,number,number,number]};onsource?:(s:SourceRef)=>void;interactive?:boolean}=$props();
   let view=$state('recreated');
   let zoom=$state(false);
   let error=$state(false);
   let dimensions=$state<{name:string;ratio:number}|null>(null);
   const spherical=$derived(interactive&&name==='e2-f25-q1');
-  const vectorSrc=$derived(`/figures/${name}${dark?'-dark':''}.svg`);
+  const vectorSrc=$derived(`${assetBase}/figures/${name}${dark?'-dark':''}.svg`);
   const aspectRatio=$derived(dimensions?.name===name?dimensions.ratio:undefined);
-  const src=$derived(view==='original' ? `/original-figures/${name}.webp` : `/figures/${name}${dark?'-dark':''}.svg`);
+  const src=$derived(view==='original' ? `${assetBase}/original-figures/${name}.webp` : `${assetBase}/figures/${name}${dark?'-dark':''}.svg`);
   $effect(()=>{name;view=spherical?'3d':'recreated';});
   $effect(()=>{src;error=false;});
   function rememberDimensions(event:Event) {

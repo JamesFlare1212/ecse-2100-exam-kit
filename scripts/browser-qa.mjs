@@ -1,14 +1,15 @@
 // Optional end-to-end QA. Install Playwright separately, or point PLAYWRIGHT_MODULE
 // at an isolated install. Run against `bun run preview --host 127.0.0.1`.
 import assert from 'node:assert/strict';
-import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const destination=process.env.QA_ARTIFACTS??resolve(root,'artifacts');
 const base=process.env.QA_URL??'http://localhost:4173';
-const exams=JSON.parse(await readFile(resolve(root,'src/lib/data/exams.json'),'utf8'));
+const examDirectory=resolve(root,'content');
+const exams=await Promise.all((await readdir(examDirectory)).filter(name=>/^exam[1-9]\d*_[fs]\d{2}$/.test(name)).sort().map(async name=>JSON.parse(await readFile(resolve(examDirectory,name,'paper.json'),'utf8'))));
 await mkdir(destination,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'light',reducedMotion:'reduce'});
@@ -19,7 +20,8 @@ page.on('pageerror',e=>errors.push(e.message));
 page.on('requestfailed',r=>failures.push({url:r.url(),error:r.failure()?.errorText}));
 const record=(name,data={})=>{checks.push({name,...data});console.log('PASS',name);};
 const stored=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')));
-async function goto(id){await page.goto(`${base}/?problem=${id}`,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(id=>JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')??'{}').selected===id,id);}
+async function selected(id){await page.waitForFunction(id=>document.querySelector('[data-study-ready="true"]')?.getAttribute('data-problem')===id&&JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')??'{}').selected===id,id);}
+async function goto(id){await page.goto(`${base}/problems/${id}/`,{waitUntil:'domcontentloaded',timeout:45000});await selected(id);}
 async function noOverflow(){const metrics=await page.evaluate(()=>({width:innerWidth,documentWidth:document.documentElement.scrollWidth}));assert.ok(metrics.documentWidth<=metrics.width+1,JSON.stringify(metrics));}
 async function revealAll(){
   const button=page.locator('.solution-section-heading button');
@@ -31,6 +33,48 @@ async function revealAll(){
   await button.click();
 }
 try {
+  const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:1000}});
+  try {
+    const staticPage=await staticContext.newPage();
+    await staticPage.goto(base+'/');
+    await staticPage.waitForURL('**/problems/e2-s26-q3/');
+    const exam=exams.find(e=>e.id==='e1-f25'),question=exam.problems[1],next=exam.problems[2];
+    await staticPage.goto(`${base}/problems/${question.id}/`);
+    assert.equal(await staticPage.locator('#problem-title').innerText(),question.title.zh);
+    assert.equal(await staticPage.locator('[data-original-prompt]').count(),question.parts.length);
+    assert.equal(await staticPage.locator('main').getAttribute('data-study-ready'),'false');
+    await staticPage.locator(`a.question-link[href="/problems/${next.id}/"]`).click();
+    await staticPage.waitForURL(`**/problems/${next.id}/`);
+    assert.equal(await staticPage.locator('#problem-title').innerText(),next.title.zh);
+    await staticPage.setViewportSize({width:375,height:812});
+    assert.ok(await staticPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+    record('Static root redirect, deep links and sidebar links work without JavaScript; phone question text remains readable');
+  } finally {await staticContext.close();}
+
+  await goto('e2-s26-q3');
+  await page.evaluate(()=>window.__fieldnotesDocument='same-page');
+  await page.locator('a.question-link[href="/problems/e2-s26-q4/"]').click();
+  await selected('e2-s26-q4');
+  assert.ok(page.url().endsWith('/problems/e2-s26-q4/'));
+  assert.equal(await page.evaluate(()=>window.__fieldnotesDocument),'same-page');
+  await page.goBack();await selected('e2-s26-q3');
+  await page.goForward();await selected('e2-s26-q4');
+  await page.evaluate(()=>{
+    const data=JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1'));
+    data.selected='e1-f25-q1';
+    data.completed['e9-f99-q1-a']=true;data.bookmarks['e9-f99-q1']=true;
+    data.revealed['e9-f99-q1-a']=2;data.notes={'e9-f99-q1':'Preserved legacy record'};
+    localStorage.setItem('ecse2100-fieldnotes-v1',JSON.stringify(data));
+  });
+  await page.reload();await selected('e2-s26-q4');
+  assert.ok(page.url().endsWith('/problems/e2-s26-q4/'));
+  assert.equal((await stored()).completed['e9-f99-q1-a'],true);
+  assert.equal((await stored()).bookmarks['e9-f99-q1'],true);
+  assert.equal((await stored()).revealed['e9-f99-q1-a'],2);
+  assert.equal((await stored()).notes['e9-f99-q1'],'Preserved legacy record');
+  assert.ok((await page.locator('.progress-summary strong').innerText()).replace(/\s+/g,'').startsWith('0/'));
+  record('Unplugged paper records survive without affecting active progress');
+  record('Problem links use client navigation and browser history; a direct path overrides the saved selection');
   await goto('e2-s26-q3');
   await page.evaluate(()=>document.fonts.ready);
   assert.ok(await page.evaluate(()=>[...document.fonts].some(f=>f.family.includes('Noto')&&f.status==='loaded')));
@@ -176,7 +220,7 @@ try {
   const touchContext=await browser.newContext({viewport:{width:375,height:812},hasTouch:true,isMobile:true,colorScheme:'dark'});
   const touchPage=await touchContext.newPage();
   touchPage.on('pageerror',e=>errors.push(e.message));
-  await touchPage.goto(base+'/?problem=e2-f25-q1');
+  await touchPage.goto(base+'/problems/e2-f25-q1/');
   await touchPage.getByRole('button',{name:'展开本问解答',exact:true}).first().click();
   await touchPage.getByRole('button',{name:'查看 3D 空间结构',exact:true}).click();
   await touchPage.locator('[data-sphere-ready="true"]').waitFor({timeout:30000});
@@ -198,7 +242,7 @@ try {
     HTMLCanvasElement.prototype.getContext=function(kind,...args){return kind==='webgl2'?null:original.call(this,kind,...args);};
   });
   const fallbackPage=await fallbackContext.newPage();fallbackPage.on('pageerror',e=>errors.push(e.message));
-  await fallbackPage.goto(base+'/?problem=e2-f25-q1');
+  await fallbackPage.goto(base+'/problems/e2-f25-q1/');
   await fallbackPage.getByRole('button',{name:'展开本问解答',exact:true}).first().click();
   await fallbackPage.getByRole('button',{name:'查看 3D 空间结构',exact:true}).click();
   await fallbackPage.locator('.sphere-controls [role="status"]').filter({hasText:'3D 暂不可用'}).waitFor();
@@ -347,7 +391,8 @@ try {
   await page.getByRole('button',{name:'切换为中文',exact:true}).click();
   await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:resolve(destination,'desktop-light-zh.png')});
   await page.keyboard.press('Control+k');await page.locator('#global-search').fill('镜像');
-  await page.getByRole('dialog').getByRole('button',{name:/导体平面上方的点电荷/}).click();
+  await page.getByRole('dialog').getByRole('link',{name:/导体平面上方的点电荷/}).click();
+  await page.waitForURL('**/problems/e2-s26-q4/');
   assert.equal((await stored()).selected,'e2-s26-q4');record('Keyboard search navigates across the bilingual question bank');
   await revealAll();
   for(const viewport of [{width:375,height:812},{width:390,height:844},{width:768,height:1024},{width:667,height:375}]){

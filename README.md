@@ -12,6 +12,10 @@ bun run dev
 
 打开终端显示的地址（默认 http://localhost:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
 
+每套试卷是 `content/exam1_f26/` 这样的独立 paper 目录，包含 `paper.json`、PDF 来源记录、图源坐标、图像/PDF 资源、提取文本和对应的 `generate_figures.py`。构建自动扫描符合命名规则的目录；新增或移除 paper 无需修改导入清单，导航、考试分类和数量也由数据生成。修改 JSON 后直接运行 `bun run build` 即可更新页面；Bun/TypeScript 校验内容，Vite/SvelteKit 直接读取 JSON 并生成静态 HTML，没有题库编译步骤或生成的 JSON 副本。题库结构、校验和编辑约定见 [content/README.md](content/README.md)。开发服务器也会监听 paper 的新增、移除、JSON 编辑和资源变化。`assets/` 是资源源文件，构建和开发启动时自动复制到 Git 忽略的 `static/papers/`；不要手工编辑暂存目录。
+
+每题使用独立路径，如 `/problems/e2-s26-q3/`。构建时枚举全部 20 题，生成 `build/problems/<题目 ID>/index.html`，HTML 已包含对应题目的标题、题干及所有小问；关闭 JavaScript 仍能阅读题面。根路径静态跳转至默认题目。SvelteKit 接管交互后，切题会加载该题预生成的数据并更新浏览器历史，支持刷新、前进后退和在新标签页打开。完整解答题库仅由构建端读取，前端共享的是不含解答的导航与搜索索引，每页只携带当前题目的完整内容；个人显示偏好与学习进度仍在浏览器恢复。
+
 技术栈：Svelte 5、SvelteKit 3、Vite 8、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Inter、Noto Sans SC 与 KaTeX 字体均随应用提供，不访问 Google Fonts。为支持 OneDrive / WSL 文件系统，Vite 开发服务器启用了文件轮询。
 
 类型检查使用正式版 TypeScript 7.0.2 原生编译器，按 [svelte-check 官方方案](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check#typescript-7-supports)并存两个依赖：`@typescript/native` 是 `typescript@^7.0.2` 的 npm 别名；`typescript@~6.0.3` 为 SvelteKit 配置同步和 Svelte 文件转换提供仍需的 JavaScript 编译器 API。`bun run check` 与 `bun run check:watch` 均通过 `svelte-check --tsgo` 调用 TS7，CI 使用相同命令。保留 TS6 的兼容 API 符合 [TypeScript 官方迁移说明](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)；Svelte 编辑器仍使用兼容工具链。Dependabot 继续更新原生编译器，兼容依赖 `typescript` 暂不自动升级主版本。
@@ -29,13 +33,13 @@ bun run dev
 - 顶栏左右图标可分别收起试卷导航与公式/课件栏，收起后释放阅读宽度，展开状态保存在本地。Ctrl/Cmd+B 切换左侧导航；手机端使用相同入口打开抽屉，保持桌面偏好。
 - 中英文切换，浅色 / 深色主题，首次跟随系统主题；桌面三栏，手机使用原生 Sheet 抽屉。
 - 支持题目 / 公式搜索（Ctrl/Cmd+K）；收藏、逐问进度及显示偏好保存在当前浏览器的 localStorage。
-- 可分享 `?problem=e2-s26-q3` 形式的题目链接。数学内容支持 MathML；支持键盘操作、跳转链接和减少动态效果设置。
+- 可分享 `/problems/e2-s26-q3/` 形式的题目链接。数学内容支持 MathML；支持键盘操作、跳转链接和减少动态效果设置。
 
 进度属于当前浏览器，不在设备之间同步；“已掌握”由学习者自行判断。
 
 ## 来源核对
 
-所有页码指 **从 1 开始的 PDF 页序**，不是课件中有时不同的幻灯片编号。`src/lib/data/documents.json` 保存原文件名、页数、尺寸及 SHA-256；公式区域为相对 PDF 页面的 `[x, y, width, height]`，从左上角计。
+所有页码指 **从 1 开始的 PDF 页序**，不是课件中有时不同的幻灯片编号。共享 `content/documents.json` 与各 paper 的 `documents.json` 保存原文件名、页数、尺寸及 SHA-256；公式区域为相对 PDF 页面的 `[x, y, width, height]`，从左上角计。
 
 - Fall 2026 Exam 1 本地仅有包含答案的 PDF，网页题目只转录原题文字；查看原始页面时会看到官方答案。
 - Spring 2026 Exam 1 的单支节匹配数值已用输入导纳方程核对，两组精确解为 `(d/λ, ℓ/λ)=(0.275282714,0.307588706)` 与 `(0.378410847,0.192411294)`，原图的不同数值在页面中明确说明。
@@ -69,7 +73,7 @@ https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp
 
 ## 校验与重新生成
 
-GitHub Actions 配置位于 `.github/workflows/ci.yml`，在推送到 `main`、创建或更新 PR 时自动运行，也支持手动触发。前端任务按 `package.json` 指定的 Bun 版本安装锁定依赖，检查题库重新编译后是否一致，并运行下面的类型检查、测试和静态构建。Python 工具任务覆盖 3.12 和 3.14，验证依赖一致性、25 个 PDF 的 SHA-256 与页尺寸、全部页面的文字提取、引用区域渲染与 WebP 编解码，以及全部图形两种主题的标注和球形几何；不会改写原始素材，也不会上传课程 PDF 或站点构建产物。图形检查失败时保留 7 天的诊断图片和报告。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在推送到 `main`、创建或更新 PR 时自动运行，也支持手动触发。前端任务按 `package.json` 指定的 Bun 版本安装锁定依赖，直接校验 JSON 题库，并运行下面的类型检查、测试和静态构建，全程无需 Python。独立的 Python 图像工具任务覆盖 3.12 和 3.14，验证依赖一致性、25 个 PDF 的 SHA-256 与页尺寸、全部页面的文字提取、引用区域渲染与 WebP 编解码，以及全部图形两种主题的标注和球形几何；不会改写原始素材，也不会上传课程 PDF 或站点构建产物。图形检查失败时保留 7 天的诊断图片和报告。
 
 Dependabot 配置位于 `.github/dependabot.yml`，每周一纽约时间 09:00 检查 GitHub Actions、根目录的 Bun 依赖和 `scripts/requirements.txt` 中的 Python 依赖。Actions 更新按组提出；Bun / Python 次版本与补丁更新分别按生态分组提出 PR，主版本更新单独提出，不自动合并。
 
@@ -83,9 +87,11 @@ bun run build
 
 内容测试包含所有小问与双语字段、KaTeX 公式、748 个页图、SVG 两种主题、PDF 页码与矩形引用，还包括匹配、源/负载边界、瞬态级数、功率、Gauss、电势梯度、微分电容、镜像法及电流密度的一致性检查。
 
+`bun run content:check` 直接校验 JSON 的双语字段、KaTeX 公式、ID、引用关系、PDF 页码与引用矩形，不改写内容。`bun run build` 先执行该校验，再直接从 JSON 静态渲染；最后自动运行 `scripts/check_prerender.ts`，核对全部 20 个 HTML 中实际渲染的题干与 93 个小问，以及每页的 hydration 数据只包含当前题目的完整记录。paper 通过文件系统自动发现，导航与搜索数据通过 TypeScript 在内存中投影，由布局的 server load 提供，无独立索引文件。新增目录自动纳入构建，移除目录会清理对应的静态页面和资源；默认 paper 缺席时，根路径跳转到现有题目。暂时移除的 paper 的本地学习记录会保留，但不计入当前进度。投影与题库的一致性也包含在 `bun test` 中。
+
 原生类型检查的回归测试在隔离目录中植入 Svelte 脚本、组件属性和通过 `#lib` 引入的 `.svelte.ts` rune 类型错误，检查 TS7 能逐项报错；修正后必须通过，避免迁移时漏掉诊断。
 
-交付时检查结果：Svelte / TypeScript 为 0 错误、0 警告；22 项测试通过（11700 次断言）；静态构建通过。另以真实 Chromium 验证了 37 项浏览器场景，覆盖全部题目、470 个推导步骤的公式显示与逐步揭示、公式原页定位、多页缩略图独立滚动与切页、长讲义、原图切换、练习与数据持久化、中英文、主题，以及 4 种手机 / 平板尺寸；无未捕获异常或失败请求。全部 20 题、93 小问、470 个步骤均在 375px 手机宽度下完整展开检查，无页面横向溢出。原题英文正文中 267 个文字片段与 PDF 提取文本直接匹配，另 2 个因公式排版打乱提取顺序的片段已对照原页人工核验。
+交付时检查结果：Svelte / TypeScript 为 0 错误、0 警告；36 项测试通过（12045 次断言）；静态构建通过。另以真实 Chromium 验证了 40 项浏览器场景，覆盖全部题目、470 个推导步骤的公式显示与逐步揭示、公式原页定位、多页缩略图独立滚动与切页、长讲义、原图切换、练习与数据持久化、中英文、主题，以及 4 种手机 / 平板尺寸；无未捕获异常或失败请求。全部 20 题、93 小问、470 个步骤均在 375px 手机宽度下完整展开检查，无页面横向溢出。原题英文正文中 267 个文字片段与 PDF 提取文本直接匹配，另 2 个因公式排版打乱提取顺序的片段已对照原页人工核验。
 
 `python3 scripts/check_figures.py` 在相同 Matplotlib 环境中检查全部 44 幅图的两种主题，共 88 组：文字边界框不重叠，球形图的半径共享球心、箭头止于对应边界、法向从高斯面径向向外，球形文字避开曲线和引线。检查不改写静态素材，逐图 PNG 和报告写入 Git 忽略的 `artifacts/figure-review/`。
 
@@ -100,16 +106,17 @@ QA_URL=http://localhost:4173 node scripts/browser-qa.mjs
 
 若浏览器装在自定义位置，同时设置 `PLAYWRIGHT_BROWSERS_PATH`。结果写入 Git 忽略的 `artifacts/`，测试使用独立浏览器上下文，不修改日常浏览器进度。
 
-只有编辑题库或重新生成图像时才需要 Python：
+编辑题库和构建站点只需要 Bun。只有重新绘图、渲染 PDF 页图及裁图，或核验这些图像工具时才需要 Python：
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r scripts/requirements.txt
-python3 scripts/build_content.py
-python3 scripts/prepare_sources.py --source-dir ..
-python3 scripts/build_formulas.py
+python3 scripts/prepare_sources.py
+python3 scripts/render_excerpts.py
 python3 scripts/generate_figures.py
+# 也可单独绘制一套 paper
+python3 content/exam1_f26/generate_figures.py
 ```
 
-`content/exam1.py`、`content/exam1_f26.py`、`content/exam2.py` 保存双语推导，`content/problem_guides.py` 保存每题的双语解题导读；`content/original_questions.py` 保存逐字转录的英文原题，`content/question_translations.py` 保存原题的对应中文译文，`content/source_figures.py` 保存原始题图位置。编译后写入 `src/lib/data/exams.json`。题面存在的笔误保留在原题中，核对与纠错只写在解答里。`scripts/generate_figures.py` 与 `scripts/question_figures.py` 保留 SVG 文本，并记录生成器版本及两个脚本的散列。上述命令从父目录读取课程原 PDF，不修改原文件。
+每个 paper 的 `paper.json` 将原始英文题干、中文译文、导读、完整推导和纠错说明集中保存；`documents.json` 保存该 paper 的原始 PDF 来源和散列，路径相对于它的 `assets/`；`figure-sources.json` 保存原始裁图区域，`generate_figures.py` 保存该 paper 的题图和解题图配置。`scripts/plotting.py` 与 `scripts/question_primitives.py` 只提供共用绘图工具，`scripts/generate_figures.py` 自动发现各 paper 的绘图入口，支持 `--paper exam1_f26`。Python 不编译或改写题库 JSON。PDF 图像工具直接读取 paper 内的 PDF 和共享课程 PDF，只有重新从外部导入时才使用 `--source-dir ..`，并核验已有 SHA-256 记录。

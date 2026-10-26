@@ -1,0 +1,106 @@
+{
+  "e2-s26": {
+    "id": "e2-s26",
+    "title": "Exam 2 · Spring 2026",
+    "kind": "exam",
+    "pages": 10,
+    "pdf": "sources/e2-s26.pdf",
+    "pageBase": "pages/e2-s26",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exams/Exam_2_S26.pdf",
+    "sha256": "798286b9efa663003c5ce6f93a0ed5b762d0dd6eed6a2bf2701cc419d5ee3813"
+  },
+  "e2-s26-sol": {
+    "id": "e2-s26-sol",
+    "title": "Exam 2 · Spring 2026 · Solutions",
+    "kind": "solution",
+    "pages": 10,
+    "pdf": "sources/e2-s26-sol.pdf",
+    "pageBase": "pages/e2-s26-sol",
+    "sizes": [
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ],
+      [
+        816,
+        1123
+      ]
+    ],
+    "original": "Exams/Exam_2_S26_Solutions.pdf",
+    "sha256": "4fffd5f9b9ed4485fbe34abe648d10dde3d78a9fd68e035615b378db85c96767"
+  }
+}

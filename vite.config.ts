@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { papersPlugin } from './scripts/papers-plugin.ts';
 
 export default defineConfig({
 	// OneDrive/DrvFS mounts do not reliably forward filesystem events to Vite.
@@ -9,10 +10,11 @@ export default defineConfig({
 		watch: {
 			usePolling: true,
 			interval: 700,
-			ignored: ['**/.git/**', '**/.svelte-kit/**', '**/build/**', '**/static/**', '**/content/**', '**/.agents/**', '**/scripts/**', '**/design-system/**']
+			ignored: ['**/.git/**', '**/.svelte-kit/**', '**/build/**', '**/static/**', '**/content/**/extracted/**', '**/.agents/**', '**/scripts/**', '**/design-system/**']
 		}
 	},
 	plugins: [
+		papersPlugin(),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {

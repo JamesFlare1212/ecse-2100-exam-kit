@@ -168,6 +168,7 @@ button,a,[role='tab'],[role='switch'] { cursor:pointer; }button:disabled { curso
 .nav-section-label { display:flex; justify-content:space-between; align-items:center; margin:6px 5px 15px; font-size:10px; font-weight:600; color:var(--muted-foreground); letter-spacing:1.2px; }
 .exam-list { margin-top:10px; margin-bottom:21px; }.exam-trigger { padding:15px 7px; align-items:center; }.exam-season { display:flex; flex-direction:column; gap:3px; }.exam-season small { font-size:10px; font-weight:400; color:var(--muted-foreground); }
 .question-navigation { display:flex; flex-direction:column; gap:5px; padding:2px 0 4px; }
+.question-link,.search-result,.saved-problem { text-decoration:none; }
 .question-link { display:flex; justify-content:flex-start; width:100%; height:auto; min-height:62px; white-space:normal; gap:10px; padding:11px 10px; }
 .question-number { font-variant-numeric:tabular-nums; font-size:11px; width:20px; flex-shrink:0; align-self:flex-start; padding-top:1px; color:var(--muted-foreground); }.question-number svg { width:15px; height:15px; }
 .question-link-title { text-align:left; line-height:1.55; font-size:12px; font-weight:500; }.question-link-title small { display:block; margin-top:5px; font-size:9px; font-weight:400; color:var(--muted-foreground); }.nav-bookmark { margin-left:auto; flex-shrink:0; }

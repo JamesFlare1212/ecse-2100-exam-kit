@@ -14,9 +14,9 @@
   import Figure from './Figure.svelte';
   import { formulaById } from '#lib/catalog';
   import { conclusionMath } from '#lib/answer-math';
-  import type { Part, SourceRef, Exam } from '#lib/types';
+  import type { Part, SourceRef, ExamInfo } from '#lib/types';
   import type { StudyState } from '#lib/study.svelte';
-  let {part,study,exam,dark,onsource}: {part:Part;study:StudyState;exam:Exam;dark:boolean;onsource:(s:SourceRef)=>void}=$props();
+  let {part,study,exam,dark,assetBase,onsource}: {assetBase:string;part:Part;study:StudyState;exam:ExamInfo;dark:boolean;onsource:(s:SourceRef)=>void}=$props();
   const visible=$derived(study.revealed[`${part.id}`]??(study.mode==='practice'?0:1));
   const done=$derived(Boolean(study.completed[part.id]));
   const conclusion=$derived(conclusionMath(part.steps.at(-1)?.math,part.answer));
@@ -26,21 +26,21 @@
 </script>
 <Accordion.Item value={part.id} class="problem-part" data-part={part.id}>
   <Accordion.Trigger class="part-trigger" level={3}><span class:complete={done} class="part-letter">{#if done}<Check aria-label={study.locale==='zh'?'已掌握':'Mastered'}/>{:else}{part.label}{/if}</span><span class="part-prompt" lang={study.locale==='zh'?'zh-CN':'en'} data-original-prompt><RichText text={part.prompt[study.locale]}/></span>{#if part.points>0}<Badge variant="outline">{part.points} {study.locale==='zh'?'分':'pts'}</Badge>{/if}</Accordion.Trigger>
-  {#if part.questionFigure}<div class="part-question-figure"><Figure name={part.questionFigure.name} locale={study.locale} {dark} caption={part.questionFigure.caption} original={part.questionFigure.source} {onsource}/></div>{/if}
+  {#if part.questionFigure}<div class="part-question-figure"><Figure {assetBase} name={part.questionFigure.name} locale={study.locale} {dark} caption={part.questionFigure.caption} original={part.questionFigure.source} {onsource}/></div>{/if}
   <Accordion.Content class="part-content">
     {#if visible>0}
       <div class="solution-steps">
         {#each part.steps.slice(0,visible) as step,i(i)}
-          <div class="solution-step" data-answer={i===part.steps.length-1&&visible>part.steps.length?part.id:undefined}><span class="step-number">{String(i+1).padStart(2,'0')}</span><div class="step-content"><p><RichText text={step.text[study.locale]}/></p>{#if i===part.steps.length-1&&visible>part.steps.length}{#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}<Math tex={conclusion.result} display/>{#if part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}{:else if step.math}<Math tex={step.math} display/>{/if}{#if step.refs.length}<div class="step-references">{#each step.refs as id(id)}<FormulaLink formula={formulaById[id]} locale={study.locale} {onsource} compact/>{/each}</div>{/if}</div></div>
+          <div class="solution-step" data-answer={i===part.steps.length-1&&visible>part.steps.length?part.id:undefined}><span class="step-number">{String(i+1).padStart(2,'0')}</span><div class="step-content"><p><RichText text={step.text[study.locale]}/></p>{#if i===part.steps.length-1&&visible>part.steps.length}{#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}<Math tex={conclusion.result} display/>{#if part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}{:else if step.math}<Math tex={step.math} display/>{/if}{#if step.refs.length}<div class="step-references">{#each step.refs as id(id)}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} compact/>{/each}</div>{/if}</div></div>
         {/each}
       </div>
     {/if}
     {#if visible>part.steps.length}
-      {#if part.figure}<Figure name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
+      {#if part.figure}<Figure {assetBase} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
       {#if part.spatialFigure}
         <div class="solution-exploration">
           <Button variant="outline" size="sm" aria-expanded={explorationOpen} onclick={()=>explorationOpen=!explorationOpen}><Eye data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?(explorationOpen?'收起 3D 工具':'查看 3D 空间结构'):(explorationOpen?'Hide 3D tool':'Explore the geometry in 3D')}</Button>
-          {#if explorationOpen}<Figure name={part.spatialFigure} locale={study.locale} {dark} interactive/>{/if}
+          {#if explorationOpen}<Figure {assetBase} name={part.spatialFigure} locale={study.locale} {dark} interactive/>{/if}
         </div>
       {/if}
       {#if part.note}<Alert.Root class="solution-note"><Info aria-hidden="true"/><Alert.Title>{study.locale==='zh'?'核对说明':'Source check'}</Alert.Title><Alert.Description><RichText text={part.note[study.locale]}/></Alert.Description></Alert.Root>{/if}

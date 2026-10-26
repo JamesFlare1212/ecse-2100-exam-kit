@@ -1,0 +1,1411 @@
+{
+  "id": "e2-s26",
+  "number": 2,
+  "term": {
+    "zh": "春季",
+    "en": "Spring"
+  },
+  "year": 2026,
+  "points": 32,
+  "doc": "e2-s26",
+  "solutionDoc": "e2-s26-sol",
+  "questionsOnly": true,
+  "problems": [
+    {
+      "id": "e2-s26-q1",
+      "number": 1,
+      "title": {
+        "zh": "高频下微带线的电阻",
+        "en": "Resistance of a Microstrip Line at High Frequencies"
+      },
+      "topic": {
+        "zh": "电流密度 · 电阻",
+        "en": "Current density · resistance"
+      },
+      "statement": {
+        "zh": "如课堂所述，由于趋肤效应，频率较高时电流倾向于靠近导体表面流动。考虑下方微带线，其性质如下：\n• 宽度（y 方向）：$W$\n• 高度（z 方向）：$h$\n• 长度（x 方向）：无限长\n• 电导率：$\\sigma$\n\n微带线中的电流密度分布给定为：\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{当 }0.4h\\le z<0.5h\\\\0&\\text{当 }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{当 }-0.5h<z\\le-0.4h\\end{cases}$$\n忽略由微带线有限宽度引起的电场边缘效应。",
+        "en": "As discussed in class, due to the skin effect, current prefers to flow closer to the surfaces of a conductor at higher frequencies. Consider the microstrip line below, which has the following properties:\n• Width (in y-dimension): $W$\n• Height (in z-dimension): $h$\n• Length (in x-dimension): infinite\n• Conductivity: $\\sigma$\n\nThe current density distribution in the microstrip line is given by:\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{for }0.4h\\le z<0.5h\\\\0&\\text{for }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{for }-0.5h<z\\le-0.4h\\end{cases}$$\nIgnore any electric field fringing effects due to the finite width of the microstrip line."
+      },
+      "givens": [
+        "0.4h\\le |z|\\le0.5h",
+        "\\mathbf J=J_0\\hat{\\mathbf x}",
+        "A_{\\mathrm{eff}}=0.2Wh"
+      ],
+      "points": 6,
+      "figure": "e2-s26-q1",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e2-s26",
+        "page": 2,
+        "region": [
+          0.4611,
+          0.163,
+          0.4353,
+          0.2074
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-14",
+          "page": 9,
+          "label": {
+            "zh": "电流密度的通量积分",
+            "en": "Current as a flux integral"
+          }
+        },
+        {
+          "doc": "lecture-14",
+          "page": 14,
+          "label": {
+            "zh": "趋肤效应与非均匀电流",
+            "en": "Skin effect and nonuniform current"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 0,
+          "prompt": {
+            "zh": "计算流过微带线的总电流 $I$。",
+            "en": "Calculate the total current $I$ flowing through the microstrip line."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写公式表中的电流密度通量公式，总电流是穿过截面的 J 的法向分量积分。",
+                "en": "Begin with the crib current-density flux equation: integrate the normal component of J over the cross-section."
+              },
+              "math": "I=\\iint_S\\mathbf J\\cdot d\\mathbf S",
+              "refs": [
+                "current"
+              ]
+            },
+            {
+              "text": {
+                "zh": "电流沿 +x，所以选 yz 截面、外法向 +x̂；按原图 y 从 0 到 W，z 从 −0.5h 到 0.5h。",
+                "en": "Current flows along +x, so choose a yz cross-section with normal +x̂. As drawn, y runs from 0 to W and z from −0.5h to 0.5h."
+              },
+              "math": "d\\mathbf S=\\hat{\\mathbf x}\\,dy\\,dz,\\qquad \\hat{\\mathbf x}\\cdot\\hat{\\mathbf x}=1",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将分段电流密度逐段代入。中间层 J=0，只有上下两层贡献。",
+                "en": "Substitute the piecewise current density. The middle has J=0, leaving the lower and upper layers."
+              },
+              "math": "\\begin{aligned}I={}&\\int_{-0.5h}^{-0.4h}\\!\\int_0^W J_0\\,dy\\,dz\\\\&+\\int_{0.4h}^{0.5h}\\!\\int_0^W J_0\\,dy\\,dz\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先对 y 积分得到 W，再代入两段 z 的上下限。",
+                "en": "Integrate over y to obtain W, then evaluate both z intervals."
+              },
+              "math": "I=J_0W\\bigl[(-0.4h)-(-0.5h)\\bigr]+J_0W\\bigl[(0.5h)-(0.4h)\\bigr]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "每层厚度是 0.1h，总载流面积为 0.2Wh；电流量纲为 A。",
+                "en": "Each layer is 0.1h thick, giving total conducting area 0.2Wh and current in amperes."
+              },
+              "math": "I=J_0W(0.1h+0.1h)=0.2J_0Wh",
+              "refs": []
+            }
+          ],
+          "answer": "I=0.2J_0Wh",
+          "sourcePage": 2,
+          "solutionPage": 2,
+          "id": "e2-s26-q1-a"
+        },
+        {
+          "label": "b",
+          "points": 0,
+          "prompt": {
+            "zh": "计算微带线单位长度电势降的大小 $V^{\\prime}$。",
+            "en": "Calculate the magnitude of the potential drop per unit length $V^{\\prime}$ of the microstrip line."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写电势差原式与微观欧姆定律。题目要求电压降的大小，符号约定应先明确。",
+                "en": "Begin with the potential integral and microscopic Ohm’s law. Define the voltage-drop sign before taking its magnitude."
+              },
+              "math": "V(B)-V(A)=-\\int_A^B\\mathbf E\\cdot d\\mathbf l,\\qquad\\mathbf J=\\sigma\\mathbf E",
+              "refs": [
+                "potential",
+                "ohm"
+              ]
+            },
+            {
+              "text": {
+                "zh": "沿题设承载电流的表层取一条 x 方向路径；这一层的电场由 J₀/σ 给出。",
+                "en": "Choose an x-directed path in a current-carrying surface layer. Its electric field follows from J₀/σ."
+              },
+              "math": "\\mathbf E=\\frac{\\mathbf J}{\\sigma}=\\frac{J_0}{\\sigma}\\hat{\\mathbf x},\\qquad d\\mathbf l=\\hat{\\mathbf x}\\,dx",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "在长度 ℓ 上代入积分并计算单位矢量点积。",
+                "en": "Substitute into the integral over a length ℓ and evaluate the unit-vector dot product."
+              },
+              "math": "V(\\ell)-V(0)=-\\int_0^\\ell\\frac{J_0}{\\sigma}(\\hat{\\mathbf x}\\cdot\\hat{\\mathbf x})\\,dx",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "场强沿 x 不变，积分给出 ℓ。沿电流方向电位降低，因此电压降大小为正。",
+                "en": "The field is independent of x, so integration gives ℓ. Potential decreases along the current, making the drop magnitude positive."
+              },
+              "math": "V(0)-V(\\ell)=\\frac{J_0\\ell}{\\sigma},\\qquad V^\\prime=\\frac{|V(0)-V(\\ell)|}{\\ell}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "除以长度 ℓ，单位由 V 变为 V/m。",
+                "en": "Divide by ℓ to obtain volts per meter."
+              },
+              "math": "V^\\prime=\\frac{J_0}{\\sigma}",
+              "refs": []
+            }
+          ],
+          "answer": "V^\\prime=\\frac{J_0}{\\sigma}\\quad[\\mathrm{V/m}]",
+          "sourcePage": 2,
+          "solutionPage": 2,
+          "id": "e2-s26-q1-b"
+        },
+        {
+          "label": "c",
+          "points": 0,
+          "prompt": {
+            "zh": "计算微带线的单位长度电阻 $R^{\\prime}$。",
+            "en": "Calculate the resistance per unit length $R^{\\prime}$ of the microstrip line."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写电阻定义，再将其除以导线长度，得到单位长度形式。",
+                "en": "Begin with the resistance definition and divide by conductor length to obtain its per-length form."
+              },
+              "math": "R=\\frac{\\Delta V}{I},\\qquad R^\\prime=\\frac R\\ell=\\frac{\\Delta V/\\ell}{I}=\\frac{V^\\prime}{I}",
+              "refs": [
+                "resistance"
+              ]
+            },
+            {
+              "text": {
+                "zh": "把 a)、b) 的两个结果完整代入，不要把电压降和总电压混淆。",
+                "en": "Substitute both preceding results explicitly, distinguishing voltage drop per length from total voltage."
+              },
+              "math": "I=0.2J_0Wh,\\qquad V^\\prime=\\frac{J_0}{\\sigma},\\qquad R^\\prime=\\frac{J_0/\\sigma}{0.2J_0Wh}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "约去电流密度 J₀，将 1/0.2 化为 5。",
+                "en": "Cancel J₀ and evaluate 1/0.2 as 5."
+              },
+              "math": "R^\\prime=\\frac1{0.2\\sigma Wh}=\\frac5{\\sigma Wh}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "检查单位：(S/m)·m²= S·m，取倒数得到 Ω/m。",
+                "en": "Check units: (S/m)·m² is S·m, whose reciprocal is Ω/m."
+              },
+              "math": "R^\\prime=\\frac{5}{\\sigma Wh}\\quad[\\Omega/\\mathrm m]",
+              "refs": []
+            }
+          ],
+          "answer": "R^\\prime=\\frac{5}{\\sigma Wh}\\quad[\\Omega/\\mathrm m]",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "id": "e2-s26-q1-c"
+        },
+        {
+          "label": "d",
+          "points": 0,
+          "prompt": {
+            "zh": "在电流密度与上文相同的情况下，用物理推理解释为什么增大电导率 $\\sigma$ 会降低微带线的电阻。",
+            "en": "For the same current density as above, use physical reasoning to explain why increasing the conductivity $\\sigma$ would lead to a decrease in the resistance of the microstrip line."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先用微观欧姆定律明确哪些量固定：题目保持同一个 J(z) 分布和同一截面。",
+                "en": "Use microscopic Ohm’s law to identify what stays fixed: the specified J(z) distribution and conductor cross-section."
+              },
+              "math": "\\mathbf J=\\sigma\\mathbf E,\\qquad I=\\iint\\mathbf J\\cdot d\\mathbf S",
+              "refs": [
+                "ohm",
+                "current"
+              ]
+            },
+            {
+              "text": {
+                "zh": "固定电流密度与面积意味着总电流也不变。提高 σ 后，同一 J 所需的驱动电场更小。",
+                "en": "Fixed current density and area keep total current unchanged. Increasing σ requires less driving field for that same J."
+              },
+              "math": "I=0.2J_0Wh=\\text{constant},\\qquad E_x=\\frac{J_0}{\\sigma}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "长度相同，电场减小会让单位长度电压降减小；把它代入电阻定义。",
+                "en": "For the same length, a smaller field gives a smaller voltage drop per length. Substitute that into the resistance definition."
+              },
+              "math": "R^\\prime=\\frac{V^\\prime}{I}=\\frac{J_0/\\sigma}{0.2J_0Wh}=\\frac5{\\sigma Wh}",
+              "refs": [
+                "resistance"
+              ]
+            },
+            {
+              "text": {
+                "zh": "因此增加电导率会降低电阻；原因是维持相同电流所需的电压降减少。",
+                "en": "Increasing conductivity therefore reduces resistance because the same current requires a smaller voltage drop."
+              },
+              "math": "\\sigma\\uparrow\\ \\Longrightarrow\\ R^\\prime\\downarrow",
+              "refs": []
+            }
+          ],
+          "answer": "\\sigma\\uparrow\\ \\Longrightarrow\\ R^\\prime\\downarrow",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "answerText": {
+            "zh": "更高电导率意味着维持同样电流只需更小的驱动电场。",
+            "en": "Higher conductivity requires a smaller driving field for the same current."
+          },
+          "id": "e2-s26-q1-d"
+        },
+        {
+          "label": "e",
+          "points": 0,
+          "prompt": {
+            "zh": "在流过微带线的总电流相同的情况下，如果电流密度均匀分布在整个横截面上，而不是集中在表面附近，电阻会有什么不同？用物理推理简要解释。",
+            "en": "For the same total current flowing through the microstrip line, how would the resistance of the microstrip line differ if the current density were distributed uniformly over the cross-section instead of being concentrated near the surfaces? Briefly explain using physical reasoning."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写电流积分和欧姆定律。这次固定的是总电流 I，而不是原来的表层密度 J₀。",
+                "en": "Begin with the current integral and Ohm’s law. Here total current I is fixed, rather than the previous surface-layer density J₀."
+              },
+              "math": "I=\\iint\\mathbf J\\cdot d\\mathbf S,\\qquad\\mathbf E=\\frac{\\mathbf J}{\\sigma}",
+              "refs": [
+                "current",
+                "ohm"
+              ]
+            },
+            {
+              "text": {
+                "zh": "均匀分布使用整个 Wh 截面；先求新的电流密度。",
+                "en": "A uniform distribution uses the entire Wh cross-section. Compute the new current density first."
+              },
+              "math": "J_{\\mathrm{uniform}}=\\frac I{Wh}=\\frac{0.2J_0Wh}{Wh}=0.2J_0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入欧姆定律，电场与每单位长度电压降都变为原来的五分之一。",
+                "en": "Substitute into Ohm’s law: both field and voltage drop per length become one fifth of their previous values."
+              },
+              "math": "E_{\\mathrm{uniform}}=\\frac{0.2J_0}{\\sigma}=0.2E_{\\mathrm{skin}},\\qquad V^\\prime_{\\mathrm{uniform}}=0.2V^\\prime_{\\mathrm{skin}}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "总电流保持不变，将电压降比代入 R′=V′/I。",
+                "en": "With total current unchanged, insert this voltage-drop ratio into R′=V′/I."
+              },
+              "math": "R^\\prime_{\\mathrm{uniform}}=\\frac{I/(\\sigma Wh)}{I}=\\frac1{\\sigma Wh},\\qquad R^\\prime_{\\mathrm{skin}}=\\frac5{\\sigma Wh}",
+              "refs": [
+                "resistance"
+              ]
+            },
+            {
+              "text": {
+                "zh": "得到电阻减为五分之一，即下降 80%；物理原因是可供载流的有效面积扩大。",
+                "en": "Resistance becomes one fifth, an 80% reduction, because the available current-carrying area increases."
+              },
+              "math": "R^\\prime_{\\mathrm{uniform}}=\\frac15 R^\\prime_{\\mathrm{skin}}",
+              "refs": []
+            }
+          ],
+          "answer": "R^\\prime_{\\mathrm{uniform}}=\\frac15 R^\\prime_{\\mathrm{skin}}",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "id": "e2-s26-q1-e"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查电流密度的通量积分、微观欧姆定律，以及趋肤效应为什么会增大电阻。",
+          "en": "This problem connects current-density flux, microscopic Ohm's law and the resistance increase caused by skin effect."
+        },
+        "known": {
+          "zh": "微带线宽为 $W$、厚为 $h$、电导率为 $\\sigma$，电流沿 $x$ 方向。题设分段给出 $\\vec J(z)$：上下表层有电流，中间区域为零。",
+          "en": "The strip has width $W$, thickness $h$ and conductivity $\\sigma$, with current along $x$. The given piecewise $\\vec J(z)$ is nonzero in the top and bottom surface layers and zero in the middle."
+        },
+        "goal": {
+          "zh": "依次求总电流 $I$、单位长度电势降 $V^\\prime$ 和单位长度电阻 $R^\\prime$，再解释电导率与电流分布的影响。",
+          "en": "Find total current $I$, voltage drop per unit length $V^\\prime$ and resistance per unit length $R^\\prime$, then explain the effects of conductivity and current distribution."
+        },
+        "approach": {
+          "zh": "先认清哪些区域真正载流，再选垂直于电流的横截面积分。得到总电流后，用 $\\mathbf J=\\sigma\\mathbf E$ 联系电场与电势降，最后回到电阻定义。",
+          "en": "Identify the current-carrying regions before integrating over a cross-section perpendicular to the current. Then use $\\mathbf J=\\sigma\\mathbf E$ to connect field and voltage drop, and apply the definition of resistance."
+        }
+      }
+    },
+    {
+      "id": "e2-s26-q2",
+      "number": 2,
+      "title": {
+        "zh": "静电边界条件",
+        "en": "Electrostatic Boundary Conditions"
+      },
+      "topic": {
+        "zh": "边界条件 · 极化",
+        "en": "Boundary conditions · polarization"
+      },
+      "statement": {
+        "zh": "下图是一组由三种电介质组成的叠层：\n• 电介质 1：占据 $y>0.01\\,\\mathrm{m}$，介电常数为 $\\varepsilon_1=2\\varepsilon_0$\n• 电介质 2：占据 $0<y<0.01\\,\\mathrm{m}$，介电常数为 $\\varepsilon_2=5\\varepsilon_0$\n• 电介质 3：占据 $y<0$，介电常数为 $\\varepsilon_3=2\\varepsilon_0$\n\n电介质 1 中的电场给定为：\n$$\\vec E_1=100\\hat x-100\\hat y$$",
+        "en": "Shown below is a stack of three dielectric materials:\n• Dielectric 1: occupies the region $y>0.01\\,\\mathrm{m}$ and has permittivity $\\varepsilon_1=2\\varepsilon_0$\n• Dielectric 2: occupies the region $0<y<0.01\\,\\mathrm{m}$ and has permittivity $\\varepsilon_2=5\\varepsilon_0$\n• Dielectric 3: occupies the region $y<0$ and has permittivity $\\varepsilon_3=2\\varepsilon_0$\n\nThe electric field in dielectric 1 is given by:\n$$\\vec E_1=100\\hat x-100\\hat y$$"
+      },
+      "givens": [
+        "\\mathbf E_1=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+        "\\rho_s=0",
+        "d=0.01\\,\\mathrm m"
+      ],
+      "points": 8,
+      "figure": "e2-s26-q2",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e2-s26",
+        "page": 4,
+        "region": [
+          0.2696,
+          0.2047,
+          0.4607,
+          0.1923
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-12",
+          "page": 14,
+          "label": {
+            "zh": "切向电场连续",
+            "en": "Tangential electric field"
+          }
+        },
+        {
+          "doc": "lecture-12",
+          "page": 15,
+          "label": {
+            "zh": "法向电位移边界条件",
+            "en": "Normal displacement boundary condition"
+          }
+        },
+        {
+          "doc": "lecture-11",
+          "page": 22,
+          "label": {
+            "zh": "介质极化",
+            "en": "Dielectric polarization"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 0,
+          "prompt": {
+            "zh": "求电介质 2 中的电场 $\\vec E_2$。",
+            "en": "Find the electric field in dielectric 2, $\\vec E_2$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表的两条静电边界条件和本构关系。",
+                "en": "Begin with both crib electrostatic boundary conditions and the constitutive relation."
+              },
+              "math": "D_{1n}-D_{2n}=\\rho_s,\\quad E_{1t}=E_{2t},\\quad\\mathbf D_i=\\epsilon_i\\mathbf E_i",
+              "refs": [
+                "boundary",
+                "constitutive"
+              ]
+            },
+            {
+              "text": {
+                "zh": "分界面是 y=0.01 m，法向沿 y、切向沿 x。先将已知电场分解。",
+                "en": "The interface is y=0.01 m, with normal along y and tangent along x. Decompose the given field."
+              },
+              "math": "E_{1t}=E_{1x}=100\\,\\mathrm{V/m},\\quad E_{1n}=E_{1y}=-100\\,\\mathrm{V/m},\\quad E_{1z}=0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "切向 E 连续，因此 x 分量直接传递，z 分量仍为零。",
+                "en": "Tangential E is continuous, so the x component carries across and the z component remains zero."
+              },
+              "math": "E_{2x}=E_{1x}=100\\,\\mathrm{V/m},\\qquad E_{2z}=0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "无自由面电荷，令法向 D 的跳变为零，再解出 E₂y。",
+                "en": "There is no free surface charge. Set the normal-D jump to zero and solve for E₂y."
+              },
+              "math": "\\epsilon_1E_{1y}-\\epsilon_2E_{2y}=0\\quad\\Longrightarrow\\quad E_{2y}=\\frac{\\epsilon_1}{\\epsilon_2}E_{1y}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入两个介电常数，约去 ε₀，保留已知 y 分量的负号。",
+                "en": "Insert both permittivities, cancel ε₀ and retain the negative y component."
+              },
+              "math": "E_{2y}=\\frac{2\\epsilon_0}{5\\epsilon_0}(-100)=-40\\,\\mathrm{V/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把三个分量合成为矢量。",
+                "en": "Combine all three components into the vector."
+              },
+              "math": "\\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+          "sourcePage": 4,
+          "solutionPage": 4,
+          "id": "e2-s26-q2-a"
+        },
+        {
+          "label": "b",
+          "points": 0,
+          "prompt": {
+            "zh": "求电介质 3 中的电场 $\\vec E_3$。",
+            "en": "Find the electric field in dielectric 3, $\\vec E_3$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "在 y=0 的第二个介质界面再次使用切向 E 连续和法向 D 连续。",
+                "en": "At the second dielectric interface y=0, again use continuity of tangential E and normal D."
+              },
+              "math": "E_{2t}=E_{3t},\\qquad D_{2n}-D_{3n}=0",
+              "refs": [
+                "boundary"
+              ]
+            },
+            {
+              "text": {
+                "zh": "上问给出 E₂x=100、E₂y=−40，法向和切向仍分别为 y 与 x。",
+                "en": "The preceding result gives E₂x=100 and E₂y=−40; y remains normal and x tangential."
+              },
+              "math": "E_{3x}=E_{2x}=100\\,\\mathrm{V/m},\\qquad E_{3z}=0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先代入本构关系，再把 E₃y 单独移到一侧。",
+                "en": "Substitute the constitutive relation and isolate E₃y."
+              },
+              "math": "\\epsilon_2E_{2y}=\\epsilon_3E_{3y}\\quad\\Longrightarrow\\quad E_{3y}=\\frac{\\epsilon_2}{\\epsilon_3}E_{2y}",
+              "refs": [
+                "constitutive"
+              ]
+            },
+            {
+              "text": {
+                "zh": "代入 ε₂=5ε₀、ε₃=2ε₀ 和 −40 V/m。",
+                "en": "Substitute ε₂=5ε₀, ε₃=2ε₀ and −40 V/m."
+              },
+              "math": "E_{3y}=\\frac{5\\epsilon_0}{2\\epsilon_0}(-40)=-100\\,\\mathrm{V/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "恢复完整矢量。因为 ε₃=ε₁，最终场与区域 1 一致。",
+                "en": "Restore the complete vector. Since ε₃=ε₁, the field agrees with region 1."
+              },
+              "math": "\\mathbf E_3=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E_3=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+          "sourcePage": 5,
+          "solutionPage": 5,
+          "id": "e2-s26-q2-b"
+        },
+        {
+          "label": "c",
+          "points": 0,
+          "prompt": {
+            "zh": "计算电介质 2 两端的总电势差 $V_0$（即 $y=0.01\\,\\mathrm{m}$ 与 $y=0$ 之间）。",
+            "en": "Calculate the total potential difference across dielectric 2, $V_0$, (i.e. between $y=0.01\\,\\mathrm{m}$ and $y=0$)."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先明确电势差的次序，再写原表的负线积分。",
+                "en": "Specify the order of the potential difference before writing the crib negative line integral."
+              },
+              "math": "V_0=V(y=0.01)-V(y=0)=-\\int_{y=0}^{y=0.01}\\mathbf E_2\\cdot d\\mathbf l",
+              "refs": [
+                "potential"
+              ]
+            },
+            {
+              "text": {
+                "zh": "选 x、z 不变的直线路径，仅有 dy 分量。",
+                "en": "Choose a straight path at fixed x and z, leaving only a dy component."
+              },
+              "math": "d\\mathbf l=\\hat{\\mathbf y}\\,dy,\\qquad \\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "展开点积，x̂·ŷ=0，ŷ·ŷ=1，因此切向的 100 V/m 不参与本次电势差。",
+                "en": "Expand the dot product: x̂·ŷ=0 and ŷ·ŷ=1, so the tangential 100 V/m does not contribute."
+              },
+              "math": "\\mathbf E_2\\cdot d\\mathbf l=[100(0)-40(1)]\\,dy=-40\\,dy",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "积分常数场，并把 0.01 m 代入上下限；外面的负号使结果为正。",
+                "en": "Integrate the constant field and substitute the 0.01 m limits. The leading minus sign makes the result positive."
+              },
+              "math": "V_0=-\\int_0^{0.01}(-40)\\,dy=40[\\,y\\,]_0^{0.01}=40(0.01)\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "所求电势差为 +0.40 V，表示上表面的电位较高。",
+                "en": "The requested difference is +0.40 V, meaning the upper surface is at higher potential."
+              },
+              "math": "V_0=+0.40\\,\\mathrm V",
+              "refs": []
+            }
+          ],
+          "answer": "V_0=+0.40\\,\\mathrm V",
+          "sourcePage": 5,
+          "solutionPage": 5,
+          "id": "e2-s26-q2-c"
+        },
+        {
+          "label": "d",
+          "points": 0,
+          "prompt": {
+            "zh": "利用电介质材料极化的概念，简要解释为什么电介质 2 中的电场大小与电介质 1 和电介质 3 中的电场大小不同。必须讨论相对大小：为什么其中一个比另外的更大或更小？",
+            "en": "Using the concept of polarization in dielectric materials, briefly explain why the magnitude of the electric field in dielectric 2 is different from the magnitudes of the electric fields in dielectric 1 and dielectric 3. Be sure to comment on the relative magnitudes: why is one larger/smaller than the others?"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "用边界条件和 D=εE 作为解释起点；不是把全部电场都按 1/ε 缩放。",
+                "en": "Start from the boundary conditions and D=εE. The entire field does not scale uniformly as 1/ε."
+              },
+              "math": "D_{1n}=D_{2n}=D_{3n},\\qquad E_{1t}=E_{2t}=E_{3t}",
+              "refs": [
+                "boundary",
+                "constitutive"
+              ]
+            },
+            {
+              "text": {
+                "zh": "相同法向 D 下，介电常数最大的区域 2 具有最小的法向 E。",
+                "en": "For the same normal D, region 2 has the smallest normal E because its permittivity is largest."
+              },
+              "math": "E_{2n}=\\frac{D_n}{5\\epsilon_0},\\qquad E_{1n}=E_{3n}=\\frac{D_n}{2\\epsilon_0}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "材料中的电偶极被极化，其响应使给定自由电荷产生的法向净场减弱；切向场仍由连续条件限定。",
+                "en": "Polarization of material dipoles reduces the normal net field for the given free charge, while tangential continuity constrains the tangential field."
+              },
+              "math": "|E_{2n}|=40<100=|E_{1n}|=|E_{3n}|\\quad[\\mathrm{V/m}]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "比较题目问到的总场大小，必须使用各分量平方和，而不是只比较 y 分量。",
+                "en": "Compare total field magnitudes using the sum of squared components, rather than the y component alone."
+              },
+              "math": "|\\mathbf E_2|=\\sqrt{100^2+40^2}\\approx107.7\\,\\mathrm{V/m},\\quad |\\mathbf E_1|=|\\mathbf E_3|=\\sqrt{100^2+100^2}\\approx141.4\\,\\mathrm{V/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "因此区域 2 的总场较小，区域 1 和 3 的场强相同。",
+                "en": "Region 2 therefore has the smaller total field, while regions 1 and 3 agree."
+              },
+              "math": "|\\mathbf E_2|<|\\mathbf E_1|=|\\mathbf E_3|",
+              "refs": []
+            }
+          ],
+          "answer": "|\\mathbf E_2|<|\\mathbf E_1|=|\\mathbf E_3|",
+          "sourcePage": 5,
+          "solutionPage": 5,
+          "answerText": {
+            "zh": "减小的是法向分量；不能把所有电场分量都按介电常数反比缩放。",
+            "en": "The normal component decreases; do not scale every field component inversely with permittivity."
+          },
+          "id": "e2-s26-q2-d"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查分层介质中切向电场与法向电位移的边界条件，以及介质极化的解释。",
+          "en": "This problem applies tangential-field and normal-displacement boundary conditions to layered dielectrics and interprets them through polarization."
+        },
+        "known": {
+          "zh": "三层介电常数依次为 $2\\varepsilon_0$、$5\\varepsilon_0$、$2\\varepsilon_0$，中间层厚 $0.01\\,\\mathrm m$；已给出第一层的 $\\vec E_1=100\\hat x-100\\hat y$。",
+          "en": "The layers have permittivities $2\\varepsilon_0$, $5\\varepsilon_0$ and $2\\varepsilon_0$, with a $0.01\\,\\mathrm m$ middle layer. The first-layer field is $\\vec E_1=100\\hat x-100\\hat y$."
+        },
+        "goal": {
+          "zh": "求第二、第三层电场和中间层两端的电势差，并用极化解释电场大小的差异。",
+          "en": "Find the fields in layers two and three and the voltage across the middle layer, then explain the field-magnitude differences through polarization."
+        },
+        "approach": {
+          "zh": "先按界面方向把电场分为切向与法向。在无自由面电荷的介质界面，分别使用切向电场连续和法向电位移连续，再沿法向路径计算电势差。",
+          "en": "Split the field into tangential and normal components. At a dielectric interface without free surface charge, preserve tangential electric field and normal displacement, then integrate along the normal to obtain the voltage."
+        }
+      }
+    },
+    {
+      "id": "e2-s26-q3",
+      "number": 3,
+      "title": {
+        "zh": "同轴电缆的漏电介质",
+        "en": "Leaky Coaxial Cable Dielectric"
+      },
+      "topic": {
+        "zh": "高斯定律 · 微分电容",
+        "en": "Gauss’s law · differential capacitance"
+      },
+      "statement": {
+        "zh": "右侧同轴电缆的电介质质量较差，导致一些电荷泄漏到内导体与外导体之间。电缆的内导体半径为 $a$，面电荷密度为 $\\rho_{sa}$；外导体壳的半径为 $b$，保持电势 $V(b)=0$。区域 $a<r<b$ 填充了介电常数为 $\\varepsilon$ 的电介质，其体电荷密度给定为：\n$$\\rho(r)=\\rho_0\\frac{a}{r}$$",
+        "en": "The coaxial cable to the right has a poor dielectric, which has allowed some charge to leak between the inner conductor and outer conductor. The cable has an inner conductor of radius $a$ with surface charge density $\\rho_{sa}$ and an outer conducting shell of radius $b$, held at a potential $V(b)=0$. The region $a<r<b$ is filled with a dielectric of permittivity $\\varepsilon$ and volumetric charge density given by:\n$$\\rho(r)=\\rho_0\\frac{a}{r}$$"
+      },
+      "givens": [
+        "\\rho(r)=\\rho_0\\frac ar",
+        "V(b)=0",
+        "a<r<b"
+      ],
+      "points": 8,
+      "figure": "e2-s26-q3",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e2-s26",
+        "page": 6,
+        "region": [
+          0.4957,
+          0.114,
+          0.3774,
+          0.1951
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-10",
+          "page": 32,
+          "label": {
+            "zh": "柱对称高斯定律",
+            "en": "Cylindrical Gauss’s law"
+          }
+        },
+        {
+          "doc": "lecture-11",
+          "page": 12,
+          "label": {
+            "zh": "由电场积分求电势",
+            "en": "Integrating field to potential"
+          }
+        },
+        {
+          "doc": "lecture-12",
+          "page": 25,
+          "label": {
+            "zh": "微分电容定义",
+            "en": "Differential capacitance"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 0,
+          "prompt": {
+            "zh": "使用高斯定律，求区域 $a<r<b$ 内的电场 $\\vec E(\\vec r)$。附图说明所选高斯面的位置。",
+            "en": "Using Gauss’s law, find the electric field $\\vec E(\\vec r)$ in the region $a<r<b$. Include a diagram that shows the location of your Gaussian surface."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原始高斯定律，再将电位移换成 εE。",
+                "en": "Begin with the original Gauss equation and substitute εE for displacement."
+              },
+              "math": "\\oiint_S\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}},\\qquad\\mathbf D=\\epsilon\\mathbf E",
+              "refs": [
+                "gauss",
+                "constitutive"
+              ]
+            },
+            {
+              "text": {
+                "zh": "选半径 R、长度 ℓ 的同轴闭合圆柱，高斯半径满足 a<R<b；端面的法向与径向电场垂直。",
+                "en": "Choose a coaxial closed cylinder of radius R and length ℓ, with a<R<b. End-cap normals are perpendicular to the radial field."
+              },
+              "math": "\\mathbf E=E_r(R)\\hat{\\mathbf r},\\quad d\\mathbf S_{\\mathrm{side}}=\\hat{\\mathbf r}R\\,d\\phi\\,dz,\\quad \\mathbf E\\cdot d\\mathbf S_{\\mathrm{caps}}=0",
+              "refs": [
+                "geometry"
+              ]
+            },
+            {
+              "text": {
+                "zh": "代入柱侧面通量积分，依次计算 φ 和 z 积分。",
+                "en": "Substitute into the lateral-surface flux integral and evaluate the φ and z factors."
+              },
+              "math": "\\Phi_D=\\int_0^\\ell\\!\\int_0^{2\\pi}\\epsilon E_r(R)R\\,d\\phi\\,dz=2\\pi R\\ell\\epsilon E_r(R)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "包围电荷分成内导体表面电荷与 a 到 R 之间的体电荷。先积分内导体柱面。",
+                "en": "Split enclosed charge into the inner-conductor surface charge and volume charge from a to R. Integrate the inner surface first."
+              },
+              "math": "Q_{\\mathrm{surface}}=\\int_0^\\ell\\!\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi\\,dz=2\\pi a\\ell\\rho_{sa}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "体电荷积分必须使用变半径 r′；将密度 ρ₀a/r′ 和柱坐标体积元 r′dr′dφdz 同时代入。",
+                "en": "For volume charge use a varying radius r′. Substitute both ρ₀a/r′ and the cylindrical volume element r′dr′dφdz."
+              },
+              "math": "Q_{\\mathrm{volume}}=\\int_0^\\ell\\!\\int_0^{2\\pi}\\!\\int_a^R\\frac{\\rho_0a}{r^\\prime}\\,r^\\prime\\,dr^\\prime d\\phi dz",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "密度中的 1/r′ 与体积元的 r′ 抵消，剩下常数的径向积分。",
+                "en": "The density’s 1/r′ cancels the volume element’s r′, leaving a constant radial integral."
+              },
+              "math": "Q_{\\mathrm{volume}}=2\\pi\\ell\\rho_0a\\int_a^R dr^\\prime=2\\pi\\ell\\rho_0a(R-a)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两项电荷相加后代入高斯定律，最后约去共同长度和 2π。",
+                "en": "Add both charge terms, substitute into Gauss’s law and cancel the common length and 2π."
+              },
+              "math": "2\\pi R\\ell\\epsilon E_r(R)=2\\pi a\\ell[\\rho_{sa}+\\rho_0(R-a)]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "除以 εR，并把任意高斯半径 R 改记为观察半径 r。",
+                "en": "Divide by εR and relabel the arbitrary Gaussian radius R as observation radius r."
+              },
+              "math": "\\mathbf E(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{\\mathbf r}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{\\mathbf r}",
+          "sourcePage": 6,
+          "solutionPage": 6,
+          "figure": "leaky-gauss",
+          "figureCaption": {
+            "zh": "保持同轴线三维视角，标出 a<R<b 的闭合高斯圆柱及长度 ℓ。",
+            "en": "Coaxial geometry in its 3D perspective, showing a closed Gaussian cylinder with a<R<b and length ℓ."
+          },
+          "id": "e2-s26-q3-a"
+        },
+        {
+          "label": "b",
+          "points": 0,
+          "prompt": {
+            "zh": "求区域 $a<r<b$ 内的电势 $V(\\vec r)$。",
+            "en": "Find the potential $V(\\vec r)$ in the region $a<r<b$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写电势差原式，参考点选题设接地的外导体。",
+                "en": "Begin with the potential-difference integral, referenced to the grounded outer conductor."
+              },
+              "math": "V(r)-V(b)=-\\int_b^r\\mathbf E\\cdot d\\mathbf l,\\qquad V(b)=0",
+              "refs": [
+                "potential"
+              ]
+            },
+            {
+              "text": {
+                "zh": "选径向路径，积分变量用 s，避免和终点 r 混淆。",
+                "en": "Use a radial path and integration variable s, distinct from endpoint r."
+              },
+              "math": "d\\mathbf l=\\hat{\\mathbf r}\\,ds,\\qquad V(r)=-\\int_b^r\\frac{a}{\\epsilon s}[\\rho_{sa}+\\rho_0(s-a)]\\,ds",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将括号展开成 1/s 项和常数项，再把积分上下限反转去掉外侧负号。",
+                "en": "Expand into a 1/s term and a constant, then reverse the limits to remove the leading minus sign."
+              },
+              "math": "V(r)=\\frac a\\epsilon\\int_r^b\\left[\\frac{\\rho_{sa}-a\\rho_0}{s}+\\rho_0\\right]ds",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "分别积分：第一项产生对数，第二项产生线性距离。",
+                "en": "Integrate separately: the first term gives a logarithm and the second a linear distance."
+              },
+              "math": "V(r)=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\,[\\ln s]_r^b+\\rho_0[s]_r^b\\right]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入两端，使用 ln b−ln r=ln(b/r)。在 r=b 时对数项和线性项都为零。",
+                "en": "Evaluate both endpoints and use ln b−ln r=ln(b/r). Both terms vanish at r=b."
+              },
+              "math": "V(r)=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\ln\\frac br+\\rho_0(b-r)\\right]",
+              "refs": []
+            }
+          ],
+          "answer": "V(r)=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\ln\\frac br+\\rho_0(b-r)\\right]",
+          "sourcePage": 7,
+          "solutionPage": 7,
+          "id": "e2-s26-q3-b"
+        },
+        {
+          "label": "c",
+          "points": 0,
+          "prompt": {
+            "zh": "求导体之间的电势差 $V_0=V(a)-V(b)$。然后将内导体的面电荷密度 $\\rho_{sa}$ 表示为 $V_0$ 和 $\\rho_0$ 的函数。",
+            "en": "Find the potential difference between the conductors, $V_0=V(a)-V(b)$. Then, express the surface charge density on the inner conductor, $\\rho_{sa}$, as a function of $V_0$ and $\\rho_0$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先按定义写两导体电势差，再把上一问电位函数取在 a 和 b。",
+                "en": "Begin with the conductor potential difference and evaluate the preceding potential at a and b."
+              },
+              "math": "V_0=V(a)-V(b),\\qquad V(b)=0",
+              "refs": [
+                "potential"
+              ]
+            },
+            {
+              "text": {
+                "zh": "将 r=a 代入，保留完整的对数项与线性项。",
+                "en": "Substitute r=a, retaining both logarithmic and linear contributions."
+              },
+              "math": "V_0=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\ln\\frac ba+\\rho_0(b-a)\\right]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "两边乘 ε/a，先消去最外层的系数。",
+                "en": "Multiply both sides by ε/a to remove the outer coefficient."
+              },
+              "math": "\\frac{\\epsilon V_0}{a}=(\\rho_{sa}-a\\rho_0)\\ln(b/a)+\\rho_0(b-a)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把与 ρsa 无关的线性项移到左边，再除以 ln(b/a)。",
+                "en": "Move the linear term independent of ρsa to the left and divide by ln(b/a)."
+              },
+              "math": "\\rho_{sa}-a\\rho_0=\\frac{\\epsilon V_0/a-\\rho_0(b-a)}{\\ln(b/a)}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "最后加回 aρ₀，并把分子展开；每一项的量纲都是 C/m²。",
+                "en": "Add back aρ₀ and expand the numerator. Every term has dimension C/m²."
+              },
+              "math": "\\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)}+a\\rho_0-\\frac{\\rho_0(b-a)}{\\ln(b/a)}",
+              "refs": []
+            }
+          ],
+          "answer": "\\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)}+a\\rho_0-\\frac{\\rho_0(b-a)}{\\ln(b/a)}",
+          "sourcePage": 7,
+          "solutionPage": 7,
+          "id": "e2-s26-q3-c"
+        },
+        {
+          "label": "d",
+          "points": 0,
+          "prompt": {
+            "zh": "当两导体之间存在体电荷密度时，不能用通常的公式计算电容，而必须定义为 $C=\\frac{dQ}{dV_0}$，其中 $Q$ 为其中一个导体的总电荷，$V_0$ 为导体间的电势差。使用这一定义和前几问的结果，求电缆的单位长度电容 $C^{\\prime}$。",
+            "en": "When a volumetric charge density exists in the region between two conductors, the capacitance cannot be computed using the usual formulas. Instead, it must be defined by $C=\\frac{dQ}{dV_0}$, where $Q$ is the total charge on one conductor and $V_0$ is the potential difference between the conductors. Using this definition and your results from earlier parts, determine the capacitance per unit length $C^{\\prime}$ of the cable."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "本题明确要求微分电容：背景空间电荷保持不变，只改变两导体间电势差。",
+                "en": "Use the differential capacitance required by the question: hold the background space charge fixed while varying the conductor voltage."
+              },
+              "math": "C^\\prime=\\frac1\\ell\\left.\\frac{\\partial Q}{\\partial V_0}\\right|_{\\rho_0}=\\left.\\frac{\\partial Q^\\prime}{\\partial V_0}\\right|_{\\rho_0}",
+              "refs": [
+                "capacitance"
+              ]
+            },
+            {
+              "text": {
+                "zh": "先用内导体表面电荷密度求每单位长度电荷。",
+                "en": "First convert the inner-conductor surface density to charge per unit length."
+              },
+              "math": "Q=2\\pi a\\ell\\rho_{sa},\\qquad Q^\\prime=\\frac Q\\ell=2\\pi a\\rho_{sa}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把 c) 求出的 ρsa 完整代入。",
+                "en": "Substitute the full expression for ρsa from part c)."
+              },
+              "math": "Q^\\prime=2\\pi a\\left[\\frac{\\epsilon V_0}{a\\ln(b/a)}+a\\rho_0-\\frac{\\rho_0(b-a)}{\\ln(b/a)}\\right]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把含 V₀ 的线性项与固定电荷造成的偏移量分开。",
+                "en": "Separate the term linear in V₀ from the fixed-charge offset."
+              },
+              "math": "Q^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}V_0+2\\pi a\\rho_0\\left[a-\\frac{b-a}{\\ln(b/a)}\\right]",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "对 V₀ 求导。第一项留下系数，第二项在固定 ρ₀ 时导数为零。",
+                "en": "Differentiate with respect to V₀. The first term leaves its coefficient and the fixed-ρ₀ offset has zero derivative."
+              },
+              "math": "\\frac{\\partial Q^\\prime}{\\partial V_0}=\\frac{2\\pi\\epsilon}{\\ln(b/a)}(1)+0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "所以空间电荷改变 Q–V 曲线截距，却不改变这里的斜率。",
+                "en": "Space charge changes the Q–V intercept but not the slope in this model."
+              },
+              "math": "C^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}\\quad[\\mathrm{F/m}]",
+              "refs": []
+            }
+          ],
+          "answer": "C^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}\\quad[\\mathrm{F/m}]",
+          "sourcePage": 7,
+          "solutionPage": 7,
+          "id": "e2-s26-q3-d"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查有体电荷时的柱对称高斯定律、电势积分和微分电容，不能直接套用无体电荷的同轴公式。",
+          "en": "This problem combines cylindrical Gauss's law, potential integration and differential capacitance in the presence of volume charge."
+        },
+        "known": {
+          "zh": "内、外导体半径为 $a$、$b$，内表面电荷密度为 $\\rho_{sa}$，外导体接地；间隙介电常数为 $\\varepsilon$，体电荷密度为 $\\rho(r)=\\rho_0a/r$。",
+          "en": "The conductors have radii $a$ and $b$, inner surface-charge density $\\rho_{sa}$ and a grounded outer conductor. The gap has permittivity $\\varepsilon$ and volume-charge density $\\rho(r)=\\rho_0a/r$."
+        },
+        "goal": {
+          "zh": "求电场、电势和导体间电压，再将 $\\rho_{sa}$ 写成电压的函数，最后用 $dQ/dV_0$ 求单位长度电容。",
+          "en": "Find field, potential and conductor voltage, express $\\rho_{sa}$ as a function of voltage, then obtain capacitance per unit length using $dQ/dV_0$."
+        },
+        "approach": {
+          "zh": "同轴高斯面包围的电荷包括内导体表面电荷和一部分体电荷。先分别计入二者，再积分得到电势；求微分电容时保持给定体电荷分布不变。",
+          "en": "A coaxial Gaussian surface encloses both inner-conductor charge and part of the volume charge. Account for both before integrating the field to potential; hold the given volume-charge distribution fixed when differentiating for capacitance."
+        }
+      }
+    },
+    {
+      "id": "e2-s26-q4",
+      "number": 4,
+      "title": {
+        "zh": "导体平面上方的点电荷",
+        "en": "Point Charges over a Conducting Plane"
+      },
+      "topic": {
+        "zh": "镜像法 · 面电荷",
+        "en": "Method of images · surface charge"
+      },
+      "statement": {
+        "zh": "两个固定不动的点电荷保持在理想导体平面上方高度 $z_0$ 处，导体占据区域 $z<0$。点电荷 $-q$ 位于 $(-x_0,0,z_0)$，点电荷 $+q$ 位于 $(x_0,0,z_0)$。导体上方区域 $(z>0)$ 的介电常数为 $\\varepsilon_0$。",
+        "en": "Two immobile point charges are held at a height $z_0$ above a perfectly conducting plane that occupies the region $z<0$. A point charge $-q$ is located at $(-x_0,0,z_0)$ and a charge $+q$ is located at $(x_0,0,z_0)$. The region above the conductor $(z>0)$ has permittivity $\\varepsilon_0$."
+      },
+      "givens": [
+        "\\mathbf r_- =(-x_0,0,z_0)",
+        "\\mathbf r_+=(x_0,0,z_0)",
+        "P=(x,0,0^+)"
+      ],
+      "points": 10,
+      "figure": "e2-s26-q4",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e2-s26",
+        "page": 8,
+        "region": [
+          0.3296,
+          0.1803,
+          0.4878,
+          0.182
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-11",
+          "page": 43,
+          "label": {
+            "zh": "导体与镜像法",
+            "en": "Conductors and image charges"
+          }
+        },
+        {
+          "doc": "lecture-12",
+          "page": 16,
+          "label": {
+            "zh": "导体表面的法向电场",
+            "en": "Normal field at a conductor"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 0,
+          "prompt": {
+            "zh": "在 x-z 平面内画出用于镜像法的几何示意图。包括真实电荷、镜像电荷及其坐标，并清楚标出导体表面的位置。",
+            "en": "Draw a diagram in the x-z plane showing the geometry you will use for applying the method of images. Include the real charges, their image charges, their coordinates, and clearly mark the position of the conducting surface."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "镜像构造要满足导体边界：表面为等势面，导体内部静电场为零。",
+                "en": "The image construction must satisfy an equipotential conducting surface and zero electrostatic field inside the conductor."
+              },
+              "math": "V(x,y,0)=\\text{constant},\\qquad E_t(x,y,0^+)=0",
+              "refs": [
+                "boundary",
+                "potential"
+              ]
+            },
+            {
+              "text": {
+                "zh": "在 x–z 平面先画 z=0，再标出两个真实电荷及其坐标；二者的 y 坐标均为零。",
+                "en": "Draw z=0 in the x–z plane, then place both real charges with coordinates; both have y=0."
+              },
+              "math": "-q:\\ (-x_0,0,z_0),\\qquad +q:\\ (x_0,0,z_0)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "对左边的 −q，位置关于 z=0 反射，符号反转，得到位于下方的 +q。",
+                "en": "Reflect the left −q across z=0 and reverse its sign, obtaining +q below the plane."
+              },
+              "math": "q_{\\mathrm{im},L}=+q,\\qquad \\mathbf r_{\\mathrm{im},L}=(-x_0,0,-z_0)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "对右边的 +q 作相同操作，得到下方的 −q；上下高度均应标为 z₀。",
+                "en": "Do the same for the right +q, obtaining −q below the plane. Mark equal heights z₀ above and below."
+              },
+              "math": "q_{\\mathrm{im},R}=-q,\\qquad\\mathbf r_{\\mathrm{im},R}=(x_0,0,-z_0)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "核对边界：平面上每一对真实电荷与镜像到观察点距离相等、电荷符号相反，电位逐对抵消。",
+                "en": "Check the boundary: each real charge and its image are equidistant from a point on the plane and have opposite signs, so their potentials cancel pairwise."
+              },
+              "math": "V_{\\mathrm{pair}}(z=0)=\\frac1{4\\pi\\epsilon_0}\\left(\\frac{q_i}{R_i}-\\frac{q_i}{R_i}\\right)=0",
+              "refs": [
+                "coulomb"
+              ]
+            },
+            {
+              "text": {
+                "zh": "这四个点构成用于求上半空间场的数学系统，下面的镜像电荷不是导体中的真实点电荷。",
+                "en": "These four points define the mathematical system for the upper-half-space field; the images are not physical point charges inside the conductor."
+              },
+              "math": "q_{\\mathrm{im},L}=+q,\\qquad q_{\\mathrm{im},R}=-q",
+              "refs": []
+            }
+          ],
+          "answer": "q_{\\mathrm{im},L}=+q,\\qquad q_{\\mathrm{im},R}=-q",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "figure": "images-geometry",
+          "answerText": {
+            "zh": "镜像只用于求 z>0 的真实场；z<0 是数学延拓区域。",
+            "en": "Images reproduce the physical field only for z>0; z<0 is a mathematical extension."
+          },
+          "figureCaption": {
+            "zh": "x–z 平面的四电荷镜像构造，标出真实和镜像电荷坐标及导体表面 z=0。",
+            "en": "Four-charge image construction in the x–z plane, with real/image coordinates and conducting surface z=0."
+          },
+          "id": "e2-s26-q4-a"
+        },
+        {
+          "label": "b",
+          "points": 0,
+          "prompt": {
+            "zh": "另画一张图，画出第 a) 问中各电荷之间的电场线，包括 $z<0$ 区域中的电场线。",
+            "en": "In a new diagram, sketch the electric field lines between the charges you drew in part a), including those in the region $z<0$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写四点电荷的库仑场叠加式，场线切线方向必须与该合场一致。",
+                "en": "Begin with the Coulomb superposition of all four charges; field-line tangents must follow that total field."
+              },
+              "math": "\\mathbf E(\\mathbf r)=\\frac1{4\\pi\\epsilon_0}\\sum_iq_i\\frac{\\mathbf r-\\mathbf r_i}{|\\mathbf r-\\mathbf r_i|^3}",
+              "refs": [
+                "coulomb"
+              ]
+            },
+            {
+              "text": {
+                "zh": "逐一代入 a) 的位置和符号：右上、左下为正，左上、右下为负。",
+                "en": "Substitute the positions and signs from a): upper right and lower left are positive; upper left and lower right are negative."
+              },
+              "math": "(x_i,z_i,q_i)=(-x_0,z_0,-q),\\ (x_0,z_0,q),\\ (-x_0,-z_0,q),\\ (x_0,-z_0,-q)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "在平面上，真实电荷与对应镜像的切向场抵消、法向场相加，所以场线必须垂直穿过 z=0。",
+                "en": "On the plane, each real–image pair cancels tangential field and adds normal field, so field lines meet z=0 normally."
+              },
+              "math": "E_x(x,0,0)=0,\\qquad \\mathbf E(x,0,0)\\parallel\\hat{\\mathbf z}",
+              "refs": [
+                "boundary"
+              ]
+            },
+            {
+              "text": {
+                "zh": "箭头从正电荷出发、到负电荷结束；图中上方主要由右向左，下方主要由左向右，符合四电荷的符号。",
+                "en": "Arrows leave positive charges and end on negative charges: mainly right to left above and left to right below, consistent with all four signs."
+              },
+              "math": "\\frac{d\\mathbf r}{ds}\\parallel\\mathbf E(\\mathbf r)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "图中场线形状为对称几何示意，弯曲程度随 x₀/z₀ 改变。下半空间只表示镜像系统，真实导体内部 E=0。",
+                "en": "The lines illustrate the symmetric geometry; their curvature depends on x₀/z₀. Below the plane they show the image system only; the physical conductor has E=0."
+              },
+              "math": "\\mathbf E(0^+)\\parallel\\hat{\\mathbf z}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E(0^+)\\parallel\\hat{\\mathbf z}",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "figure": "images-fieldlines",
+          "answerText": {
+            "zh": "图中箭头给出方向，导体内部真实电场为零。",
+            "en": "Arrows show direction; the physical field inside the conductor is zero."
+          },
+          "figureCaption": {
+            "zh": "场线以 x₀=z₀ 作几何示意，从正电荷到负电荷；下半空间仅为数学镜像系统，实际导体内部电场为零。",
+            "en": "Illustrative field lines with x₀=z₀, from positive to negative charges; the lower half is only the image system, and the physical conductor field is zero."
+          },
+          "id": "e2-s26-q4-b"
+        },
+        {
+          "label": "c",
+          "points": 0,
+          "prompt": {
+            "zh": "忽略导体平面，求仅由位于 $(x_0,0,z_0)$ 的点电荷 $+q$ 在点 $P=(x,0,0)$ 产生的电场 $\\vec E_{+q}$。",
+            "en": "Determine the electric field $\\vec E_{+q}$ at a point $P=(x,0,0)$ solely due to the point charge $+q$ located at $(x_0,0,z_0)$, ignoring the conducting plane."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表的点电荷电场。将单位径向矢量换成位移除以距离，就得到适合坐标代入的形式。",
+                "en": "Begin with the crib point-charge field. Replace the radial unit vector by displacement divided by distance for coordinate substitution."
+              },
+              "math": "\\mathbf E=\\frac q{4\\pi\\epsilon_0R^2}\\hat{\\mathbf R}=\\frac{q\\mathbf R}{4\\pi\\epsilon_0R^3}",
+              "refs": [
+                "coulomb"
+              ]
+            },
+            {
+              "text": {
+                "zh": "源电荷位于 (x₀,0,z₀)，观察点为 (x,0,0)；位移必须是观察点减源点。",
+                "en": "The source is at (x₀,0,z₀) and observation point at (x,0,0). Displacement is observation minus source."
+              },
+              "math": "\\mathbf R_+=(x,0,0)-(x_0,0,z_0)=(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "逐分量求距离和单位矢量，注意 z 分量为负。",
+                "en": "Compute the distance and unit vector component by component, keeping the negative z component."
+              },
+              "math": "R_+=\\sqrt{(x-x_0)^2+z_0^2},\\qquad \\hat{\\mathbf R}_+=\\frac{(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}}{\\sqrt{(x-x_0)^2+z_0^2}}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将 q、位移和距离完整代入库仑定律。此问明确忽略导体，因此不加入镜像。",
+                "en": "Substitute the charge, displacement and distance into Coulomb’s law. This part explicitly ignores the conductor, so include no image charges."
+              },
+              "math": "\\mathbf E_{+q}(P)=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E_{+q}(P)=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
+          "sourcePage": 9,
+          "solutionPage": 9,
+          "id": "e2-s26-q4-c"
+        },
+        {
+          "label": "d",
+          "points": 0,
+          "prompt": {
+            "zh": "考虑两个真实电荷及导体平面的影响，求导体表面点 $P=(x,0,0)$ 处的总电场 $\\vec E_{tot}$。",
+            "en": "Determine the total electric field $\\vec E_{tot}$ at the point $P=(x,0,0)$ on the surface of the conductor, taking into account both real charges and the effect of the conducting plane."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "总场由两个真实电荷和两个镜像电荷相加得到，不能只把 c) 的单个电场乘二。",
+                "en": "The total field sums both real charges and both images; doubling the single field in c) is insufficient."
+              },
+              "math": "\\mathbf E_{\\mathrm{tot}}=\\frac1{4\\pi\\epsilon_0}\\sum_{i=1}^4q_i\\frac{\\mathbf R_i}{R_i^3}",
+              "refs": [
+                "coulomb"
+              ]
+            },
+            {
+              "text": {
+                "zh": "用 R_L、R_R 分别表示观察点到左、右电荷列的距离；每列上下电荷到平面的距离相同。",
+                "en": "Use R_L and R_R for distances from P to the left and right charge columns. Within a column, real and image distances to P agree."
+              },
+              "math": "R_L=\\sqrt{(x+x_0)^2+z_0^2},\\qquad R_R=\\sqrt{(x-x_0)^2+z_0^2}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先展开右列：真实 +q 和镜像 −q 的 x 分量相消，z 分量相加为 −2qz₀。",
+                "en": "Expand the right column first: real +q and image −q cancel in x and add to −2qz₀ in z."
+              },
+              "math": "\\begin{aligned}\\mathbf E_R&=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_R^3}\\\\&\\quad-\\frac{q[(x-x_0)\\hat{\\mathbf x}+z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_R^3}\\\\&=-\\frac{2qz_0}{4\\pi\\epsilon_0R_R^3}\\hat{\\mathbf z}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再展开左列：真实 −q 和镜像 +q 的切向分量相消，法向分量给出相反的正号。",
+                "en": "Expand the left column next: real −q and image +q cancel tangentially and give the opposite, positive normal sign."
+              },
+              "math": "\\begin{aligned}\\mathbf E_L&=-\\frac{q[(x+x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_L^3}\\\\&\\quad+\\frac{q[(x+x_0)\\hat{\\mathbf x}+z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_L^3}\\\\&=+\\frac{2qz_0}{4\\pi\\epsilon_0R_L^3}\\hat{\\mathbf z}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "相加并提取公因子；这也显式验证了导体表面的切向场为零。",
+                "en": "Add and factor the common coefficient, explicitly verifying zero tangential field at the conductor."
+              },
+              "math": "\\mathbf E_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{\\mathbf z}",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathbf E_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{\\mathbf z}",
+          "sourcePage": 9,
+          "solutionPage": 9,
+          "id": "e2-s26-q4-d"
+        },
+        {
+          "label": "e",
+          "points": 0,
+          "prompt": {
+            "zh": "使用第 d) 问的结果，计算导体上点 $P=(x,0,0)$ 处的面电荷密度 $\\rho_s(\\vec r)$。",
+            "en": "Using your result from part d), calculate the surface charge density $\\rho_s(\\vec r)$ on the conductor at the point $P=(x,0,0)$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表的法向位移跳变条件，法向取从导体指向空气的 +ẑ。",
+                "en": "Begin with the crib normal-displacement jump condition, using +ẑ from conductor into air."
+              },
+              "math": "D_{\\mathrm{out},n}-D_{\\mathrm{in},n}=\\rho_s,\\qquad\\hat{\\mathbf n}=+\\hat{\\mathbf z}",
+              "refs": [
+                "boundary"
+              ]
+            },
+            {
+              "text": {
+                "zh": "导体内部 D=0，外部为 ε₀E；因此表面电荷等于外侧电场的有符号法向分量乘 ε₀。",
+                "en": "Inside the conductor D=0 and outside D=ε₀E, so surface charge is ε₀ times the signed exterior normal field."
+              },
+              "math": "\\rho_s=\\epsilon_0\\mathbf E(0^+)\\cdot\\hat{\\mathbf z}=\\epsilon_0 E_z(0^+)",
+              "refs": [
+                "constitutive"
+              ]
+            },
+            {
+              "text": {
+                "zh": "完整代入 d) 的电场，先保留 ε₀ 因子再约去。",
+                "en": "Substitute the full field from d), retaining ε₀ before cancellation."
+              },
+              "math": "\\rho_s=\\epsilon_0\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)=\\frac{qz_0}{2\\pi}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "用位置坐标展开距离；在 x=0 两项相等，右侧 x>0 对应负的感应电荷，可作符号核对。",
+                "en": "Expand the distances in coordinates. At x=0 the terms cancel; for x>0 the induced charge is negative, providing a sign check."
+              },
+              "math": "\\rho_s(x)=\\frac{qz_0}{2\\pi}\\left[\\frac1{((x+x_0)^2+z_0^2)^{3/2}}-\\frac1{((x-x_0)^2+z_0^2)^{3/2}}\\right]",
+              "refs": []
+            }
+          ],
+          "answer": "\\rho_s(x)=\\frac{qz_0}{2\\pi}\\left[\\frac1{((x+x_0)^2+z_0^2)^{3/2}}-\\frac1{((x-x_0)^2+z_0^2)^{3/2}}\\right]",
+          "sourcePage": 10,
+          "solutionPage": 10,
+          "id": "e2-s26-q4-e"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查镜像法、库仑场叠加和理想导体表面的电荷边界条件。",
+          "en": "This problem combines image charges, Coulomb-field superposition and the surface-charge boundary condition at a perfect conductor."
+        },
+        "known": {
+          "zh": "真实电荷 $-q$、$+q$ 位于 $(-x_0,0,z_0)$、$(x_0,0,z_0)$；理想导体占据 $z<0$，上方介质的介电常数为 $\\varepsilon_0$，观察点在表面上方。",
+          "en": "The real charges $-q$ and $+q$ are at $(-x_0,0,z_0)$ and $(x_0,0,z_0)$. A perfect conductor occupies $z<0$, the upper region has permittivity $\\varepsilon_0$, and the field is evaluated just above its surface."
+        },
+        "goal": {
+          "zh": "构造镜像几何与电场线，求单个真实电荷和完整系统的表面电场，再求感应面电荷密度。",
+          "en": "Construct the image geometry and field lines, find the surface field of one real charge and of the complete system, then obtain induced surface-charge density."
+        },
+        "approach": {
+          "zh": "先为每个真实电荷确定镜像的位置和符号，再逐项写出位移矢量。叠加后检查导体表面的切向场是否抵消；镜像下半空间用于辅助计算，不是导体内部的真实电场。",
+          "en": "Assign each real charge its mirrored position and opposite sign, then write the displacement vectors. Check cancellation of tangential field at the conductor; the image region is a mathematical construction, not the physical field inside the conductor."
+        }
+      }
+    }
+  ]
+}

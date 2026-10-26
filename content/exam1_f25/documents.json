@@ -1,0 +1,98 @@
+{
+  "e1-f25": {
+    "id": "e1-f25",
+    "title": "Exam 1 · Fall 2025",
+    "kind": "exam",
+    "pages": 9,
+    "pdf": "sources/e1-f25.pdf",
+    "pageBase": "pages/e1-f25",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exams/Exam_1_F25_w_Smith_Chart.pdf",
+    "sha256": "3c99988308bedf988c518168889ea2859078f5855e72ab7716db7a05908e9dc1"
+  },
+  "e1-f25-sol": {
+    "id": "e1-f25-sol",
+    "title": "Exam 1 · Fall 2025 · Solutions",
+    "kind": "solution",
+    "pages": 9,
+    "pdf": "sources/e1-f25-sol.pdf",
+    "pageBase": "pages/e1-f25-sol",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exam_1_Solutions_F25.pdf",
+    "sha256": "18d96891295ba9f39307b49c0a36d44e76986f0c3180f29ad4333330710b6ae6"
+  }
+}

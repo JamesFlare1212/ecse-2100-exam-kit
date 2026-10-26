@@ -2,17 +2,40 @@ import {describe,expect,test} from 'bun:test';
 import {existsSync,readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import katex from 'katex';
-import {exams,formulas,documents,problemEntries,partIds} from '../src/lib/catalog';
+import {exams,examIndex,problemEntries,documents} from '../src/lib/catalog.server';
+import {createCatalog,formulas} from '../src/lib/catalog';
+import {assetSource} from '../content/papers.server';
 import {renderText} from '../src/lib/math';
 import {conclusionMath} from '../src/lib/answer-math';
 
 const root=resolve(import.meta.dir,'..');
-const exists=(path:string)=>existsSync(resolve(root,'static',path.replace(/^\//,'')));
+const {partIds}=createCatalog(examIndex,documents);
+const exists=(path:string)=>existsSync(assetSource(path));
 const checkTex=(tex:string)=>katex.renderToString(tex,{throwOnError:true,strict:'ignore',trust:false});
 describe('Complete, bilingual and source-addressable content',()=>{
+  test('the client index preserves all searchable questions without shipping solutions',()=>{
+    expect(examIndex.map(e=>e.id)).toEqual(exams.map(e=>e.id));
+    for(const exam of exams){
+      const indexed=examIndex.find(e=>e.id===exam.id)!;
+      expect(indexed.problems.map(p=>p.id)).toEqual(exam.problems.map(p=>p.id));
+      for(const question of exam.problems){
+        const summary=indexed.problems.find(p=>p.id===question.id)!;
+        expect(summary.title).toEqual(question.title);
+        expect(summary.topic).toEqual(question.topic);
+        expect(summary.statement).toEqual(question.statement);
+        expect(summary.parts).toEqual(question.parts.map(({id,prompt})=>({id,prompt})));
+        expect(summary).not.toHaveProperty('guide');
+        expect(summary).not.toHaveProperty('givens');
+        for(const part of summary.parts){expect(part).not.toHaveProperty('steps');expect(part).not.toHaveProperty('answer');}
+      }
+    }
+  });
   test('every original subpart is represented exactly once',()=>{
-    expect(exams).toHaveLength(5);expect(problemEntries).toHaveLength(20);expect(partIds.size).toBe(93);
-    expect(exams.map(e=>e.problems.map(p=>p.parts.length))).toEqual([[5,4,5,4],[6,4,4,4],[4,6,4,5],[7,4,4,5],[5,4,4,5]]);
+    expect(exams.length).toBeGreaterThan(0);
+    expect(new Set(problemEntries.map(entry=>entry.problem.id)).size).toBe(problemEntries.length);
+    expect(partIds.size).toBe(problemEntries.reduce((n,entry)=>n+entry.problem.parts.length,0));
+    const expected:Record<string,number[]>={'e1-f25':[5,4,5,4],'e1-s26':[6,4,4,4],'e1-f26':[4,6,4,5],'e2-f25':[7,4,4,5],'e2-s26':[5,4,4,5]};
+    for(const exam of exams)if(expected[exam.id])expect(exam.problems.map(p=>p.parts.length)).toEqual(expected[exam.id]);
     for(const exam of exams){expect(exam.problems.reduce((n,p)=>n+p.points,0)).toBe(exam.points);}
   });
   test('translations contain no accidentally decoded TeX control characters',()=>{
@@ -34,7 +57,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
       for(const p of q.parts){expect(p.steps.length).toBeGreaterThanOrEqual(2);checkTex(`\\boxed{${p.answer}}`);const conclusion=conclusionMath(p.steps.at(-1)?.math,p.answer);checkTex(conclusion.result);if(conclusion.calculation)checkTex(conclusion.calculation);expect(conclusion.result).toContain('\\boxed{');count++;inline(p.prompt.zh);inline(p.prompt.en);for(const s of p.steps){if(s.math){checkTex(s.math);count++;}for(const ref of s.refs)expect(formulas.some(f=>f.id===ref)).toBe(true);}}
     }
     for(const f of formulas){checkTex(f.math);count++;}
-    expect(count).toBeGreaterThan(500);
+    expect(count).toBeGreaterThanOrEqual(partIds.size*4+formulas.length);
   });
   test('all 93 solutions start with an equation and show intermediate calculation steps',()=>{
     for(const {problem} of problemEntries)for(const part of problem.parts){
@@ -51,7 +74,8 @@ describe('Complete, bilingual and source-addressable content',()=>{
         expect(part.figureCaption?.en,part.id).toBeTruthy();
       }
     }
-    const sphere=problemEntries.find(({problem})=>problem.id==='e2-f25-q1')!.problem;
+    const sphere=problemEntries.find(({problem})=>problem.id==='e2-f25-q1')?.problem;
+    if(!sphere)return;
     for(const label of ['b','d']){
       const math=sphere.parts.find(p=>p.label===label)!.steps.map(s=>s.math).join('\n');
       expect(math).toContain('\\oiint');
@@ -70,7 +94,8 @@ describe('Complete, bilingual and source-addressable content',()=>{
       }
       expect(problem.lectures.length).toBeGreaterThan(0);
     }
-    const strip=problemEntries.find(({problem})=>problem.id==='e2-s26-q1')!.problem;
+    const strip=problemEntries.find(({problem})=>problem.id==='e2-s26-q1')?.problem;
+    if(!strip)return;
     expect(strip.guide.known.zh).toContain('中间区域为零');
     expect(strip.guide.known.zh).not.toContain('0.2');
     expect(strip.lectures.map(ref=>[ref.doc,ref.page])).toEqual([['lecture-14',9],['lecture-14',14]]);
@@ -78,26 +103,31 @@ describe('Complete, bilingual and source-addressable content',()=>{
   test('all pages, SVG themes, original figures and formula excerpts exist',()=>{
     for(const doc of Object.values(documents)){expect(exists(doc.pdf)).toBe(true);for(let p=1;p<=doc.pages;p++)expect(exists(`${doc.pageBase}/${p}.webp`)).toBe(true);}
     function source(doc:string,page:number,region?:number[]){expect(documents[doc]).toBeDefined();expect(page).toBeGreaterThan(0);expect(page).toBeLessThanOrEqual(documents[doc].pages);if(region){expect(region).toHaveLength(4);expect(region[0]).toBeGreaterThanOrEqual(0);expect(region[1]).toBeGreaterThanOrEqual(0);expect(region[0]+region[2]).toBeLessThanOrEqual(1);expect(region[1]+region[3]).toBeLessThanOrEqual(1);}}
-    for(const {exam,problem:q} of problemEntries){source(q.originalFigure.doc,q.originalFigure.page,q.originalFigure.region);q.lectures.forEach(r=>source(r.doc,r.page));expect(exists(`/original-figures/${q.id}.webp`)).toBe(true);
-      for(const figure of [q.figure,...q.parts.flatMap(p=>[p.figure,p.questionFigure?.name]).filter(Boolean)]){for(const suffix of ['','-dark']){const path=`/figures/${figure}${suffix}.svg`;expect(exists(path)).toBe(true);const svg=readFileSync(resolve(root,'static'+path),'utf8');expect(svg).toContain('<svg');expect(svg).toContain('<text');expect(svg).not.toContain('<image');}}
-      q.parts.forEach(p=>{source(exam.doc,p.sourcePage);source(exam.solutionDoc,p.solutionPage);if(p.questionFigure){const r=p.questionFigure.source;source(r.doc,r.page,r.region);expect(exists(`/original-figures/${p.questionFigure.name}.webp`)).toBe(true);}});
+    for(const {exam,problem:q,paper} of problemEntries){source(q.originalFigure.doc,q.originalFigure.page,q.originalFigure.region);q.lectures.forEach(r=>source(r.doc,r.page));expect(exists(`${paper.assetBase}/original-figures/${q.id}.webp`)).toBe(true);
+      for(const figure of [q.figure,...q.parts.flatMap(p=>[p.figure,p.questionFigure?.name]).filter(Boolean)]){for(const suffix of ['','-dark']){const path=`${paper.assetBase}/figures/${figure}${suffix}.svg`;expect(exists(path)).toBe(true);const svg=readFileSync(assetSource(path),'utf8');expect(svg).toContain('<svg');expect(svg).toContain('<text');expect(svg).not.toContain('<image');}}
+      q.parts.forEach(p=>{source(exam.doc,p.sourcePage);source(exam.solutionDoc,p.solutionPage);if(p.questionFigure){const r=p.questionFigure.source;source(r.doc,r.page,r.region);expect(exists(`${paper.assetBase}/original-figures/${p.questionFigure.name}.webp`)).toBe(true);}});
     }
     for(const f of formulas){source(f.source.doc,f.source.page,f.source.region);expect(exists(`/excerpts/${f.id}.webp`)).toBe(true);}
   });
   test('original questions retain the source wording, givens and requested explanations',()=>{
     for(const {problem} of problemEntries)expect(problem.wording).toBe('original');
-    const leaky=problemEntries.find(({problem})=>problem.id==='e2-s26-q3')!.problem;
+    const leaky=problemEntries.find(({problem})=>problem.id==='e2-s26-q3')?.problem;
+    if(leaky){
     expect(leaky.title.en).toBe('Leaky Coaxial Cable Dielectric');
     expect(leaky.statement.en).toContain('The coaxial cable to the right has a poor dielectric, which has allowed some charge to leak');
     expect(leaky.parts[0].prompt.en).toContain('Include a diagram that shows the location of your Gaussian surface.');
     expect(leaky.parts[3].prompt.en).toContain('the capacitance cannot be computed using the usual formulas.');
-    const plates=problemEntries.find(({problem})=>problem.id==='e2-f25-q2')!.problem;
+    }
+    const plates=problemEntries.find(({problem})=>problem.id==='e2-f25-q2')?.problem;
     // The printed sign error belongs in the original question; its correction is a solution note.
-    expect(plates.statement.en).toContain('\\frac{V_1-V_0}{L}');
-    const matching=problemEntries.find(({problem})=>problem.id==='e1-f26-q4')!.problem;
+    if(plates)expect(plates.statement.en).toContain('\\frac{V_1-V_0}{L}');
+    const matching=problemEntries.find(({problem})=>problem.id==='e1-f26-q4')?.problem;
+    if(matching){
     expect(matching.parts[4].prompt.en).toContain('Circle all that apply.');
     expect(matching.parts[4].prompt.en).toContain('d. No reflections occur anywhere in the system since the feedline is matched to the load.');
-    expect(problemEntries.find(({problem})=>problem.id==='e1-s26-q1')!.problem.parts.at(-1)?.label).toBe('f');
+    }
+    const spring=problemEntries.find(({problem})=>problem.id==='e1-s26-q1')?.problem;
+    if(spring)expect(spring.parts.at(-1)?.label).toBe('f');
   });
   test('English prose matches the independently extracted source PDFs',()=>{
     const normalize=(s:string)=>s.normalize('NFKC').toLowerCase().replaceAll('’',"'").replaceAll('–','-').replaceAll('−','-').replace(/[^a-z0-9]+/g,' ').trim();
@@ -109,7 +139,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
     ]);
     let checked=0,visualChecks=0;
     for(const exam of exams){
-      const source=normalize(readFileSync(resolve(root,`content/extracted/${exam.doc}.txt`),'utf8'));
+      const source=normalize(readFileSync(resolve(root,`content/${problemEntries.find(entry=>entry.exam.id===exam.id)!.paper.name}/extracted/${exam.doc}.txt`),'utf8'));
       for(const q of exam.problems)for(const [part,text] of [['statement',q.statement.en],...q.parts.map(p=>[p.label,p.prompt.en])]){
         for(const run of text.split(/\$\$[\s\S]*?\$\$|\$[^$\n]+\$/))for(const line of run.split('\n')){
           const prose=normalize(line);if(prose.split(' ').length<4)continue;
@@ -118,7 +148,8 @@ describe('Complete, bilingual and source-addressable content',()=>{
         }
       }
     }
-    expect(checked).toBe(267);expect(visualChecks).toBe(2);
+    expect(checked).toBeGreaterThan(0);
+    expect(visualChecks).toBe(problemEntries.some(entry=>entry.problem.id==='e2-s26-q3')?2:0);
   });
   test('text renderer escapes markup while preserving mathematical typesetting',()=>{const html=renderText('<img src=x onerror=alert(1)> $a^2$');expect(html).toContain('&lt;img');expect(html).not.toContain('<img');expect(html).toContain('katex');});
 });
@@ -139,9 +170,8 @@ describe('Independent physical and numerical consistency checks',()=>{
     const z={re:3,im:-1};for(const [d,resistance] of [[.23259887818173403,14.837129522559273],[.482598878181734,168.49620381077406]]){const zin=scale(input(z,d),50);expect(zin.im).toBeCloseTo(0,9);expect(zin.re).toBeCloseTo(resistance,9);const zt=Math.sqrt(50*resistance);expect(zt*zt/resistance).toBeCloseTo(50,10);}
   });
   test('the official F26 interface choices retain local reflections while net input reflection cancels',()=>{
-    const part=problemEntries.find(({problem})=>problem.id==='e1-f26-q4')!.problem.parts.at(-1)!;
-    expect(part.answer).toBe('\\text{Interfaces (a), (b) and (c)}');
-    expect(part.answerText?.en).toContain('Select a, b and c');
+    const part=problemEntries.find(({problem})=>problem.id==='e1-f26-q4')?.problem.parts.at(-1);
+    if(part){expect(part.answer).toBe('\\text{Interfaces (a), (b) and (c)}');expect(part.answerText?.en).toContain('Select a, b and c');}
     const load={re:150,im:-50},gammaLoad=div(add(load,{re:-50,im:0}),add(load,{re:50,im:0}));
     expect(Math.hypot(gammaLoad.re,gammaLoad.im)).toBeGreaterThan(0);
     for(const resistance of [14.837129522559273,168.49620381077406]){

@@ -1,0 +1,102 @@
+{
+  "e2-f25": {
+    "id": "e2-f25",
+    "title": "Exam 2 · Fall 2025",
+    "kind": "exam",
+    "pages": 9,
+    "pdf": "sources/e2-f25.pdf",
+    "pageBase": "pages/e2-f25",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exams/Exam_2_F25.pdf.pdf",
+    "sha256": "0885768fa7a84cf4eadf51644c874223abca73504d5ef75f4c429baf008a9fe9"
+  },
+  "e2-f25-sol": {
+    "id": "e2-f25-sol",
+    "title": "Exam 2 · Fall 2025 · Solutions",
+    "kind": "solution",
+    "pages": 10,
+    "pdf": "sources/e2-f25-sol.pdf",
+    "pageBase": "pages/e2-f25-sol",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exams/Exam_2_F25_Solutions.pdf",
+    "sha256": "51163f2df0d161001ebb9ca2e65d8016d4ad4df5593dd59fe3e5a83e834075bc"
+  }
+}

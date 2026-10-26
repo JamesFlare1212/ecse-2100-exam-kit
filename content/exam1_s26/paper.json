@@ -1,0 +1,1466 @@
+{
+  "id": "e1-s26",
+  "number": 1,
+  "term": {
+    "zh": "春季",
+    "en": "Spring"
+  },
+  "year": 2026,
+  "points": 32,
+  "doc": "e1-s26",
+  "solutionDoc": "e1-s26-sol",
+  "questionsOnly": true,
+  "problems": [
+    {
+      "id": "e1-s26-q1",
+      "number": 1,
+      "title": {
+        "zh": "低损耗传输线模型",
+        "en": "Low-Loss Transmission Line Model"
+      },
+      "topic": {
+        "zh": "参数测量 · 低损耗线",
+        "en": "Measurements · low-loss line"
+      },
+      "statement": {
+        "zh": "给你一卷长度为 $L=100\\mathrm{m}$ 的同轴电缆，要求通过测量确定其性质。测量装置如下图所示。假设可将同轴电缆视为低损耗传输线。",
+        "en": "You are given a spool of coaxial cable of length $L=100\\mathrm{m}$ and are tasked with determining its properties through measurements. A diagram of your measurement setup is shown below. Assume the coaxial cable can be treated as a low-loss transmission line."
+      },
+      "givens": [
+        "L=100\\,\\mathrm m",
+        "T_d=392\\,\\mathrm{ns}",
+        "R_g=25\\,\\Omega",
+        "R_L=50\\,\\Omega"
+      ],
+      "points": 8,
+      "figure": "e1-s26-q1",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e1-s26",
+        "page": 2,
+        "region": [
+          0.2538,
+          0.1796,
+          0.4922,
+          0.1521
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-02",
+          "page": 39,
+          "label": {
+            "zh": "特性阻抗与波速",
+            "en": "Characteristic impedance and speed"
+          }
+        },
+        {
+          "doc": "lecture-05",
+          "page": 32,
+          "label": {
+            "zh": "低损耗衰减",
+            "en": "Low-loss attenuation"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 1,
+          "prompt": {
+            "zh": "测得电缆的时间延迟为 $T_d=392\\mathrm{ns}$。这根同轴电缆的速度因子是多少？",
+            "en": "You measure the time delay of your cable to be $T_d=392\\mathrm{ns}$. What is the velocity factor of the coaxial cable?"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写传播距离、单程时间与波速的关系，再用速度因子的定义。",
+                "en": "Begin with the distance, one-way time and speed relation, then the velocity-factor definition."
+              },
+              "math": "u=\\frac L{T_d},\\qquad \\mathrm{vf}=\\frac u{u_c}",
+              "refs": [
+                "bounce",
+                "velocity"
+              ]
+            },
+            {
+              "text": {
+                "zh": "将长度和测得时延统一为米与秒。",
+                "en": "Express length and measured delay in meters and seconds."
+              },
+              "math": "L=100\\,\\mathrm m,\\qquad T_d=392\\,\\mathrm{ns}=392\\times10^{-9}\\,\\mathrm s",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入距离除以时间，先求实际传播速度。",
+                "en": "Substitute distance divided by time to compute the propagation speed first."
+              },
+              "math": "u=\\frac{100}{392\\times10^{-9}}\\,\\mathrm{m/s}=2.5510204\\times10^8\\,\\mathrm{m/s}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再除以真空光速，速度因子没有单位。",
+                "en": "Divide by vacuum light speed to obtain a dimensionless factor."
+              },
+              "math": "\\mathrm{vf}=\\frac{2.5510204\\times10^8}{3.00\\times10^8}=0.85034\\approx0.85",
+              "refs": []
+            }
+          ],
+          "answer": "\\mathrm{vf}=0.85034\\approx0.85",
+          "sourcePage": 2,
+          "solutionPage": 2,
+          "id": "e1-s26-q1-a"
+        },
+        {
+          "label": "b",
+          "points": 1,
+          "prompt": {
+            "zh": "不论将 $V_g$ 设为何种频率，测得同轴电缆输入电压 $V_{in}$ 的幅值均为 $1\\mathrm{V}$。这根电缆的特性阻抗 $Z_0$ 是多少？",
+            "en": "You measure the amplitude of the voltage at the input to the coaxial cable $V_{in}$ to be $1\\mathrm{V}$ for any frequency you set for $V_g$. What is the characteristic impedance $Z_0$ of the cable?"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写反射系数与输入阻抗原式，识别随频率变化的驻波来源。",
+                "en": "Begin with the reflection and input-impedance equations to identify frequency-dependent standing-wave behavior."
+              },
+              "math": "\\Gamma_L=\\frac{Z_L-Z_0}{Z_L+Z_0},\\qquad Z_{\\mathrm{in}}=Z_0\\frac{Z_L+jZ_0\\tan(\\beta L)}{Z_0+jZ_L\\tan(\\beta L)}",
+              "refs": [
+                "reflection",
+                "zin"
+              ]
+            },
+            {
+              "text": {
+                "zh": "扫频改变 βL；若有明显负载失配，输入阻抗通常随频率改变，源端分压也会改变。",
+                "en": "Sweeping frequency changes βL. With load mismatch, input impedance and hence the source divider generally vary with frequency."
+              },
+              "math": "V_{\\mathrm{in}}=V_g\\frac{Z_{\\mathrm{in}}}{R_g+Z_{\\mathrm{in}}},\\qquad \\beta=\\frac{2\\pi f}{u}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "按题设固定源和低损耗近似，输入幅度不随扫频变化，采用官方的匹配推断 ΓL≈0。",
+                "en": "For the stated fixed-source, low-loss model, follow the official inference that constant input amplitude indicates ΓL≈0."
+              },
+              "math": "\\Gamma_L\\approx0\\quad\\Longrightarrow\\quad Z_L-Z_0\\approx0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "负载是 50 Ω，所以推断出的特性阻抗也是约 50 Ω。",
+                "en": "The 50 Ω load therefore implies approximately the same characteristic impedance."
+              },
+              "math": "Z_0\\approx50\\,\\Omega",
+              "refs": []
+            }
+          ],
+          "answer": "Z_0\\approx50\\,\\Omega",
+          "sourcePage": 2,
+          "solutionPage": 2,
+          "id": "e1-s26-q1-b"
+        },
+        {
+          "label": "c",
+          "points": 1,
+          "prompt": {
+            "zh": "若发生器的频率为 $f=100\\mathrm{MHz}=100\\times10^6\\,\\mathrm{Hz}$，计算同轴电缆上电压波的波长 $\\lambda$。",
+            "en": "Calculate the wavelength $\\lambda$ of the voltage wave on the coaxial cable if the frequency of the generator is $f=100\\mathrm{MHz}=100\\times10^6\\,\\mathrm{Hz}$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写公式表的波长与波速关系。",
+                "en": "Begin with the crib wavelength–speed relation."
+              },
+              "math": "\\lambda=\\frac uf",
+              "refs": [
+                "wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "使用 a) 从时延测出的未舍入波速，并把频率换成 Hz。",
+                "en": "Use the unrounded speed measured in a) and convert frequency to Hz."
+              },
+              "math": "u=2.5510204\\times10^8\\,\\mathrm{m/s},\\qquad f=100\\,\\mathrm{MHz}=100\\times10^6\\,\\mathrm{Hz}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入数值，s⁻¹ 与 m/s 中的时间单位约去。",
+                "en": "Substitute the values and cancel the time units."
+              },
+              "math": "\\lambda=\\frac{2.5510204\\times10^8\\,\\mathrm{m/s}}{100\\times10^6\\,\\mathrm{s^{-1}}}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "按题目要求保留至少两位有效数字。",
+                "en": "Retain at least the two significant digits requested."
+              },
+              "math": "\\lambda=2.5510\\,\\mathrm m\\approx2.55\\,\\mathrm m",
+              "refs": []
+            }
+          ],
+          "answer": "\\lambda=2.5510\\,\\mathrm m\\approx2.55\\,\\mathrm m",
+          "sourcePage": 2,
+          "solutionPage": 2,
+          "id": "e1-s26-q1-c"
+        },
+        {
+          "label": "d",
+          "points": 2,
+          "prompt": {
+            "zh": "计算同轴电缆的单位长度电感 $l$ 和单位长度电容 $c$。",
+            "en": "Calculate the per-unit-inductance $l$ and per-unit-capacitance $c$ of the coaxial cable."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写需要联立的两条原表公式；低损耗近似下使用无损线的 Z₀ 与波速关系。",
+                "en": "Begin with both crib equations, using the lossless relations for Z₀ and speed in the low-loss approximation."
+              },
+              "math": "Z_0=\\sqrt{\\frac lc},\\qquad u=\\frac1{\\sqrt{lc}}",
+              "refs": [
+                "impedance",
+                "velocity"
+              ]
+            },
+            {
+              "text": {
+                "zh": "将 Z₀ 除以 u，根号相乘后只剩 l；将 Z₀ 乘 u 得到 1/c。",
+                "en": "Divide Z₀ by u to isolate l; multiply Z₀ by u to obtain 1/c."
+              },
+              "math": "\\frac{Z_0}{u}=\\sqrt{\\frac lc}\\sqrt{lc}=l,\\qquad Z_0u=\\frac{\\sqrt{l/c}}{\\sqrt{lc}}=\\frac1c",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先代入求每单位长度电感，保留 H/m 单位。",
+                "en": "Substitute to obtain inductance per unit length, retaining H/m."
+              },
+              "math": "l=\\frac{Z_0}{u}=\\frac{50}{2.5510204\\times10^8}=1.9600\\times10^{-7}\\,\\mathrm{H/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再独立代入求电容，不要把分母中的 Z₀ 漏掉。",
+                "en": "Substitute separately for capacitance, retaining Z₀ in the denominator."
+              },
+              "math": "c=\\frac1{Z_0u}=\\frac1{50(2.5510204\\times10^8)}=7.8400\\times10^{-11}\\,\\mathrm{F/m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把 H、F 分别换为 nH、pF；此处沿用未舍入时延，原解的微小差别来自中间舍入。",
+                "en": "Convert H and F to nH and pF. The small difference from the official inductance comes from its intermediate rounding."
+              },
+              "math": "l=196.0\\,\\mathrm{nH/m},\\qquad c=78.40\\,\\mathrm{pF/m}",
+              "refs": []
+            }
+          ],
+          "answer": "l=196.0\\,\\mathrm{nH/m},\\qquad c=78.40\\,\\mathrm{pF/m}",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "note": {
+            "zh": "使用未舍入的 392 ns 得 l=196.0 nH/m；官方先取 vf=0.85 得 196.1 nH/m，属于舍入差异。",
+            "en": "Using the unrounded 392 ns gives l=196.0 nH/m. The official 196.1 nH/m uses vf rounded to 0.85."
+          },
+          "id": "e1-s26-q1-d"
+        },
+        {
+          "label": "e",
+          "points": 2,
+          "prompt": {
+            "zh": "若测得负载电压幅值为 $V(L=100\\mathrm{m})=0.904\\mathrm{V}$，输入电压幅值为 $V(L=0\\mathrm{m})=1\\mathrm{V}$，求衰减系数 $\\alpha$。",
+            "en": "If you measure the amplitude of the voltage at the load to be $V(L=100\\mathrm{m})=0.904\\mathrm{V}$ and the amplitude of the voltage at the input to be $V(L=0\\mathrm{m})=1\\mathrm{V}$, determine the attenuation coefficient $\\alpha$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写有损行波包络。负载匹配时幅度之比直接给出单程指数衰减。",
+                "en": "Begin with the lossy-wave envelope; with a matched load, the amplitude ratio gives one-way exponential attenuation."
+              },
+              "math": "|V(L)|=|V(0)|e^{-\\alpha L}",
+              "refs": [
+                "lossy-wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "把两个测得幅度及线长代入，先形成无量纲比值。",
+                "en": "Substitute the measured amplitudes and length, forming a dimensionless ratio first."
+              },
+              "math": "\\frac{0.904\\,\\mathrm V}{1.000\\,\\mathrm V}=e^{-\\alpha(100\\,\\mathrm m)}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "两边取自然对数；指数的负号不能省去。",
+                "en": "Take natural logarithms on both sides, keeping the minus sign."
+              },
+              "math": "\\ln(0.904)=-\\alpha(100\\,\\mathrm m)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再除以负的长度系数，得到正衰减常数。",
+                "en": "Divide by the negative length coefficient to obtain a positive attenuation constant."
+              },
+              "math": "\\alpha=-\\frac{\\ln(0.904)}{100\\,\\mathrm m}=\\frac{0.1009259186}{100\\,\\mathrm m}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "幅度的指数衰减用 Np/m 表示，不是功率衰减或 dB/m。",
+                "en": "This amplitude attenuation is in Np/m, rather than a power coefficient or dB/m."
+              },
+              "math": "\\alpha=1.00926\\times10^{-3}\\,\\mathrm{Np/m}",
+              "refs": []
+            }
+          ],
+          "answer": "\\alpha=1.00926\\times10^{-3}\\,\\mathrm{Np/m}",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "id": "e1-s26-q1-e"
+        },
+        {
+          "label": "f",
+          "points": 1,
+          "prompt": {
+            "zh": "计算同轴电缆的单位长度电阻 $r$。",
+            "en": "Calculate the per-unit-length resistance $r$ of the coaxial cable."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表低损耗衰减公式。按该题模型忽略并联漏电导 g。",
+                "en": "Begin with the crib low-loss attenuation equation, neglecting shunt conductance g in this model."
+              },
+              "math": "\\alpha=\\frac r{2Z_0}",
+              "refs": [
+                "attenuation"
+              ]
+            },
+            {
+              "text": {
+                "zh": "两边乘 2Z₀，先解出未知串联电阻密度。",
+                "en": "Multiply both sides by 2Z₀ to isolate series resistance per length."
+              },
+              "math": "r=2Z_0\\alpha",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入未舍入的衰减系数和 b) 的 50 Ω 特性阻抗。",
+                "en": "Insert the unrounded attenuation and the 50 Ω characteristic impedance from b)."
+              },
+              "math": "r=2(50\\,\\Omega)(1.0092592\\times10^{-3}\\,\\mathrm{m^{-1}})",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "化简并检查单位是 Ω/m。",
+                "en": "Simplify and check the units are Ω/m."
+              },
+              "math": "r=0.10093\\,\\Omega/\\mathrm m\\approx0.10\\,\\Omega/\\mathrm m",
+              "refs": []
+            }
+          ],
+          "answer": "r=0.10093\\,\\Omega/\\mathrm m\\approx0.10\\,\\Omega/\\mathrm m",
+          "sourcePage": 3,
+          "solutionPage": 3,
+          "id": "e1-s26-q1-rf"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题是从实验读数反推传输线参数：传播、匹配和衰减需要依次联系起来。",
+          "en": "This problem works backward from measurements to the propagation, matching and loss parameters of a transmission line."
+        },
+        "known": {
+          "zh": "电缆长 $100\\,\\mathrm m$，测得延迟 $392\\,\\mathrm{ns}$；图中 $R_g=25\\,\\Omega$、$R_L=50\\,\\Omega$，输入电压幅值不随频率变化。后续给出频率及输入、输出幅值。",
+          "en": "The cable is $100\\,\\mathrm m$ long with measured delay $392\\,\\mathrm{ns}$. The circuit has $R_g=25\\,\\Omega$ and $R_L=50\\,\\Omega$, and the input-voltage magnitude is independent of frequency. Later parts supply frequency and endpoint amplitudes."
+        },
+        "goal": {
+          "zh": "求速度因子、$Z_0$、波长、单位长度电感与电容，再由幅值衰减求 $\\alpha$ 和单位长度电阻。",
+          "en": "Find velocity factor, $Z_0$, wavelength and distributed inductance and capacitance; then infer $\\alpha$ and resistance per unit length from attenuation."
+        },
+        "approach": {
+          "zh": "先由长度和延迟确定波速，再利用频率无关的输入测量判断匹配。最后处理损耗，注意电压幅值的衰减指数与功率的衰减指数不同。",
+          "en": "Find speed from length and delay, then interpret the frequency-independent input measurement to identify matching. Handle loss afterward, keeping voltage-amplitude attenuation distinct from power attenuation."
+        }
+      }
+    },
+    {
+      "id": "e1-s26-q2",
+      "number": 2,
+      "title": {
+        "zh": "瞬态分析",
+        "en": "Transient Analysis"
+      },
+      "topic": {
+        "zh": "瞬态 · 反弹图",
+        "en": "Transients · bounce diagrams"
+      },
+      "statement": {
+        "zh": "一根特性阻抗为 $Z_0=50\\Omega$、时间延迟为 $T_d=50\\mathrm{ps}$ 的传输线，连接在电压为 $V_g=10\\mathrm{V}$、源阻抗为 $R_g=30\\Omega$ 的发生器电路与负载阻抗 $Z_L=150\\Omega$ 之间，如下图所示。开关在 $t=0$ 闭合，向传输线施加直流电压。",
+        "en": "A transmission line of characteristic impedance $Z_0=50\\Omega$ and time delay $T_d=50\\mathrm{ps}$ is connected between a generator circuit with voltage $V_g=10\\mathrm{V}$ and generator impedance $R_g=30\\Omega$, and a load impedance $Z_L=150\\Omega$, as shown below. The switch closes at time $t=0$ and provides a DC voltage to the transmission line."
+      },
+      "givens": [
+        "V_g=10\\,\\mathrm V",
+        "R_g=30\\,\\Omega",
+        "Z_0=50\\,\\Omega",
+        "R_L=150\\,\\Omega",
+        "T_d=50\\,\\mathrm{ps}"
+      ],
+      "points": 8,
+      "figure": "e1-s26-q2",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e1-s26",
+        "page": 4,
+        "region": [
+          0.2588,
+          0.1966,
+          0.4823,
+          0.1265
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-04",
+          "page": 31,
+          "label": {
+            "zh": "行波反弹参数",
+            "en": "Traveling-wave bounce parameters"
+          }
+        },
+        {
+          "doc": "lecture-04",
+          "page": 41,
+          "label": {
+            "zh": "持续直流阶跃",
+            "en": "Sustained DC step"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 2,
+          "prompt": {
+            "zh": "计算下列量：\n• 负载端反射系数 $\\Gamma_L$\n• 发生器端反射系数 $\\Gamma_g$",
+            "en": "Calculate the following quantities:\n• The reflection coefficient at the load $\\Gamma_L$\n• The reflection coefficient at the generator $\\Gamma_g$"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表的端点电压反射系数；负载端和源端都以同一个线路 Z₀ 为参考。",
+                "en": "Begin with the crib endpoint voltage reflection coefficient, referencing both ends to the same line Z₀."
+              },
+              "math": "\\Gamma=\\frac{Z-Z_0}{Z+Z_0}",
+              "refs": [
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "负载端代入 150 Ω 和 50 Ω，先算差再算和。",
+                "en": "At the load insert 150 Ω and 50 Ω, evaluating the difference and sum separately."
+              },
+              "math": "\\Gamma_L=\\frac{150-50}{150+50}=\\frac{100}{200}=+0.50",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "源端返回波看到 30 Ω 源电阻，因此对应系数为负。",
+                "en": "A wave returning to the source sees its 30 Ω resistance, giving a negative coefficient."
+              },
+              "math": "\\Gamma_g=\\frac{30-50}{30+50}=\\frac{-20}{80}=-0.25",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "两系数均为电压比，无量纲；负号表示源端反射电压反相。",
+                "en": "Both coefficients are dimensionless voltage ratios; the negative sign indicates voltage inversion at the source."
+              },
+              "math": "\\Gamma_L=0.50,\\qquad\\Gamma_g=-0.25",
+              "refs": []
+            }
+          ],
+          "answer": "\\Gamma_L=0.50,\\qquad\\Gamma_g=-0.25",
+          "sourcePage": 4,
+          "solutionPage": 4,
+          "id": "e1-s26-q2-a"
+        },
+        {
+          "label": "b",
+          "points": 2,
+          "prompt": {
+            "zh": "计算下方反弹图中 $V_1^+$、$V_1^-$、$V_2^+$ 和 $V_2^-$ 的数值。",
+            "en": "Calculate numerical values for $V_1^+$, $V_1^-$, $V_2^+$ and $V_2^-$ in the bounce diagram below."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写初始分压和反射递推式，再按传播顺序逐个计算。",
+                "en": "Begin with the launch divider and reflection recurrence, then evaluate in propagation order."
+              },
+              "math": "V_1^+=V_g\\frac{Z_0}{R_g+Z_0},\\qquad V_n^-=\\Gamma_LV_n^+,\\qquad V_{n+1}^+=\\Gamma_gV_n^-",
+              "refs": [
+                "bounce",
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "t=0 时把 10 V、30 Ω、50 Ω 代入，得到第一正向阶跃。",
+                "en": "At t=0 substitute 10 V, 30 Ω and 50 Ω to obtain the first forward step."
+              },
+              "math": "V_1^+=(10\\,\\mathrm V)\\frac{50}{30+50}=10\\frac58=6.25\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "50 ps 时到达负载，第一反向波乘负载反射系数 +0.5。",
+                "en": "At 50 ps the wave reaches the load; multiply by +0.5 for the first backward wave."
+              },
+              "math": "V_1^-=\\Gamma_LV_1^+=0.5(6.25)=3.125\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "100 ps 时反向波到源，再乘 −0.25，得到第二正向阶跃。",
+                "en": "At 100 ps the return reaches the source; multiply by −0.25 for the second forward step."
+              },
+              "math": "V_2^+=\\Gamma_gV_1^-=-0.25(3.125)=-0.78125\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "150 ps 时第二正向阶跃到负载，再乘 +0.5；两次反射的负号不能丢失。",
+                "en": "At 150 ps the second forward step reaches the load; multiply by +0.5, retaining its negative sign."
+              },
+              "math": "V_2^-=\\Gamma_LV_2^+=0.5(-0.78125)=-0.390625\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把四个行波幅度标在反弹图对应的四条轨迹上。",
+                "en": "Label these four traveling-wave amplitudes on their four bounce trajectories."
+              },
+              "math": "\\begin{gathered}V_1^+=6.25\\,\\mathrm V,\\quad V_1^-=3.125\\,\\mathrm V\\\\V_2^+=-0.78125\\,\\mathrm V,\\quad V_2^-=-0.390625\\,\\mathrm V\\end{gathered}",
+              "refs": []
+            }
+          ],
+          "answer": "\\begin{gathered}V_1^+=6.25\\,\\mathrm V,\\quad V_1^-=3.125\\,\\mathrm V\\\\V_2^+=-0.78125\\,\\mathrm V,\\quad V_2^-=-0.390625\\,\\mathrm V\\end{gathered}",
+          "sourcePage": 4,
+          "solutionPage": 4,
+          "figure": "bounce-s26",
+          "figureCaption": {
+            "zh": "持续 DC 阶跃的反弹图：各行波按 50 ps 单程时延传播，端点电压需累加历史阶跃。",
+            "en": "Bounce diagram of a sustained DC step with 50 ps transit time; endpoint voltages include previous steps."
+          },
+          "id": "e1-s26-q2-b",
+          "questionFigure": {
+            "name": "e1-s26-q2-template",
+            "source": {
+              "doc": "e1-s26",
+              "page": 4,
+              "region": [
+                0.1451,
+                0.6761,
+                0.2179,
+                0.22920000000000001
+              ]
+            },
+            "caption": {
+              "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+              "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+            }
+          }
+        },
+        {
+          "label": "c",
+          "points": 3,
+          "prompt": {
+            "zh": "画出 $0\\le t\\le150\\mathrm{ps}$ 内负载电压 $V(z=L)$ 随时间变化的曲线。标注电压幅值和关键时刻，例如电压波发生相关反射的时刻。",
+            "en": "Sketch a plot of the voltage at the load $V(z=L)$ vs. time for $0\\le t\\le150\\mathrm{ps}$. Label voltage amplitudes and critical times, such as when the voltage wave undergoes relevant reflections."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写每次到达负载所增加的电压：入射阶跃与即时反射阶跃相加。",
+                "en": "Begin with each load voltage increment: add the arriving step and its immediate reflected step."
+              },
+              "math": "\\Delta V_{L,n}=V_n^++V_n^-=(1+\\Gamma_L)V_n^+",
+              "refs": [
+                "bounce",
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "第一行波传播时间为 50 ps，未到达前，负载处仍没有电压变化。",
+                "en": "The first transit takes 50 ps, so the load voltage remains unchanged before that arrival."
+              },
+              "math": "V_L(t)=0\\quad(0\\le t<50\\,\\mathrm{ps})",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "50 ps 到达时代入 V₁⁺ 与 ΓL，求第一次阶跃后的平台值。",
+                "en": "At 50 ps substitute V₁⁺ and ΓL to obtain the first plateau."
+              },
+              "math": "V_L(50^+\\,\\mathrm{ps})=0+(1+0.5)(6.25)=9.375\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "100 ps 的反射发生在源端；还需再传播 50 ps 才影响负载，所以中间平台保持不变。",
+                "en": "The 100 ps reflection occurs at the source and needs another 50 ps to affect the load, so the intermediate plateau stays unchanged."
+              },
+              "math": "V_L(t)=9.375\\,\\mathrm V\\quad(50\\le t<150\\,\\mathrm{ps})",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "150 ps 第二次入射带来负的增量。源持续接通，所以新平台要在旧平台上累加。",
+                "en": "The second arrival at 150 ps gives a negative increment. With the source still on, add it to the existing plateau."
+              },
+              "math": "\\Delta V_{L,2}=(1+0.5)(-0.78125)=-1.171875\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将增量加到 9.375 V，按右连续理想阶跃标记端点。",
+                "en": "Add the increment to 9.375 V and mark right-continuous ideal-step values."
+              },
+              "math": "V_L(150^+\\,\\mathrm{ps})=9.375-1.171875=8.203125\\,\\mathrm V",
+              "refs": []
+            }
+          ],
+          "answer": "V_L(t)=\\begin{cases}0&0\\le t<50\\,\\mathrm{ps}\\\\9.375\\,\\mathrm V&50\\le t<150\\,\\mathrm{ps}\\\\8.203125\\,\\mathrm V&t=150^+\\,\\mathrm{ps}\\end{cases}",
+          "sourcePage": 5,
+          "solutionPage": 5,
+          "figure": "load-step-s26",
+          "figureCaption": {
+            "zh": "负载电压在 50 ps 上升至 9.375 V，在 150 ps 降至 8.203125 V。",
+            "en": "Load voltage rises to 9.375 V at 50 ps and falls to 8.203125 V at 150 ps."
+          },
+          "id": "e1-s26-q2-c"
+        },
+        {
+          "label": "d",
+          "points": 1,
+          "prompt": {
+            "zh": "计算传输线达到稳态后的电压 $V_{ss}$。",
+            "en": "Calculate the voltage on the transmission line after it has reached steady state $V_{ss}$."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "持续 DC 的最终稳态中，无损传输线等效为理想连接；用串联回路的电压定律开始推导。",
+                "en": "At final sustained-DC steady state the lossless line is an ideal connection. Begin with the series-loop voltage law."
+              },
+              "math": "V_g=I_\\infty R_g+I_\\infty R_L=I_\\infty(R_g+R_L)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先求最终电流，再乘负载电阻。",
+                "en": "Solve for final current, then multiply by the load resistance."
+              },
+              "math": "I_\\infty=\\frac{V_g}{R_g+R_L},\\qquad V_\\infty=I_\\infty R_L=V_g\\frac{R_L}{R_g+R_L}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入 10 V、30 Ω 和 150 Ω。",
+                "en": "Substitute 10 V, 30 Ω and 150 Ω."
+              },
+              "math": "V_\\infty=(10\\,\\mathrm V)\\frac{150}{30+150}=\\frac{1500}{180}\\,\\mathrm V",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "也可对反弹图求和：第一负载增量为 9.375 V，每次往返乘 ΓgΓL=−1/8。",
+                "en": "Alternatively sum the bounce increments: the first is 9.375 V and each round trip multiplies it by ΓgΓL=−1/8."
+              },
+              "math": "V_\\infty=9.375\\sum_{n=0}^\\infty(-1/8)^n=\\frac{9.375}{1-(-1/8)}",
+              "refs": [
+                "bounce"
+              ]
+            },
+            {
+              "text": {
+                "zh": "级数求和与 DC 电路分压完全一致。",
+                "en": "The geometric sum agrees with the DC circuit divider."
+              },
+              "math": "V_\\infty=\\frac{25}{3}\\,\\mathrm V\\approx8.333\\,\\mathrm V",
+              "refs": []
+            }
+          ],
+          "answer": "V_\\infty=\\frac{25}{3}\\,\\mathrm V\\approx8.333\\,\\mathrm V",
+          "sourcePage": 5,
+          "solutionPage": 5,
+          "id": "e1-s26-q2-d"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查持续直流阶跃在失配传输线上的反弹过程，以及暂态与稳态的区别。",
+          "en": "This problem distinguishes the transient reflections of a sustained DC step from the eventual steady state."
+        },
+        "known": {
+          "zh": "$V_g=10\\,\\mathrm V$、$R_g=30\\,\\Omega$、$Z_0=50\\,\\Omega$、$R_L=150\\,\\Omega$，单程延迟 $T_d=50\\,\\mathrm{ps}$；开关闭合后电源持续接通。",
+          "en": "The sustained source has $V_g=10\\,\\mathrm V$, $R_g=30\\,\\Omega$, $Z_0=50\\,\\Omega$ and $R_L=150\\,\\Omega$, with one-way delay $T_d=50\\,\\mathrm{ps}$."
+        },
+        "goal": {
+          "zh": "求两端反射系数和前几次行波，画出指定时间内的负载电压，再求稳态电压。",
+          "en": "Find both reflection coefficients and the first traveling waves, plot the specified load-voltage history, and find the steady-state voltage."
+        },
+        "approach": {
+          "zh": "先求初始发射波，再按到达端点的时刻逐次反射。负载电压是入射波与反射波的和；长时间结果还应与直流等效电路相符。",
+          "en": "Start with the launched wave and reflect it at each arrival time. Load voltage combines incident and reflected waves; the long-time limit should agree with the DC equivalent circuit."
+        }
+      }
+    },
+    {
+      "id": "e1-s26-q3",
+      "number": 3,
+      "title": {
+        "zh": "输入阻抗",
+        "en": "Input Impedance"
+      },
+      "topic": {
+        "zh": "半波线 · 四分之一波线",
+        "en": "Half-wave · quarter-wave lines"
+      },
+      "statement": {
+        "zh": "本题所有电路中，发生器电压频率均为 $f=200\\mathrm{MHz}=200\\times10^6\\mathrm{Hz}$，所有同轴电缆的速度因子均为 $0.65$。每问都应给出带单位的数值答案。",
+        "en": "For all circuits in this problem, the frequency of the generator voltage is $f=200\\mathrm{MHz}=200\\times10^6\\mathrm{Hz}$ and the velocity factor of all coaxial cables is $0.65$. In each part, provide a numerical answer with units."
+      },
+      "givens": [
+        "f=200\\,\\mathrm{MHz}",
+        "\\mathrm{vf}=0.65",
+        "\\lambda=0.975\\,\\mathrm m"
+      ],
+      "points": 8,
+      "figure": "e1-s26-q3",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e1-s26",
+        "page": 6,
+        "region": [
+          0.1156,
+          0.3131,
+          0.4866,
+          0.1358
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-06",
+          "page": 14,
+          "label": {
+            "zh": "四分之一波长匹配",
+            "en": "Quarter-wave matching"
+          }
+        },
+        {
+          "doc": "lecture-07",
+          "page": 42,
+          "label": {
+            "zh": "支节作为陷波器",
+            "en": "Stubs as blocking filters"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a(i)",
+          "points": 2,
+          "prompt": {
+            "zh": "仅对第 a) 问：可以使用下列特性阻抗的同轴电缆卷：\n• 电缆类型 #1：$Z_{01}=25\\Omega$\n• 电缆类型 #2：$Z_{02}=50\\Omega$\n• 电缆类型 #3：$Z_{03}=75\\Omega$\n对下列每个电路，指定能将发生器阻抗匹配到负载阻抗的电缆类型（即特性阻抗 $Z_0$）和长度 $L$。\n\n电路 #1",
+            "en": "For part a) only: you have access to spools of coaxial cable with characteristic impedances:\n• Cable type #1: $Z_{01}=25\\Omega$\n• Cable type #2: $Z_{02}=50\\Omega$\n• Cable type #3: $Z_{03}=75\\Omega$\nIn each of the circuits below, specify the type of cable (which characteristic impedance $Z_0$) and length $L$ that match the generator impedance to the load impedance.\n\nCircuit #1"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "此问两端都是 100 Ω，优先使用原表的半波阻抗重复性质。",
+                "en": "Both terminations are 100 Ω, so start with the crib half-wave impedance-repeat property."
+              },
+              "math": "L=\\frac{\\lambda}{2}\\quad\\Longrightarrow\\quad Z_{\\mathrm{in}}=Z_L",
+              "refs": [
+                "half"
+              ]
+            },
+            {
+              "text": {
+                "zh": "无论选 25、50 还是 75 Ω 电缆，半波线都将 100 Ω 负载重复为 100 Ω 输入，等于源电阻。",
+                "en": "A half-wave line of 25, 50 or 75 Ω repeats the 100 Ω load as a 100 Ω input, matching the source."
+              },
+              "math": "Z_{\\mathrm{in}}=100\\,\\Omega=R_g,\\qquad Z_0\\in\\{25,50,75\\}\\,\\Omega",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先由速度因子和频率计算电缆内波长。",
+                "en": "First calculate the cable wavelength from velocity factor and frequency."
+              },
+              "math": "\\lambda=\\frac{\\mathrm{vf}\\,u_c}{f}=\\frac{0.65(3\\times10^8\\,\\mathrm{m/s})}{200\\times10^6\\,\\mathrm{Hz}}=0.975\\,\\mathrm m",
+              "refs": [
+                "wave",
+                "velocity"
+              ]
+            },
+            {
+              "text": {
+                "zh": "取一个半波的正长度即可完成所需匹配。",
+                "en": "One positive half-wavelength length gives the required match."
+              },
+              "math": "L=\\frac{0.975\\,\\mathrm m}{2}=0.4875\\,\\mathrm m",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "因此三种给定电缆都可使用，长度相同。",
+                "en": "All three available cables therefore work with the same length."
+              },
+              "math": "Z_0\\in\\{25,50,75\\}\\,\\Omega,\\qquad L=0.4875\\,\\mathrm m",
+              "refs": []
+            }
+          ],
+          "answer": "Z_0\\in\\{25,50,75\\}\\,\\Omega,\\qquad L=0.4875\\,\\mathrm m",
+          "sourcePage": 6,
+          "solutionPage": 6,
+          "id": "e1-s26-q3-ai",
+          "questionFigure": {
+            "name": "e1-s26-q3-ai",
+            "source": {
+              "doc": "e1-s26",
+              "page": 6,
+              "region": [
+                0.1156,
+                0.3131,
+                0.4866,
+                0.1358
+              ]
+            },
+            "caption": {
+              "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+              "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+            }
+          }
+        },
+        {
+          "label": "a(ii)",
+          "points": 2,
+          "prompt": {
+            "zh": "电路 #2",
+            "en": "Circuit #2"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "不同的纯电阻之间使用四分之一波长变换。先写原表阻抗反演式并设输入等于源电阻。",
+                "en": "Use a quarter-wave transformer between unequal real resistances. Begin with impedance inversion and set the input equal to source resistance."
+              },
+              "math": "Z_{\\mathrm{in}}=\\frac{Z_0^2}{R_L}=R_g",
+              "refs": [
+                "quarter"
+              ]
+            },
+            {
+              "text": {
+                "zh": "先解出待选电缆的特性阻抗，代入 50 Ω 与 12.5 Ω。",
+                "en": "Solve for the cable characteristic impedance and substitute 50 Ω and 12.5 Ω."
+              },
+              "math": "Z_0=\\sqrt{R_gR_L}=\\sqrt{(50\\,\\Omega)(12.5\\,\\Omega)}=\\sqrt{625}\\,\\Omega=25\\,\\Omega",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "三种给定电缆中，25 Ω 对应类型 #1。再由统一的速度因子求波长。",
+                "en": "Among the available cables, 25 Ω is type #1. Next calculate wavelength using the common velocity factor."
+              },
+              "math": "\\lambda=\\frac{0.65(3\\times10^8)}{200\\times10^6}=0.975\\,\\mathrm m",
+              "refs": [
+                "wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "取四分之一波长，并核对反演后确实为 50 Ω。",
+                "en": "Choose a quarter wavelength and verify the transformed resistance is 50 Ω."
+              },
+              "math": "L=\\frac{0.975}{4}=0.24375\\,\\mathrm m,\\qquad \\frac{25^2}{12.5}=50\\,\\Omega",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "所需类型与长度如下。",
+                "en": "The required cable and length are:"
+              },
+              "math": "Z_0=25\\,\\Omega,\\qquad L=0.24375\\,\\mathrm m",
+              "refs": []
+            }
+          ],
+          "answer": "Z_0=25\\,\\Omega,\\qquad L=0.24375\\,\\mathrm m",
+          "sourcePage": 6,
+          "solutionPage": 6,
+          "id": "e1-s26-q3-aii",
+          "questionFigure": {
+            "name": "e1-s26-q3-aii",
+            "source": {
+              "doc": "e1-s26",
+              "page": 6,
+              "region": [
+                0.1156,
+                0.6325,
+                0.5129,
+                0.1395
+              ]
+            },
+            "caption": {
+              "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+              "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+            }
+          }
+        },
+        {
+          "label": "b",
+          "points": 2,
+          "prompt": {
+            "zh": "求下列电路的 $Z_{in}$。",
+            "en": "Determine $Z_{in}$ for the circuit below."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先把串联电阻与电容合并为负载阻抗，再用四分之一波长性质变换。",
+                "en": "First combine the series resistor and capacitor as the load, then use the quarter-wave property."
+              },
+              "math": "Z_C=\\frac1{j\\omega C},\\qquad Z_L=R+Z_C,\\qquad Z_{\\mathrm{in}}=\\frac{Z_0^2}{Z_L}",
+              "refs": [
+                "quarter"
+              ]
+            },
+            {
+              "text": {
+                "zh": "由频率求角频率，并把 1 μF 写为 10⁻⁶ F。",
+                "en": "Calculate angular frequency and express 1 μF as 10⁻⁶ F."
+              },
+              "math": "\\omega=2\\pi(200\\times10^6)\\,\\mathrm{rad/s},\\qquad C=10^{-6}\\,\\mathrm F",
+              "refs": [
+                "wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "利用 1/j=−j 求电容阻抗，并与 50 Ω 相加。",
+                "en": "Use 1/j=−j for the capacitor impedance and add the 50 Ω resistor."
+              },
+              "math": "Z_C=-\\frac j{2\\pi(200\\times10^6)(10^{-6})}=-j7.95775\\times10^{-4}\\,\\Omega,\\qquad Z_L=50-j7.95775\\times10^{-4}\\,\\Omega",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入原表反演式，再乘分母共轭数，显示虚部符号为何反转。",
+                "en": "Substitute into the crib inversion and multiply by the denominator conjugate to show the imaginary-sign reversal."
+              },
+              "math": "\\begin{aligned}Z_{\\mathrm{in}}&=\\frac{2500}{50-jX_C}\\\\&=\\frac{2500(50+jX_C)}{50^2+X_C^2},\\quad X_C=7.95775\\times10^{-4}\\,\\Omega\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "Xc² 远小于 50²，因此实部约为 50 Ω，虚部为小的正电抗。",
+                "en": "Since Xc² is negligible relative to 50², the real part is approximately 50 Ω with a small positive reactance."
+              },
+              "math": "Z_{\\mathrm{in}}\\approx(50+j7.95775\\times10^{-4})\\,\\Omega",
+              "refs": []
+            }
+          ],
+          "answer": "Z_{\\mathrm{in}}\\approx(50+j7.95775\\times10^{-4})\\,\\Omega",
+          "sourcePage": 7,
+          "solutionPage": 7,
+          "id": "e1-s26-q3-b",
+          "questionFigure": {
+            "name": "e1-s26-q3-b",
+            "source": {
+              "doc": "e1-s26",
+              "page": 7,
+              "region": [
+                0.1156,
+                0.1076,
+                0.4753,
+                0.1401
+              ]
+            },
+            "caption": {
+              "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+              "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+            }
+          }
+        },
+        {
+          "label": "c",
+          "points": 2,
+          "prompt": {
+            "zh": "下图电路中，开路电缆长度 $\\ell$ 为多少时，会使电压波在 $z=A$ 处全反射？",
+            "en": "In the circuit below, what length of open-circuited cable $\\ell$ would lead to full reflection of the voltage wave at $z=A$?"
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表的开路支节输入阻抗。要使有电阻负载的并联节点全反射，可把支节输入变成短路。",
+                "en": "Begin with the crib open-stub impedance. To obtain total reflection at a shunt node with a resistive load contribution, make the stub input a short."
+              },
+              "math": "Z_s=-jZ_0\\cot(\\beta\\ell)",
+              "refs": [
+                "open"
+              ]
+            },
+            {
+              "text": {
+                "zh": "令支节输入阻抗为零，即 cot(βℓ)=0，选择最短正电长度 π/2。",
+                "en": "Set the stub input to zero, requiring cot(βℓ)=0; choose the shortest positive electrical length π/2."
+              },
+              "math": "\\beta\\ell=\\frac\\pi2,\\qquad\\ell=\\frac{\\pi/2}{2\\pi/\\lambda}=\\frac\\lambda4",
+              "refs": [
+                "wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "短路支节并联任何有限负载都会把节点 A 的总阻抗压为零。",
+                "en": "A shorted shunt branch makes the total impedance at A zero for any finite parallel load."
+              },
+              "math": "Z_A=\\frac{Z_sZ_L}{Z_s+Z_L}=\\frac{0\\cdot Z_L}{0+Z_L}=0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将节点阻抗代入反射系数原式；电压反相，模为 1。",
+                "en": "Substitute the node impedance into the reflection equation; voltage reverses sign and the magnitude is one."
+              },
+              "math": "\\Gamma_A=\\frac{Z_A-Z_0}{Z_A+Z_0}=\\frac{-Z_0}{Z_0}=-1",
+              "refs": [
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "由共同速度因子和频率求得 λ=0.975 m，再取四分之一波长。",
+                "en": "The common velocity factor and frequency give λ=0.975 m; take one quarter of it."
+              },
+              "math": "\\ell=\\frac\\lambda4=0.24375\\,\\mathrm m,\\qquad|\\Gamma_A|=1",
+              "refs": []
+            }
+          ],
+          "answer": "\\ell=\\frac\\lambda4=0.24375\\,\\mathrm m,\\qquad|\\Gamma_A|=1",
+          "sourcePage": 7,
+          "solutionPage": 7,
+          "id": "e1-s26-q3-c",
+          "questionFigure": {
+            "name": "e1-s26-q3-c",
+            "source": {
+              "doc": "e1-s26",
+              "page": 7,
+              "region": [
+                0.1156,
+                0.4694,
+                0.5056,
+                0.1775
+              ]
+            },
+            "caption": {
+              "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+              "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+            }
+          }
+        }
+      ],
+      "wording": "original",
+      "figureAtParts": true,
+      "guide": {
+        "concept": {
+          "zh": "本题通过不同电路考查传输线的阻抗变换、匹配和开路支节的滤波作用。",
+          "en": "These circuits test impedance transformation, matching and the filtering action of an open-circuit stub."
+        },
+        "known": {
+          "zh": "所有电路均有 $f=200\\,\\mathrm{MHz}$、速度因子 $0.65$；第 a) 问可选 $25\\,\\Omega$、$50\\,\\Omega$、$75\\,\\Omega$ 电缆，各电路的连接与终端见原图。",
+          "en": "All circuits operate at $200\\,\\mathrm{MHz}$ with velocity factor $0.65$. Part a offers $25\\,\\Omega$, $50\\,\\Omega$ and $75\\,\\Omega$ cables; each diagram supplies its connections and terminations."
+        },
+        "goal": {
+          "zh": "选出匹配所需的电缆类型和实际长度，计算指定输入阻抗，并确定使主线发生全反射的支节长度。",
+          "en": "Select cable type and physical length for matching, calculate the specified input impedance, and choose a stub length that produces total reflection."
+        },
+        "approach": {
+          "zh": "先把电长度与米数联系起来，再识别半波、四分之一波等特殊长度。遇到并联支节时改用导纳，先判断接点实际呈现开路还是短路。",
+          "en": "Relate electrical length to physical length, then recognize half-wave and quarter-wave properties. For a parallel stub, use admittance and identify whether the junction effectively sees an open or a short."
+        }
+      }
+    },
+    {
+      "id": "e1-s26-q4",
+      "number": 4,
+      "title": {
+        "zh": "利用 Smith 图的单支节匹配",
+        "en": "Single-Stub Matching with a Smith Chart"
+      },
+      "topic": {
+        "zh": "Smith 图 · 开路支节",
+        "en": "Smith chart · open stub"
+      },
+      "statement": {
+        "zh": "使用所附 Smith 图，通过单支节匹配法将馈线的特性阻抗 $Z_0$ 与负载阻抗 $Z_L$ 匹配。如下图所示，匹配电路包含一段连接负载、长度为 $d$ 的直通线，以及一段与直通线并联、长度为 $\\ell$ 的开路支节。本题所有传输线均有 $Z_0=50\\Omega$。",
+        "en": "Use the included Smith chart to match the feedline’s characteristic impedance $Z_0$ to the load impedance $Z_L$ via the single-stub matching method. As shown below, the matching circuit consists of a through-line of length $d$, which is connected to the load and an open-circuited stub of length $\\ell$, connected in parallel with the through-line. $Z_0=50\\Omega$ for all transmission lines in this problem."
+      },
+      "givens": [
+        "Z_L=(25+j90)\\,\\Omega",
+        "Z_0=50\\,\\Omega",
+        "y_d+y_s=1"
+      ],
+      "points": 8,
+      "figure": "e1-s26-q4",
+      "figureCaption": {
+        "zh": "复刻原卷插图，保留原图的视角、结构与标注。",
+        "en": "Recreated from the exam figure, preserving its perspective, geometry and labels."
+      },
+      "originalFigure": {
+        "doc": "e1-s26",
+        "page": 8,
+        "region": [
+          0.2645,
+          0.1969,
+          0.4709,
+          0.17980000000000002
+        ]
+      },
+      "lectures": [
+        {
+          "doc": "lecture-06",
+          "page": 25,
+          "label": {
+            "zh": "阻抗归一化与 Smith 图",
+            "en": "Normalization and the Smith chart"
+          }
+        },
+        {
+          "doc": "lecture-07",
+          "page": 19,
+          "label": {
+            "zh": "阻抗与导纳转换",
+            "en": "Impedance-to-admittance conversion"
+          }
+        },
+        {
+          "doc": "lecture-07",
+          "page": 29,
+          "label": {
+            "zh": "单支节匹配步骤",
+            "en": "Single-stub matching procedure"
+          }
+        }
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "points": 2,
+          "prompt": {
+            "zh": "计算归一化负载阻抗 $z_L$，并在 Smith 图上标出。",
+            "en": "Calculate the normalized load impedance $z_L$ and plot it on the Smith chart."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写归一化定义。这里 z 为无量纲负载阻抗，参考阻抗取该题馈线的 Z₀。",
+                "en": "Begin with normalization. The load impedance z is dimensionless and referenced to the feedline Z₀."
+              },
+              "math": "z_L=\\frac{Z_L}{Z_0}",
+              "refs": [
+                "zin"
+              ]
+            },
+            {
+              "text": {
+                "zh": "把复负载的实部和虚部分别除以 Z₀，保留电抗的正号。",
+                "en": "Divide the real and imaginary parts by Z₀ separately, preserving the positive reactance."
+              },
+              "math": "z_L=\\frac{(25+j90)\\,\\Omega}{50\\,\\Omega}=0.5+j1.8",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "在 Smith 阻抗图中找 r=Re(zL) 圆与 x=Im(zL)>0 弧的交点；也可用反射系数验证坐标。",
+                "en": "On the impedance chart intersect the r=Re(zL) circle with the positive-x reactance arc; verify the plotted coordinate with the reflection coefficient."
+              },
+              "math": "\\Gamma_z=\\frac{z_L-1}{z_L+1}",
+              "refs": [
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "将已归一化的复数代入，得到该点的 Γ 平面坐标；它位于上半平面。",
+                "en": "Substitute the normalized complex impedance to obtain its Γ-plane coordinate, in the upper half-plane."
+              },
+              "math": "\\Gamma_z=\\frac{-0.5+j1.8}{1.5+j1.8}\\approx0.453552+j0.655738",
+              "refs": []
+            }
+          ],
+          "answer": "z_L=0.5+j1.8",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "id": "e1-s26-q4-a"
+        },
+        {
+          "label": "b",
+          "points": 1,
+          "prompt": {
+            "zh": "确定并在 Smith 图上标出归一化负载导纳 $y_L$ 的位置，然后读出其数值。",
+            "en": "Determine and plot the location of the normalized load admittance $y_L$ on the Smith chart, then read off its numerical value."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写归一化导纳定义，再代入 Y=1/Z，说明为什么结果是 1/zL。",
+                "en": "Begin with normalized admittance and substitute Y=1/Z to show why it equals 1/zL."
+              },
+              "math": "y_L=\\frac{Y_L}{Y_0}=\\frac{1/Z_L}{1/Z_0}=\\frac{Z_0}{Z_L}=\\frac1{z_L}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "复数取倒数要乘共轭数；分母变成实部平方加虚部平方。",
+                "en": "Take the complex reciprocal by multiplying by the conjugate; the denominator becomes the sum of squared components."
+              },
+              "math": "y_L=\\frac1{0.5+j1.8}=\\frac{0.5-j1.8}{0.5^2+1.8^2}=\\frac{50-j180}{349}\\approx0.143266-j0.515759",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "在同一阻抗网格上读取导纳时，表示坐标应关于图心反转，即旋转 180°。这不是让实际负载的反射改变符号。",
+                "en": "Reading admittance on the same impedance grid requires reversing the displayed point through the center, a 180° rotation; the actual load reflection does not change sign."
+              },
+              "math": "\\Gamma_y=\\frac{y_L-1}{y_L+1}=\\frac{1-z_L}{1+z_L}=-\\Gamma_z",
+              "refs": [
+                "reflection"
+              ]
+            },
+            {
+              "text": {
+                "zh": "因此沿同一个等模圆转到对径点，再读出电导与电纳；代数倒数与图上结果一致。",
+                "en": "Move to the diametrically opposite point on the same magnitude circle and read conductance and susceptance; the algebraic reciprocal verifies the chart."
+              },
+              "math": "y_L=\\frac1{0.5+j1.8}=\\frac{0.5-j1.8}{0.5^2+1.8^2}=\\frac{50-j180}{349}\\approx0.143266-j0.515759",
+              "refs": []
+            }
+          ],
+          "answer": "y_L=0.143266-j0.515759",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "id": "e1-s26-q4-b"
+        },
+        {
+          "label": "c",
+          "points": 3,
+          "prompt": {
+            "zh": "确定直通线的长度 $d$，使其输入导纳的实部与特性导纳 $Y_0=1/Z_0$ 匹配（即 $y_d=1+jA$）。在 Smith 图上展示确定这一长度的全部过程。答案可以用波长表示。",
+            "en": "Determine the length of the through-line $d$ that yields an input admittance whose real part is matched to the characteristic admittance $Y_0=1/Z_0$ (i.e. $y_d=1+jA$). Show all work for how you determined this length on the Smith chart. You may leave your answer in terms of wavelengths."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先从原表输入阻抗式取倒数并归一化，得到向源移动距离 d 后的输入导纳。",
+                "en": "Begin by taking the reciprocal of the crib input-impedance equation and normalizing to obtain admittance a distance d toward the source."
+              },
+              "math": "y_d=\\frac{y_L+jt}{1+jy_Lt},\\qquad t=\\tan(\\beta d),\\quad\\beta=\\frac{2\\pi}{\\lambda}",
+              "refs": [
+                "zin",
+                "wave"
+              ]
+            },
+            {
+              "text": {
+                "zh": "把负载导纳分成 g+jb，将分母写成实部 1−bt 与虚部 gt。",
+                "en": "Write load admittance as g+jb and express the denominator with real part 1−bt and imaginary part gt."
+              },
+              "math": "g=\\frac{50}{349},\\quad b=-\\frac{180}{349},\\quad |y_L|^2=\\frac{100}{349}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "乘分母共轭数，单独取实部。匹配实部要求实际输入电导等于 Y₀，即归一化实部等于 1。",
+                "en": "Multiply by the denominator conjugate and take the real part. Matching conductance to Y₀ requires normalized real part one."
+              },
+              "math": "\\Re(y_d)=\\frac{g(1+t^2)}{(1-bt)^2+(gt)^2}=1",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "展开分母并把右边移到左边，得到可逐项代入的二次方程。",
+                "en": "Expand the denominator and collect terms to obtain the quadratic for substitution."
+              },
+              "math": "(g^2+b^2-g)t^2-2bt+(1-g)=0",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把本题的 g、b 代入并求根；两个根对应 Smith 图与 g=1 圆的两个交点。",
+                "en": "Substitute this load’s g and b and solve. The two roots correspond to the intersections with the g=1 circle on the Smith chart."
+              },
+              "math": "50t^2+360t+299=0\\quad\\Longrightarrow\\quad t=\\frac{-360\\pm\\sqrt{69800}}{100}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "列出两个 t 值，再由 t=tan(2πd/λ) 选 0≤d<λ/2 的分支。",
+                "en": "List both t values, then choose branches satisfying 0≤d<λ/2 using t=tan(2πd/λ)."
+              },
+              "math": "t_1=-6.241969,\\quad t_2=-0.958031",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "反正切的负值要加 π 后再除以 2π；距离按 λ/2 周期重复。图上对应从负载向源顺时针旋转。",
+                "en": "For a negative arctangent add π before dividing by 2π. Distances repeat modulo λ/2; on the chart rotate clockwise toward the source."
+              },
+              "math": "\\frac{d_1}{\\lambda}=\\frac{\\pi+\\arctan(-6.241969)}{2\\pi}=0.275283,\\quad\\frac{d_2}{\\lambda}=0.378411",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两个距离对应的 t 代回输入导纳式，验证实部确为 1，并保留待抵消的虚部。",
+                "en": "Substitute each t back into the admittance formula to verify real part one and retain the susceptance to be cancelled."
+              },
+              "math": "y_{d,1}=\\frac{y_L+j(-6.241969)}{1+jy_L(-6.241969)}\\approx1+j2.641969,\\quad y_{d,2}\\approx1-j2.641969",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "选第一组非负距离作为本页主答案；另一分支仍是有效匹配方案。",
+                "en": "Choose the first nonnegative distance as the primary solution; the other branch is also valid."
+              },
+              "math": "d=0.275283\\lambda,\\qquad y_d=1+j2.641969",
+              "refs": []
+            }
+          ],
+          "answer": "d=0.275283\\lambda,\\qquad y_d=1+j2.641969",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "note": {
+            "zh": "核对：官方图给出 d≈0.271λ、ℓ≈0.305λ、b≈2.82，另一分支写 d≈0.318λ。直接代入给定 zL=0.5+j1.8 后，精确结果为本页数值；另一分支 d=0.378411λ、ℓ=0.192411λ。已用输入导纳方程独立校验。",
+            "en": "Check: the official chart gives d≈0.271λ, ℓ≈0.305λ, b≈2.82 and an alternative d≈0.318λ. Direct substitution of zL=0.5+j1.8 gives the values here; the other exact branch is d=0.378411λ, ℓ=0.192411λ. Both are independently checked with the input-admittance equation."
+          },
+          "figureCaption": {
+            "zh": "按给定负载精确计算的导纳 Smith 图；两组匹配结果在推导中分别核验。",
+            "en": "Admittance Smith chart computed from the stated load; both matching branches are checked in the derivation."
+          },
+          "id": "e1-s26-q4-c",
+          "figure": "smith-e1-s26-q4"
+        },
+        {
+          "label": "d",
+          "points": 2,
+          "prompt": {
+            "zh": "确定完成阻抗匹配所需的开路支节长度 $\\ell$。在 Smith 图上展示确定这一长度的全部过程。答案可以用波长表示。",
+            "en": "Determine the length of the open-circuited stub $\\ell$ that completes the impedance match. Show all work for how you determined this length on the Smith chart. You may leave your answer in terms of wavelengths."
+          },
+          "steps": [
+            {
+              "text": {
+                "zh": "先写原表开路传输线阻抗，再取倒数并用 Y₀=1/Z₀ 归一化。",
+                "en": "Begin with the crib open-line impedance, then invert and normalize with Y₀=1/Z₀."
+              },
+              "math": "Z_s=-jZ_0\\cot(\\beta\\ell),\\qquad y_s=\\frac{1/Z_s}{1/Z_0}=j\\tan(\\beta\\ell)",
+              "refs": [
+                "open"
+              ]
+            },
+            {
+              "text": {
+                "zh": "支节并联时导纳相加，目标是总归一化导纳为 1。若主线为 1+jB，支节必须为 −jB。",
+                "en": "Parallel admittances add and the target total is one. If the main line is 1+jB, the stub must supply −jB."
+              },
+              "math": "y_{\\mathrm{in}}=y_d+y_s=1,\\qquad y_s=1-(1+jB)=-jB",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入 c) 选中分支的电纳，列出需要满足的正切方程。",
+                "en": "Insert the susceptance of the selected branch from c) and write the tangent equation."
+              },
+              "math": "y_s=-j2.641969,\\qquad \\tan(2\\pi\\ell/\\lambda)=-2.641969",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "选最小非负的开路支节长度；正切为负时使用第二象限的电长度。",
+                "en": "Choose the smallest nonnegative open-stub length; a negative tangent requires a second-quadrant electrical length."
+              },
+              "math": "\\beta\\ell=\\pi-\\arctan(2.641969),\\qquad \\frac{\\ell}{\\lambda}=\\frac{\\pi-\\arctan(2.641969)}{2\\pi}=0.307589",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "核对虚部恰好抵消；若改用另一主线交点，必须同时改用配套的支节长度。",
+                "en": "Check exact susceptance cancellation. Choosing the other main-line intersection also requires its corresponding stub length."
+              },
+              "math": "d_2=0.378411\\lambda,\\quad y_{s,2}=+j2.641969,\\quad \\ell_2=0.192411\\lambda",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "本页所选分支的开路支节参数如下。",
+                "en": "The open-stub parameters for the selected branch are:"
+              },
+              "math": "\\ell=0.307589\\lambda,\\qquad y_s=-j2.641969",
+              "refs": []
+            }
+          ],
+          "answer": "\\ell=0.307589\\lambda,\\qquad y_s=-j2.641969",
+          "sourcePage": 8,
+          "solutionPage": 8,
+          "id": "e1-s26-q4-d"
+        }
+      ],
+      "wording": "original",
+      "guide": {
+        "concept": {
+          "zh": "本题考查用 Smith 图完成单支节匹配，重点是并联时应使用导纳。",
+          "en": "This problem constructs a single-stub match on the Smith chart, using admittance for the parallel connection."
+        },
+        "known": {
+          "zh": "负载为 $Z_L=(25+j90)\\,\\Omega$，所有线段均有 $Z_0=50\\,\\Omega$，匹配支节开路。",
+          "en": "The load is $Z_L=(25+j90)\\,\\Omega$, all line sections have $Z_0=50\\,\\Omega$, and the matching stub is open-circuited."
+        },
+        "goal": {
+          "zh": "求归一化阻抗、导纳，以及直通线距离和开路支节长度，并标出 Smith 图上的读数过程。",
+          "en": "Find normalized impedance and admittance, then the through-line distance and open-stub length, showing the Smith-chart readings."
+        },
+        "approach": {
+          "zh": "归一化后先作阻抗到导纳的中心对称转换，再向发生器方向旋转到电导匹配处。此时支节只需补偿电纳，注意两条可行分支与读数方向。",
+          "en": "Normalize, reflect through the chart center to convert impedance to admittance, then rotate toward the generator to match conductance. The stub cancels susceptance; keep track of both branches and the direction of the wavelength scale."
+        }
+      }
+    }
+  ]
+}

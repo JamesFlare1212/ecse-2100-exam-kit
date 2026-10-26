@@ -5,6 +5,7 @@ __pycache__/
 /test-results/
 /playwright-report/
 /artifacts/
+/static/papers/
 
 # Output
 .output

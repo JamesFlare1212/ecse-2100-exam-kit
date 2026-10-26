@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pymupdf
 from PIL import Image, ImageDraw
+from paper_assets import documents as load_documents, papers, asset_source
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -36,9 +37,9 @@ def check_image(page, region=None):
 
 
 def main():
-    documents = json.loads((ROOT / 'src/lib/data/documents.json').read_text())
-    formulas = json.loads((ROOT / 'src/lib/data/formulas.json').read_text())
-    exams = json.loads((ROOT / 'src/lib/data/exams.json').read_text())
+    documents = load_documents()
+    formulas = json.loads((ROOT / 'content/formulas.json').read_text())
+    exams = [paper['exam'] for paper in papers()]
     citations = [formula['source'] for formula in formulas]
     for exam in exams:
         for problem in exam['problems']:
@@ -49,7 +50,7 @@ def main():
             )
     page_count = 0
     for doc_id, entry in documents.items():
-        path = ROOT / 'static' / entry['pdf'].lstrip('/')
+        path = asset_source(entry['pdf'])
         assert hashlib.sha256(path.read_bytes()).hexdigest() == entry['sha256'], doc_id
         with pymupdf.open(path) as doc:
             assert len(doc) == entry['pages'] == len(entry['sizes']), doc_id

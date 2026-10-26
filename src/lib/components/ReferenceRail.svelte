@@ -10,8 +10,8 @@
   import Math from './Math.svelte';
   import FormulaLink from './FormulaLink.svelte';
   import { problemFormulas } from '#lib/catalog';
-  import type { Problem, Locale, SourceRef } from '#lib/types';
-  let {problem,locale,onsource,onlibrary}: {problem:Problem;locale:Locale;onsource:(s:SourceRef)=>void;onlibrary:(kind:string)=>void}=$props();
+  import type { Problem, Locale, SourceRef, SourceDocument } from '#lib/types';
+  let {problem,locale,documents,onsource,onlibrary}: {problem:Problem;locale:Locale;documents:Record<string,SourceDocument>;onsource:(s:SourceRef)=>void;onlibrary:(kind:string)=>void}=$props();
   const formulas=$derived(problemFormulas(problem));
   let tab=$state('formulas');
 </script>
@@ -25,7 +25,7 @@
         {#each formulas as formula,i(formula.id)}
           <section class="rail-formula">
             <div class="rail-formula-number">{String(i+1).padStart(2,'0')} <span>{formula.source.doc==='crib'?'CRIB SHEET':'LECTURE 04'} · P.{formula.source.page}</span></div>
-            <FormulaLink {formula} {locale} {onsource}/>
+            <FormulaLink {documents} {formula} {locale} {onsource}/>
             <div class="rail-equation"><Math tex={formula.math} display/></div>
           </section>
         {/each}

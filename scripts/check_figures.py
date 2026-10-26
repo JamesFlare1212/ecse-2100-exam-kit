@@ -14,7 +14,7 @@ def review(output):
     output.mkdir(parents=True, exist_ok=True)
     results = []
 
-    def inspect(fig, name, dark):
+    def inspect(fig, name, dark, paper):
         figures.prepare_figure(fig)
         fig.canvas.draw()
         renderer = fig.canvas.get_renderer()
@@ -46,21 +46,14 @@ def review(output):
                         path = line.get_path().transformed(line.get_transform())
                         if box.overlaps(path.get_extents()) and path.intersects_bbox(box, filled=False):
                             strokes.append([label.get_text(), 'leader'])
-        key = name + ('-dark' if dark else '')
+        key = paper['name'] + '/' + name + ('-dark' if dark else '')
+        (output/paper['name']).mkdir(exist_ok=True)
         fig.savefig(output/(key+'.png'), bbox_inches='tight', pad_inches=.16, dpi=140)
         results.append({'name': key, 'textCollisions': collisions, 'strokeCollisions': strokes})
         figures.plt.close(fig)
 
-    original_save = figures.save
-    try:
-        figures.save = inspect
-        for dark in [False, True]:
-            figures.setup(dark)
-            figures.solution_figures(dark)
-            colors = (figures.INK, figures.PAPER, figures.MUTED, figures.TEAL, figures.ORANGE)
-            figures.render_question_figures(inspect, dark, colors)
-    finally:
-        figures.save = original_save
+    for dark in [False, True]:
+        figures.render_figures(inspect, dark)
     (output/'report.json').write_text(json.dumps(results, ensure_ascii=False, indent=2)+'\n')
     failures = [item for item in results if item['textCollisions'] or item['strokeCollisions']]
     for item in failures:

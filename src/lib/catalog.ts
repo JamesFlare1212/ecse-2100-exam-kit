@@ -1,19 +1,18 @@
-import examData from './data/exams.json';
-import formulaData from './data/formulas.json';
-import documentData from './data/documents.json';
-import type { Exam, Formula, Problem, SourceDocument, Localized } from './types';
+import formulaData from '../../content/formulas.json';
+import type { ExamIndex, Formula, Problem, SourceDocument, Localized } from './types';
+import { DEFAULT_PROBLEM_ID } from './problem-navigation';
 
-export const exams = examData as unknown as Exam[];
-export const formulas = formulaData as unknown as Formula[];
-export const documents = documentData as unknown as Record<string, SourceDocument>;
+export const formulas = formulaData as Formula[];
 export const formulaById = Object.fromEntries(formulas.map(f => [f.id, f]));
-export const problemEntries = exams.flatMap(exam => exam.problems.map(problem => ({ exam, problem })));
-export const partIds = new Set(problemEntries.flatMap(({problem}) => problem.parts.map(p => p.id)));
-export const problemIds = new Set(problemEntries.map(({problem}) => problem.id));
-export const totalParts = partIds.size;
-export function findProblem(id: string) {
-  return problemEntries.find(p => p.problem.id === id) ?? problemEntries.find(p => p.problem.id === 'e2-s26-q3')!;
+export function createCatalog(exams: ExamIndex[], documents: Record<string, SourceDocument>) {
+  const problemEntries = exams.flatMap(exam => exam.problems.map(problem => ({ exam, problem })));
+  const partIds = new Set(problemEntries.flatMap(({problem}) => problem.parts.map(p => p.id)));
+  const problemIds = new Set(problemEntries.map(({problem}) => problem.id));
+  const findProblem = (id: string) => problemEntries.find(p => p.problem.id === id)
+    ?? problemEntries.find(p => p.problem.id === DEFAULT_PROBLEM_ID) ?? problemEntries[0];
+  return { exams, documents, problemEntries, partIds, problemIds, totalParts: partIds.size, findProblem };
 }
+export type Catalog = ReturnType<typeof createCatalog>;
 export function problemFormulas(problem: Problem) {
   const ids = [...new Set(problem.parts.flatMap(p => p.steps.flatMap(s => s.refs)))];
   return ids.map(id => formulaById[id]).filter(Boolean);

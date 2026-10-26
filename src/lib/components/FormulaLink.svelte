@@ -4,9 +4,8 @@
   import BookOpen from '@lucide/svelte/icons/book-open';
   import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
   import Math from './Math.svelte';
-  import { documents } from '#lib/catalog';
-  import type { Formula, Locale, SourceRef } from '#lib/types';
-  let {formula,locale,onsource,compact = false}: {formula: Formula; locale: Locale; onsource:(s:SourceRef)=>void; compact?:boolean} = $props();
+  import type { Formula, Locale, SourceRef, SourceDocument } from '#lib/types';
+  let {formula,locale,documents,onsource,compact = false}: {formula: Formula; locale: Locale; documents:Record<string,SourceDocument>; onsource:(s:SourceRef)=>void; compact?:boolean} = $props();
 </script>
 <HoverCard.Root openDelay={180} closeDelay={160}>
   <HoverCard.Trigger href={`${documents[formula.source.doc].pdf}#page=${formula.source.page}`} class="formula-link" onclick={(e) => {e.preventDefault(); onsource(formula.source);}} aria-label={`${formula.title[locale]} · ${formula.source.label[locale]}`}>

@@ -1,251 +1,97 @@
-"""Reproducible Matplotlib SVG figures; no screenshot-based replacement drawings.
-
-The SVG fonttype stays 'none' to preserve native vector text. Both color themes
-are generated from the same geometry. Original figures are cropped separately.
-"""
-from pathlib import Path
-import json
-import math
-import cmath
+"""Discover paper-local Matplotlib renderers and generate only their assets."""
+import argparse
 import hashlib
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, Rectangle, FancyArrowPatch, Arc
-from matplotlib.text import Text
-import numpy as np
+import importlib.util
+import json
+from pathlib import Path
+
 import pymupdf
 from PIL import Image
+import plotting
+from plotting import prepare_figure, plt
+from paper_assets import ROOT, papers, documents, asset_source
 
-ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'static/figures'; OUT.mkdir(parents=True,exist_ok=True)
-EXAMS=json.loads((ROOT/'src/lib/data/exams.json').read_text())
-matplotlib.rcParams.update({'svg.fonttype':'none','font.family':'DejaVu Sans','font.size':10,'font.weight':'bold',
-    'mathtext.fontset':'custom','mathtext.rm':'DejaVu Sans:weight=bold',
-    'mathtext.it':'DejaVu Sans:style=oblique:weight=bold','mathtext.bf':'DejaVu Sans:weight=bold',
-    'mathtext.bfit':'DejaVu Sans:style=oblique:weight=bold','mathtext.sf':'DejaVu Sans:weight=bold',
-    'mathtext.tt':'DejaVu Sans Mono:weight=bold','mathtext.cal':'DejaVu Sans:style=oblique:weight=bold',
-    'axes.spines.top':False,'axes.spines.right':False,'axes.titleweight':'bold','axes.labelweight':'bold',
-    'axes.titlesize':11,'axes.labelsize':10,'savefig.transparent':True,'svg.hashsalt':'ecse2100-fieldnotes'})
-FIGURE_TEXT_SCALE=1.3
-INK='#263746'; MUTED='#667581'; GRID='#dce3e4'; ORANGE='#b65c3b'; TEAL='#187c78'; PAPER='#ffffff'; FILL='#e8f2ef'
-generated=set()
-def setup(dark):
-    global INK,MUTED,GRID,ORANGE,TEAL,PAPER,FILL
-    INK='#dbe5e9' if dark else '#263746'; MUTED='#9baeb8' if dark else '#667581'
-    GRID='#36464d' if dark else '#dce3e4'; ORANGE='#f0a075' if dark else '#b65c3b'; TEAL='#70c9bb' if dark else '#187c78'
-    PAPER='#18252c' if dark else '#ffffff'; FILL='#213e3c' if dark else '#e8f2ef'
-    matplotlib.rcParams.update({'text.color':INK,'axes.labelcolor':MUTED,'xtick.color':MUTED,'ytick.color':MUTED,'axes.edgecolor':GRID,'grid.color':GRID,'axes.titlecolor':INK})
-def prepare_figure(fig):
-    # Apply to every label, tick and legend; mathtext uses matching bold fonts.
-    for artist in fig.findobj(match=Text):
-        if artist.get_text():
-            artist.set_fontsize(max(10.4,artist.get_fontsize()*FIGURE_TEXT_SCALE))
-            artist.set_fontweight('bold')
-            artist.set_zorder(max(20,artist.get_zorder()))
-    if len(fig.axes)>1 and any(ax.axison for ax in fig.axes):
-        fig.tight_layout()
-def save(fig,name,dark):
-    prepare_figure(fig)
-    fig.savefig(OUT/rf'{name}{"-dark" if dark else ""}.svg',bbox_inches='tight',pad_inches=.16,metadata={'Date':None,'Creator':'Matplotlib · ECSE 2100 Fieldnotes'})
-    plt.close(fig); generated.add(name)
-def label(ax,x,y,text,**kw): ax.text(x,y,text,color=kw.pop('color',INK),**kw)
-def line(ax,x,y,**kw): ax.plot(x,y,color=kw.pop('color',INK),lw=kw.pop('lw',1.5),**kw)
-def arrow(ax,a,b,text='',color=None,offset=(0,0)):
-    ax.add_patch(FancyArrowPatch(a,b,arrowstyle='-|>',mutation_scale=11,color=color or ORANGE,lw=1.4))
-    if text: label(ax,(a[0]+b[0])/2+offset[0],(a[1]+b[1])/2+offset[1],text,color=color or ORANGE,fontsize=10,ha='center')
-def canvas(ax,xlim=(-.2,9),ylim=(-.6,3)):
-    ax.set_xlim(*xlim); ax.set_ylim(*ylim); ax.axis('off')
-def resistor(ax,a,b,text):
-    a=np.array(a); b=np.array(b); direction=(b-a); normal=np.array([-direction[1],direction[0]])/np.linalg.norm(direction)
-    points=[a]
-    for i in range(1,10): points.append(a+direction*i/10+normal*(.09 if i%2 else -.09))
-    points.append(b); xy=np.array(points); line(ax,xy[:,0],xy[:,1]); mid=(a+b)/2
-    label(ax,mid[0]+(.20 if abs(direction[1]) else 0),mid[1]+(.0 if abs(direction[1]) else .24),text,ha='left' if abs(direction[1]) else 'center',va='center',fontsize=9)
-def tidy(ax):
-    ax.grid(True,alpha=.65,lw=.6); ax.set_axisbelow(True); ax.spines['left'].set_color(GRID);ax.spines['bottom'].set_color(GRID)
-    ax.tick_params(labelsize=8)
-def bounce(ax,values,td=1,unit='Td',measurements=(),coefficients=None):
-    ax.set_xlim(-1.85,2.35); ax.set_ylim(4.6,-.65);ax.axis('off')
-    line(ax,[0,0],[0,4.1],color=GRID,lw=2);line(ax,[1,1],[0,4.1],color=GRID,lw=2)
-    label(ax,0,-.38,'Source',ha='center',color=MUTED,fontsize=10);label(ax,1,-.38,'Load',ha='center',color=MUTED,fontsize=10)
-    for i,v in enumerate(values):
-        # A zero-amplitude reflection is absorption, not another traveling ray.
-        if abs(v)<1e-12:continue
-        start,end=((0,i),(1,i+1)) if i%2==0 else ((1,i),(0,i+1))
-        arrow(ax,start,end,color=ORANGE if i%2==0 else TEAL)
-        direction='+' if i%2==0 else '-';order=i//2+1
-        label(ax,.5,i+.40,rf'$V_{order}^{direction}={v:g}\,\mathrm{{V}}$',ha='center',va='center',fontsize=10,bbox={'facecolor':PAPER,'edgecolor':'none','pad':2})
-    for i in range(5): label(ax,-1.70,i,rf'{i*td:g} {unit}',ha='right',va='center',fontsize=9,color=MUTED)
-    for end,time,tex in measurements:
-        artist=ax.text(-.12 if end==0 else 1.12,time,tex,ha='right' if end==0 else 'left',va='center',fontsize=11,color=INK)
-        artist.set_gid('bounce-measured-'+str(end)+'-'+str(time))
-    if coefficients:
-        for end,tex in enumerate(coefficients):
-            label(ax,end,4.43,tex,ha='center',va='center',fontsize=10,color=MUTED)
-def loadsteps(ax,times,vals,xlabel):
-    ax.step(times,vals,where='post',color=ORANGE,lw=2.2)
-    ax.fill_between(times,vals,step='post',alpha=.08,color=ORANGE)
-    ax.set_xlabel(xlabel); ax.set_ylabel('$V_L$ (V)');ax.margins(y=.22);tidy(ax)
-    for t,v in list(zip(times,vals))[1:-1]:
-        ax.scatter([t],[v],s=20,color=ORANGE,zorder=3);ax.annotate(rf'{v:g} V',(t,v),xytext=(7,8),textcoords='offset points',fontsize=9,color=INK)
-def smith(ax,z,admittance=False):
-    theta=np.linspace(0,2*np.pi,700); line(ax,np.cos(theta),np.sin(theta),color=GRID,lw=1)
-    for r in [.2,.5,1,2,5]:
-        xs=np.linspace(-35,35,1600); zz=r+1j*xs; G=(zz-1)/(zz+1); line(ax,G.real,G.imag,color=GRID,lw=.55)
-    for x in [.2,.5,1,2,5]:
-        for sign in [-1,1]:
-            zz=np.linspace(0,50,1000)+1j*sign*x; G=(zz-1)/(zz+1);line(ax,G.real,G.imag,color=GRID,lw=.55)
-    line(ax,[-1,1],[0,0],color=GRID,lw=.7)
-    Gz=(z-1)/(z+1); G=-Gz if admittance else Gz; radius=abs(G)
-    line(ax,radius*np.cos(theta),radius*np.sin(theta),color=TEAL,lw=1.3,ls='--')
-    ax.scatter([G.real],[G.imag],color=ORANGE,s=38,zorder=5)
-    ax.annotate('$y_L$' if admittance else '$z_L$',(G.real,G.imag),xytext=(9,9) if admittance else (-22,-40),
-                textcoords='offset points',ha='left' if admittance else 'right',fontsize=10,color=ORANGE)
-    if admittance:
-        ax.scatter([Gz.real],[Gz.imag],marker='^',s=27,color=MUTED,zorder=5)
-        ax.annotate('$z_L$',(Gz.real,Gz.imag),xytext=(7,7),textcoords='offset points',fontsize=9,color=MUTED)
-        line(ax,[Gz.real,G.real],[Gz.imag,G.imag],color=GRID,lw=.8,ls=':')
-        y=1/z; g,b=y.real,y.imag; A=abs(y)**2-g;B=-2*b;C=1-g
-        branches=[]
-        for sign in [-1,1]:
-            t=(-B+sign*math.sqrt(B*B-4*A*C))/(2*A);yd=(y+1j*t)/(1+1j*y*t);gd=(yd-1)/(yd+1)
-            distance=(math.atan(t)%math.pi)/(2*math.pi);ell=(math.atan(-yd.imag)%math.pi)/(2*math.pi)
-            branches.append((distance,ell,gd,yd))
-            ax.scatter([gd.real],[gd.imag],s=30,color=TEAL,zorder=5)
-            if abs(yd.imag)>2:
-                ax.annotate('$1%+gj$'%yd.imag,(gd.real,gd.imag),xytext=(-.56,.96 if gd.imag>0 else -.98),
-                            textcoords='data',ha='center',fontsize=8,color=TEAL,
-                            arrowprops={'arrowstyle':'-','color':TEAL,'lw':.7})
+
+def renderer(paper):
+    path = paper['directory'] / 'generate_figures.py'
+    spec = importlib.util.spec_from_file_location('figures_' + paper['name'], path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def render_figures(save, dark, selected=None):
+    for paper in papers():
+        if selected is None or paper['name'] == selected:
+            renderer(paper).render_figures(lambda fig, name, theme: save(fig, name, theme, paper), dark)
+
+
+def generate_paper(directory):
+    directory = Path(directory).resolve()
+    paper = next(p for p in papers() if p['directory'] == directory)
+    output = directory / 'assets/figures'
+    output.mkdir(parents=True, exist_ok=True)
+    generated = set()
+
+    def save(fig, name, dark, owner):
+        if Path(name).name != name:
+            raise ValueError(f'Invalid figure name: {name}')
+        prepare_figure(fig)
+        fig.savefig(output / f'{name}{"-dark" if dark else ""}.svg',
+                    bbox_inches='tight', pad_inches=.16,
+                    metadata={'Date': None, 'Creator': 'Matplotlib · ECSE 2100 Fieldnotes'})
+        plt.close(fig)
+        generated.add(name)
+
+    for dark in [False, True]:
+        render_figures(save, dark, paper['name'])
+
+    source_path = directory / 'figure-sources.json'
+    sources = json.loads(source_path.read_text())
+    registry = documents()
+    crops = directory / 'assets/original-figures'
+    crops.mkdir(parents=True, exist_ok=True)
+    for name, source in sources['figures'].items():
+        x, y, width, height = source['region']
+        region = [max(0, x-.002), max(0, y-.002), width+.004, height+.004]
+        with pymupdf.open(asset_source(registry[source['doc']]['pdf'])) as doc:
+            page = doc[source['page']-1]
+            size = page.rect
+            panels = []
+            for x, y, width, height in sources['panels'].get(name, [region]):
+                rectangle = pymupdf.Rect(x*size.width, y*size.height,
+                                         (x+width)*size.width, (y+height)*size.height)
+                pix = page.get_pixmap(matrix=pymupdf.Matrix(2, 2), clip=rectangle, alpha=False)
+                panels.append(Image.frombytes('RGB', (pix.width, pix.height), pix.samples))
+            if len(panels) == 1:
+                original = panels[0]
             else:
-                ax.annotate('$1%+gj$'%yd.imag,(gd.real,gd.imag),xytext=(-70 if gd.real>.3 else 5,12 if gd.imag>0 else -18),textcoords='offset points',fontsize=8,color=TEAL)
-        distance,ell,gd,yd=min(branches,key=lambda item:item[0]);a0=cmath.phase(G);a1=a0-4*math.pi*distance
-        arc=np.linspace(a0,a1,160);line(ax,radius*np.cos(arc),radius*np.sin(arc),color=ORANGE,lw=1.5)
-        arrow(ax,(radius*math.cos(arc[-12]),radius*math.sin(arc[-12])),(gd.real,gd.imag),color=ORANGE)
-        ys=-1j*yd.imag;gs=(ys-1)/(ys+1);ax.scatter([gs.real],[gs.imag],s=25,facecolors=PAPER,edgecolors=ORANGE,zorder=5)
-        ax.annotate('$y_s$',(gs.real,gs.imag),xytext=(6,-14),textcoords='offset points',fontsize=8,color=ORANGE)
-        label(ax,0,-1.27,rf'$d_1={distance:.4f}\lambda,\quad\ell_1={ell:.4f}\lambda$',ha='center',fontsize=8,color=MUTED)
-    else:
-        for sign,name in [(-1,'$R_{min}$'),(1,'$R_{max}$')]:
-            ax.scatter([sign*radius],[0],s=28,color=TEAL,zorder=5);ax.annotate(name,(sign*radius,0),xytext=(-10,-18),textcoords='offset points',fontsize=8,color=TEAL)
-        distance=(math.pi+cmath.phase(G))/(4*math.pi);arc=np.linspace(cmath.phase(G),-math.pi,160)
-        line(ax,radius*np.cos(arc),radius*np.sin(arc),color=ORANGE,lw=1.5)
-        arrow(ax,(radius*math.cos(arc[-12]),radius*math.sin(arc[-12])),(-radius,0),color=ORANGE)
-        label(ax,0,-1.27,rf'$d_1={distance:.4f}\lambda,\quad d_2=d_1+\lambda/4$',ha='center',fontsize=8,color=MUTED)
-    ax.scatter([0],[0],s=15,color=MUTED);ax.set_aspect('equal');ax.axis('off');ax.set_xlim(-1.15,1.17);ax.set_ylim(-1.12,1.12)
-    ax.set_title('Admittance Smith chart' if admittance else 'Impedance Smith chart',fontsize=10,pad=4)
-def sphere(ax,selected=None):
-    ax.set_aspect('equal');ax.axis('off');ax.set_xlim(-4.35,4.55);ax.set_ylim(-3.45,3.25)
-    radii=[.6,1.5,2.4]
-    selected=0 if selected is None else selected
-    R=radii[selected]
-    for radius,fill,color,key in [(1,FILL,TEAL,'a'),(2,'none',INK,'b'),(R,'none',ORANGE,'R')]:
-        circle=Circle((0,0),radius,fc=fill,ec=color,lw=2 if key=='b' else 1.5,ls=(0,(5,3)) if key=='R' else '-')
-        circle.set_gid('sphere-boundary-'+key);ax.add_patch(circle)
-    def caption(key,x,y,tex,color,ha='left'):
-        artist=ax.text(x,y,tex,color=color,fontsize=12,ha=ha,va='center')
-        artist.set_gid('sphere-label-'+key)
-    def callout(key,tex,anchor,y,color,side=1):
-        # Keep labels in clear gutters; the dot identifies the intended region.
-        line(ax,[anchor[0],side*2.83,side*3.03],[anchor[1],y,y],color=MUTED,lw=.65)
-        ax.scatter(*anchor,s=8,color=color,zorder=6)
-        caption(key,side*3.2,y,tex,color,ha='left' if side>0 else 'right')
-    # All actual radius arrows start at O and end on their own boundary.
-    for key,radius,angle,y,color,tex in [
-        ('a',1,.34,.50,TEAL,'$a$'),('b',2,1.18,1.8,INK,'$b$'),
-        ('R',R,-.74,-1.20,ORANGE,rf'$R\;(S_{selected+1})$')]:
-        endpoint=radius*np.array([math.cos(angle),math.sin(angle)])
-        patch=FancyArrowPatch((0,0),endpoint,arrowstyle='-|>',mutation_scale=12,shrinkA=0,shrinkB=0,color=color,lw=1.25,zorder=8)
-        patch.set_gid('sphere-radius-'+key);ax.add_patch(patch)
-        callout(key,tex,endpoint,y,color)
-    ax.scatter(0,0,s=12,color=INK,zorder=9)
-    callout('density',r'$\rho_0$',(-.40,.20),1.45,TEAL,-1)
-    callout('permittivity',r'$\varepsilon_0$',(-1.35,.30),.10,MUTED,-1)
-    callout('shell-charge',r'$\rho_{sb}$',(-1.6,-1.2),-1.25,INK,-1)
-    normal=np.array([math.cos(2.6),math.sin(2.6)])
-    patch=FancyArrowPatch(R*normal,(R+.35)*normal,arrowstyle='-|>',mutation_scale=12,shrinkA=0,shrinkB=0,color=ORANGE,lw=1.2,zorder=8)
-    patch.set_gid('sphere-outward-normal');ax.add_patch(patch)
-    callout('normal',r'$\hat{\mathbf{r}}$',(R+.175)*normal,2.65,ORANGE,-1)
-    caption('charge',-2.6,-3.12,'$Q_b=-Q_a$',MUTED)
-    caption('domain',.4,-3.12,['$0<R<a$','$a<R<b$','$R>b$'][selected],ORANGE)
-def images(ax,fieldlines=False):
-    ax.set_aspect('equal');ax.set_xlim(-3.1,3.1);ax.set_ylim(-3.05,3.05);ax.axis('off')
-    ax.axhspan(-2.1,0,color=GRID,alpha=.20);line(ax,[-2.9,2.9],[0,0],lw=2);label(ax,3.05,0,'$z=0$',va='center',fontsize=9,color=MUTED)
-    charges=[(-1,1,-1),(1,1,1),(-1,-1,1),(1,-1,-1)]
-    if fieldlines:
-        xx=np.linspace(-2.8,2.8,180);zz=np.linspace(-2,2,160);X,Z=np.meshgrid(xx,zz);Ex=np.zeros_like(X);Ez=np.zeros_like(X);mask=np.zeros_like(X,dtype=bool)
-        for x,z,q in charges:
-            R2=(X-x)**2+(Z-z)**2;mask|=R2<.13**2;den=np.maximum(R2,.001)**1.5;Ex+=q*(X-x)/den;Ez+=q*(Z-z)/den
-        Ex=np.ma.array(Ex,mask=mask);Ez=np.ma.array(Ez,mask=mask)
-        ax.streamplot(xx,zz,Ex,Ez,color=TEAL,density=.9,linewidth=.7,arrowsize=.8)
-    for x,z,q in charges:
-        color=ORANGE if q>0 else TEAL
-        ax.add_patch(Circle((x,z),.13,fc=PAPER,ec=color,lw=1.7,ls='--' if z<0 else '-'))
-        label(ax,x,z,'+' if q>0 else '−',ha='center',va='center',color=color,fontsize=13)
-        if not fieldlines:
-            label_x=1.5*x
-            line(ax,[x,label_x],[z+(.18 if z>0 else -.18),z+(.65 if z>0 else -.57)],color=MUTED,lw=.6)
-            label(ax,label_x,z+(.85 if z>0 else -1.15),('−q' if q<0 else '+q')+'\n'+('$(x_0,0,' if x>0 else '$(-x_0,0,')+('z_0)$' if z>0 else '-z_0)$'),ha='center',fontsize=9)
-    label(ax,-2.9,2.75,'Real charges',color=MUTED,fontsize=9);label(ax,-2.9,-2.90,'Image system only',color=MUTED,fontsize=9)
-
-def solution_figures(dark):
-    # Analytical figures live in revealed solutions, never in the original question.
-    fig,ax=plt.subplots(figsize=(7.2,5.5))
-    bounce(ax,[1,.6,.2,.12],10,'ns',[(0,0,r'$V_{\rm in}=1.00\,\mathrm{V}$'),(1,1,r'$V_L=1.60\,\mathrm{V}$'),(0,2,r'$V_{\rm in}=0.80\,\mathrm{V}$'),(1,3,r'$V_L=0.32\,\mathrm{V}$')],(r'$\Gamma_g=1/3$',r'$\Gamma_L=0.6$'));save(fig,'bounce-f25',dark)
-    fig,ax=plt.subplots(figsize=(7.2,5.5))
-    bounce(ax,[6.25,3.125,-.78125,-.390625],50,'ps',[(0,0,r'$V_{\rm in}=6.25\,\mathrm{V}$'),(1,1,r'$V_L=9.375\,\mathrm{V}$'),(0,2,r'$V_{\rm in}=8.59375\,\mathrm{V}$'),(1,3,r'$V_L=8.203125\,\mathrm{V}$')],(r'$\Gamma_g=-0.25$',r'$\Gamma_L=0.5$'));save(fig,'bounce-s26',dark)
-    fig,ax=plt.subplots(figsize=(6.8,2.8));loadsteps(ax,[0,50,150,200],[0,9.375,8.203125,8.203125],'$t$ (ps)');save(fig,'load-step-s26',dark)
-    fig,ax=plt.subplots(figsize=(7.2,5.5))
-    bounce(ax,[6,-3,0,0],250,'ns',[(0,0,r'$V_{\rm in}=6\,\mathrm{V}$'),(1,1,r'$V_L=3\,\mathrm{V}$'),(0,2,r'$V_{\rm in}=3\,\mathrm{V}$')],(r'$\Gamma_g=0$',r'$\Gamma_L=-0.5$'))
-    label(ax,.5,2.85,r'$V_2^+=V_2^-=0$',ha='center',fontsize=11,color=MUTED);save(fig,'bounce-f26',dark)
-    fig,ax=plt.subplots(figsize=(7,2.7));x=np.linspace(-1,0,500);ax.plot(x,np.abs(5*np.exp(-2j*np.pi*x)+3*np.exp(2j*np.pi*x)),color=ORANGE,lw=2);ax.set_xlabel('$z$ (m)');ax.set_ylabel('Voltage envelope (V)');ax.set_yticks([2,5,8]);tidy(ax);fig.tight_layout();save(fig,'standing-damage',dark)
-    for selected,name in enumerate(['sphere-inner','sphere-middle','sphere-outer']):
-        fig,ax=plt.subplots(figsize=(7.2,5.5));sphere(ax,selected);save(fig,name,dark)
-    for name,z,admittance in [('e1-f25-q4',2+1j,True),('e1-s26-q4',.5+1.8j,True),('e1-f26-q4',3-1j,False)]:
-        fig,ax=plt.subplots(figsize=(5.5,5.5));smith(ax,z,admittance);save(fig,'smith-'+name,dark)
-    for name,stream in [('images-geometry',False),('images-fieldlines',True)]:
-        fig,ax=plt.subplots(figsize=(6.7,4.3));images(ax,stream);save(fig,name,dark)
-
-from question_figures import render_question_figures
-import sys
-sys.path.insert(0,str(ROOT/'content'))
-from source_figures import SOURCE_FIGURES, SOURCE_PANELS, figure_source
-
-def main():
-    for dark in [False,True]:
-        setup(dark)
-        solution_figures(dark)
-        render_question_figures(save,dark,(INK,PAPER,MUTED,TEAL,ORANGE))
-
-    # Preserve the actual original figure region alongside each SVG recreation.
-    original_dir=ROOT/'static/original-figures';original_dir.mkdir(parents=True,exist_ok=True)
-    for name in SOURCE_FIGURES:
-        src=figure_source(name);doc=pymupdf.open(ROOT/rf'static/sources/{src["doc"]}.pdf');p=doc[src['page']-1];r=p.rect
-        panels=[]
-        for x,y,w,h in SOURCE_PANELS.get(name,[src['region']]):
-            rect=pymupdf.Rect(x*r.width,y*r.height,(x+w)*r.width,(y+h)*r.height);pix=p.get_pixmap(matrix=pymupdf.Matrix(2,2),clip=rect,alpha=False)
-            panels.append(Image.frombytes('RGB',(pix.width,pix.height),pix.samples))
-        if len(panels)==1:
-            original=panels[0]
-        else:
-            original=Image.new('RGB',(max(im.width for im in panels),sum(im.height for im in panels)+24*(len(panels)-1)),'white')
-            top=0
-            for panel in panels:original.paste(panel,((original.width-panel.width)//2,top));top+=panel.height+24
-        original.save(original_dir/rf'{name}.webp','WEBP',quality=93)
-        doc.close()
-    (OUT/'manifest.json').write_text(json.dumps({
-        'generator':'scripts/generate_figures.py',
-        'matplotlib':matplotlib.__version__,
-        'scriptSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        'questionScriptSha256':hashlib.sha256((ROOT/'scripts/question_figures.py').read_bytes()).hexdigest(),
-        'svgFonttype':'none',
-        'textScale':FIGURE_TEXT_SCALE,
-        'textWeight':'bold',
-        'questionFigures':sorted(SOURCE_FIGURES),
-        'perspectiveFigures':['e2-f25-q1','e2-f25-q3','e2-s26-q1','e2-s26-q3'],
-        'figures':sorted(generated)},indent=2)+'\n')
-    print(rf'Generated {len(generated)} figures in two themes and {len(SOURCE_FIGURES)} original figure crops.')
+                original = Image.new('RGB', (max(im.width for im in panels),
+                    sum(im.height for im in panels)+24*(len(panels)-1)), 'white')
+                top = 0
+                for panel in panels:
+                    original.paste(panel, ((original.width-panel.width)//2, top))
+                    top += panel.height+24
+            original.save(crops / f'{name}.webp', 'WEBP', quality=93)
+    hashes = {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in [directory/'generate_figures.py', source_path,
+                           ROOT/'scripts/plotting.py', ROOT/'scripts/question_primitives.py']}
+    (output/'manifest.json').write_text(json.dumps({
+        'paper': paper['name'], 'matplotlib': plotting.matplotlib.__version__,
+        'generator': str((directory/'generate_figures.py').relative_to(ROOT)),
+        'sourceSha256': hashes, 'svgFonttype': 'none',
+        'textScale': plotting.FIGURE_TEXT_SCALE, 'textWeight': 'bold',
+        'questionFigures': sorted(sources['figures']), 'figures': sorted(generated),
+    }, indent=2)+'\n')
+    print(f'{paper["name"]}: generated {len(generated)} figures in both themes and {len(sources["figures"])} crops.')
 
 
-if __name__=='__main__':
-    main()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--paper', help='Paper folder name, for example exam1_f26')
+    args = parser.parse_args()
+    selected = [paper for paper in papers() if args.paper is None or paper['name'] == args.paper]
+    if not selected:
+        parser.error('No matching paper')
+    for paper in selected:
+        generate_paper(paper['directory'])

@@ -1,13 +1,16 @@
-import { partIds, problemIds } from './catalog';
+import type { Catalog } from './catalog';
 import type { Locale } from './types';
+import { DEFAULT_PROBLEM_ID } from './problem-navigation';
 
 export const STORAGE_KEY = 'ecse2100-fieldnotes-v1';
 export type Mode = 'study' | 'practice';
+const problemRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*$/;
+const partRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*-[a-z0-9]+$/;
 export class StudyState {
   locale = $state<Locale>('zh');
   theme = $state<'light' | 'dark' | 'system'>('system');
   mode = $state<Mode>('study');
-  selected = $state('e2-s26-q3');
+  selected = $state(DEFAULT_PROBLEM_ID);
   navigationOpen = $state(true);
   referencesOpen = $state(true);
   completed = $state<Record<string, boolean>>({});
@@ -18,8 +21,14 @@ export class StudyState {
   ready = $state(false);
   storageError = $state(false);
 
+  constructor(private readonly getCatalog: () => Catalog, selected = DEFAULT_PROBLEM_ID) {
+    this.selected = selected;
+  }
+  get catalog() { return this.getCatalog(); }
+
   restore(raw?: string | null) {
     try {
+      const { problemIds } = this.catalog;
       const data = JSON.parse(raw ?? localStorage.getItem(STORAGE_KEY) ?? '{}');
       if (data.version !== 1) return;
       if (data.locale === 'zh' || data.locale === 'en') this.locale = data.locale;
@@ -28,18 +37,19 @@ export class StudyState {
       if (problemIds.has(data.selected)) this.selected = data.selected;
       if (typeof data.sidebars?.navigation === 'boolean') this.navigationOpen = data.sidebars.navigation;
       if (typeof data.sidebars?.references === 'boolean') this.referencesOpen = data.sidebars.references;
-      const booleans = (value: unknown, valid: Set<string>) => {
+      // Keep records for unplugged papers so putting them back restores progress.
+      const booleans = (value: unknown, valid: RegExp) => {
         if (!value || typeof value !== 'object') return {};
-        return Object.fromEntries(Object.entries(value).filter(([key,v]) => valid.has(key) && v === true));
+        return Object.fromEntries(Object.entries(value).filter(([key,v]) => valid.test(key) && v === true));
       };
-      this.completed = booleans(data.completed, partIds);
-      this.bookmarks = booleans(data.bookmarks, problemIds);
+      this.completed = booleans(data.completed, partRecord);
+      this.bookmarks = booleans(data.bookmarks, problemRecord);
       if (data.notes && typeof data.notes === 'object') {
         this.legacyNotes = Object.fromEntries(Object.entries(data.notes).filter(([key,value]) =>
-          (partIds.has(key) || problemIds.has(key)) && typeof value === 'string').map(([key,value]) => [key, (value as string).slice(0,20000)]));
+          (partRecord.test(key) || problemRecord.test(key)) && typeof value === 'string').map(([key,value]) => [key, (value as string).slice(0,20000)]));
       }
       if (data.revealed && typeof data.revealed === 'object') {
-        this.revealed = Object.fromEntries(Object.entries(data.revealed).filter(([key,value]) => partIds.has(key) && Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 20).map(([key,value])=>[key,Number(value)]));
+        this.revealed = Object.fromEntries(Object.entries(data.revealed).filter(([key,value]) => partRecord.test(key) && Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 20).map(([key,value])=>[key,Number(value)]));
       }
     } catch { this.storageError = true; }
   }
