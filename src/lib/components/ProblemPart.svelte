@@ -8,9 +8,11 @@
   import FileText from '@lucide/svelte/icons/file-text';
   import Math from './Math.svelte';
   import RichText from './RichText.svelte';
+  import ReferencedText from './ReferencedText.svelte';
   import FormulaLink from './FormulaLink.svelte';
   import Figure from './Figure.svelte';
   import { formulaById } from '#lib/catalog';
+  import { formulaReferences } from '../../../content/text';
   import { conclusionMath } from '#lib/answer-math';
   import type { Part, SourceRef, ExamInfo } from '#lib/types';
   import type { StudyState } from '#lib/study.svelte';
@@ -25,19 +27,19 @@
   <Accordion.Content class="part-content">
       <div class="solution-steps">
         {#each part.steps as step,i(i)}
+          {@const inlineRefs = step.text ? formulaReferences(step.text[study.locale]) : []}
+          {@const remainingRefs = step.refs.filter(id=>!inlineRefs.includes(id))}
           <div class="solution-step" data-answer={i===part.steps.length-1?part.id:undefined}>
             <div class="step-content">
-              {#if step.text}<p class="solution-annotation"><RichText text={step.text[study.locale]}/></p>{/if}
-              <div class="derivation-line">
-                <div class="derivation-equations">
-                  {#if i===part.steps.length-1}
-                    {#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}
-                    <Math tex={conclusion.result} display/>
-                  {:else}
-                    <Math tex={step.math} display/>
-                  {/if}
-                </div>
-                {#if step.refs.length}<div class="equation-references" aria-label={study.locale==='zh'?'本式来源':'Equation sources'}>{#each step.refs as id(id)}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} compact/>{/each}</div>{/if}
+              {#if step.text}<p class="solution-annotation" data-authored-annotation><ReferencedText text={step.text[study.locale]} locale={study.locale} documents={study.catalog.documents} {onsource}/></p>{/if}
+              {#if remainingRefs.length}<p class="solution-annotation">{study.locale==='zh'?'使用':'Use'} {#each remainingRefs as id,i(id)}{#if i}{study.locale==='zh'?'、':', '}{/if}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} inline/>{/each}{study.locale==='zh'?'：':':'}</p>{/if}
+              <div class="derivation-equations">
+                {#if i===part.steps.length-1}
+                  {#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}
+                  <Math tex={conclusion.result} display/>
+                {:else}
+                  <Math tex={step.math} display/>
+                {/if}
               </div>
               {#if i===part.steps.length-1&&part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}
             </div>

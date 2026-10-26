@@ -1,7 +1,5 @@
-import { fromMarkdown } from 'mdast-util-from-markdown';
-import { math } from 'micromark-extension-math';
-import { mathFromMarkdown } from 'mdast-util-math';
 import { parseDocument } from 'yaml';
+import { parseText as markdown, formulaReferences } from './text';
 import type { Localized, Part, Problem, ProblemGuide, Step } from './types';
 
 export type PartMetadata = Omit<Part, 'prompt' | 'steps' | 'answer' | 'answerText' | 'note'>;
@@ -17,10 +15,6 @@ interface Section {
   end: number;
   children: Section[];
 }
-
-const markdown = (source: string) => fromMarkdown(source, {
-  extensions: [math()], mdastExtensions: [mathFromMarkdown()],
-});
 
 /** Read ordinary YAML frontmatter; question prose and equations live in the body. */
 export function readQuestionMarkdown(source: string, file = 'question.md'): Problem {
@@ -93,10 +87,22 @@ export function parseQuestionBody(metadata: unknown, body: string, file = 'quest
   function step(section: Section): Step {
     branch(section, ['Equation'], ['English', '中文', 'References']);
     const annotated = section.children.some(entry => entry.name === 'English' || entry.name === '中文');
+    const text = annotated ? { en: leaf(child(section, 'English')), zh: leaf(child(section, '中文')) } : undefined;
+    let inlineRefs: string[] = [];
+    if (text) {
+      let translated: string[];
+      try {
+        inlineRefs = formulaReferences(text.en);
+        translated = formulaReferences(text.zh);
+      } catch (error) {
+        fail(section, error instanceof Error ? error.message : String(error));
+      }
+      if (inlineRefs.toSorted().join(',') !== translated.toSorted().join(',')) fail(section, 'formula references must match in both languages');
+    }
     return {
-      ...(annotated ? { text: { en: leaf(child(section, 'English')), zh: leaf(child(section, '中文')) } } : {}),
+      ...(text ? { text } : {}),
       math: equation(child(section, 'Equation')),
-      refs: section.children.some(entry => entry.name === 'References') ? references(child(section, 'References')) : [],
+      refs: [...new Set([...inlineRefs, ...(section.children.some(entry => entry.name === 'References') ? references(child(section, 'References')) : [])])],
     };
   }
   if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) fail(root, 'expected a frontmatter object');

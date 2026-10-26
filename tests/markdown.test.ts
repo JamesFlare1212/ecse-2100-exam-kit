@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { parseQuestionBody, readQuestionMarkdown } from '../content/markdown';
 import { renderText } from '../src/lib/math';
 import { conclusionMath } from '../src/lib/answer-math';
+import { formulaReferences, hasFormulaReference, parseText } from '../content/text';
 
 const source = readFileSync(resolve(import.meta.dir, '../content/exam1_f26/questions/q1.md'), 'utf8');
 
@@ -28,7 +29,7 @@ describe('Markdown question articles', () => {
   test('allows an equation without compulsory narration or an arbitrary step count', () => {
     const changed = source
       .replace(/### Step 1\n[\s\S]*?#### Equation/, '### Step 1\n\n#### Equation')
-      .replace(/### Step 2\n[\s\S]*?(?=### Answer\n)/, '');
+      .replace(/### Step 2\n[\s\S]*?(?=### Answer\n)/, '#### References\n\n- [lossy-wave](formula:lossy-wave)\n\n');
     const part = readQuestionMarkdown(changed).parts[0];
     expect(part.steps).toHaveLength(1);
     expect(part.steps[0].text).toBeUndefined();
@@ -39,6 +40,19 @@ describe('Markdown question articles', () => {
   test('still requires both translations when an annotation is supplied', () => {
     const changed = source.replace(/(### Step 1\n[\s\S]*?)#### 中文[\s\S]*?(?=#### Equation)/, '$1');
     expect(() => readQuestionMarkdown(changed)).toThrow('missing section 中文');
+  });
+
+  test('derives source references from prose links, including formatted labels, while ignoring code and math', () => {
+    const prose = '**Use [Gauss $E$](formula:gauss)** and [displacement](formula:constitutive). '
+      + '`[code](formula:ignored)` and $[math](formula:ignored)$, then [Gauss again](formula:gauss).';
+    expect(formulaReferences(prose)).toEqual(['gauss', 'constitutive']);
+    expect(hasFormulaReference(parseText(prose))).toBe(true);
+    expect(formulaReferences('```md\n[code](formula:ignored)\n```')).toEqual([]);
+  });
+
+  test('keeps legacy reference lists without duplicating inline sources', () => {
+    const changed = source.replace('### Step 2', '#### References\n\n- [lossy-wave](formula:lossy-wave)\n\n### Step 2');
+    expect(readQuestionMarkdown(changed).parts[0].steps[0].refs).toEqual(['lossy-wave']);
   });
 
   test('keeps a mathematical therefore symbol without repeating the final answer', () => {
@@ -57,8 +71,9 @@ describe('Markdown question articles', () => {
     ['unknown section', text => text.replace('### Step 2', '### Summary'), /numbered consecutively|unknown section/],
     ['broken heading hierarchy', text => text.replace('#### Equation', '###### Equation'), /level 5/],
     ['missing governing equation', text => text.replace('#### Equation', '#### Equations'), /missing section Equation/],
-    ['multiple equations per step', text => text.replace('#### References', '$$\nx=1\n$$\n\n#### References'), /exactly one display equation/],
-    ['invalid formula link', text => text.replace('formula:lossy-wave', 'https://example.com/'), /formula:formula-id/],
+    ['multiple equations per step', text => text.replace(/\n#### Equation\n\n\$\$\n[\s\S]*?\n\$\$/, match => match + '\n\n$$\nx=1\n$$'), /exactly one display equation/],
+    ['malformed inline formula link', text => text.replace('formula:lossy-wave', 'formula:lossy-wave/invalid'), /formula:formula-id/],
+    ['mismatched translated formula reference', text => text.replace('formula:lossy-wave', 'https://example.com/'), /formula references must match/],
     ['duplicate YAML property', text => text.replace('number: 1', 'number: 1\nnumber: 2'), /unique/],
     ['body stored in frontmatter', text => text.replace('number: 1', 'number: 1\nstatement: forbidden'), /belongs in the Markdown body/],
     ['unknown frontmatter field in a part', text => text.replace('label: a(i)', 'label: a(i)\n    steps: forbidden'), /belongs in the Markdown body/],

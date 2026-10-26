@@ -58,10 +58,17 @@ The Markdown body uses these exact headings:
   formulas” → “given …, find …” → “substitute … into …” → “this gives …”.
   Identify question-supplied definitions and earlier derived results accurately.
   Annotations remain optional; do not repeat prose for every algebraic line.
-- An optional `#### References` under a step is a Markdown list of typed links,
-  for example `- [velocity](formula:velocity)`. IDs refer to `formulas.json`.
-  These source links appear beside that group's equation, never in a detached
-  list at the bottom of the solution.
+- Cite formulas where their names naturally occur in each annotation, for
+  example `使用 [高斯定律](formula:gauss)` and `Use [Gauss’s law](formula:gauss)`.
+  IDs refer to `formulas.json`; both languages must reference the same formulas.
+  Source IDs are derived from these links, with no separate list to maintain.
+  The text inherits the paragraph’s typography, previews the original excerpt
+  with the native Hover Card, and opens its PDF location on activation.
+  Keep source tags out of the equation row.
+- A legacy `#### References` list of typed links remains supported for an
+  equation-only step, for example `- [velocity](formula:velocity)`. The interface
+  renders it as a short source sentence before the equation; prefer inline
+  links when an annotation is present.
 - `### Answer` holds one display equation for the final result. An optional
   `### Answer text` holds bilingual concluding prose. The interface incorporates
   the result into the last derivation step using KaTeX boxed emphasis, without
