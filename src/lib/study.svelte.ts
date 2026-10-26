@@ -18,6 +18,7 @@ export class StudyState {
   bookmarks = $state<Record<string, boolean>>({});
   // Compatibility only: retain previously saved text without a note-taking UI.
   private legacyNotes?: Record<string, string>;
+  // Compatibility only: retain saved step counts; accordions reveal full solutions.
   revealed = $state<Record<string, number>>({});
   ready = $state(false);
   storageError = $state(false);

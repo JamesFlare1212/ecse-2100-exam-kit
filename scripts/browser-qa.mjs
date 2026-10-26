@@ -53,6 +53,30 @@ try {
     record('Static root redirect, deep links and sidebar links work without JavaScript; phone question text remains readable');
   } finally {await staticContext.close();}
 
+  await goto('e2-s26-q1');
+  await page.evaluate(()=>{
+    const data=JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1'));
+    data.revealed={'e2-s26-q1-a':20,'e2-s26-q2-a':1,'e2-s26-q2-b':0};
+    localStorage.setItem('ecse2100-fieldnotes-v1',JSON.stringify(data));
+  });
+  for(const id of ['e2-s26-q1','e2-s26-q2']){
+    await goto(id);
+    const question=exams.flatMap(e=>e.problems).find(q=>q.id===id);
+    assert.equal(await page.locator('#worked-parts .part-trigger[aria-expanded="true"]').count(),0);
+    for(const part of question.parts){
+      const item=page.locator(`[data-part="${part.id}"]`);
+      await item.locator('.part-trigger').click();
+      assert.equal(await item.locator('.solution-step').count(),part.steps.length);
+      assert.equal(await item.locator('[data-answer]').count(),1);
+      if(part.figure)assert.equal(await item.locator('.part-content .figure-image').count(),1);
+      if(part.note)assert.equal(await item.locator('.solution-note').count(),1);
+      await item.locator('.part-trigger').click();
+    }
+  }
+  assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
+  assert.equal((await stored()).revealed['e2-s26-q2-b'],0);
+  record('Every part opens its full solution regardless of legacy saved step counts');
+
   await goto('e2-s26-q3');
   await page.evaluate(()=>window.__fieldnotesDocument='same-page');
   await page.locator('a.question-link[href="/problems/e2-s26-q4/"]').click();
@@ -303,24 +327,20 @@ try {
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('.svg'));
   record('Original figure / Matplotlib SVG switch');
   await page.getByRole('radio',{name:'练习',exact:true}).click();
-  assert.equal(await page.locator('[data-answer]').count(),0);
-  assert.equal(await page.locator('.solution-step').count(),0);
+  assert.equal(await page.locator('[data-answer]:visible').count(),0);
+  assert.equal(await page.locator('.solution-step:visible').count(),0);
   assert.equal(await page.locator('.worked-solution textarea').count(),0);
   assert.equal(await page.locator('[id^="attempt-"]').count(),0);
   record('Practice uses a notebook workflow with no per-part text entry');
-  await page.getByRole('button',{name:'开始分步推导',exact:true}).first().click();
-  assert.equal(await page.locator('[data-part="e2-s26-q3-a"] .solution-step').count(),1);
-  assert.equal(await page.locator('[data-answer]').count(),0);
   const practicePart=page.locator('[data-part="e2-s26-q3-a"]');
   const expectedPracticeSteps=exams.flatMap(e=>e.problems).find(q=>q.id==='e2-s26-q3').parts[0].steps.length;
-  for(let count=2;count<=expectedPracticeSteps;count++){
-    await practicePart.getByRole('button',{name:'下一步',exact:true}).click();
-    assert.equal(await practicePart.locator('.solution-step').count(),count);
-    assert.equal(await practicePart.locator('[data-answer]').count(),0);
-  }
-  await page.getByRole('button',{name:'查看最终答案',exact:true}).first().click();
+  await practicePart.locator('.part-trigger').click();
+  assert.equal(await practicePart.locator('.solution-step').count(),expectedPracticeSteps);
+  assert.equal(await practicePart.locator('[data-answer]').count(),1);
+  assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
+  assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
   await page.getByRole('button',{name:'标记已掌握',exact:true}).first().click();
-  record('Practice hides answers; reveal and mastery advance independently');
+  record('Practice starts collapsed and opens full solutions; mastery and legacy records remain independent');
   assert.equal(await page.getByRole('tab',{name:'我的笔记',exact:true}).count(),0);
   assert.equal(await page.locator('textarea').count(),0);
   await page.getByRole('button',{name:'收藏此题',exact:true}).click();

@@ -85,9 +85,8 @@
   function toggleSolutions(){
     if(openParts.length){openParts=[];return;}
     openParts=problem.parts.map(p=>p.id);
-    for(const p of problem.parts)study.revealed[p.id]=p.steps.length+1;
   }
-  function changeMode(mode:string){if(mode==='study'||mode==='practice'){study.mode=mode;study.revealed={};}}
+  function changeMode(mode:string){if(mode==='study'||mode==='practice'){study.mode=mode;openParts=[];}}
   function focusOutsidePanel(id:string,toggle:string){
     if(document.getElementById(id)?.contains(document.activeElement))
       document.querySelector<HTMLElement>('[data-sidebar-toggle="'+toggle+'"]')?.focus({preventScroll:true});
@@ -153,7 +152,7 @@
               {#if !problem.figureAtParts}<Figure {assetBase} name={problem.figure} locale={study.locale} {dark} caption={problem.figureCaption} original={problem.originalFigure} onsource={openSource}/>{/if}
               <section class="worked-solution" aria-label={t('分步解答','Worked solution')}><div class="solution-section-heading"><div class="section-label"><span>02</span>{t('一步一步推导','WORK IT THROUGH')}</div><Button variant="ghost" size="sm" onclick={toggleSolutions} aria-controls="worked-parts" aria-expanded={openParts.length>0}>{#if openParts.length}{t('收起全部推导','Collapse all steps')}<ChevronsUp data-icon="inline-end" aria-hidden="true"/>{:else}{t('展开全部推导','Reveal all steps')}<Layers data-icon="inline-end" aria-hidden="true"/>{/if}</Button></div>
                 <ProblemOverview {problem} locale={study.locale} onsource={openSource}/>
-                {#if study.mode==='practice'}<p class="solution-intro">{t('在自己的本子上练习，需要时再逐步查看解答。','Work in your notebook, then reveal the solution when you need it.')}</p>{/if}
+                {#if study.mode==='practice'}<p class="solution-intro">{t('在自己的本子上练习，需要时点击小问查看完整解答。','Work in your notebook, then open a part to view its full solution when you need it.')}</p>{/if}
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
               {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
