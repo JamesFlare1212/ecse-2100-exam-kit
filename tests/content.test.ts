@@ -181,7 +181,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
   });
   test('worked integrals retain antiderivatives, endpoint subtraction and intermediate algebra',()=>{
     const calculations=(id:string)=>problemEntries.flatMap(({problem})=>problem.parts)
-      .find(part=>part.id===id)?.steps.map(step=>step.math).join('\n');
+      .find(part=>part.id===id)?.steps.map(step=>step.math).join('\n').replaceAll('&','');
     const milestones:Record<string,string[]>={
       'e2-s26-q1-a':['[J_0y]_0^W','[z]_{-0.5h}^{-0.4h}','(-0.4h+0.5h)','[z]_{0.4h}^{0.5h}','I_{\\mathrm{middle}}'],
       'e2-f25-q1-b':['[-\\cos\\theta]_0^\\pi','\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^R','\\frac{4\\pi\\rho_0R^3}{3}'],
@@ -189,7 +189,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
       'e2-f25-q2-b':['[x]_0^L','[y]_0^W','[z]_{H/2}^H','[z]_0^{H/2}'],
       'e2-f25-q3-a':['r\\frac{dV}{dr}=A','[\\ln(s/a)]_a^r','V(a)=A\\ln1+B=0','V(b)=A\\ln(b/a)=-V_0'],
       'e2-f25-q3-b':['-\\frac d{dr}','\\frac{V_0}{r\\ln(b/a)}\\hat r'],
-      'e2-s26-q3-a':['\\oiint_S','\\hat r R\\,d\\phi\\,dz','\\int_a^R','\\frac{\\rho_0a}{r^\\prime}','[r^\\prime]_a^R','\\rho_0(R-a)'],
+      'e2-s26-q3-a':['\\oiint_S','\\hat r R\\,d\\phi\\,dz','\\hat r\\cdot\\hat r','\\int_0^{2\\pi}1\\,d\\phi','[\\phi]_0^{2\\pi}','(2\\pi-0)','[z]_0^\\ell','(\\ell-0)','\\int_a^R','\\frac{\\rho_0a}{r^\\prime}','[r^\\prime]_a^R','\\rho_0(R-a)'],
       'e2-s26-q3-b':['\\int_r^b','\\ln(s/a)','\\rho_0s\\right]_r^b','\\rho_0(b-r)'],
       'e1-s26-q4-c':['g(1+t^2)','360^2-4(50)(299)','\\sqrt{69800}','0.274760-j0.725907'],
     };

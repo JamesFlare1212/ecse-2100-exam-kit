@@ -83,9 +83,19 @@ both themes, original-image switching and PDF citation actions remain available.
 Headings are structural: do not add arbitrary subheadings inside a prose section.
 
 Every worked part starts with its governing equation, followed by actual
-substitutions and intermediate algebra or calculus. Retain all integration
-elements, limits, antiderivatives, boundary constants, units, vector directions
-and source-correction notes. Do not silently repair an original question's givens.
+substitutions and intermediate algebra or calculus. Keep prose short, but expand
+integration for a beginner: substitute the field/density and differential element,
+show the dot product, identify and take out constant factors, integrate one variable
+at a time, and show each antiderivative and upper-minus-lower evaluation, including
+subtraction of negative lower limits. Explain an unfamiliar area/volume element
+briefly at its first use. Never replace a multiple integral with its final area
+or volume in one jump. Split long calculations at meaningful stages, without
+omitting working to keep the prose short. A result evaluated in an earlier part
+can be reused with its origin identified; drawing, setup-only and conceptual
+questions should keep their requested scope. Retain all integration elements,
+limits, boundary constants, units, vector directions and source-correction notes.
+Verify the result against the official PDF, expanding any working it abbreviates.
+Do not silently repair an original question's givens.
 The guide introduces actual givens and starting ideas, never computed answers.
 
 ## Discovery, validation and pages
