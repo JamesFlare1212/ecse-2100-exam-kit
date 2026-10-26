@@ -1,7 +1,7 @@
 """Render PDF page images from the preserved JSON source manifest.
 
-Use --source-dir to copy the original PDFs from another folder after verifying
-SHA-256. Without it, use the preserved static/sources copies. No JSON is written.
+Use --source-dir to copy original PDFs after verifying SHA-256. --locale selects
+the independent paper assets; shared lecture/crib assets remain common. No JSON is written.
 """
 from pathlib import Path
 import argparse
@@ -16,8 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--source-dir', type=Path)
 parser.add_argument('--force', action='store_true')
+parser.add_argument('--locale', choices=['en','zh-cn'], default='en')
 args = parser.parse_args()
-documents = load_documents()
+documents = load_documents(args.locale)
 (ROOT / 'content/extracted').mkdir(parents=True, exist_ok=True)
 for doc_id, entry in documents.items():
     preserved = asset_source(entry['pdf'])
@@ -46,8 +47,8 @@ for doc_id, entry in documents.items():
             pix = page.get_pixmap(matrix=pymupdf.Matrix(scale, scale), alpha=False)
             Image.frombytes('RGB', (pix.width, pix.height), pix.samples).save(
                 dest, 'WEBP', quality=85, method=4)
-        text_source(doc_id).parent.mkdir(parents=True, exist_ok=True)
-        text_source(doc_id).write_text(
+        text_source(doc_id,args.locale).parent.mkdir(parents=True, exist_ok=True)
+        text_source(doc_id,args.locale).write_text(
             '\n'.join(f'\n--- PAGE {index+1} ---\n'+page.get_text(sort=True)
                       for index, page in enumerate(doc)))
         if entry['kind'] in ('exam', 'crib'):

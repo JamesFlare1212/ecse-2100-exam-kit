@@ -1,0 +1,334 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                                Exam 2
+
+                                       Spring 2026
+
+
+
+                        1                   /6
+
+                        2                   /8
+
+                        3                   /8
+
+                        4                 /10
+
+                         Total               /32
+
+
+
+
+                                    Name _______________________________
+
+
+
+                                      RIN _______________________________
+
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for numbers that appear without justification. Partial credit will
+be awarded where possible, so show your work so that we can follow your thought process. Use
+the backs of pages if there is not enough room on the front. If you do, please indicate on the front
+of your exam that there is more work on the back of pages.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers. Ensure that
+your calculator is set to use radians for trigonometric functions (and not degrees) and include
+units with all numerical answers.
+
+At least skim through the entire quiz before you begin and then start with the problems you know
+best.
+
+--- PAGE 2 ---
+Problem 1: Resistance of a Microstrip Line at High Frequencies [6 pts]
+
+As discussed in class, due to the skin effect, current prefers to flow closer to the surfaces of a conductor at
+higher frequencies. Consider the microstrip line below, which has the following properties:
+    •  Width (in y-dimension): 𝑊
+    •   Height (in z-dimension): ℎ
+    •  Length (in x-dimension): infinite
+    •   Conductivity: 𝜎
+
+The current density distribution in the
+microstrip line is given by:
+
+             𝐽0𝑥̂  for   0.4ℎ≤𝑧< 0.5ℎ
+   𝐽⃗(𝑧) = { 0   for  −0.4ℎ< 𝑧< 0.4ℎ
+             𝐽0𝑥̂  for  −0.5ℎ< 𝑧≤−0.4ℎ
+
+Ignore any electric field fringing effects due
+to the finite width of the microstrip line.
+
+a)  Calculate the total current 𝐼 flowing through the microstrip line.
+
+     Primary
+     Equation
+
+
+
+
+
+   𝐼=
+
+
+
+b)  Calculate the magnitude of the potential drop per unit length 𝑉′ of the microstrip line.
+
+     Primary
+     Equation
+
+
+
+
+
+     𝑉′ =
+
+
+
+                                          1
+
+--- PAGE 3 ---
+c)  Calculate the resistance per unit length 𝑅′ of the microstrip line.
+
+     Primary
+     Equation
+
+
+
+
+
+     𝑅′ =
+
+
+d)  For the same current density as above, use physical reasoning to explain why increasing the
+    conductivity 𝜎 would lead to a decrease in the resistance of the microstrip line.
+
+
+
+
+
+e)  For the same total current flowing through the microstrip line, how would the resistance of the
+    microstrip line differ if the current density were distributed uniformly over the cross-section instead
+    of being concentrated near the surfaces? Briefly explain using physical reasoning.
+
+
+
+
+
+                                          2
+
+--- PAGE 4 ---
+Problem 2: Electrostatic Boundary Conditions [8 pts]
+
+Shown below is a stack of three dielectric materials:
+    •   Dielectric 1: occupies the region 𝑦> 0.01 m and has permittivity 𝜀1 = 2𝜀0
+    •   Dielectric 2: occupies the region 0 < 𝑦< 0.01 m and has permittivity 𝜀2 = 5𝜀0
+    •   Dielectric 3: occupies the region 𝑦< 0 and has permittivity 𝜀3 = 2𝜀0
+
+
+
+
+
+The electric field in dielectric 1 is given by:
+
+                                                                       𝐸⃗⃗1 = 100𝑥̂ −100𝑦̂
+
+a)  Find the electric field in dielectric 2, 𝐸⃗⃗2.
+
+     Primary
+     Equations
+
+
+
+
+
+          𝐸⃗⃗2 =
+
+
+
+                                          3
+
+--- PAGE 5 ---
+b)  Find the electric field in dielectric 3, 𝐸⃗⃗3.
+
+
+
+
+
+          𝐸⃗⃗3 =
+
+
+c)  Calculate the total potential difference across dielectric 2, 𝑉0, (i.e. between 𝑦= 0.01 m and 𝑦= 0).
+
+     Primary
+     Equation
+
+
+
+
+
+     𝑉0 =
+
+
+d)  Using the concept of polarization in dielectric materials, briefly explain why the magnitude of the
+    electric field in dielectric 2 is different from the magnitudes of the electric fields in dielectric 1 and
+    dielectric 3. Be sure to comment on the relative magnitudes: why is one larger/smaller than the others?
+
+
+
+
+
+                                          4
+
+--- PAGE 6 ---
+Problem 3: Leaky Coaxial Cable Dielectric [8 pts]
+
+The coaxial cable to the right has a poor dielectric,
+which has allowed some charge to leak between
+the inner conductor and outer conductor. The
+cable has an inner conductor of radius 𝑎 with
+surface charge density 𝜌𝑠𝑎 and an outer
+conducting shell of radius 𝑏, held at a potential
+𝑉(𝑏) = 0. The region 𝑎< 𝑟< 𝑏 is filled with a
+dielectric of permittivity 𝜀 and volumetric charge
+density given by:
+                      𝑎
+                𝜌(𝑟) = 𝜌0
+                         𝑟
+
+a)  Using Gauss’s law, find the electric field 𝐸⃗⃗(𝑟⃗) in the region 𝑎< 𝑟< 𝑏. Include a diagram that shows
+    the location of your Gaussian surface.
+
+     Primary
+     Equation
+
+
+
+
+
+        𝐸⃗⃗(𝑟⃗) =
+
+
+
+
+                                          5
+
+--- PAGE 7 ---
+b)  Find the potential 𝑉(𝑟⃗) in the region 𝑎< 𝑟< 𝑏.
+
+     Primary
+     Equation
+
+
+
+
+
+      𝑉(𝑟⃗) =
+
+
+c)  Find the potential difference between the conductors, 𝑉0 = 𝑉(𝑎) −𝑉(𝑏). Then, express the surface
+    charge density on the inner conductor, 𝜌𝑠𝑎, as a function of 𝑉0 and 𝜌0.
+
+
+
+
+
+    𝜌𝑠𝑎=
+
+
+d) When a volumetric charge density exists in the region between two conductors, the capacitance cannot
+                                                                𝑑𝑄
+   be computed using the usual formulas. Instead, it must be defined by 𝐶= 𝑑𝑉0, where 𝑄 is the total
+    charge on one conductor and 𝑉0 is the potential difference between the conductors. Using this
+    definition and your results from earlier parts, determine the capacitance per unit length 𝐶′ of the cable.
+
+
+
+
+
+      𝐶′ =
+
+
+
+                                          6
+
+--- PAGE 8 ---
+Problem 4: Point Charges over a Conducting Plane [10 pts]
+
+Two immobile point charges are held at a height 𝑧0 above a perfectly conducting plane that occupies the
+region 𝑧< 0. A point charge −𝑞 is located at (−𝑥0, 0, 𝑧0) and a charge +𝑞 is located at (𝑥0, 0, 𝑧0). The
+region above the conductor (𝑧> 0) has permittivity 𝜀0.
+
+
+
+
+
+a)  Draw a diagram in the x-z plane showing the geometry you will use for applying the method of
+    images. Include the real charges, their image charges, their coordinates, and clearly mark the position
+    of the conducting surface.
+
+
+
+
+
+b)  In a new diagram, sketch the electric field lines between the charges you drew in part a), including
+    those in the region 𝑧< 0.
+
+
+
+
+
+                                          7
+
+--- PAGE 9 ---
+c)  Determine the electric field 𝐸⃗⃗+𝑞 at a point 𝑃= (𝑥, 0,0) solely due to the point charge +𝑞 located at
+    (𝑥0, 0, 𝑧0), ignoring the conducting plane.
+
+     Primary
+     Equation
+
+
+
+
+
+        𝐸⃗⃗+𝑞(𝑟⃗) =
+
+
+d)  Determine the total electric field 𝐸⃗⃗𝑡𝑜𝑡 at the point 𝑃= (𝑥, 0,0) on the surface of the conductor, taking
+    into account both real charges and the effect of the conducting plane.
+
+
+
+
+
+        𝐸⃗⃗𝑡𝑜𝑡(𝑟⃗) =
+
+
+
+
+                                          8
+
+--- PAGE 10 ---
+e)  Using your result from part d), calculate the surface charge density 𝜌𝑠(𝑟⃗) on the conductor at the
+    point 𝑃= (𝑥, 0,0).
+
+     Primary
+     Equation
+
+
+
+
+
+      𝜌𝑠(𝑟⃗) =
+
+
+
+
+
+                                          9

@@ -8,6 +8,16 @@ export const parseText = (source: string) => fromMarkdown(source, {
   extensions: [math()], mdastExtensions: [mathFromMarkdown()],
 });
 
+export function displayEquations(source: string): string[] {
+  const equations: string[] = [];
+  function visit(node: TextNode) {
+    if (node.type === 'math') equations.push(node.value);
+    if ('children' in node) node.children.forEach(visit);
+  }
+  visit(parseText(source));
+  return equations;
+}
+
 export function formulaReference(node: TextNode): string | undefined {
   return node.type === 'link' ? /^formula:([a-z0-9-]+)$/.exec(node.url)?.[1] : undefined;
 }

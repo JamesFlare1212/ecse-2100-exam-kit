@@ -14,7 +14,7 @@ from paper_assets import ROOT, papers, documents, asset_source
 
 def renderer(paper):
     path = paper['directory'] / 'generate_figures.py'
-    spec = importlib.util.spec_from_file_location('figures_' + paper['name'], path)
+    spec = importlib.util.spec_from_file_location('figures_' + paper['locale'] + '_' + paper['name'], path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -22,7 +22,7 @@ def renderer(paper):
 
 def render_figures(save, dark, selected=None):
     for paper in papers():
-        if selected is None or paper['name'] == selected:
+        if selected is None or paper['directory'] == selected:
             renderer(paper).render_figures(lambda fig, name, theme: save(fig, name, theme, paper), dark)
 
 
@@ -44,11 +44,11 @@ def generate_paper(directory):
         generated.add(name)
 
     for dark in [False, True]:
-        render_figures(save, dark, paper['name'])
+        render_figures(save, dark, paper['directory'])
 
     source_path = directory / 'figure-sources.json'
     sources = json.loads(source_path.read_text())
-    registry = documents()
+    registry = documents(paper['locale'])
     crops = directory / 'assets/original-figures'
     crops.mkdir(parents=True, exist_ok=True)
     for name, source in sources['figures'].items():
@@ -89,8 +89,9 @@ def generate_paper(directory):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--paper', help='Paper folder name, for example exam1_f26')
+    parser.add_argument('--locale', choices=['en', 'zh-cn'], help='Draw only one language; default draws both')
     args = parser.parse_args()
-    selected = [paper for paper in papers() if args.paper is None or paper['name'] == args.paper]
+    selected = [paper for paper in papers(args.locale) if args.paper is None or paper['name'] == args.paper]
     if not selected:
         parser.error('No matching paper')
     for paper in selected:

@@ -1,0 +1,426 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                            Exam 1 Solutions
+
+                                       Spring 2026
+
+
+
+                        1                   /8
+
+                        2                   /8
+
+                        3                   /8
+
+                        4                   /8
+
+                         Total               /32
+
+
+
+
+                                    Name _______________________________
+
+
+
+                                      RIN _______________________________
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for numbers that appear without justification. For questions that
+request it, write down the primary equation from the crib sheet that you will use to solve that part
+of the problem. Partial credit will be awarded where possible, so show your work so that we can
+follow your thought process. Use the backs of pages if there is not enough room on the front. If
+you do, please indicate on the front of your exam that there is more work on the back of pages.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers. Ensure that
+your calculator is set to use radians for trigonometric functions (and not degrees) and include
+units with all numerical answers.
+
+At least skim through the entire exam before you begin and then start with the problems you
+know best.
+
+--- PAGE 2 ---
+Problem 1: Low-Loss Transmission Line Model [8 pts]
+
+You are given a spool of coaxial cable of length 𝐿= 100m and are tasked with determining its properties
+through measurements. A diagram of your measurement setup is shown below. Assume the coaxial cable
+can be treated as a low-loss transmission line.
+
+
+
+
+
+a)  [1 pt] You measure the time delay of your cable to be 𝑇𝑑= 392ns. What is the velocity factor of the
+    coaxial cable?
+
+                                   𝐿        m
+                     𝑢=  = 2.55 × 108  = 𝟎. 𝟖𝟓𝑐
+                                       𝑇𝑑               s
+
+
+
+
+
+      velocity
+                  𝟎. 𝟖𝟓
+      factor =
+
+b)  [1 pt] You measure the amplitude of the voltage at the input to the coaxial cable 𝑉𝑖𝑛 to be 1V for any
+    frequency you set for 𝑉𝑔. What is the characteristic impedance 𝑍0 of the cable?
+
+                              Since the amplitude of the voltage does not change with frequency, there is no
+     𝑍0 =  𝟓𝟎𝛀                reflection, indicating that 𝑍0 = 𝑍𝐿= 50Ω
+
+
+c)  [1 pt] Calculate the wavelength 𝜆 of the voltage wave on the coaxial cable if the frequency of the
+    generator is 𝑓= 100MHz = 100 × 106 Hz.
+
+                                      m
+      Primary                                  𝑢   2.55 × 108 s           𝝀= 𝒖/𝒇              𝜆=           = 𝟐. 𝟓𝟓𝐦      Equation                        𝑓= 100 × 106 Hz
+
+
+
+
+
+   𝜆=  𝟐. 𝟓𝟓𝐦
+
+
+
+                                          1
+
+--- PAGE 3 ---
+d)  [2 pts] Calculate the per-unit-inductance 𝑙 and per-unit-capacitance 𝑐 of the coaxial cable.
+
+     Primary                           1
+                  𝑍0 = √𝑙 and 𝑢=     Equations               𝑐           √𝑙𝑐
+
+
+
+   𝑐=           1 and 𝑙= 𝑍0
+          𝑍0𝑢        𝑢
+
+
+             1
+   𝑐=                   𝟕𝟖. 𝟒 𝐩𝐅 and 𝑙= 𝑍0   𝟏𝟗𝟔. 𝟏 𝐧𝐇         50Ω⋅0.85𝑐=         𝑢=
+
+
+
+   𝑙=   𝟏𝟗𝟔. 𝟏𝐧𝐇/𝐦
+
+
+
+   𝑐=   𝟕𝟖. 𝟒𝐩𝐅/𝐦
+
+
+e)  [2 pts] If you measure the amplitude of the voltage at the load to be 𝑉(𝐿= 100m) = 0.904V and the
+    amplitude of the voltage at the input to be 𝑉(𝐿= 0m) = 1V, determine the attenuation coefficient 𝛼.
+
+                 𝑉(𝑧) = 𝑉(𝑧= 0)𝑒−𝛼𝑧→𝑉(𝑧= 100m) = 0.904𝑉= 1𝑉𝑒−𝛼100m
+                   𝛼= −ln(0.904) = 𝟎. 𝟎𝟎𝟏𝐦−𝟏
+                               100m
+
+
+
+
+
+   𝛼=  𝟎. 𝟎𝟎𝟏𝐦−𝟏
+
+
+f)  [1 pt] Calculate the per-unit-length resistance 𝑟 of the coaxial cable.
+
+      Primary           𝑟          𝛼=                𝑟= 2𝛼𝑍0 = 2 ∗0.001m−1 ∗50Ω = 𝟎. 𝟏𝛀      Equation        2𝑍0                             𝒎
+
+
+
+
+
+           𝛀
+   𝑟= 𝟎. 𝟏
+         𝒎
+
+
+
+                                          2
+
+--- PAGE 4 ---
+Problem 2: Transient Analysis [8 pts]
+
+A transmission line of characteristic impedance 𝑍0 = 50Ω and time delay 𝑇𝑑= 50ps is connected
+between a generator circuit with voltage 𝑉𝑔= 10V and generator impedance 𝑅𝑔= 30Ω, and a load
+impedance 𝑍𝐿= 150Ω, as shown below. The switch closes at time 𝑡= 0 and provides a DC voltage to
+the transmission line.
+
+
+
+
+
+a)  [2 pts] Calculate the following quantities:
+       •  The reflection coefficient at the load Γ𝐿
+       •  The reflection coefficient at the generator Γ𝑔
+
+     Primary      𝑍−𝑍0                   𝑍𝐿−𝑍0  150Ω −50Ω
+              Γ =                               ΓL =     =        = 𝟎. 𝟓
+     Equation    𝑍+ 𝑍0                   𝑍𝐿+ 𝑍0  150Ω + 50Ω
+
+                                      𝑍𝑔−𝑍0  30Ω −50Ω
+                                                      Γg =     =       = −𝟎. 𝟐𝟓
+                                     𝑍𝑔+ 𝑍0  30Ω + 50Ω
+
+
+
+
+    Γ𝐿= 𝟎. 𝟓
+
+
+
+    Γ𝑔= −𝟎. 𝟐𝟓
+
+
+b)  [2 pts] Calculate numerical values for 𝑉1+, 𝑉1−, 𝑉2+ and 𝑉2− in the bounce diagram below.
+
+                                +       𝑍0          50Ω
+                                   V1 = 𝑉𝑔     = 10𝑉       = 𝟔. 𝟐𝟓𝑽
+                             𝑅𝑔+ 𝑍0     30Ω + 50Ω
+
+                                   V1−= Γ𝐿𝑉1+ = 0.5 ⋅6.25𝑉= 𝟑. 𝟏𝟐𝟓𝑽
+
+                                   V2+ = Γ𝑔𝑉1−= −0.25 ⋅3.125𝑉= −𝟎. 𝟕𝟖𝟏𝑽
+
+                                   V2−= Γ𝐿𝑉2+ = 0.5 ⋅(−0.781𝑉) = −𝟎. 𝟑𝟗𝟏𝑽
+
+
+
+
+
+                                          3
+
+--- PAGE 5 ---
+     𝑉1+ = 𝟔. 𝟐𝟓𝐕
+
+
+     𝑉1−= 𝟑. 𝟏𝟐𝟓𝐕
+
+
+     𝑉2+ = −𝟎. 𝟕𝟖𝟏𝑽
+
+
+     𝑉2−= −𝟎. 𝟑𝟗𝟏𝑽
+
+
+c)  [3 pts] Sketch a plot of the voltage at the load 𝑉(𝑧= 𝐿) vs. time for 0 ≤𝑡≤150ps. Label voltage
+    amplitudes and critical times, such as when the voltage wave undergoes relevant reflections.
+
+
+                                                   𝟗. 𝟑𝟕𝟓𝑽
+
+                                                                            𝟖. 𝟐𝟎𝟑𝑽
+
+
+
+
+
+                  𝟎𝑽
+
+                      t = 0              t = 50ps         t = 100ps         t = 150ps
+
+      𝑉𝐿(𝑡= 50ps) = 𝑉1+ + 𝑉1−= 6.25𝑉+ 3.125𝑉= 𝟗. 𝟑𝟕𝟓𝑽
+
+      𝑉𝐿(𝑡= 150ps) = 𝑉1+ + 𝑉1−+ 𝑉2+ + 𝑉2−= 9.375𝑉−1.172𝑉= 𝟖. 𝟐𝟎𝟑𝑽
+
+
+
+
+
+d)  [1 pt] Calculate the voltage on the transmission line after it has reached steady state 𝑉𝑠𝑠.
+
+     Primary               𝑍𝐿                         150Ω
+           𝑉∞= 𝑉𝑔                𝑉∞= 10𝑉        = 𝟖. 𝟑𝟑𝑽
+     Equation        𝑅𝑔+ 𝑍𝐿                    30Ω + 150Ω
+
+
+
+
+
+    V𝑠𝑠= 𝟖. 𝟑𝟑𝑽
+
+
+
+                                          4
+
+--- PAGE 6 ---
+Problem 3: Input Impedance [8 pts]
+
+For all circuits in this problem, the frequency of the generator voltage is 𝑓= 200MHz = 200 × 106Hz
+and the velocity factor of all coaxial cables is 0.65. In each part, provide a numerical answer with units.
+
+a)  For part a) only: you have access to spools of coaxial cable with characteristic impedances:
+       •   Cable type #1: 𝑍01 = 25Ω
+       •   Cable type #2: 𝑍02 = 50Ω
+       •   Cable type #3: 𝑍03 = 75Ω
+    In each of the circuits below, specify the type of cable (which characteristic impedance 𝑍0) and
+    length 𝐿 that match the generator impedance to the load impedance.
+
+     i)  [2 pts] Circuit #1
+
+
+
+
+
+                                 Since a line of length 𝜆/2 has an input impedance equal to 𝑍𝐿,
+    𝑍0 = 𝟐𝟓𝛀, 𝟓𝟎𝛀, 𝟕𝟓𝛀         any coaxial cable type will lead to a match.
+                              m
+                             𝑢   0.65 ⋅3 × 108                                                          s
+                   𝜆= 𝑓= 200 × 106 Hz = 0.975m  𝐿= 𝟎. 𝟒𝟖𝟕𝟓𝐦
+
+                       𝐿= 𝜆/2 = 𝟎. 𝟒𝟖𝟕𝟓𝐦
+      ii)  [2 pts] Circuit #2
+
+
+
+
+
+                   A quarter wave transformer 𝐿= 𝜆/4 will match two resistive loads.
+   𝑍0 = 𝟐𝟓𝛀
+                                         𝜆/4   𝑍02               𝜆/4
+                                      𝑍𝑖𝑛 =  →𝑍0 = √𝑍𝐿𝑍𝑖𝑛 = √12.5Ω ⋅50Ω = 𝟐𝟓𝛀                                        𝑍𝐿
+  𝐿= 𝟎. 𝟐𝟒𝟑𝟖𝐦
+                            𝐿= 𝜆/4 = 𝟎. 𝟐𝟒𝟑𝟖𝐦
+
+
+
+                                          5
+
+--- PAGE 7 ---
+b)  [2 pts] Determine 𝑍𝑖𝑛 for the circuit below.
+
+
+                                                              Primary           𝒁𝟎𝟐
+                                                                           𝒁𝒊𝒏𝝀/𝟒=                                                               Equation          𝒁𝑳
+
+
+
+
+𝑍𝐿= 50Ω + 1/(𝑗2𝜋⋅200 × 106Hz ⋅10−6F) = (50 −j7.96 × 10−4)Ω
+
+  𝜆/4   𝑍02         (50Ω)2
+𝑍𝑖𝑛 =  =             = (𝟓𝟎+ 𝐣𝟕. 𝟗𝟔× 𝟏𝟎−𝟒)𝛀       𝑍𝐿   (50 −j7.96 × 10−4)Ω
+
+
+
+    𝑍𝑖𝑛= (𝟓𝟎+ 𝐣𝟕. 𝟗𝟔× 𝟏𝟎−𝟒)𝛀
+
+
+c)  [2 pts] In the circuit below, what length of open-circuited cable ℓ would lead to full reflection of the
+    voltage wave at 𝑧= 𝐴?
+
+
+                                                                Primary          𝒁𝟎𝟐
+                                                                             𝒁𝒊𝒏𝝀/𝟒=                                                                  Equation          𝒁𝑳
+
+
+
+
+
+   A quarter wave transformer 𝐿= 𝜆/4 will transform an open circuit load to look like a short circuit
+    impedance at the input, which will lead to a reflection coefficient of Γ = −1, so
+
+                        𝐿= 𝜆/4 = 𝟎. 𝟐𝟒𝟑𝟖𝐦
+
+
+
+
+
+   ℓ= 𝟎. 𝟐𝟒𝟑𝟖𝐦
+
+
+
+                                          6
+
+--- PAGE 8 ---
+Problem 4: Single-Stub Matching with a Smith Chart [8 pts]
+
+Use the included Smith chart to match the feedline’s characteristic impedance 𝑍0 to the load impedance
+𝑍𝐿 via the single-stub matching method. As shown below, the matching circuit consists of a through-line
+of length 𝑑, which is connected to the load and an open-circuited stub of length ℓ, connected in parallel
+with the through-line. 𝑍0 = 50Ω for all transmission lines in this problem.
+
+
+
+
+
+a)  [2 pts] Calculate the normalized load impedance 𝑧𝐿 and plot it on the Smith chart.
+
+     Primary        𝒁𝑳                   𝑍𝐿   (25 + 𝑗90)Ω
+           𝒛𝑳=             𝑧𝐿=  =        = 𝟎. 𝟓+ 𝒋𝟏. 𝟖
+     Equation       𝒁𝟎                  𝑍0     50Ω
+
+                                         (See Smith chart for location of 𝒛𝑳)
+
+
+    𝑧𝐿= 𝟎. 𝟓+ 𝒋𝟏. 𝟖
+
+b)  [1 pt] Determine and plot the location of the normalized load admittance 𝑦𝐿 on the Smith chart, then
+    read off its numerical value.
+
+   𝑦𝐿= 𝟎. 𝟏𝟒−𝒋. 𝟓𝟐                 (See Smith chart for location of 𝒚𝑳)
+
+c)  [3 pts] Determine the length of the through-line 𝑑 that yields an input admittance whose real part is
+   matched to the characteristic admittance 𝑌0 = 1/𝑍0 (i.e. 𝑦𝑑= 1 + 𝑗𝐴). Show all work for how you
+    determined this length on the Smith chart. You may leave your answer in terms of wavelengths.
+
+                       𝑑= (0.5𝜆−0.423𝜆) + 0.203𝜆= 𝟎. 𝟐𝟕𝟏𝝀
+
+                                                  (See Smith chart for 𝒚𝒅)
+   𝑑= 𝟎. 𝟐𝟕𝟏𝝀
+                                       Alternate solution: 𝑦𝑑= 1 −𝑗2.82 and 𝑑= 0.318𝜆
+
+d)  [2 pts] Determine the length of the open-circuited stub ℓ that completes the impedance match. Show
+     all work for how you determined this length on the Smith chart. You may leave your answer in terms
+    of wavelengths.
+
+                                                  (See Smith chart for 𝒚𝓵)
+   ℓ= 𝟎. 𝟑𝟎𝟓𝝀
+                                       Alternate solution for 𝑦𝑑= 1 −𝑗2.82: ℓ= 0.196𝜆
+
+
+                                          7
+
+--- PAGE 9 ---
+                         𝑧𝐿= 0.5 + 𝑗1.8
+                                                                      0.203𝜆
+
+
+
+
+                                       𝑦𝑑≈1 + 𝑗2.82
+
+
+
+
+
+𝑦𝑜𝑐
+
+
+
+
+
+                                                    𝑦𝑑≈−𝑗2.82
+
+
+                  𝑦𝐿≈0.14 −𝑗0.52
+                                                                0.304𝜆
+
+
+       0.423𝜆
+
+
+
+
+
+                                 8

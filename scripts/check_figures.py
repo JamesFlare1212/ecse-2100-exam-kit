@@ -68,8 +68,8 @@ def review(output):
                         path = line.get_path().transformed(line.get_transform())
                         if box.overlaps(path.get_extents()) and path.intersects_bbox(box, filled=False):
                             strokes.append([label.get_text(), 'leader'])
-        key = paper['name'] + '/' + name + ('-dark' if dark else '')
-        (output/paper['name']).mkdir(exist_ok=True)
+        key = paper['locale'] + '/' + paper['name'] + '/' + name + ('-dark' if dark else '')
+        (output/paper['locale']/paper['name']).mkdir(parents=True, exist_ok=True)
         fig.savefig(output/(key+'.png'), bbox_inches='tight', pad_inches=.16, dpi=140)
         results.append({'name': key, 'textCollisions': collisions, 'strokeCollisions': strokes})
         figures.plt.close(fig)

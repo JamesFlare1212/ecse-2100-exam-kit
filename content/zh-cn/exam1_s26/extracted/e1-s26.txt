@@ -1,0 +1,383 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                                Exam 1
+
+                                       Spring 2026
+
+
+
+                        1                   /8
+
+                        2                   /8
+
+                        3                   /8
+
+                        4                   /8
+
+                         Total               /32
+
+
+
+
+                                    Name _______________________________
+
+
+
+                                      RIN _______________________________
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for numbers that appear without justification. For questions that
+request it, write down the primary equation from the crib sheet that you will use to solve that part
+of the problem. Partial credit will be awarded where possible, so show your work so that we can
+follow your thought process. Use the backs of pages if there is not enough room on the front. If
+you do, please indicate on the front of your exam that there is more work on the back of pages.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers. Ensure that
+your calculator is set to use radians for trigonometric functions (and not degrees) and include
+units with all numerical answers.
+
+At least skim through the entire exam before you begin and then start with the problems you
+know best.
+
+--- PAGE 2 ---
+Problem 1: Low-Loss Transmission Line Model [8 pts]
+
+You are given a spool of coaxial cable of length 𝐿= 100m and are tasked with determining its properties
+through measurements. A diagram of your measurement setup is shown below. Assume the coaxial cable
+can be treated as a low-loss transmission line.
+
+
+
+
+
+a)  [1 pt] You measure the time delay of your cable to be 𝑇𝑑= 392ns. What is the velocity factor of the
+    coaxial cable?
+
+
+
+
+
+      velocity
+      factor =
+
+b)  [1 pt] You measure the amplitude of the voltage at the input to the coaxial cable 𝑉𝑖𝑛 to be 1V for any
+    frequency you set for 𝑉𝑔. What is the characteristic impedance 𝑍0 of the cable?
+
+
+     𝑍0 =
+
+
+c)  [1 pt] Calculate the wavelength 𝜆 of the voltage wave on the coaxial cable if the frequency of the
+    generator is 𝑓= 100MHz = 100 × 106 Hz.
+
+
+      Primary
+      Equation
+
+
+
+
+
+   𝜆=
+
+
+
+                                          1
+
+--- PAGE 3 ---
+d)  [2 pts] Calculate the per-unit-inductance 𝑙 and per-unit-capacitance 𝑐 of the coaxial cable.
+
+     Primary
+     Equations
+
+
+
+
+
+   𝑙=
+
+
+
+   𝑐=
+
+
+e)  [2 pts] If you measure the amplitude of the voltage at the load to be 𝑉(𝐿= 100m) = 0.904V and the
+    amplitude of the voltage at the input to be 𝑉(𝐿= 0m) = 1V, determine the attenuation coefficient 𝛼.
+
+
+
+
+
+   𝛼=
+
+
+f)  [1 pt] Calculate the per-unit-length resistance 𝑟 of the coaxial cable.
+
+      Primary
+      Equation
+
+
+
+
+
+   𝑟=
+
+
+
+                                          2
+
+--- PAGE 4 ---
+Problem 2: Transient Analysis [8 pts]
+
+A transmission line of characteristic impedance 𝑍0 = 50Ω and time delay 𝑇𝑑= 50ps is connected
+between a generator circuit with voltage 𝑉𝑔= 10V and generator impedance 𝑅𝑔= 30Ω, and a load
+impedance 𝑍𝐿= 150Ω, as shown below. The switch closes at time 𝑡= 0 and provides a DC voltage to
+the transmission line.
+
+
+
+
+
+a)  [2 pts] Calculate the following quantities:
+       •  The reflection coefficient at the load Γ𝐿
+       •  The reflection coefficient at the generator Γ𝑔
+
+     Primary
+     Equation
+
+
+
+
+
+    Γ𝐿=
+
+
+
+    Γ𝑔=
+
+
+b)  [2 pts] Calculate numerical values for 𝑉1+, 𝑉1−, 𝑉2+ and 𝑉2− in the bounce diagram below.
+
+
+
+
+
+                                          3
+
+--- PAGE 5 ---
+     𝑉1+ =
+
+
+     𝑉1−=
+
+
+     𝑉2+ =
+
+
+     𝑉2−=
+
+
+c)  [3 pts] Sketch a plot of the voltage at the load 𝑉(𝑧= 𝐿) vs. time for 0 ≤𝑡≤150ps. Label voltage
+    amplitudes and critical times, such as when the voltage wave undergoes relevant reflections.
+
+
+
+
+
+d)  [1 pt] Calculate the voltage on the transmission line after it has reached steady state 𝑉𝑠𝑠.
+
+     Primary
+     Equation
+
+
+
+
+
+    V𝑠𝑠=
+
+
+
+                                          4
+
+--- PAGE 6 ---
+Problem 3: Input Impedance [8 pts]
+
+For all circuits in this problem, the frequency of the generator voltage is 𝑓= 200MHz = 200 × 106Hz
+and the velocity factor of all coaxial cables is 0.65. In each part, provide a numerical answer with units.
+
+a)  For part a) only: you have access to spools of coaxial cable with characteristic impedances:
+       •   Cable type #1: 𝑍01 = 25Ω
+       •   Cable type #2: 𝑍02 = 50Ω
+       •   Cable type #3: 𝑍03 = 75Ω
+    In each of the circuits below, specify the type of cable (which characteristic impedance 𝑍0) and
+    length 𝐿 that match the generator impedance to the load impedance.
+
+     i)  [2 pts] Circuit #1
+
+
+
+
+
+    𝑍0 =
+
+
+
+  𝐿=
+
+
+      ii)  [2 pts] Circuit #2
+
+
+
+
+
+   𝑍0 =
+
+
+
+  𝐿=
+
+
+
+                                          5
+
+--- PAGE 7 ---
+b)  [2 pts] Determine 𝑍𝑖𝑛 for the circuit below.
+
+
+                                                              Primary
+                                                               Equation
+
+
+
+
+
+    𝑍𝑖𝑛=
+
+
+c)  [2 pts] In the circuit below, what length of open-circuited cable ℓ would lead to full reflection of the
+    voltage wave at 𝑧= 𝐴?
+
+
+                                                                Primary
+                                                                 Equation
+
+
+
+
+
+   ℓ=
+
+
+
+                                          6
+
+--- PAGE 8 ---
+Problem 4: Single-Stub Matching with a Smith Chart [8 pts]
+
+Use the included Smith chart to match the feedline’s characteristic impedance 𝑍0 to the load impedance
+𝑍𝐿 via the single-stub matching method. As shown below, the matching circuit consists of a through-line
+of length 𝑑, which is connected to the load and an open-circuited stub of length ℓ, connected in parallel
+with the through-line. 𝑍0 = 50Ω for all transmission lines in this problem.
+
+
+
+
+
+a)  [2 pts] Calculate the normalized load impedance 𝑧𝐿 and plot it on the Smith chart.
+
+     Primary
+     Equation
+
+
+
+
+    𝑧𝐿=
+
+b)  [1 pt] Determine and plot the location of the normalized load admittance 𝑦𝐿 on the Smith chart, then
+    read off its numerical value.
+
+
+   𝑦𝐿=
+
+
+c)  [3 pts] Determine the length of the through-line 𝑑 that yields an input admittance whose real part is
+   matched to the characteristic admittance 𝑌0 = 1/𝑍0 (i.e. 𝑦𝑑= 1 + 𝑗𝐴). Show all work for how you
+    determined this length on the Smith chart. You may leave your answer in terms of wavelengths.
+
+
+
+
+   𝑑=
+
+
+d)  [2 pts] Determine the length of the open-circuited stub ℓ that completes the impedance match. Show
+     all work for how you determined this length on the Smith chart. You may leave your answer in terms
+    of wavelengths.
+
+
+   ℓ=
+
+
+
+                                          7
+
+--- PAGE 9 ---
+                The Complete Smith Chart
+                                Black Magic Design
+
+
+
+
+                                                                                                                 0.12           0.13
+                                                                                             0.11                                     0.14
+                                                                           0.1           0.39          0.38    90    0.37         0.36          0.15
+                                                                                                            80                                                                                   100                                                                             0.4                                                                                                                                            0.35                                                              0.09                                                                                                                                                      0.16                                                                            45                                                                 50                                                                                       40                                                                0.41     110                                                                                                             70      0.34                                                                                                                         0.9          1.0                                                       55                                                                                                                                                1.2                                                   0.08                                    0.8                                     35                  0.17
+                                                     0.42 120  60        0.7   )                                                        1.4             60  0.33                                                                                                                                                 1.6                                                           B/Yo
+                                                                                                                30                                        0.07                                                                                                                                                                             0.18                                                               0.6 ANCE(+j                                                                                                                                                    1.8                                                                                                                      0.2                                                                                                                                                                          0.32                                           0.43                                                CEPT                                                                                                                      50                                     130   65     SUS                                                                                                                                                       2.0                                0.06                0.5  TIVE                                                                               25           0.19                                   0.44            PACI                                                                                                                            0.31
+                            CA                              70
+                   OR                                                                                                                 0.4
+                        0.05     140    0.4  o),                                                                                           40      0.2                                       jX/Z                                                                                                      20     0.3                            0.45         (+
+                        75    NT                                                                                                                            3.0
+                          ONE                                                                        0.6
+                  0.04                                                                                                                                                                                                                                0.21                             0.3                                                                                                                                       30 0.29                      0.46 150             COMP
+                                                                                                                                                          15                                                                                                                  0.8     —>                     CE                    80                                                                                                                                                                                4.0
+        OR            TAN
+                                                                                                                    1.0                                                                                                                                                                                                                                                          0.22                       EAC                                                                                                                                                                                                                                                     0.28          ERAT 0.47                                                                                                                                                                                        5.0           R                                                                                                                      1.0                                                                                                                                                   20                160 85 0.2 VE        GEN
+                                                                                                               0.8                                                               10                            UCTI       WARD              0.48   90     IND     TO                                                                                                           0.6                                                                                                                                                                                      ANG     0.27 0.23                                                                                                                                                                                                ANG    HS                                                                                                                                                                       10 LE                                                                                                                                                              LE
+                                                                                   OF              170    0.1                                                                                       0.4                                                                                     OF      ENGT                                                                                                                                                               TR
+      AVEL  0.49                                                                                                                                                                            20 ANS REF 0.26  0.24
+  W                                                                                                              0.2                                                                                                                                                LECT   —>                                                                                                                                                                                            50 MISSI                                                                                                                                                                                                                                                                             ION                                            0.1                0.2             0.3           0.4         0.5        0.6      0.7     0.8    0.9    1.0         1.2       1.4     1.6    1.8   2.0                  3.0          4.0      5.0           10     20   50    ON
+     0.0  0.0 180                                                                                      C         0.25   0.25
+      ±                                                                                                                                                                                                                                                                                                                                                                           COEF
+   —                              RESISTANCE COMPONENT (R/Zo), OR CONDUCTANCE COMPONENT (G/Yo)                                                                                       50 OEFF    <                                                                                                                    0.2                                                                                                                                                                                       FICIE
+       AD                                                                                                                                                                             20 ICIE NT                                                                                                                                                                NT                                                                                                                                                                      IN 0.24  0.26       0.49 LOD
+                                                                                                                                                                                                                   DEG         WAR -170    0.1                                                                                       0.4                                                                     10 DEGIN
+       TO                                                                                                                                                                                                                                                               REES        HS     -90    o)                                                                                  0.6                                                                                                REES         0.48                                                                                                                                                                                                                                                                                      0.23 0.27
+            ENGT            jB/Y(-                                                                                    0.8                                                                          -10
+                                                                                                                                                                                                            -20                    -160 -85 0.2 CE             AVEL                      TAN                                                                                        1.0                                                           5.0     W                                                                                                                                                                                                                                                     0.22             0.47                                                                                                        1.0                                                                                           0.28          <—           SCEP
+                             -80   SUE                                                                                0.8                                                          4.0-15
+                      0.04 -150    0.3CTIV                                                                                                                                                -30 0.21
+                  0.46            NDUI                                                                        0.6                                                                                        0.29
+                                  -75   OR                                                                                                                            3.0
+                            0.05             Zo),                                                                                                                             -20     0.2
+                                      0.4 (-jX/                                                                                                                                                                    -40      0.3                        0.45      -140                                 ENT                                                            0.4                                          -70                                 PON                                   0.06                                                                                                                                                 0.19                                COM                                                                                                    -25                                0.44                0.5                                                                                                                                                                                           0.31                                      NCE                                                                                           2.0                                                                                                                                                      -50                                           -130   -65     CTA                                           REA                                          0.2                                       1.8                                                                                                                                                                          0.18                                           0.07
+                                                                                                                                            -30              0.32                                        0.43                   0.6   IVEACIT                                                   CAP                                                               1.6
+                                                     0.08 -120  -60        0.7                                                             1.4                -60 0.17                                                                                                                              -35                                                                                                  0.8                                                   0.42                                                                                                                                                                 0.33                                                                                                                                                1.2                                                                         -55                                                                                                                         0.9          1.0                                                                                                                                                     0.16                                                                                                                                    -70                                                                0.09     -110                                                                                                                -40                                                                                     -50                                                                                                  -45                                                                                                                                                      0.34                                                              0.41                                                                             0.1                                                                                                                                            0.15                                                                                                                               -80                                                                                            -100
+                                                                           0.4           0.11          0.12    -90    0.13         0.14          0.35
+                                                                                             0.39                                     0.36
+                                                                                                                 0.38           0.37
+
+
+
+                                                                        RADIALLY SCALED PARAMETERS                                                                                                                                                                                                           [dB]COEFF P)                                                                              TOWARD LOAD —>                  <— TOWARD GENERATOR RTN. SWR  ' 100 40  20      10             5     4        3      2.5       2   1.8   1.6    1.4      1.2  1.1  1   15    10        7          5       4         3           2              1                    ATTEN.LOSS[dB]  RFL.LOSSdBS  ' 40  30         20         15               10       8        6    5    4    3    2    1   1 1                     1.1      1.2    1.3  1.4     1.6   1.8  2           3     4   5       10  20  '   S.W.LOSS(CONST.RFL.                                                                                          P                                                                                                                                                                                         RFL.         [dB]                 0                           1                                    2                                            3                                                    4     5                                                                6                                                                     7    8   9                                                                                 10    12                                                                                            14                                                                                                                0                                                                                                                                                     0.1                                                                                                                                                            0.2                                                                                                                                                                     0.4                                                                                                                                                                            0.6                                                                                                                                                                                  0.8                                                                                                                                                         1                                                                                                                                                                                                 1.5                                                                                                                                                                        2        3                                                                                                                                                                                       4                                                                                                                                                                                            5   6                                                                                                                                                                                                       10                                                                                                     20    30 '                                                                                                                                                                                                          15 '                                                                                                                                                             PEAKCOEFF,                                                                                                                                                          orI     COEFF,                                                                                           E     P                                                                                                                                                                                             S.W.   COEFF,                 1    0.9   0.8                                      0.7                                             0.6     0.5                                                             0.4                                                                      0.3                                                                                  0.2                                                                                                0.1                                                                                                     0.05                                                                                                                  0.01                                                                                                              0                                                                                                                0       1.1                                                                                                                                                        1.2                                                                                                                                                                 1.3                                                                                                                                                                        1.4                                                                                                                                                                               1.5                                                                                                                                                                                     1.6                                                                                                                                                                                          1.7  1.8                                                                                                                                                                                                    1.9 2                                                                                                                                                                                                                     2.5                                                                                                                                                                                          3                                                                                                                                                                                                 4   5                                                                                                                                                                                                          10                                                                                                                                               '    E       orI    1         0.9        0.8        0.7        0.6        0.5        0.4        0.3        0.2        0.1       0 1       0.99         0.95       0.9            0.8        0.7       0.6     0.5     0.4    0.3   0.2   0.1   0   TRANSM.COEFF,
+
+                                                                               CENTER                    0.0        0.1        0.2        0.3        0.4        0.5        0.6        0.7        0.8        0.9        1         1.1        1.2        1.3        1.4        1.5        1.6        1.7        1.8        1.9        2   TRANSM.
+
+           ORIGIN

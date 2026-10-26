@@ -12,9 +12,9 @@ bun run dev
 
 打开终端显示的地址（默认 http://127.0.0.1:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
 
-每道大题是一篇 Markdown 文章，例如 `content/exam1_f26/questions/q1.md`，按试卷目录归档。YAML frontmatter 保存稳定 ID、双语标题、分值、图和来源元数据；正文直接编辑原题、中文译文、导读、完整推导、公式与纠错说明。`paper.json` 只保存试卷元数据。构建自动发现试卷与文章，导航、考试分类和数量由数据生成；新增或移除 paper 无需修改导入清单。编辑规则见 [content/README.md](content/README.md)。开发服务器监听 Markdown、新增/移除文章、元数据及资源变化。`assets/` 是资源源文件，开发和构建自动复制到 Git 忽略的 `static/papers/`，不要手工编辑暂存目录。
+每道大题分别在 `content/en/exam1_f26/questions/q1.md` 和 `content/zh-cn/exam1_f26/questions/q1.md` 保存独立的单语言 Markdown。两边各自拥有试卷元数据、PDF、SVG、页图、提取文本和绘图配置，相同素材也分别保留。YAML frontmatter 保存标题、分值、来源和必要的元数据覆盖；题号、默认图名和裁图来源自动推导。正文只需 `Question`、`Guide`、`Part` 和 `Solution` 等结构标题，直接书写段落与公式，最终方框结果仅写一次。两种语言按题目和小问的稳定 ID 配对，保留相同的分值、物理条件和来源信息，各自独立安排解答的段落与公式；一对翻译只计为一套试卷。新增或移除 paper 时同时处理两边目录，无需修改导入清单。编辑规则见 [content/README.md](content/README.md)。开发服务器监听两种语言的文章、元数据和资源变化；各自的 `assets/` 自动复制到 Git 忽略的 `static/papers/en/` 和 `static/papers/zh-cn/`，不要手工编辑暂存目录。
 
-Astro 内容集合负责发现文章和校验 frontmatter，Markdown 语法树解析器保留双语正文和原始 TeX；现有内容校验继续检查公式、页码、引用和几何区域。数据仅在内存中组装，没有中间题库 JSON。每题保留独立路径，如 `/problems/e2-s26-q3/`，输出 `build/problems/<题目 ID>/index.html`；关闭 JavaScript 仍能阅读标题、题干和全部小问。根路径静态跳转至默认题目。Astro ClientRouter 处理切题与浏览器历史，持久化 Svelte 学习界面保留跨页面状态。每页只携带当前题的完整解答及不含解答的导航/搜索索引；偏好、进度和旧版记录仍保存在同一个 localStorage 中。
+Astro 内容集合负责发现文章和校验 frontmatter，Markdown 语法树解析器分别读取单语言文章，按稳定 ID 组装双语数据，完整保留各语言的正文和原始 TeX；现有内容校验继续检查公式、页码、引用和几何区域。数据仅在内存中组装，没有中间题库 JSON。每题保留独立路径，如 `/problems/e2-s26-q3/`，输出 `build/problems/<题目 ID>/index.html`；关闭 JavaScript 仍能阅读标题、题干和全部小问。根路径静态跳转至默认题目。Astro ClientRouter 处理切题与浏览器历史，持久化 Svelte 学习界面保留跨页面状态。每页只携带当前题的完整解答及不含解答的导航/搜索索引；偏好、进度和旧版记录仍保存在同一个 localStorage 中。
 
 技术栈：Astro 7、Svelte 5、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Astro 命令通过 Bun 运行时执行；Inter、Noto Sans SC 和 KaTeX 字体均本地提供。为支持 OneDrive / WSL 文件系统，开发服务器启用了文件轮询。
 
@@ -85,15 +85,15 @@ bun test
 bun run build
 ```
 
-内容测试包含所有小问与双语字段、KaTeX 公式、748 个页图、SVG 两种主题、PDF 页码与矩形引用，还包括匹配、源/负载边界、瞬态级数、功率、Gauss、电势梯度、微分电容、镜像法及电流密度的一致性检查。
+内容测试包含两种语言的独立文章与资产、KaTeX 公式、全部 PDF 页图、SVG 两种主题、PDF 页码与矩形引用，还包括匹配、源/负载边界、瞬态级数、功率、Gauss、电势梯度、微分电容、镜像法及电流密度的一致性检查。
 
-`bun run content:check` 校验 Markdown 的双语章节、KaTeX 公式、ID、引用关系、PDF 页码与引用矩形，不改写内容。`bun run build` 先执行校验，再由 Astro 内容集合构建静态页面；最后自动运行 `scripts/check_prerender.ts`，核对全部 20 个 HTML 中实际渲染的题干与 93 个小问，以及每页 Svelte 岛的序列化数据只包含当前题目的完整记录。导航与搜索数据由 TypeScript 在内存中投影，无独立索引文件。新增目录自动纳入构建，移除目录会清理对应的静态页面和资源；默认 paper 缺席时，根路径跳转到现有题目。暂时移除的 paper 的本地学习记录会保留，但不计入当前进度。投影与题库的一致性也包含在 `bun test` 中。
+`bun run content:check` 校验两种语言的独立 Markdown、配对关系、KaTeX 公式、ID、引用关系、PDF 页码与引用矩形，不改写内容。`bun run build` 先执行校验，再由 Astro 内容集合构建静态页面；最后自动运行 `scripts/check_prerender.ts`，核对全部 20 个 HTML 中实际渲染的题干与 93 个小问，以及每页 Svelte 岛的序列化数据只包含当前题目的完整记录。导航与搜索数据由 TypeScript 在内存中投影，无独立索引文件。新增目录自动纳入构建，移除目录会清理对应的静态页面和资源；默认 paper 缺席时，根路径跳转到现有题目。暂时移除的 paper 的本地学习记录会保留，但不计入当前进度。投影与题库的一致性也包含在 `bun test` 中。
 
 原生类型检查的回归测试在隔离目录中植入 Svelte 脚本、组件属性和通过 `#lib` 引入的 `.svelte.ts` rune 类型错误，检查 TS7 能逐项报错；修正后必须通过，避免迁移时漏掉诊断。
 
 `bun test` 覆盖正文解析错误、翻译完整性、原题措辞、KaTeX、来源坐标、内容发现和独立物理数值核对。`scripts/browser-qa.mjs` 使用真实 Chromium 检查全部题目、小问和公式组，覆盖无脚本阅读、浏览器历史、双语、主题、解答展开、存储兼容、侧栏、搜索、原图和 PDF 查看器，以及手机和平板尺寸。原题英文继续与独立提取的 PDF 文本核对；因公式排版打乱提取顺序的片段保留人工核验记录。
 
-`python3 scripts/check_figures.py` 在相同 Matplotlib 环境中检查全部 44 幅图的两种主题，共 88 组：文字边界框不重叠，球形图的半径共享球心、箭头止于对应边界、法向从高斯面径向向外，球形文字避开曲线和引线。检查不改写静态素材，逐图 PNG 和报告写入 Git 忽略的 `artifacts/figure-review/`。
+`python3 scripts/check_figures.py` 在相同 Matplotlib 环境中检查两种语言各 44 幅图的两种主题，共 176 组：文字边界框不重叠，球形图的半径共享球心、箭头止于对应边界、法向从高斯面径向向外，球形文字避开曲线和引线。检查不改写静态素材，逐图 PNG 和报告写入 Git 忽略的 `artifacts/figure-review/`。
 
 `python3 scripts/check_sources.py` 使用已保存的 PDF 核验来源散列、748 页的尺寸与文字提取，并在内存中验证引用裁图、缩略图拼接和 WebP 编解码，便于检查 PyMuPDF / Pillow 更新的兼容性；无需父目录中的原始文件。
 
@@ -116,7 +116,8 @@ python3 scripts/prepare_sources.py
 python3 scripts/render_excerpts.py
 python3 scripts/generate_figures.py
 # 也可单独绘制一套 paper
-python3 content/exam1_f26/generate_figures.py
+python3 content/en/exam1_f26/generate_figures.py
+python3 content/zh-cn/exam1_f26/generate_figures.py
 ```
 
-每个 paper 的 `questions/q{number}.md` 保存原始英文题干、中文译文、导读、完整推导和纠错说明；`paper.json` 仅存试卷元数据。`documents.json` 保存原始 PDF 来源和散列，路径相对于该 paper 的 `assets/`；`figure-sources.json` 保存裁图区域，`generate_figures.py` 保存绘图配置。共享绘图工具与自动发现入口保持不变。Python 仅用 PyYAML 读取文章 frontmatter 中的资源引用以核验来源，不读取或改写正文。PDF 图像工具直接读取 paper 内的 PDF 和共享课程 PDF，只有重新从外部导入时才使用 `--source-dir ..`，并核验已有 SHA-256 记录。
+每种语言的 paper 使用自己的 `questions/q{number}.md` 保存该语言的题干、导读、完整推导和纠错说明；`paper.json` 仅存试卷元数据。`documents.json` 保存原始 PDF 来源和散列，路径相对于该 paper 的 `assets/`；`figure-sources.json` 保存裁图区域，`generate_figures.py` 保存绘图配置。共享绘图工具与自动发现入口保持不变。Python 仅用 PyYAML 读取文章 frontmatter 中的资源引用以核验来源，不读取或改写正文。PDF 图像工具直接读取 paper 内的 PDF 和共享课程 PDF，只有重新从外部导入时才使用 `--source-dir ..`，并核验已有 SHA-256 记录。

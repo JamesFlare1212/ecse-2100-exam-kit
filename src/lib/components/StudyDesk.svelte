@@ -42,10 +42,10 @@
 
   let {data}:{data:StudyPageData}=$props();
   const formulaPreviews=provideFormulaPreviews();
-  const catalog=$derived(createCatalog(data.examIndex,data.documents));
-  const assetBase=$derived(data.assetBase);
+  const study:StudyState=untrack(()=>new StudyState(()=>catalog,data.problem.id));
+  const catalog=$derived(createCatalog(data.examIndex,data.documents[study.locale]));
+  const assetBase=$derived(data.assetBase[study.locale]);
   const documents=$derived(catalog.documents);
-  const study=untrack(()=>new StudyState(()=>catalog,data.problem.id));
   let systemDark=$state(false);
   const dark=$derived(study.theme==='dark'||(study.theme==='system'&&systemDark));
   const problem=$derived(data.problem);
@@ -156,7 +156,7 @@
                 <ProblemOverview {problem} locale={study.locale} onsource={openSource}/>
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
-              {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
+              {#if problem.note?.[study.locale]}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]!}/></Alert.Description></Alert.Root>{/if}
               <div class="problem-completion"><div><CircleCheck aria-hidden="true"/><span>{completed}/{problem.parts.length} {t('小问已掌握','parts mastered')}</span></div><span>{t('掌握后自行标记，进度自动保存。','Mark your understanding; progress saves automatically.')}</span></div>
             </Tabs.Content>
             <Tabs.Content value="source"><div class="source-tab-heading"><p>{t('保留原始试卷版式、插图与题号。点击页面可放大查看。','Original layout, figures and numbering. Open any page to inspect it.')}</p>{#if !exam.questionsOnly}<Alert.Root><Info aria-hidden="true"/><Alert.Description>{t('本地仅有含官方答案版本，原页会显示答案。练习可使用“题目与推导”中的网页原生题目。','Only a combined questions/solutions PDF is available. Source pages show answers; use the native problem view for practice.')}</Alert.Description></Alert.Root>{/if}</div>
