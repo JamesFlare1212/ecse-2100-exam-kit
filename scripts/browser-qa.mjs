@@ -5,6 +5,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {checkI18n} from './browser-i18n-qa.mjs';
+import {checkThemeNavigation} from './browser-theme-qa.mjs';
 import {loadContent} from '../content/papers.server.ts';
 import {renderText} from '../src/lib/math.ts';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
@@ -47,6 +48,7 @@ async function revealAll(){
 }
 try {
   await checkI18n(browser,base,record);
+  await checkThemeNavigation(browser,base,record);
   const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:1000}});
   try {
     const staticPage=await staticContext.newPage();
