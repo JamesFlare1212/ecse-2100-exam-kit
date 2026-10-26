@@ -125,7 +125,6 @@
           "sourcePage": 2,
           "solutionPage": 2,
           "figure": "sphere-inner",
-          "spatialFigure": "e2-f25-q1",
           "figureCaption": {
             "zh": "同心球截面，虚线表示半径 $0<R<a$ 的闭合高斯球面；半径 $a$、$b$、$R$ 共享球心。",
             "en": "Concentric-sphere section with the closed Gaussian sphere at $0<R<a$; radii $a$, $b$ and $R$ share one center."
@@ -497,7 +496,7 @@
             },
             {
               "text": {
-                "zh": "\\u58F3\\u5916\\u4ECD\\u662F\\u540C\\u5FC3\\u7403\\u9762\\uFF0C\\u4E24\\u4E2A\\u7AEF\\u70B9\\u4EE3\\u5165\\u4E0E\\u524D\\u9762\\u76F8\\u540C\\u3002\\u5199\\u51FA\\u4E24\\u4E2A\\u89D2\\u79EF\\u5206\\u7684\\u539F\\u51FD\\u6570\\u540E\\u76F8\\u4E58\\uFF0C\\u518D\\u4E58\\u56FA\\u5B9A\\u7684 $\\epsilon_0E_r(R)R^2$\\u3002",
+                "zh": "壳外仍是同心球面，两个端点代入与前面相同。写出两个角积分的原函数后相乘，再乘固定的 $\\epsilon_0E_r(R)R^2$。",
                 "en": "The exterior surface is still a concentric sphere. Evaluate the two angular antiderivatives at the same bounds as before, multiply them, and then multiply by the fixed factor $\\epsilon_0E_r(R)R^2$."
               },
               "math": "\\begin{aligned}\\Phi_D&=\\epsilon_0E_r(R)R^2\\left(\\int_0^{2\\pi}d\\phi\\right)\\left(\\int_0^\\pi\\sin\\theta\\,d\\theta\\right)\\\\&=\\epsilon_0E_r(R)R^2[\\phi]_0^{2\\pi}[-\\cos\\theta]_0^\\pi\\\\&=\\epsilon_0E_r(R)R^2(2\\pi-0)[-(-1)-(-1)]\\\\&=4\\pi\\epsilon_0R^2E_r(R)\\end{aligned}",
@@ -607,7 +606,7 @@
                 "zh": "诱导偶极的极化响应减小同一自由电荷产生的电场。取绝对值比较，结论不依赖 $\\rho_{0}$ 的符号。",
                 "en": "The induced-dipole polarization response reduces the field for the same free charge. Compare magnitudes so the conclusion is independent of the sign of $\\rho_{0}$."
               },
-              "math": "|\\Delta V_\\epsilon|=\\frac{\\epsilon_0}{\\epsilon}|\\Delta V_{\\mathrm{vac}}|<|\\Delta V_{\\mathrm{vac}}|",
+              "math": "|\\Delta V_{\\epsilon}|=\\frac{\\epsilon_0}{\\epsilon}|\\Delta V_{\\mathrm{vac}}|<|\\Delta V_{\\mathrm{vac}}|",
               "refs": []
             }
           ],
@@ -725,7 +724,7 @@
             },
             {
               "text": {
-                "zh": "\\u5BF9\\u7EBF\\u6027\\u7535\\u52BF\\u9010\\u9879\\u6C42\\u5BFC\\u3002\\u677F\\u7535\\u4F4D $V_0$\\u3001$V_1$ \\u548C\\u95F4\\u8DDD $L$ \\u90FD\\u662F\\u5E38\\u6570\\uFF0C\\u53EA\\u6709\\u8DEF\\u5F84\\u5750\\u6807 $x$ \\u662F\\u53D8\\u91CF\\uFF0C\\u56E0\\u6B64\\u5E38\\u6570\\u9879\\u7684\\u5BFC\\u6570\\u4E3A\\u96F6\\uFF0C\\u800C $x$ \\u5BF9\\u81EA\\u8EAB\\u7684\\u5BFC\\u6570\\u4E3A $1$\\u3002",
+                "zh": "对线性电势逐项求导。板电位 $V_0$、$V_1$ 和间距 $L$ 都是常数，只有路径坐标 $x$ 是变量，因此常数项的导数为零，而 $x$ 对自身的导数为 $1$。",
                 "en": "Differentiate the linear potential term by term. The plate potentials $V_0$, $V_1$ and separation $L$ are constants; only the path coordinate $x$ varies. The constant term has derivative zero and $x$ has derivative $1$."
               },
               "math": "\\begin{aligned}\\frac{dV}{dx}&=\\frac d{dx}\\left[V_0+\\frac{V_1-V_0}{L}x\\right]\\\\&=0+\\frac{V_1-V_0}{L}(1)\\\\&=\\frac{V_1-V_0}{L}\\end{aligned}",

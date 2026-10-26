@@ -304,7 +304,7 @@
             },
             {
               "text": {
-                "zh": "\\u8981\\u9A8C\\u8BC1\\u534A\\u6CE2\\u7EBF\\u4E3A\\u4F55\\u91CD\\u590D\\u8D1F\\u8F7D\\uFF0C\\u5148\\u5199\\u51FA\\u539F\\u8868\\u7684\\u4E00\\u822C\\u8F93\\u5165\\u963B\\u6297\\u3002\\u7528 $t=\\tan(\\beta L)$ \\u7F29\\u77ED\\u7B26\\u53F7\\uFF0C\\u4F46\\u4E0D\\u6539\\u53D8\\u5B83\\u7684\\u7269\\u7406\\u610F\\u4E49\\u3002",
+                "zh": "要验证半波线为何重复负载，先写出原表的一般输入阻抗。用 $t=\\tan(\\beta L)$ 缩短符号，但不改变它的物理意义。",
                 "en": "To verify why a half-wave line repeats its load, start from the crib's general input impedance. Write $t=\\tan(\\beta L)$ to shorten the algebra without changing its meaning."
               },
               "math": "Z_{\\mathrm{in}}=Z_0\\frac{Z_L+jZ_0t}{Z_0+jZ_Lt},\\qquad t=\\tan(\\beta L)",
@@ -314,7 +314,7 @@
             },
             {
               "text": {
-                "zh": "\\u4EE4\\u8F93\\u5165\\u963B\\u6297\\u7B49\\u4E8E\\u672C\\u9898\\u7684\\u8D1F\\u8F7D\\u963B\\u6297\\u3002\\u4E24\\u8FB9\\u4E58\\u5206\\u6BCD\\uFF0C\\u518D\\u5C55\\u5F00\\u5DE6\\u53F3\\u4E24\\u4FA7\\uFF1B\\u5171\\u540C\\u7684 $Z_0Z_L$ \\u9879\\u968F\\u540E\\u76F8\\u6D88\\u3002",
+                "zh": "令输入阻抗等于本题的负载阻抗。两边乘分母，再展开左右两侧；共同的 $Z_0Z_L$ 项随后相消。",
                 "en": "Set the input impedance equal to this problem's load impedance. Multiply both sides by the denominator and expand; the common term $Z_0Z_L$ then cancels."
               },
               "math": "\\begin{aligned}Z_L(Z_0+jZ_Lt)&=Z_0(Z_L+jZ_0t)\\\\Z_0Z_L+jZ_L^2t&=Z_0Z_L+jZ_0^2t\\\\jZ_L^2t&=jZ_0^2t\\end{aligned}",
@@ -894,7 +894,7 @@
             },
             {
               "text": {
-                "zh": "\\u76F8\\u91CF\\u53D6\\u5B9E\\u90E8\\u4F7F\\u7528\\u6B27\\u62C9\\u516C\\u5F0F\\uFF1A\\u4F59\\u5F26\\u662F\\u5B9E\\u90E8\\uFF0C\\u6B63\\u5F26\\u524D\\u5E26 $j$\\uFF0C\\u5C5E\\u4E8E\\u865A\\u90E8\\u3002\\u5BF9\\u6BCF\\u4E2A\\u5B9E\\u6570\\u5E45\\u5EA6\\u5206\\u522B\\u4F7F\\u7528\\u8FD9\\u6761\\u89C4\\u5219\\uFF0C\\u5E45\\u5EA6\\u539F\\u6709\\u7684\\u6B63\\u8D1F\\u53F7\\u90FD\\u4FDD\\u7559\\u3002",
+                "zh": "相量取实部使用欧拉公式：余弦是实部，正弦前带 $j$，属于虚部。对每个实数幅度分别使用这条规则，幅度原有的正负号都保留。",
                 "en": "Use Euler's formula when taking the real part: cosine is real, while the sine term multiplied by $j$ is imaginary. Apply the rule separately to each real amplitude, retaining its original sign."
               },
               "math": "\\begin{aligned}e^{j\\theta}&=\\cos\\theta+j\\sin\\theta\\\\\\operatorname{Re}\\{A e^{j\\theta}\\}&=A\\cos\\theta\\qquad(A\\in\\mathbb R)\\end{aligned}",
@@ -1147,7 +1147,7 @@
             },
             {
               "text": {
-                "zh": "\\u590D\\u6570\\u5206\\u6BCD\\u4E0D\\u80FD\\u76F4\\u63A5\\u6309\\u5B9E\\u6570\\u9664\\u6CD5\\u8BA1\\u7B97\\u3002\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u540C\\u4E58 $3-j$\\uFF0C\\u5229\\u7528 $j^2=-1$\\uFF0C\\u4EA4\\u53C9\\u865A\\u90E8\\u5728\\u5206\\u6BCD\\u4E2D\\u76F8\\u6D88\\u3002",
+                "zh": "复数分母不能直接按实数除法计算。分子和分母同乘 $3-j$，利用 $j^2=-1$，交叉虚部在分母中相消。",
                 "en": "Treat the complex denominator by multiplying numerator and denominator by $3-j$. Use $j^2=-1$; the cross terms cancel in the denominator."
               },
               "math": "\\begin{aligned}\\frac{1+j}{3+j}&=\\frac{(1+j)(3-j)}{(3+j)(3-j)}\\\\(1+j)(3-j)&=3-j+3j-j^2=4+2j\\\\(3+j)(3-j)&=9-3j+3j-j^2=10\\end{aligned}",
@@ -1185,7 +1185,7 @@
             },
             {
               "text": {
-                "zh": "\\u590D\\u6570 $u+jv$ \\u7684\\u5171\\u8F6D\\u6570\\u662F $u-jv$\\u3002\\u4E24\\u8005\\u76F8\\u4E58\\u65F6\\uFF0C\\u4E24\\u4E2A\\u4EA4\\u53C9\\u9879\\u4E00\\u6B63\\u4E00\\u8D1F\\u800C\\u76F8\\u6D88\\uFF0C\\u6700\\u540E\\u7684 $-j^2v^2$ \\u53D8\\u6210\\u6B63\\u7684 $v^2$\\u3002",
+                "zh": "复数 $u+jv$ 的共轭数是 $u-jv$。两者相乘时，两个交叉项一正一负而相消，最后的 $-j^2v^2$ 变成正的 $v^2$。",
                 "en": "The conjugate of $u+jv$ is $u-jv$. Their cross terms cancel, and the final term $-j^2v^2$ becomes positive $v^2$."
               },
               "math": "\\begin{aligned}(u+jv)(u-jv)&=u^2-juv+juv-j^2v^2\\\\&=u^2+v^2\\\\\\frac1{u+jv}&=\\frac{u-jv}{u^2+v^2}\\end{aligned}",
@@ -1233,7 +1233,7 @@
           "steps": [
             {
               "text": {
-                "zh": "\\u5148\\u5199\\u516C\\u5F0F\\u8868\\u4E2D\\u7684\\u65E0\\u635F\\u7EBF\\u8F93\\u5165\\u963B\\u6297\\uFF0C\\u518D\\u9664\\u4EE5\\u53C2\\u8003\\u963B\\u6297\\u5F97\\u5230\\u5F52\\u4E00\\u5316\\u8F93\\u5165\\u963B\\u6297\\u3002\\u4E3B\\u7EBF\\u548C\\u8D1F\\u8F7D\\u4F7F\\u7528\\u540C\\u4E00\\u4E2A\\u53C2\\u8003\\u963B\\u6297\\u3002",
+                "zh": "先写公式表中的无损线输入阻抗，再除以参考阻抗得到归一化输入阻抗。主线和负载使用同一个参考阻抗。",
                 "en": "Start from the crib's lossless input impedance, then divide by the reference impedance. The line and load use the same reference impedance."
               },
               "math": "\\begin{aligned}Z_{\\mathrm{in},d}&=Z_0\\frac{Z_L+jZ_0\\tan(\\beta d)}{Z_0+jZ_L\\tan(\\beta d)}\\\\z_d&=\\frac{Z_{\\mathrm{in},d}}{Z_0}=\\frac{z_L+jt}{1+jz_Lt}\\\\t&=\\tan(\\beta d),\\qquad\\beta=\\frac{2\\pi}{\\lambda}\\end{aligned}",
@@ -1243,7 +1243,7 @@
             },
             {
               "text": {
-                "zh": "\\u5BFC\\u7EB3\\u662F\\u963B\\u6297\\u7684\\u5012\\u6570\\u3002\\u5206\\u5B50\\u3001\\u5206\\u6BCD\\u540C\\u65F6\\u9664\\u4EE5 $z_L$\\uFF0C\\u5C31\\u80FD\\u7528\\u5DF2\\u7ECF\\u6C42\\u51FA\\u7684\\u8D1F\\u8F7D\\u5BFC\\u7EB3 $y_L=1/z_L$ \\u8868\\u793A\\u3002",
+                "zh": "导纳是阻抗的倒数。分子、分母同时除以 $z_L$，就能用已经求出的负载导纳 $y_L=1/z_L$ 表示。",
                 "en": "Admittance is the reciprocal of impedance. Divide numerator and denominator by $z_L$ to express the result using the previously calculated load admittance $y_L=1/z_L$."
               },
               "math": "\\begin{aligned}y_d&=\\frac1{z_d}=\\frac{1+jz_Lt}{z_L+jt}\\\\&=\\frac{1/z_L+jt}{1+jt/z_L}\\\\&=\\frac{y_L+jt}{1+jy_Lt}\\end{aligned}",
@@ -1259,7 +1259,7 @@
             },
             {
               "text": {
-                "zh": "\\u628A $y_L=g+jb$ \\u4EE3\\u5165\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u3002\\u5206\\u6BCD\\u91CC\\u7684 $j\\cdot j=-1$\\uFF0C\\u56E0\\u6B64\\u5B9E\\u90E8\\u662F $1-bt$\\uFF0C\\u865A\\u90E8\\u662F $gt$\\u3002",
+                "zh": "把 $y_L=g+jb$ 代入分子和分母。分母里的 $j\\cdot j=-1$，因此实部是 $1-bt$，虚部是 $gt$。",
                 "en": "Substitute $y_L=g+jb$ into numerator and denominator. Since $j\\cdot j=-1$, the denominator has real part $1-bt$ and imaginary part $gt$."
               },
               "math": "\\begin{aligned}y_L+jt&=g+j(b+t)\\\\1+jy_Lt&=1+j(g+jb)t\\\\&=(1-bt)+jgt\\\\y_d&=\\frac{g+j(b+t)}{(1-bt)+jgt}\\end{aligned}",
@@ -1267,7 +1267,7 @@
             },
             {
               "text": {
-                "zh": "\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u540C\\u4E58\\u5206\\u6BCD\\u7684\\u5171\\u8F6D\\u6570\\u3002\\u8FD9\\u6837\\u5206\\u6BCD\\u53D8\\u6210\\u5B9E\\u6570\\uFF0C\\u624D\\u53EF\\u4EE5\\u5206\\u522B\\u8BFB\\u53D6\\u5B9E\\u90E8\\u548C\\u865A\\u90E8\\u3002",
+                "zh": "分子和分母同乘分母的共轭数。这样分母变成实数，才可以分别读取实部和虚部。",
                 "en": "Multiply numerator and denominator by the denominator's conjugate. The denominator becomes real, allowing the real and imaginary parts to be read separately."
               },
               "math": "y_d=\\frac{[g+j(b+t)][(1-bt)-jgt]}{(1-bt)^2+(gt)^2}",
@@ -1275,7 +1275,7 @@
             },
             {
               "text": {
-                "zh": "\\u5C55\\u5F00\\u5206\\u5B50\\u7684\\u5B9E\\u90E8\\u548C\\u865A\\u90E8\\u3002\\u5B9E\\u90E8\\u4E2D\\u7684\\u4E24\\u9879 $-gbt$ \\u4E0E $gbt$ \\u6070\\u597D\\u76F8\\u6D88\\uFF0C\\u7559\\u4E0B $g(1+t^2)$\\u3002",
+                "zh": "展开分子的实部和虚部。实部中的两项 $-gbt$ 与 $gbt$ 恰好相消，留下 $g(1+t^2)$。",
                 "en": "Expand the numerator into real and imaginary terms. The real-part terms $-gbt$ and $gbt$ cancel, leaving $g(1+t^2)$."
               },
               "math": "\\begin{aligned}N_{\\mathrm{real}}&=g(1-bt)+(b+t)gt\\\\&=g-gbt+gbt+gt^2\\\\&=g(1+t^2)\\\\N_{\\mathrm{imag}}&=(b+t)(1-bt)-g^2t\\end{aligned}",
@@ -1291,7 +1291,7 @@
             },
             {
               "text": {
-                "zh": "\\u5148\\u5C55\\u5F00\\u5206\\u6BCD\\uFF0C\\u518D\\u5C06\\u5339\\u914D\\u6761\\u4EF6\\u4E24\\u8FB9\\u540C\\u4E58\\u5206\\u6BCD\\u3002\\u6700\\u540E\\u628A\\u5DE6\\u8FB9\\u7684 $g+gt^2$ \\u79FB\\u5230\\u53F3\\u8FB9\\uFF0C\\u5E76\\u6309 $t$ \\u7684\\u5E42\\u6B21\\u6574\\u7406\\u3002",
+                "zh": "先展开分母，再将匹配条件两边同乘分母。最后把左边的 $g+gt^2$ 移到右边，并按 $t$ 的幂次整理。",
                 "en": "Expand the denominator and multiply the matching condition by it. Move $g+gt^2$ to the right and group by powers of $t$."
               },
               "math": "\\begin{aligned}(1-bt)^2+(gt)^2&=1-2bt+(b^2+g^2)t^2\\\\g+gt^2&=1-2bt+(b^2+g^2)t^2\\\\0&=(g^2+b^2-g)t^2-2bt+(1-g)\\end{aligned}",
@@ -1299,7 +1299,7 @@
             },
             {
               "text": {
-                "zh": "\\u9010\\u9879\\u8BA1\\u7B97\\u4E8C\\u6B21\\u65B9\\u7A0B\\u7684\\u4E09\\u4E2A\\u7CFB\\u6570\\uFF0C\\u518D\\u540C\\u9664\\u4EE5\\u8D1F\\u7684 $0.2$\\u3002\\u6574\\u6761\\u7B49\\u5F0F\\u4E24\\u8FB9\\u90FD\\u4F5C\\u76F8\\u540C\\u8FD0\\u7B97\\uFF0C\\u6240\\u4EE5\\u7B49\\u5F0F\\u6210\\u7ACB\\uFF0C\\u4E09\\u4E2A\\u7CFB\\u6570\\u7684\\u7B26\\u53F7\\u4E5F\\u90FD\\u4F1A\\u6539\\u53D8\\u3002",
+                "zh": "逐项计算二次方程的三个系数，再同除以负的 $0.2$。整条等式两边都作相同运算，所以等式成立，三个系数的符号也都会改变。",
                 "en": "Evaluate the three quadratic coefficients, then divide both sides by negative $0.2$. Applying the same operation to both sides preserves the equality and changes all three coefficient signs."
               },
               "math": "\\begin{aligned}g^2+b^2-g&=0.4^2+(-0.2)^2-0.4=-0.2\\\\-2b&=0.4,\\qquad1-g=0.6\\\\-0.2t^2+0.4t+0.6&=0\\\\t^2-2t-3&=0\\end{aligned}",
@@ -1307,7 +1307,7 @@
             },
             {
               "text": {
-                "zh": "\\u627E\\u51FA\\u4E58\\u79EF\\u4E3A $-3$\\u3001\\u548C\\u4E3A $-2$ \\u7684\\u4E24\\u4E2A\\u6570\\uFF0C\\u5373 $-3$ \\u4E0E $1$\\u3002\\u5206\\u89E3\\u540E\\uFF0C\\u53EA\\u8981\\u4E00\\u4E2A\\u56E0\\u5B50\\u4E3A\\u96F6\\uFF0C\\u4E58\\u79EF\\u5C31\\u4E3A\\u96F6\\u3002",
+                "zh": "找出乘积为 $-3$、和为 $-2$ 的两个数，即 $-3$ 与 $1$。分解后，只要一个因子为零，乘积就为零。",
                 "en": "Find two numbers with product $-3$ and sum $-2$: they are $-3$ and $1$. After factoring, the product is zero when either factor is zero."
               },
               "math": "\\begin{aligned}t^2-2t-3&=(t-3)(t+1)=0\\\\t-3=0&\\quad\\text{or}\\quad t+1=0\\\\t_1=3,&\\qquad t_2=-1\\end{aligned}",
@@ -1323,7 +1323,7 @@
             },
             {
               "text": {
-                "zh": "\\u7531\\u6B63\\u5207\\u53CD\\u89E3\\u957F\\u5EA6\\u524D\\uFF0C\\u5148\\u5199\\u6E05\\u5468\\u671F\\u3002\\u7B2C\\u4E00\\u6839\\u5728\\u7B2C\\u4E00\\u8C61\\u9650\\uFF1B\\u7B2C\\u4E8C\\u6839\\u7684\\u4E3B\\u503C\\u4E3A\\u8D1F\\uFF0C\\u8981\\u52A0 $\\pi$ \\u624D\\u843D\\u5728\\u975E\\u8D1F\\u7684\\u534A\\u6CE2\\u957F\\u5EA6\\u533A\\u95F4\\u3002",
+                "zh": "由正切反解长度前，先写清周期。第一根在第一象限；第二根的主值为负，要加 $\\pi$ 才落在非负的半波长度区间。",
                 "en": "Write the tangent period before recovering length. The first root lies in the first quadrant. The second has a negative principal value, so add $\\pi$ to place it in the nonnegative half-wavelength interval."
               },
               "math": "\\begin{aligned}2\\pi d_1/\\lambda&=\\arctan3\\approx1.249046\\\\d_1/\\lambda&=1.249046/(2\\pi)\\approx0.198792\\\\2\\pi d_2/\\lambda&=\\arctan(-1)+\\pi\\\\&=-\\pi/4+\\pi=3\\pi/4\\\\d_2/\\lambda&=(3\\pi/4)/(2\\pi)=0.375000\\end{aligned}",
@@ -1331,7 +1331,7 @@
             },
             {
               "text": {
-                "zh": "\\u7B2C\\u4E00\\u6839 $t_1=3$ \\u4EE3\\u56DE\\u540E\\uFF0C\\u5148\\u5408\\u5E76\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\uFF0C\\u518D\\u540C\\u4E58\\u5171\\u8F6D\\u6570\\u3002\\u5B9E\\u90E8\\u548C\\u865A\\u90E8\\u5206\\u522B\\u9664\\u4EE5\\u5B9E\\u5206\\u6BCD\\uFF0C\\u5F97\\u5230\\u7B2C\\u4E00\\u4E2A\\u4EA4\\u70B9\\u7684\\u5BFC\\u7EB3\\u3002",
+                "zh": "第一根 $t_1=3$ 代回后，先合并分子和分母，再同乘共轭数。实部和虚部分别除以实分母，得到第一个交点的导纳。",
                 "en": "Insert $t_1=3$, combine numerator and denominator, then multiply by the conjugate. Divide the real and imaginary numerator terms by the real denominator to obtain the first admittance."
               },
               "math": "\\begin{aligned}y_{d,1}&=\\frac{0.4+j(-0.2+3)}{(1+0.2\\cdot3)+j(0.4\\cdot3)}\\\\&=\\frac{0.4+j2.8}{1.6+j1.2}\\\\&=\\frac{(0.4+j2.8)(1.6-j1.2)}{1.6^2+1.2^2}\\\\&=\\frac{4+j4}{4}=1+j\\end{aligned}",
@@ -1339,7 +1339,7 @@
             },
             {
               "text": {
-                "zh": "\\u628A\\u7B2C\\u4E8C\\u6839 $t_2=-1$ \\u72EC\\u7ACB\\u4EE3\\u56DE\\u3002\\u7279\\u522B\\u6CE8\\u610F\\u5206\\u6BCD\\u5B9E\\u90E8\\u4E2D\\u7684\\u4E24\\u4E2A\\u8D1F\\u53F7\\uFF0C\\u4EE5\\u53CA\\u5206\\u6BCD\\u865A\\u90E8\\u7684\\u8D1F\\u53F7\\u3002",
+                "zh": "把第二根 $t_2=-1$ 独立代回。特别注意分母实部中的两个负号，以及分母虚部的负号。",
                 "en": "Substitute $t_2=-1$ independently. Keep track of the two negative signs in the denominator's real part and the negative imaginary part."
               },
               "math": "\\begin{aligned}y_{d,2}&=\\frac{0.4+j(-0.2-1)}{[1-(-0.2)(-1)]+j(0.4)(-1)}\\\\&=\\frac{0.4-j1.2}{0.8-j0.4}\\\\&=\\frac{(0.4-j1.2)(0.8+j0.4)}{0.8^2+0.4^2}\\\\&=\\frac{0.8-j0.8}{0.8}=1-j\\end{aligned}",
@@ -1388,7 +1388,7 @@
             },
             {
               "text": {
-                "zh": "\\u628A\\u5F00\\u8DEF\\u652F\\u8282\\u963B\\u6297\\u53D6\\u5012\\u6570\\u65F6\\uFF0C\\u5148\\u7EA6\\u53BB\\u53C2\\u8003\\u963B\\u6297\\u3002\\u518D\\u5229\\u7528 $1/(-j)=j$ \\u548C $1/\\cot\\theta=\\tan\\theta$\\uFF0C\\u9010\\u6B65\\u5F97\\u5230\\u6240\\u7528\\u7684\\u5BFC\\u7EB3\\u5F0F\\u3002",
+                "zh": "把开路支节阻抗取倒数时，先约去参考阻抗。再利用 $1/(-j)=j$ 和 $1/\\cot\\theta=\\tan\\theta$，逐步得到所用的导纳式。",
                 "en": "When taking the open-stub impedance reciprocal, cancel the reference impedance first. Then use $1/(-j)=j$ and $1/\\cot\\theta=\\tan\\theta$ to obtain the admittance formula step by step."
               },
               "math": "\\begin{aligned}y_s&=\\frac{Z_0}{-jZ_0\\cot(\\beta\\ell)}\\\\&=\\frac1{-j}\\frac1{\\cot(\\beta\\ell)}\\\\\\frac1{-j}&=\\frac j{(-j)j}=j\\\\y_s&=j\\tan(\\beta\\ell)\\end{aligned}",

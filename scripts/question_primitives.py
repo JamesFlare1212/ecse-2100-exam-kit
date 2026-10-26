@@ -45,7 +45,7 @@ def wire(ax, points, **kwargs):
 
 def arrow(ax, start, end, label='', offset=(0, 0), color=None, **kwargs):
     ax.add_patch(FancyArrowPatch(start, end, arrowstyle=kwargs.pop('style', '-|>'),
-                                mutation_scale=12, lw=1.2, color=color or INK, **kwargs))
+                                mutation_scale=12, lw=kwargs.pop('lw', 1.2), color=color or INK, **kwargs))
     if label:
         text(ax, (start[0]+end[0])/2+offset[0], (start[1]+end[1])/2+offset[1],
              label, ha='center', color=color or INK)
@@ -53,6 +53,37 @@ def arrow(ax, start, end, label='', offset=(0, 0), color=None, **kwargs):
 
 def node(ax, x, y, radius=.045):
     ax.add_patch(Circle((x, y), radius, fc=PAPER, ec=INK, lw=1.1, zorder=8))
+
+
+class Orthographic:
+    """One orthonormal camera for the model, its dimensions and its axes.
+
+    `view` points from the model toward the eye. Project 3D points only after
+    constructing the geometry; no independently rotated screen-space ellipses.
+    """
+    def __init__(self, view, up, origin=(0, 0)):
+        self.view = np.asarray(view, dtype=float)
+        self.view /= np.linalg.norm(self.view)
+        right = np.cross(up, self.view)
+        right /= np.linalg.norm(right)
+        self.matrix = np.array([right, np.cross(self.view, right)])
+        self.origin = np.asarray(origin, dtype=float)
+
+    def project(self, points):
+        return np.asarray(points) @ self.matrix.T + self.origin
+
+    def ring(self, radius, z=0, angles=None):
+        angles = np.linspace(0, 2*np.pi, 241) if angles is None else np.asarray(angles)
+        return self.project(np.column_stack((radius*np.cos(angles), radius*np.sin(angles),
+                                            np.full_like(angles, z))))
+
+
+def projected_axes(ax, camera, origin, length=.85):
+    """The same world x/y/z directions used to build the solid."""
+    for basis, label in zip(np.eye(3), ['$x$', '$y$', '$z$']):
+        delta = camera.matrix @ (basis*length)
+        arrow(ax, origin, origin+delta)
+        text(ax, *(origin+delta*1.3), label, fontsize=12, ha='center', va='center')
 
 
 def resistor(ax, a, b):
@@ -274,67 +305,114 @@ def distributed(ax):
     text(ax,8.8,1,'…',ha='center',fontsize=16,color=ACCENT)
 
 
-def coax_perspective(ax, leaky=True, gaussian=False):
-    canvas(ax,(-1.0,7.6),(-1.5,4.5),equal=True)
-    center=np.array([1.25,1.55]);shift=np.array([4.25,1.0]);angle=14
-    phi=math.radians(angle);u=np.array([math.cos(phi),math.sin(phi)])
-    v=np.array([-math.sin(phi),math.cos(phi)])
-    rx,ry=.83,1.55
-    def perimeter(c,t,scale=1):
-        return c+scale*(rx*math.cos(t)*u+ry*math.sin(t)*v)
-    top=perimeter(center,math.pi/2);bottom=perimeter(center,-math.pi/2)
+def coax_perspective(ax, leaky=True, gaussian=False, *, view, radii, length, radius_angles):
+    """A coaxial solid built from circular sections in the world x-y plane.
+
+    The cylinder axis is +z. Its outline generators occur where the radial
+    normal is perpendicular to the camera, so they are true ellipse tangents.
+    """
+    canvas(ax, (-2.4, 7.3), (-2.8, 3.9), equal=True)
+    camera = Orthographic(view, up=(1, 0, 0), origin=(.4, .5))
+    a, b = radii
+    center = camera.project((0, 0, 0))
+    facing = math.atan2(camera.view[1], camera.view[0])
+    tangencies = [facing+math.pi/2, facing-math.pi/2]
+    def point(radius, theta, z=0):
+        return camera.project((radius*math.cos(theta), radius*math.sin(theta), z))
+    near = camera.ring(b)
     if leaky:
-        outline=[top,top+shift]+[perimeter(center+shift,t) for t in np.linspace(math.pi/2,-math.pi/2,100)]+[bottom]
-        ax.add_patch(Polygon(outline,closed=True,ec=INK,fc=SIDE,lw=2))
+        far_arc = camera.ring(b, length, np.linspace(*tangencies, 121))
+        outline = np.vstack((point(b, tangencies[0]), far_arc, point(b, tangencies[1])))
+        ax.add_patch(Polygon(outline, closed=True, ec=INK, fc=SIDE, lw=1.8, zorder=1))
     else:
-        wire(ax,[top,top+shift],lw=1.8)
-        wire(ax,[bottom,bottom+shift],lw=1.8)
-    ax.add_patch(Ellipse(center,2*rx,2*ry,angle=angle,ec=INK,fc=FACE if leaky else PAPER,lw=2,zorder=4))
-    ax.add_patch(Ellipse(center,.56,.99,angle=angle,ec=INK,fc=PAPER if leaky else FACE,lw=1.7,zorder=5))
-    arrow(ax,center,center+.95*ry*v,color=INK if leaky else RED,zorder=7)
-    text(ax,*(center+1.05*ry*v),r'$b$',ha='center',color=INK if leaky else RED,fontsize=14,zorder=8)
-    arrow(ax,center,center+.49*v+.10*u,color=INK if leaky else ACCENT,zorder=7)
-    text(ax,*(center+.55*v+.28*u),r'$a$',fontsize=14,color=INK if leaky else ACCENT,zorder=8)
-    text(ax,*(center-.51*u+.32*v),r'$\varepsilon$',fontsize=15,zorder=8)
+        for theta in tangencies:
+            wire(ax, [point(b, theta), point(b, theta, length)], lw=1.8)
+    ax.add_patch(Polygon(near, closed=True, ec=INK, fc=FACE if leaky else PAPER, lw=1.8, zorder=4))
+    ax.add_patch(Polygon(camera.ring(a), closed=True, ec=INK, fc=PAPER if leaky else FACE, lw=1.5, zorder=5))
+    # Both radii start at the same center and end on actual circular sections.
+    radii_geometry = []
+    for key, radius, theta, offset, color in [
+        ('b', b, radius_angles[0], (-.28, .38), INK if leaky else RED),
+        ('a', a, radius_angles[1], (.12, .12), INK if leaky else ACCENT),
+    ]:
+        endpoint = point(radius, theta)
+        arrow(ax, center, endpoint, color=color, shrinkA=0, shrinkB=0, zorder=9)
+        text(ax, *(endpoint+offset), '$'+key+'$', ha='center', fontsize=14, color=color)
+        radii_geometry.append((radius, np.array([radius*math.cos(theta), radius*math.sin(theta), 0]), endpoint))
+    ax.add_patch(Circle(center, .022, fc=INK, ec='none', zorder=12))
+    text(ax, *(center+[-1.05, .15]), r'$\varepsilon$', fontsize=14, ha='right')
+    wire(ax, [center+[-.95, .22], point((a+b)/2, -.95)], color=MUTED, lw=.7, zorder=9)
     if leaky:
-        text(ax,*(center-1.55*u+1.06*v),r'$\varepsilon_0$',fontsize=12,zorder=8)
-        text(ax,*(center-1.20*u-.65*v),r'$\rho_{sa}$',ha='right',fontsize=13,zorder=8)
-        arrow(ax,center-1.05*u-.65*v,center-.18*u-.22*v,zorder=8)
-        text(ax,*(center-.06*u-1.08*v),r'$\rho(r)$',fontsize=14,ha='center',zorder=8)
+        text(ax, *(center+[-1.36, .94]), r'$\varepsilon_0$', fontsize=12, ha='center')
+        anchor = point(a, -2.2)
+        arrow(ax, center+[-1.18, -.72], anchor, zorder=9)
+        text(ax, *(center+[-1.27, -.88]), r'$\rho_{sa}$', fontsize=13, ha='right')
+        wire(ax, [point((a+b)/2, 3.0), (.15, -1.5)], color=MUTED, lw=.7, zorder=9)
+        text(ax, .15, -2.0, r'$\rho(s)$' if gaussian else r'$\rho(r)$', fontsize=13, ha='center')
     else:
-        text(ax,*(center-.35*u-.91*v),r'$V(a)=0$',ha='center',fontsize=12,zorder=8)
-        text(ax,*(center-.04*u-1.93*v),r'$V(b)=-V_0$',ha='center',fontsize=12,zorder=8)
-    origin=np.array([-.62,-.65])
-    for direction,label in [(np.array([0,.85]),'$x$'),(np.array([.54,-.4]),'$y$'),(np.array([.9,.26]),'$z$')]:
-        end=origin+direction;arrow(ax,origin,end)
-        text(ax,*(end+direction*.15),label,fontsize=13,ha='center')
+        anchor = point(a, 1.5)
+        wire(ax, [anchor, center+[1.12, -.15]], lw=.7, color=MUTED, zorder=9)
+        text(ax, *(center+[1.28, -.15]), r'$V(a)=0$', ha='left', va='center', fontsize=12)
+        text(ax, *(center+[.15, -1.98]), r'$V(b)=-V_0$', ha='center', fontsize=12)
+    projected_axes(ax, camera, np.array([-1.95, -2.15]), length=1.05)
+    geometry = {'kind': 'coax', 'camera': camera, 'radii': radii_geometry,
+                'radius_b': b, 'tangencies': tangencies, 'length': length}
     if gaussian:
-        for c in [center,center+shift*.72]:
-            ax.add_patch(Ellipse(c,2*rx*.75,2*ry*.75,angle=angle,fill=False,ec=RED,lw=1.6,ls='--',zorder=10))
-        for t in [-math.pi/2,math.pi/2]:
-            a=perimeter(center,t,.75);wire(ax,[a,a+shift*.72],color=RED,ls='--',lw=1.4,zorder=10)
-        arrow(ax,center,perimeter(center,-.3,.75),r'$R$',offset=(.3,-.28),color=RED,zorder=11)
-        length_start=perimeter(center,-math.pi/2)+np.array([0,-.60])
-        length_end=length_start+shift*.72
-        arrow(ax,length_start,length_end,r'$\ell$',offset=(0,-.35),color=RED,style='<->',zorder=11)
-        text(ax,5.8,-1.08,r'$a<R<b$',ha='center',fontsize=12,color=RED)
+        R = .85*b
+        ell = .72*length
+        # Closed Gaussian cylinder, including its front and rear end caps.
+        for z in [0, ell]:
+            wire(ax, camera.ring(R, z), color=RED, lw=1.5, ls='--', zorder=7)
+        for theta in tangencies:
+            wire(ax, [point(R, theta), point(R, theta, ell)], color=RED, lw=1.4, ls='--', zorder=7)
+        theta_R = 1.1
+        endpoint = point(R, theta_R)
+        arrow(ax, center, endpoint, color=RED, shrinkA=0, shrinkB=0, zorder=10)
+        text(ax, *(endpoint+[.45, .03]), '$R$', ha='left', fontsize=14, color=RED)
+        world_R = np.array([R*math.cos(theta_R), R*math.sin(theta_R), 0])
+        radii_geometry.append((R, world_R, endpoint))
+        # Radial outward normal has no axial component.
+        theta_n = .4
+        normal = np.array([math.cos(theta_n), math.sin(theta_n), 0])
+        start = R*normal+np.array([0, 0, .48*ell])
+        end = start+.25*normal
+        arrow(ax, camera.project(start), camera.project(end), color=RED, shrinkA=0, shrinkB=0, zorder=10)
+        text(ax, *(camera.project(end)+[.18, -.03]), r'$\hat{\mathbf{n}}$', fontsize=12, color=RED)
+        dimension = center+np.array([.7, -2.1])
+        delta = camera.project((0, 0, ell))-center
+        arrow(ax, dimension, dimension+delta, color=RED, style='<->', zorder=10)
+        text(ax, *(dimension+delta/2+[0, -.48]), r'$\ell$', fontsize=13, ha='center', color=RED)
+        text(ax, 5.1, -1.1, r'$a<R<b$', ha='center', fontsize=12, color=RED)
+        text(ax, 5.15, -1.75, r'$Q_{\mathrm{enc}}=Q_{sa}+Q_{\mathrm{vol}}$', ha='center', fontsize=10, color=RED)
+        geometry.update(R=R, normal=(start, end), ell=ell)
+    ax._projection_geometry = geometry
 
 
-def microstrip(ax):
-    canvas(ax,(-1.2,6.8),(-.9,4.5),equal=True)
-    A=np.array([.4,.0]);B=np.array([3.5,.0]);C=np.array([3.5,1.15]);D=np.array([.4,1.15]);depth=np.array([1.85,2.35])
-    for points,fill in [([D,C,C+depth,D+depth],FACE),([B,C,C+depth,B+depth],SIDE),([A,B,C,D],FACE)]:
-        ax.add_patch(Polygon(points,closed=True,fc=fill,ec=INK,lw=1.5))
-    wire(ax,[(.4,.575),(3.5,.575),(5.35,2.925)],ls='--',lw=1)
-    for y,label in [(1.15,r'$z=0.5h$'),(.575,r'$z=0$'),(0,r'$z=-0.5h$')]:
-        text(ax,.21,y,label,ha='right',va='center',fontsize=11)
-    text(ax,.4,-.49,r'$y=0$',ha='center',fontsize=11)
-    text(ax,3.5,-.49,r'$y=W$',ha='center',fontsize=11)
-    arrow(ax,(2.8,2.9),(1.8,1.8))
-    text(ax,2.78,1.82,r'$\vec J(z)$',ha='left',va='center',fontsize=14,zorder=10)
-    origin=np.array([5.4,.65])
-    for delta,label in [(np.array([-.62,-.6]),'$x$'),(np.array([.8,0]),'$y$'),(np.array([0,.8]),'$z$')]:
-        arrow(ax,origin,origin+delta);text(ax,*(origin+delta*1.2),label,ha='center',fontsize=12)
+def microstrip(ax, *, view, width, length, height):
+    """Six rectangular faces and a current direction in one 3D world frame."""
+    canvas(ax, (-1.9, 6.25), (-1.9, 2.4), equal=True)
+    camera = Orthographic(view, up=(0, 0, 1))
+    # Near cut is x=0; the strip extends toward negative x. Current is +x.
+    def face(points, fill):
+        ax.add_patch(Polygon(camera.project(points), closed=True, fc=fill, ec=INK, lw=1.5))
+    h = height/2
+    face([(0,width,-h),(-length,width,-h),(-length,width,h),(0,width,h)], SIDE)
+    face([(0,0,h),(0,width,h),(-length,width,h),(-length,0,h)], FACE)
+    face([(0,0,-h),(0,width,-h),(0,width,h),(0,0,h)], FACE)
+    wire(ax, camera.project([(0,0,0),(0,width,0),(-length,width,0)]), ls='--', lw=1)
+    for z, label in [(h, r'$z=0.5h$'), (0, r'$z=0$'), (-h, r'$z=-0.5h$')]:
+        endpoint = camera.project((0,0,z))
+        text(ax, *(endpoint+[-.14, 0]), label, ha='right', va='center', fontsize=11)
+    for y, label in [(0, r'$y=0$'), (width, r'$y=W$')]:
+        text(ax, *(camera.project((0,y,-h))+[0, -.27]), label, ha='center', va='top', fontsize=11)
+    current_start = np.array([-length*.75, width*.47, h])
+    current_end = np.array([-length*.28, width*.47, h])
+    arrow(ax, camera.project(current_start), camera.project(current_end), shrinkA=0, shrinkB=0, lw=1.6)
+    text(ax, *(camera.project(current_end)+[.50, -.25]), r'$\vec J(z)$', fontsize=14, va='center')
+    projected_axes(ax, camera, np.array([4.8, -.8]), length=.90)
+    ax._projection_geometry = {'kind': 'microstrip', 'camera': camera,
+                               'current': (current_start, current_end),
+                               'dimensions': (length, width, height)}
 
 
 def sphere_question(ax):

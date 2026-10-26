@@ -38,9 +38,9 @@ describe('Complete, bilingual and source-addressable content',()=>{
     for(const exam of exams)if(expected[exam.id])expect(exam.problems.map(p=>p.parts.length)).toEqual(expected[exam.id]);
     for(const exam of exams){expect(exam.problems.reduce((n,p)=>n+p.points,0)).toBe(exam.points);}
   });
-  test('translations contain no accidentally decoded TeX control characters',()=>{
+  test('translations contain no accidentally decoded TeX controls or literal Unicode escapes',()=>{
     function visit(v:unknown){
-      if(typeof v==='string'){expect(v).not.toMatch(/[\u0000-\u0008\u000b-\u001f]/);}
+      if(typeof v==='string'){expect(v).not.toMatch(/[\u0000-\u0008\u000b-\u001f]|\\u[\da-f]{4}/i);}
       else if(Array.isArray(v))v.forEach(visit);
       else if(v&&typeof v==='object'){
         const record=v as Record<string,unknown>;
@@ -58,6 +58,13 @@ describe('Complete, bilingual and source-addressable content',()=>{
     }
     for(const f of formulas){checkTex(f.math);count++;}
     expect(count).toBeGreaterThanOrEqual(partIds.size*4+formulas.length);
+  });
+  test('the dielectric comparison displays its final result once',()=>{
+    const part=problemEntries.find(({problem})=>problem.id==='e2-f25-q1')?.problem.parts.find(part=>part.label==='g');
+    if(!part)return;
+    const conclusion=conclusionMath(part.steps.at(-1)?.math,part.answer);
+    expect(conclusion.calculation).toBeUndefined();
+    expect(conclusion.result.match(/\\boxed\{/g)).toHaveLength(1);
   });
   test('all 93 solutions start with an equation and show intermediate calculation steps',()=>{
     for(const {problem} of problemEntries)for(const part of problem.parts){

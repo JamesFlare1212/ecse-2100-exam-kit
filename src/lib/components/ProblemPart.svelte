@@ -20,7 +20,6 @@
   const visible=$derived(study.revealed[`${part.id}`]??(study.mode==='practice'?0:1));
   const done=$derived(Boolean(study.completed[part.id]));
   const conclusion=$derived(conclusionMath(part.steps.at(-1)?.math,part.answer));
-  let explorationOpen=$state(false);
   function show(n:number){study.revealed[part.id]=n;}
   function source(solution=false){onsource({doc:solution?exam.solutionDoc:exam.doc,page:solution?part.solutionPage:part.sourcePage,label:{zh:solution?'官方解答原页':'原始试题',en:solution?'Official solution page':'Original question'}});}
 </script>
@@ -37,12 +36,6 @@
     {/if}
     {#if visible>part.steps.length}
       {#if part.figure}<Figure {assetBase} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
-      {#if part.spatialFigure}
-        <div class="solution-exploration">
-          <Button variant="outline" size="sm" aria-expanded={explorationOpen} onclick={()=>explorationOpen=!explorationOpen}><Eye data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?(explorationOpen?'收起 3D 工具':'查看 3D 空间结构'):(explorationOpen?'Hide 3D tool':'Explore the geometry in 3D')}</Button>
-          {#if explorationOpen}<Figure {assetBase} name={part.spatialFigure} locale={study.locale} {dark} interactive/>{/if}
-        </div>
-      {/if}
       {#if part.note}<Alert.Root class="solution-note"><Info aria-hidden="true"/><Alert.Title>{study.locale==='zh'?'核对说明':'Source check'}</Alert.Title><Alert.Description><RichText text={part.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
     {/if}
     <div class="part-actions">

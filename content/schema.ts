@@ -8,6 +8,7 @@ function fail(path: string, message: string): never {
 const text: Rule = (value, path) => {
   if (typeof value !== 'string' || !value.trim()) fail(path, 'expected nonempty text');
   if (/[\u0000-\u0008\u000b-\u001f]/.test(value)) fail(path, 'contains a control character; check JSON TeX escapes');
+  if (/\\u[\da-f]{4}/i.test(value)) fail(path, 'contains a literal Unicode escape; write the actual character in JSON');
 };
 const natural: Rule = (value, path) => {
   if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) fail(path, 'expected a nonnegative integer');
@@ -59,7 +60,7 @@ const part = object({
   id: text, label: text, points: natural, prompt: localized, steps: array(step, 3),
   answer: tex, sourcePage: positive, solutionPage: positive,
 }, {
-  answerText: localized, note: localized, figure: text, figureCaption: localized, spatialFigure: text,
+  answerText: localized, note: localized, figure: text, figureCaption: localized,
   questionFigure: object({ name: text, source: originalFigure, caption: localized }),
 });
 const problem = object({

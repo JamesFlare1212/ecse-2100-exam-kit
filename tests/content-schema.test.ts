@@ -14,6 +14,7 @@ describe('Authored JSON validation', () => {
   const cases: [string, (exam: Exam) => void, RegExp][] = [
     ['missing translation', e => { Reflect.deleteProperty(e.problems[0].statement, 'zh'); }, /statement\.zh/],
     ['unescaped TeX control character', e => { e.problems[0].statement.en += '\b'; }, /control character/],
+    ['literal Unicode escape in a translation', e => { e.problems[0].parts[0].steps[0].text.zh += ' \\u58F3'; }, /literal Unicode escape/],
     ['bare current-density symbol', e => { e.problems[0].parts[0].steps[0].text.zh += ' 电流密度 J'; }, /KaTeX delimiters/],
     ['Unicode math in prose', e => { e.problems[0].parts[0].note = {zh:'密度 ρ₀',en:'Density $\\rho_0$'}; }, /KaTeX delimiters/],
     ['broken inline equation', e => { e.problems[0].guide.known.en += ' $\\frac{$'; }, /guide\.known\.en.*invalid TeX/],

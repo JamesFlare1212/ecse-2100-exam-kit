@@ -26,6 +26,28 @@ def review(output):
             for (a, first), (b, second) in itertools.combinations(boxes, 2):
                 if first.overlaps(second):
                     collisions.append([a.get_text(), b.get_text()])
+            geometry = getattr(ax, '_projection_geometry', None)
+            if geometry:
+                camera = geometry['camera']
+                assert np.allclose(camera.matrix @ camera.matrix.T, np.eye(2)), (name, 'non-orthonormal camera')
+                assert np.allclose(camera.matrix @ camera.view, 0), (name, 'camera direction projects into screen')
+                if geometry['kind'] == 'coax':
+                    for radius, point, projected in geometry['radii']:
+                        assert math.isclose(np.linalg.norm(point), radius, abs_tol=1e-12), (name, 'radius endpoint off cylinder')
+                        assert point[2] == 0, (name, 'radii must share the front center')
+                        assert np.allclose(camera.project(point), projected), (name, 'radius uses a different projection')
+                    for theta in geometry['tangencies']:
+                        normal = np.array([math.cos(theta), math.sin(theta), 0])
+                        assert abs(np.dot(normal, camera.view)) < 1e-12, (name, 'outline is not tangent to cylinder')
+                    if 'R' in geometry:
+                        start, end = geometry['normal']
+                        radial = np.array([start[0], start[1], 0])
+                        assert math.isclose(np.linalg.norm(radial), geometry['R'], abs_tol=1e-12), (name, 'normal starts off Gaussian surface')
+                        assert abs((end-start)[2]) < 1e-12 and np.dot(radial, end-start) > 0, (name, 'normal is not radially outward')
+                        assert np.linalg.norm(np.cross(radial, end-start)) < 1e-12, (name, 'normal is not radial')
+                else:
+                    start, end = geometry['current']
+                    assert end[0] > start[0] and np.allclose((end-start)[1:], 0), (name, 'current must point along +x')
             if name.startswith('sphere-'):
                 patches = {patch.get_gid(): patch for patch in ax.patches if patch.get_gid()}
                 for key in ['a', 'b', 'R']:
@@ -59,7 +81,7 @@ def review(output):
     for item in failures:
         print(json.dumps(item, ensure_ascii=False))
     assert not failures, f'{len(failures)} figure/theme pairs have overlapping annotations'
-    print(f'Checked {len(results)} figure/theme pairs: no text overlaps; spherical radii, normals and label clearance verified.')
+    print(f'Checked {len(results)} figure/theme pairs: no text overlaps; 3D projections, cylinder tangencies, radii and outward normals verified.')
 
 
 if __name__ == '__main__':

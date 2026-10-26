@@ -21,11 +21,13 @@ def render_figures(save, dark):
         p.images(ax, stream)
         save(fig, name, dark)
 
-    single('e2-s26-q1',q.microstrip,(8.0,5.0))
+    strip = dict(view=(.72,.48,.50), width=2.6, length=3.7, height=.72)
+    coax = dict(view=(.35,.80,-.49), radii=(.52,1.65), length=5.0, radius_angles=(-.24,.75))
+    single('e2-s26-q1',lambda ax:q.microstrip(ax,**strip),(8.0,5.0))
     single('e2-s26-q2',q.boundaries,(8.0,4.4))
-    single('e2-s26-q3',q.coax_perspective,(8.0,5.0))
+    single('e2-s26-q3',lambda ax:q.coax_perspective(ax,**coax),(8.0,5.0))
     single('e2-s26-q4',q.conducting_plane,(8.3,4.5))
-    single('leaky-gauss',lambda ax:q.coax_perspective(ax,gaussian=True),(8.0,5.0))
+    single('leaky-gauss',lambda ax:q.coax_perspective(ax,gaussian=True,**coax),(8.0,5.0))
 
 
 if __name__ == '__main__':

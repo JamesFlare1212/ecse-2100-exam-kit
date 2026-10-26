@@ -172,8 +172,13 @@ def images(ax,fieldlines=False):
         ax.streamplot(xx,zz,Ex,Ez,color=TEAL,density=.9,linewidth=.7,arrowsize=.8)
     for x,z,q in charges:
         color=ORANGE if q>0 else TEAL
-        ax.add_patch(Circle((x,z),.13,fc=PAPER,ec=color,lw=1.7,ls='--' if z<0 else '-'))
-        label(ax,x,z,'+' if q>0 else '−',ha='center',va='center',color=color,fontsize=13)
+        # Draw the sign as geometry: font glyphs can exceed the circle or
+        # merge with its rim. Image charges use the same unbroken symbol;
+        # their lower-half placement and caption identify the image system.
+        ax.add_patch(Circle((x,z),.15,fc=PAPER,ec=color,lw=1.6,zorder=10))
+        line(ax,[x-.075,x+.075],[z,z],color=color,lw=1.6,solid_capstyle='round',zorder=11)
+        if q>0:
+            line(ax,[x,x],[z-.075,z+.075],color=color,lw=1.6,solid_capstyle='round',zorder=11)
         if not fieldlines:
             label_x=1.5*x
             line(ax,[x,label_x],[z+(.18 if z>0 else -.18),z+(.65 if z>0 else -.57)],color=MUTED,lw=.6)

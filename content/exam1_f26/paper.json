@@ -465,7 +465,7 @@
             },
             {
               "text": {
-                "zh": "\\u76F8\\u91CF\\u53D6\\u5B9E\\u90E8\\u4F7F\\u7528\\u6B27\\u62C9\\u516C\\u5F0F\\uFF1A\\u4F59\\u5F26\\u662F\\u5B9E\\u90E8\\uFF0C\\u6B63\\u5F26\\u524D\\u5E26 $j$\\uFF0C\\u5C5E\\u4E8E\\u865A\\u90E8\\u3002\\u5BF9\\u6BCF\\u4E2A\\u5B9E\\u6570\\u5E45\\u5EA6\\u5206\\u522B\\u4F7F\\u7528\\u8FD9\\u6761\\u89C4\\u5219\\uFF0C\\u5E45\\u5EA6\\u539F\\u6709\\u7684\\u6B63\\u8D1F\\u53F7\\u90FD\\u4FDD\\u7559\\u3002",
+                "zh": "相量取实部使用欧拉公式：余弦是实部，正弦前带 $j$，属于虚部。对每个实数幅度分别使用这条规则，幅度原有的正负号都保留。",
                 "en": "Use Euler's formula when taking the real part: cosine is real, while the sine term multiplied by $j$ is imaginary. Apply the rule separately to each real amplitude, retaining its original sign."
               },
               "math": "\\begin{aligned}e^{j\\theta}&=\\cos\\theta+j\\sin\\theta\\\\\\operatorname{Re}\\{A e^{j\\theta}\\}&=A\\cos\\theta\\qquad(A\\in\\mathbb R)\\end{aligned}",
@@ -609,7 +609,7 @@
             },
             {
               "text": {
-                "zh": "\\u590D\\u6570\\u6A21\\u7684\\u5E73\\u65B9\\u7B49\\u4E8E\\u5B83\\u4E0E\\u5171\\u8F6D\\u6570\\u7684\\u4E58\\u79EF\\u3002\\u5171\\u8F6D\\u4F1A\\u628A\\u6307\\u6570\\u4E2D\\u7684 $j$ \\u53D8\\u53F7\\uFF0C\\u9010\\u9879\\u76F8\\u4E58\\u540E\\u51FA\\u73B0\\u4E24\\u4E2A\\u4E92\\u4E3A\\u5171\\u8F6D\\u7684\\u4EA4\\u53C9\\u9879\\u3002",
+                "zh": "复数模的平方等于它与共轭数的乘积。共轭会把指数中的 $j$ 变号，逐项相乘后出现两个互为共轭的交叉项。",
                 "en": "A complex magnitude squared equals the value times its conjugate. Conjugation changes the sign of $j$ in each exponent; expansion produces two conjugate cross terms."
               },
               "math": "\\begin{aligned}|\\widetilde V(z)|^2&=(5e^{-j\\beta z}+3e^{j\\beta z})(5e^{j\\beta z}+3e^{-j\\beta z})\\\\&=25+15e^{-2j\\beta z}+15e^{2j\\beta z}+9\\\\&=34+15(e^{2j\\beta z}+e^{-2j\\beta z})\\end{aligned}",
@@ -617,7 +617,7 @@
             },
             {
               "text": {
-                "zh": "\\u7528\\u6B27\\u62C9\\u516C\\u5F0F\\u5408\\u5E76\\u4E24\\u4E2A\\u4EA4\\u53C9\\u9879\\uFF0C\\u518D\\u5229\\u7528\\u4F59\\u5F26\\u7684\\u6700\\u5927\\u503C\\u4E3A $1$\\u3002\\u8FD9\\u91CC $\\beta=2\\pi\\,\\mathrm{rad/m}$\\uFF0C\\u6240\\u4EE5\\u4EA4\\u53C9\\u9879\\u7684\\u76F8\\u4F4D\\u662F $4\\pi z$\\u3002",
+                "zh": "用欧拉公式合并两个交叉项，再利用余弦的最大值为 $1$。这里 $\\beta=2\\pi\\,\\mathrm{rad/m}$，所以交叉项的相位是 $4\\pi z$。",
                 "en": "Combine the cross terms with Euler's identity and use the maximum cosine value $1$. Here $\\beta=2\\pi\\,\\mathrm{rad/m}$, so the cross-term phase is $4\\pi z$."
               },
               "math": "\\begin{aligned}e^{j\\theta}+e^{-j\\theta}&=2\\cos\\theta\\\\|\\widetilde V(z)|^2&=34+30\\cos(4\\pi z)\\\\&\\le34+30=64\\,\\mathrm{V^2}\\end{aligned}",
@@ -1233,7 +1233,7 @@
             },
             {
               "text": {
-                "zh": "\\u5206\\u6BCD\\u7684\\u4EA4\\u53C9\\u9879\\u76F8\\u6D88\\uFF0C\\u800C\\u5206\\u5B50\\u7684\\u4EA4\\u53C9\\u9879\\u9700\\u8981\\u76F8\\u52A0\\u3002\\u628A $j^2=-1$ \\u5355\\u72EC\\u4EE3\\u5165\\uFF0C\\u8BF4\\u660E\\u5206\\u5B50\\u4E2D\\u7684\\u6B63 $1$ \\u4ECE\\u54EA\\u91CC\\u6765\\u3002",
+                "zh": "分母的交叉项相消，而分子的交叉项需要相加。把 $j^2=-1$ 单独代入，说明分子中的正 $1$ 从哪里来。",
                 "en": "The denominator cross terms cancel, while the numerator cross terms must be combined. Substitute $j^2=-1$ explicitly to show the positive $1$ in the numerator."
               },
               "math": "\\begin{aligned}(2-j)(4+j)&=8+2j-4j-j^2\\\\&=9-2j\\\\(4-j)(4+j)&=16-j^2=17\\end{aligned}",
@@ -1281,7 +1281,7 @@
             },
             {
               "text": {
-                "zh": "\\u4E3A\\u8BF4\\u660E\\u963B\\u6297\\u53CD\\u89E3\\u5F0F\\u7684\\u6765\\u6E90\\uFF0C\\u4ECE\\u53CD\\u5C04\\u7CFB\\u6570\\u7684\\u5B9A\\u4E49\\u4EA4\\u53C9\\u76F8\\u4E58\\uFF0C\\u518D\\u628A\\u542B $z$ \\u7684\\u9879\\u79FB\\u5230\\u540C\\u4E00\\u8FB9\\u5E76\\u63D0\\u53D6\\u516C\\u56E0\\u5B50\\u3002",
+                "zh": "为说明阻抗反解式的来源，从反射系数的定义交叉相乘，再把含 $z$ 的项移到同一边并提取公因子。",
                 "en": "Derive the inverse impedance relation by cross-multiplying the reflection definition, moving the terms containing $z$ to one side and factoring them."
               },
               "math": "\\begin{aligned}\\Gamma&=\\frac{z-1}{z+1}\\\\\\Gamma z+\\Gamma&=z-1\\\\z-\\Gamma z&=1+\\Gamma\\\\(1-\\Gamma)z&=1+\\Gamma\\\\z&=\\frac{1+\\Gamma}{1-\\Gamma}\\end{aligned}",

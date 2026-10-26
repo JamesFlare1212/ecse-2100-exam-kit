@@ -14,7 +14,7 @@ for (const paper of papers) {
     for (let page = 1; page <= doc.pages; page++) required(assetSource(`${doc.pageBase}/${page}.webp`));
   }
   for (const question of paper.exam.problems) {
-    const names = [question.figure, ...question.parts.flatMap(part => [part.figure, part.spatialFigure, part.questionFigure?.name])].filter((name): name is string => Boolean(name));
+    const names = [question.figure, ...question.parts.flatMap(part => [part.figure, part.questionFigure?.name])].filter((name): name is string => Boolean(name));
     for (const name of new Set(names)) for (const theme of ['', '-dark']) required(resolve(paper.directory, 'assets/figures', `${name}${theme}.svg`));
     for (const name of [question.figure, ...question.parts.flatMap(part => part.questionFigure ? [part.questionFigure.name] : [])]) required(resolve(paper.directory, 'assets/original-figures', `${name}.webp`));
   }

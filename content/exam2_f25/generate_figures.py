@@ -23,7 +23,9 @@ def render_figures(save, dark):
 
     single('e2-f25-q1',q.sphere_question,(5.8,4.7))
     single('e2-f25-q2',q.plates,(8.3,4.0))
-    single('e2-f25-q3',lambda ax:q.coax_perspective(ax,leaky=False),(7.5,4.6))
+    # Same world geometry as a cylinder; the source omits the far end cap.
+    coax = dict(view=(.28,.86,-.43), radii=(.34,1.65), length=5.0, radius_angles=(.30,.75))
+    single('e2-f25-q3',lambda ax:q.coax_perspective(ax,leaky=False,**coax),(7.5,4.6))
     single('e2-f25-q4',q.charged_spheres,(8.1,4.1))
 
 

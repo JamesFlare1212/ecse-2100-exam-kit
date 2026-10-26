@@ -28,7 +28,6 @@ export interface Part {
   note?: Localized;
   figure?: string;
   figureCaption?: Localized;
-  spatialFigure?: string;
   questionFigure?: { name:string; source:OriginalFigure; caption:Localized };
   sourcePage: number;
   solutionPage: number;
