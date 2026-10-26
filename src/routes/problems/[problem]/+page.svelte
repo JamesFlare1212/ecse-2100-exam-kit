@@ -56,7 +56,7 @@
   const completed=$derived(study.count(problem.parts.map(p=>p.id)));
   const originalPages=$derived([...new Set(problem.parts.map(p=>p.sourcePage))]);
   let view=$state('learn');
-  let openParts=$state<string[]>(untrack(()=>[data.problem.parts[0].id]));
+  let openParts=$state<string[]>([]);
   let source=$state<SourceRef|null>(null);
   let searchOpen=$state(false);
   let navOpen=$state(false);
@@ -69,7 +69,7 @@
   const navigationLabel=$derived(compactNavigation?t('打开试卷导航','Open exam navigation'):t(study.navigationOpen?'收起试卷导航':'展开试卷导航',study.navigationOpen?'Collapse exam navigation':'Expand exam navigation'));
   const referencesLabel=$derived(compactReferences?t('打开公式与课件','Open formulas and lectures'):t(study.referencesOpen?'收起公式与课件侧栏':'展开公式与课件侧栏',study.referencesOpen?'Collapse reference sidebar':'Expand reference sidebar'));
 
-  $effect(()=>{study.selected=problem.id;openParts=[problem.parts[0].id];view='learn';formulaPreviews.active=null;});
+  $effect(()=>{study.selected=problem.id;openParts=[];view='learn';formulaPreviews.active=null;});
   $effect(()=>{const serialized=study.serialize();if(study.ready)study.persist(serialized);});
   $effect(()=>{if(study.ready){document.documentElement.classList.toggle('dark',dark);document.documentElement.lang=study.locale==='zh'?'zh-CN':'en';document.documentElement.style.colorScheme=dark?'dark':'light';document.documentElement.dataset.navigation=study.navigationOpen?'open':'closed';document.documentElement.dataset.references=study.referencesOpen?'open':'closed';}});
 
