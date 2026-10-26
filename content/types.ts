@@ -1,5 +1,8 @@
 export type Locale = 'zh' | 'en';
 export type Localized = Record<Locale, string>;
+export type InOneLanguage<T> = T extends Localized ? string
+  : T extends (infer Item)[] ? InOneLanguage<Item>[]
+  : T extends object ? { [Key in keyof T]: InOneLanguage<T[Key]> } : T;
 export type Region = [number, number, number, number];
 export interface SourceRef { doc: string; page: number; label: Localized; region?: Region }
 export interface Formula {
@@ -9,24 +12,14 @@ export interface Formula {
   source: SourceRef;
   note?: Localized;
 }
-/** An equation group, optionally annotated; logical symbols belong in its TeX. */
-export interface Step { math: string; refs: string[]; text?: Localized }
 export interface OriginalFigure { doc:string; page:number; region:Region }
-export interface ProblemGuide {
-  concept: Localized;
-  known: Localized;
-  goal: Localized;
-  approach: Localized;
-}
 export interface Part {
   id: string;
   label: string;
   points: number;
   prompt: Localized;
-  steps: Step[];
-  answer: string;
-  answerText?: Localized;
-  note?: Localized;
+  solution: Localized;
+  note?: Partial<Localized>;
   figure?: string;
   figureCaption?: Localized;
   questionFigure?: { name:string; source:OriginalFigure; caption:Localized };
@@ -47,9 +40,9 @@ export interface Problem {
   figureCaption: Localized;
   originalFigure: OriginalFigure;
   lectures: SourceRef[];
-  guide: ProblemGuide;
+  guide: Localized;
   parts: Part[];
-  note?: Localized;
+  note?: Partial<Localized>;
 }
 export interface Exam {
   id: string;
@@ -74,8 +67,8 @@ export interface SourceDocument {
 }
 export interface StudyPageData {
   examIndex: ExamIndex[];
-  documents: Record<string, SourceDocument>;
+  documents: Record<Locale, Record<string, SourceDocument>>;
   exam: ExamInfo;
   problem: Problem;
-  assetBase: string;
+  assetBase: Localized;
 }

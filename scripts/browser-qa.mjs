@@ -6,8 +6,10 @@ import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {checkI18n} from './browser-i18n-qa.mjs';
 import {checkThemeNavigation} from './browser-theme-qa.mjs';
+import {checkContentLocales} from './browser-content-locales-qa.mjs';
 import {loadContent} from '../content/papers.server.ts';
 import {renderText} from '../src/lib/math.ts';
+import {parseText,displayEquations,formulaReference} from '../content/text.ts';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const destination=process.env.QA_ARTIFACTS??resolve(root,'artifacts');
@@ -27,7 +29,10 @@ async function selected(id){await page.waitForFunction(id=>document.querySelecto
 async function goto(id){await page.goto(`${base}/problems/${id}/`,{waitUntil:'domcontentloaded',timeout:45000});await selected(id);}
 async function noOverflow(){const metrics=await page.evaluate(()=>({width:innerWidth,documentWidth:document.documentElement.scrollWidth}));assert.ok(metrics.documentWidth<=metrics.width+1,JSON.stringify(metrics));}
 async function annotationText(question,locale){
-  const html=question.parts.flatMap(part=>part.steps.flatMap(step=>step.text?[renderText(step.text[locale])]:[]));
+  const html=question.parts.flatMap(part=>{
+    const body=part.solution[locale];
+    return parseText(body).children.filter(node=>node.type!=='math').map(node=>renderText(body.slice(node.position.start.offset,node.position.end.offset)));
+  });
   const actual=await page.locator('[data-authored-annotation]').evaluateAll((nodes,html)=>{
     const normalize=text=>text.replace(/\s+/g,' ').trim();
     return {
@@ -36,6 +41,20 @@ async function annotationText(question,locale){
     };
   },html);
   assert.deepEqual(actual.actual,actual.expected,`${question.id}: ${locale} prose and spacing`);
+}
+async function guideText(question,locale){
+  const value=await page.locator('.overview-prose').evaluate((node,html)=>{
+    const normalize=text=>text.replace(/\s+/g,' ').trim();
+    return {actual:normalize(node.textContent),expected:normalize(new DOMParser().parseFromString(html,'text/html').body.textContent)};
+  },renderText(question.guide[locale]));
+  assert.equal(value.actual,value.expected,`${question.id}: ${locale} guide`);
+}
+async function solutionMath(question,locale){
+  const rendered=await page.locator('[data-part]').evaluateAll(nodes=>nodes.map(node=>({
+    id:node.dataset.part,
+    equations:[...node.querySelectorAll('.solution-body .math-display')].map(math=>math.getAttribute('data-math'))
+  })));
+  assert.deepEqual(rendered,question.parts.map(part=>({id:part.id,equations:displayEquations(part.solution[locale])})),`${question.id}: all ${locale} calculations in authored order`);
 }
 async function revealAll(){
   const button=page.locator('.solution-section-heading button');
@@ -49,6 +68,7 @@ async function revealAll(){
 try {
   await checkI18n(browser,base,record);
   await checkThemeNavigation(browser,base,record);
+  await checkContentLocales(browser,base,record);
   const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:1000}});
   try {
     const staticPage=await staticContext.newPage();
@@ -81,7 +101,7 @@ try {
     for(const part of question.parts){
       const item=page.locator(`[data-part="${part.id}"]`);
       await item.locator('.part-trigger').click();
-      assert.equal(await item.locator('.solution-step').count(),part.steps.length);
+      assert.equal(await item.locator('.solution-body .math-display').count(),displayEquations(part.solution.zh).length);
       assert.equal(await item.locator('[data-answer]').count(),1);
       if(part.figure)assert.equal(await item.locator('.part-content .figure-image').count(),1);
       if(part.note)assert.equal(await item.locator('.solution-note').count(),1);
@@ -181,42 +201,46 @@ try {
     await goto(q.id);await revealAll();
     assert.equal(await page.locator('#problem-title').innerText(),q.title.zh);
     assert.equal(await page.locator('[data-problem-guide]').count(),1);
-    assert.equal(await page.locator('.overview-concept').innerText(),q.guide.concept.zh);
+    await guideText(q,'zh');
     assert.equal(await page.locator('.overview-references button').count(),q.lectures.length);
     assert.ok(await page.locator('[data-problem-guide]').evaluate(e=>Boolean(e.compareDocumentPosition(document.querySelector('#worked-parts'))&Node.DOCUMENT_POSITION_FOLLOWING)));
     assert.equal(await page.locator('[data-original-statement][lang="zh-CN"]').count(),1);
     assert.equal(await page.locator('[data-original-prompt][lang="zh-CN"]').count(),q.parts.length);
     await page.getByRole('button',{name:'Switch to English',exact:true}).click();
     assert.equal(await page.locator('#problem-title').innerText(),q.title.en);
-    assert.equal(await page.locator('.overview-concept').innerText(),q.guide.concept.en);
+    await guideText(q,'en');
     assert.equal(await page.locator('[data-original-statement][lang="en"]').count(),1);
     assert.equal(await page.locator('[data-original-prompt][lang="en"]').count(),q.parts.length);
     await annotationText(q,'en');
+    await solutionMath(q,'en');
     await page.getByRole('button',{name:'切换为中文',exact:true}).click();
     assert.equal(await page.locator('#problem-title').innerText(),q.title.zh);
     await annotationText(q,'zh');
+    await solutionMath(q,'zh');
     assert.equal(await page.locator('[data-part]').count(),q.parts.length);
     assert.equal(await page.locator('[data-answer]').count(),q.parts.length);
     assert.equal(await page.locator('.final-answer,.answer-heading,.problem-pagination').count(),0);
-    assert.equal(await page.locator('.solution-step[data-answer]').count(),q.parts.length);
+    assert.equal(await page.locator('.derivation-equations[data-answer]').count(),q.parts.length);
     const renderedSteps=await page.locator('[data-part]').evaluateAll(nodes=>nodes.map(node=>({
       id:node.dataset.part,
-      count:node.querySelectorAll('.solution-step').length,
-      firstEquation:node.querySelector('.solution-step .math-display annotation')?.textContent
+      count:node.querySelectorAll('.solution-body .math-display').length,
+      firstEquation:node.querySelector('.solution-body .math-display')?.getAttribute('data-math')
     })));
     for(const part of q.parts){
       const actual=renderedSteps.find(item=>item.id===part.id);
-      assert.equal(actual.count,part.steps.length,part.id);
-      assert.equal(actual.firstEquation,part.steps[0].math,part.id);
-      const refs=await page.locator(`[data-part="${part.id}"] .solution-step`).evaluateAll(nodes=>nodes.map(node=>node.querySelectorAll('.solution-annotation .formula-link-inline').length));
-      assert.deepEqual(refs,part.steps.map(step=>step.refs.length),part.id);
+      assert.equal(actual.count,displayEquations(part.solution.zh).length,part.id);
+      assert.equal(actual.firstEquation,displayEquations(part.solution.zh)[0],part.id);
+      let references=0;
+      function visit(node){if(formulaReference(node))references++;if(node.children)node.children.forEach(visit);}
+      visit(parseText(part.solution.zh));
+      assert.equal(await page.locator(`[data-part="${part.id}"] .solution-body .formula-link-inline`).count(),references,part.id);
       stepCount+=actual.count;
     }
     assert.equal(await page.locator('.derivation-equations .formula-link,.equation-references').count(),0);
     for(const link of await page.locator('main .solution-annotation .formula-link-inline').evaluateAll(nodes=>nodes.map(node=>({
       display:getComputedStyle(node).display,
       size:getComputedStyle(node).fontSize,
-      paragraphSize:getComputedStyle(node.closest('p')).fontSize,
+      paragraphSize:getComputedStyle(node.closest('.solution-annotation')).fontSize,
       icon:node.querySelector('svg')!==null
     })))){assert.equal(link.display,'inline');assert.equal(link.size,link.paragraphSize);assert.equal(link.icon,false);}
     for(const result of await page.locator('[data-answer]').evaluateAll(nodes=>nodes.map(node=>({box:Boolean(node.querySelector('.fbox')),background:getComputedStyle(node).backgroundColor,border:getComputedStyle(node).borderTopWidth})))) {
@@ -227,7 +251,7 @@ try {
     await noOverflow();partCount+=q.parts.length;
     await page.setViewportSize({width:375,height:812});
     await noOverflow();
-    assert.equal(await page.locator('.solution-step').count(),q.parts.reduce((total,part)=>total+part.steps.length,0));
+    assert.equal(await page.locator('.solution-body .math-display').count(),q.parts.reduce((total,part)=>total+displayEquations(part.solution.zh).length,0));
     await page.setViewportSize({width:1440,height:1000});
     await page.getByRole('button',{name:'收起全部推导',exact:true}).click();
     await page.waitForFunction(()=>[...document.querySelectorAll('#worked-parts [data-slot="accordion-content"]')].every(e=>e.hidden||getComputedStyle(e).display==='none'));
@@ -358,16 +382,16 @@ try {
   const solutionToggle=page.locator('.solution-section-heading button');
   if(await solutionToggle.getAttribute('aria-expanded')==='true')await solutionToggle.click();
   await page.waitForFunction(()=>document.querySelector('.solution-section-heading button')?.getAttribute('aria-expanded')==='false'
-    && [...document.querySelectorAll('.solution-step')].every(element=>!element.checkVisibility()));
+    && [...document.querySelectorAll('.solution-body .math-display')].every(element=>!element.checkVisibility()));
   assert.equal(await page.locator('[data-answer]:visible').count(),0);
-  assert.equal(await page.locator('.solution-step:visible').count(),0);
+  assert.equal(await page.locator('.solution-body .math-display:visible').count(),0);
   assert.equal(await page.locator('.worked-solution textarea').count(),0);
   assert.equal(await page.locator('[id^="attempt-"]').count(),0);
   record('The unified solution view has no mode switch or per-part text entry');
   const practicePart=page.locator('[data-part="e2-s26-q3-a"]');
-  const expectedPracticeSteps=exams.flatMap(e=>e.problems).find(q=>q.id==='e2-s26-q3').parts[0].steps.length;
+  const expectedPracticeSteps=displayEquations(exams.flatMap(e=>e.problems).find(q=>q.id==='e2-s26-q3').parts[0].solution.zh).length;
   await practicePart.locator('.part-trigger').click();
-  assert.equal(await practicePart.locator('.solution-step').count(),expectedPracticeSteps);
+  assert.equal(await practicePart.locator('.solution-body .math-display').count(),expectedPracticeSteps);
   assert.equal(await practicePart.locator('[data-answer]').count(),1);
   assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);

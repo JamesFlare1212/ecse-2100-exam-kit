@@ -9,12 +9,7 @@
 
 <section class="problem-overview" aria-labelledby="overview-title" data-problem-guide>
   <h2 id="overview-title">{locale==='zh'?'先读懂这道题':'Before the derivation'}</h2>
-  <p class="overview-concept"><RichText text={problem.guide.concept[locale]}/></p>
-  <dl class="overview-details">
-    <div><dt>{locale==='zh'?'已知':'Given'}</dt><dd><RichText text={problem.guide.known[locale]}/></dd></div>
-    <div><dt>{locale==='zh'?'所求':'Find'}</dt><dd><RichText text={problem.guide.goal[locale]}/></dd></div>
-    <div><dt>{locale==='zh'?'从哪里开始':'Start here'}</dt><dd><RichText text={problem.guide.approach[locale]}/></dd></div>
-  </dl>
+  <div class="overview-prose"><RichText text={problem.guide[locale]}/></div>
   <div class="overview-references">
     <span>{locale==='zh'?'讲义回顾':'In the lectures'}</span>
     <div class="flex flex-wrap gap-1">

@@ -1,5 +1,6 @@
 import formulaData from '../../content/formulas.json';
-import type { ExamIndex, Formula, Problem, SourceDocument, Localized } from './types';
+import type { ExamIndex, Formula, Problem, SourceDocument, Localized, Locale } from './types';
+import { formulaReferences } from '../../content/text';
 import { DEFAULT_PROBLEM_ID } from './problem-navigation';
 
 export const formulas = formulaData as Formula[];
@@ -13,8 +14,8 @@ export function createCatalog(exams: ExamIndex[], documents: Record<string, Sour
   return { exams, documents, problemEntries, partIds, problemIds, totalParts: partIds.size, findProblem };
 }
 export type Catalog = ReturnType<typeof createCatalog>;
-export function problemFormulas(problem: Problem) {
-  const ids = [...new Set(problem.parts.flatMap(p => p.steps.flatMap(s => s.refs)))];
+export function problemFormulas(problem: Problem, locale: Locale) {
+  const ids = [...new Set(problem.parts.flatMap(p => formulaReferences(p.solution[locale])))];
   return ids.map(id => formulaById[id]).filter(Boolean);
 }
 export const lectureTitles: Record<number, Localized> = {

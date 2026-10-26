@@ -6,12 +6,13 @@ import {exams,examIndex,problemEntries,documents} from '../src/lib/catalog.serve
 import {createCatalog,formulas} from '../src/lib/catalog';
 import {assetSource} from '../content/papers.server';
 import {plainText,renderText} from '../src/lib/math';
-import {conclusionMath} from '../src/lib/answer-math';
+import {displayEquations,formulaReferences} from '../content/text';
+import type {Part,Locale} from '../content/types';
 
-const root=resolve(import.meta.dir,'..');
 const {partIds}=createCatalog(examIndex,documents);
 const exists=(path:string)=>existsSync(assetSource(path));
 const checkTex=(tex:string)=>katex.renderToString(tex,{throwOnError:true,strict:'ignore',trust:false});
+const equations=(part:Part,locale:Locale='en')=>displayEquations(part.solution[locale]);
 describe('Complete, bilingual and source-addressable content',()=>{
   test('the client index preserves all searchable questions without shipping solutions',()=>{
     expect(examIndex.map(e=>e.id)).toEqual(exams.map(e=>e.id));
@@ -26,7 +27,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
         expect(summary.parts).toEqual(question.parts.map(({id,prompt})=>({id,prompt})));
         expect(summary).not.toHaveProperty('guide');
         expect(summary).not.toHaveProperty('givens');
-        for(const part of summary.parts){expect(part).not.toHaveProperty('steps');expect(part).not.toHaveProperty('answer');}
+        for(const part of summary.parts)expect(part).not.toHaveProperty('solution');
       }
     }
   });
@@ -53,8 +54,12 @@ describe('Complete, bilingual and source-addressable content',()=>{
   test('all equations and boxed answers compile in KaTeX',()=>{
     let count=0;
     function inline(text:string){for(const m of text.matchAll(/\$([^$\n]+)\$/g)){checkTex(m[1]);count++;}}
-    for(const {problem:q} of problemEntries){q.givens.forEach(tex=>{checkTex(tex);count++;});inline(q.statement.zh);inline(q.statement.en);for(const text of Object.values(q.guide)){inline(text.zh);inline(text.en);}
-      for(const p of q.parts){expect(p.steps.length).toBeGreaterThanOrEqual(2);checkTex(`\\boxed{${p.answer}}`);const conclusion=conclusionMath(p.steps.at(-1)?.math,p.answer);checkTex(conclusion.result);if(conclusion.calculation)checkTex(conclusion.calculation);expect(conclusion.result).toContain('\\boxed{');count++;inline(p.prompt.zh);inline(p.prompt.en);for(const s of p.steps){if(s.math){checkTex(s.math);count++;}for(const ref of s.refs)expect(formulas.some(f=>f.id===ref)).toBe(true);}}
+    for(const {problem:q} of problemEntries){q.givens.forEach(tex=>{checkTex(tex);count++;});inline(q.statement.zh);inline(q.statement.en);inline(q.guide.zh);inline(q.guide.en);
+      for(const p of q.parts)for(const locale of ['en','zh'] as const){
+        const math=equations(p,locale);expect(math.length).toBeGreaterThan(0);expect(math.at(-1)).toContain('\\boxed{');
+        inline(p.prompt[locale]);inline(p.solution[locale]);for(const tex of math){checkTex(tex);count++;}
+        for(const ref of formulaReferences(p.solution[locale]))expect(formulas.some(f=>f.id===ref)).toBe(true);
+      }
     }
     for(const f of formulas){checkTex(f.math);count++;}
     expect(count).toBeGreaterThanOrEqual(partIds.size*4+formulas.length);
@@ -62,21 +67,16 @@ describe('Complete, bilingual and source-addressable content',()=>{
   test('the dielectric comparison displays its final result once',()=>{
     const part=problemEntries.find(({problem})=>problem.id==='e2-f25-q1')?.problem.parts.find(part=>part.label==='g');
     if(!part)return;
-    const conclusion=conclusionMath(part.steps.at(-1)?.math,part.answer);
-    expect(conclusion.calculation).toBeUndefined();
-    expect(conclusion.result.match(/\\boxed\{/g)).toHaveLength(1);
+    expect(equations(part).at(-1)!.match(/\\boxed\{/g)).toHaveLength(1);
+    expect(part).not.toHaveProperty('answer');
   });
   test('all 93 solutions start with an equation and show intermediate calculation steps',()=>{
     for(const {problem} of problemEntries)for(const part of problem.parts){
-      expect(part.steps.length,part.id).toBeGreaterThan(0);
-      expect(part.steps[0].math,part.id).toBeTruthy();
-      expect(part.steps[0].math,part.id).not.toBe(part.answer);
-      for(const step of part.steps){
-        expect(step.math,part.id).toBeTruthy();
-        if(step.text){
-          expect(step.text.zh,part.id).not.toMatch(/待补充|TODO/);
-          expect(step.text.en,part.id).not.toMatch(/TODO|placeholder/i);
-        }
+      for(const locale of ['en','zh'] as const){
+        const math=equations(part,locale);expect(math.length,part.id).toBeGreaterThan(0);
+        expect(math[0],part.id).toBeTruthy();expect(math[0],part.id).not.toContain('\\boxed{');
+        expect(math.at(-1),part.id).toContain('\\boxed{');
+        expect(part.solution[locale],part.id).not.toMatch(/TODO|placeholder/i);
       }
       if(part.figure){
         expect(part.figureCaption?.zh,part.id).toBeTruthy();
@@ -86,7 +86,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
     const sphere=problemEntries.find(({problem})=>problem.id==='e2-f25-q1')?.problem;
     if(!sphere)return;
     for(const label of ['b','d']){
-      const math=sphere.parts.find(p=>p.label===label)!.steps.map(s=>s.math).join('\n');
+      const math=equations(sphere.parts.find(p=>p.label===label)!).join('\n');
       expect(math).toContain('\\oiint');
       expect(math).toContain('\\sin\\theta');
       expect(math).toContain('\\int_0^{2\\pi}');
@@ -95,26 +95,25 @@ describe('Complete, bilingual and source-addressable content',()=>{
   });
   test('every problem has a complete bilingual introduction before its derivation',()=>{
     for(const {problem} of problemEntries){
-      expect(Object.keys(problem.guide).sort()).toEqual(['approach','concept','goal','known']);
+      expect(Object.keys(problem.guide).sort()).toEqual(['en','zh']);
       for(const section of Object.values(problem.guide)){
-        expect(section.zh.trim()).toBeTruthy();expect(section.en.trim()).toBeTruthy();
-        expect(section.zh).not.toBe(section.en);
-        expect(section.zh+section.en).not.toMatch(/\\boxed|TODO|待补充/);
+        expect(section.trim()).toBeTruthy();
+        expect(section).not.toMatch(/\\boxed|TODO|待补充/);
       }
       expect(problem.lectures.length).toBeGreaterThan(0);
     }
     const strip=problemEntries.find(({problem})=>problem.id==='e2-s26-q1')?.problem;
     if(!strip)return;
-    expect(strip.guide.known.zh).toContain('中间区域为零');
-    expect(strip.guide.known.zh).not.toContain('0.2');
+    expect(strip.guide.zh).toContain('中间区域为零');
+    expect(strip.guide.zh).not.toContain('0.2');
     expect(strip.lectures.map(ref=>[ref.doc,ref.page])).toEqual([['lecture-14',9],['lecture-14',14]]);
   });
   test('all pages, SVG themes, original figures and formula excerpts exist',()=>{
     for(const doc of Object.values(documents)){expect(exists(doc.pdf)).toBe(true);for(let p=1;p<=doc.pages;p++)expect(exists(`${doc.pageBase}/${p}.webp`)).toBe(true);}
     function source(doc:string,page:number,region?:number[]){expect(documents[doc]).toBeDefined();expect(page).toBeGreaterThan(0);expect(page).toBeLessThanOrEqual(documents[doc].pages);if(region){expect(region).toHaveLength(4);expect(region[0]).toBeGreaterThanOrEqual(0);expect(region[1]).toBeGreaterThanOrEqual(0);expect(region[0]+region[2]).toBeLessThanOrEqual(1);expect(region[1]+region[3]).toBeLessThanOrEqual(1);}}
-    for(const {exam,problem:q,paper} of problemEntries){source(q.originalFigure.doc,q.originalFigure.page,q.originalFigure.region);q.lectures.forEach(r=>source(r.doc,r.page));expect(exists(`${paper.assetBase}/original-figures/${q.id}.webp`)).toBe(true);
-      for(const figure of [q.figure,...q.parts.flatMap(p=>[p.figure,p.questionFigure?.name]).filter(Boolean)]){for(const suffix of ['','-dark']){const path=`${paper.assetBase}/figures/${figure}${suffix}.svg`;expect(exists(path)).toBe(true);const svg=readFileSync(assetSource(path),'utf8');expect(svg).toContain('<svg');expect(svg).toContain('<text');expect(svg).not.toContain('<image');}}
-      q.parts.forEach(p=>{source(exam.doc,p.sourcePage);source(exam.solutionDoc,p.solutionPage);if(p.questionFigure){const r=p.questionFigure.source;source(r.doc,r.page,r.region);expect(exists(`${paper.assetBase}/original-figures/${p.questionFigure.name}.webp`)).toBe(true);}});
+    for(const {exam,problem:q,paper} of problemEntries)for(const base of Object.values(paper.assetBase)){source(q.originalFigure.doc,q.originalFigure.page,q.originalFigure.region);q.lectures.forEach(r=>source(r.doc,r.page));expect(exists(`${base}/original-figures/${q.id}.webp`)).toBe(true);
+      for(const figure of [q.figure,...q.parts.flatMap(p=>[p.figure,p.questionFigure?.name]).filter(Boolean)]){for(const suffix of ['','-dark']){const path=`${base}/figures/${figure}${suffix}.svg`;expect(exists(path)).toBe(true);const svg=readFileSync(assetSource(path),'utf8');expect(svg).toContain('<svg');expect(svg).toContain('<text');expect(svg).not.toContain('<image');}}
+      q.parts.forEach(p=>{source(exam.doc,p.sourcePage);source(exam.solutionDoc,p.solutionPage);if(p.questionFigure){const r=p.questionFigure.source;source(r.doc,r.page,r.region);expect(exists(`${base}/original-figures/${p.questionFigure.name}.webp`)).toBe(true);}});
     }
     for(const f of formulas){source(f.source.doc,f.source.page,f.source.region);expect(exists(`/excerpts/${f.id}.webp`)).toBe(true);}
   });
@@ -148,7 +147,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
     ]);
     let checked=0,visualChecks=0;
     for(const exam of exams){
-      const source=normalize(readFileSync(resolve(root,`content/${problemEntries.find(entry=>entry.exam.id===exam.id)!.paper.name}/extracted/${exam.doc}.txt`),'utf8'));
+      const source=normalize(readFileSync(resolve(problemEntries.find(entry=>entry.exam.id===exam.id)!.paper.directory,`extracted/${exam.doc}.txt`),'utf8'));
       for(const q of exam.problems)for(const [part,text] of [['statement',q.statement.en],...q.parts.map(p=>[p.label,p.prompt.en])]){
         for(const run of text.split(/\$\$[\s\S]*?\$\$|\$[^$\n]+\$/))for(const line of run.split('\n')){
           const prose=normalize(line);if(prose.split(' ').length<4)continue;
@@ -172,16 +171,16 @@ describe('Complete, bilingual and source-addressable content',()=>{
     if(!strip)return;
     for(const locale of ['zh','en'] as const){
       expect(strip.statement[locale]).toMatch(/\\vec\s*J/);
-      expect(strip.parts[0].steps[0].text![locale]).toMatch(/\$\\vec\s*J\$/);
+      expect(strip.parts[0].solution[locale]).toMatch(/\$\\vec\s*J\$/);
     }
-    expect(strip.parts[0].steps[0].math).toContain('\\vec{J}\\cdot d\\vec{S}');
+    expect(equations(strip.parts[0])[0]).toContain('\\vec{J}\\cdot d\\vec{S}');
     expect(formulas.find(f=>f.id==='ohm')?.math).toBe('\\vec{J}=\\sigma\\vec{E}');
-    expect(strip.parts[0].answer).toContain('J_0');
-    expect(strip.parts[0].answer).not.toContain('\\vec');
+    expect(equations(strip.parts[0]).at(-1)).toContain('J_0');
+    expect(equations(strip.parts[0]).at(-1)).not.toContain('\\vec');
   });
   test('worked integrals retain antiderivatives, endpoint subtraction and intermediate algebra',()=>{
     const calculations=(id:string)=>problemEntries.flatMap(({problem})=>problem.parts)
-      .find(part=>part.id===id)?.steps.map(step=>step.math).join('\n').replaceAll('&','');
+      .find(part=>part.id===id)?.solution.en.replaceAll('&','');
     const milestones:Record<string,string[]>={
       'e2-s26-q1-a':['[J_0y]_0^W','[z]_{-0.5h}^{-0.4h}','(-0.4h+0.5h)','[z]_{0.4h}^{0.5h}','I_{\\mathrm{middle}}'],
       'e2-f25-q1-b':['[-\\cos\\theta]_0^\\pi','\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^R','\\frac{4\\pi\\rho_0R^3}{3}'],
@@ -243,7 +242,7 @@ describe('Independent physical and numerical consistency checks',()=>{
   });
   test('the official F26 interface choices retain local reflections while net input reflection cancels',()=>{
     const part=problemEntries.find(({problem})=>problem.id==='e1-f26-q4')?.problem.parts.at(-1);
-    if(part){expect(part.answer).toBe('\\text{Interfaces (a), (b) and (c)}');expect(part.answerText?.en).toContain('Select a, b and c');}
+    if(part){expect(equations(part).at(-1)).toContain('\\text{Interfaces (a), (b) and (c)}');expect(part.solution.en).toContain('Select a, b and c');}
     const load={re:150,im:-50},gammaLoad=div(add(load,{re:-50,im:0}),add(load,{re:50,im:0}));
     expect(Math.hypot(gammaLoad.re,gammaLoad.im)).toBeGreaterThan(0);
     for(const resistance of [14.837129522559273,168.49620381077406]){

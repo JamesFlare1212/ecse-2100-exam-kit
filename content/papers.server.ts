@@ -1,17 +1,19 @@
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseContent } from './schema.ts';
 import { createExamIndex } from './navigation.ts';
 import { readQuestionMarkdown, type MarkdownQuestion } from './markdown.ts';
-import type { Exam, ExamInfo, Formula, SourceDocument } from './types.ts';
+import { CONTENT_LOCALES, joinTranslations } from './localization.ts';
+import type { Exam, ExamInfo, Formula, InOneLanguage, Locale, Localized, SourceDocument } from './types.ts';
 
 export const PAPER_NAME = /^exam[1-9]\d*_[fs]\d{2}$/;
 export interface Paper {
   name: string;
   directory: string;
-  assetBase: string;
+  directories: Record<Locale, string>;
+  assetBase: Localized;
   exam: Exam;
-  documents: Record<string, SourceDocument>;
+  documents: Record<Locale, Record<string, SourceDocument>>;
 }
 function readJson<T>(path: string): T {
   try { return JSON.parse(readFileSync(path, 'utf8')); }
@@ -20,51 +22,59 @@ function readJson<T>(path: string): T {
 
 /** Discover complete paper folders; no source list or generated registry. */
 export function loadContent(directory = resolve('content'), articles?: readonly MarkdownQuestion[]) {
-  const documents = readJson<Record<string, SourceDocument>>(resolve(directory, 'documents.json'));
+  const shared = readJson<Record<string, SourceDocument>>(resolve(directory, 'documents.json'));
+  const documentsByLocale = { en: { ...shared }, zh: { ...shared } };
   const formulas = readJson<Formula[]>(resolve(directory, 'formulas.json'));
-  const papers: Paper[] = readdirSync(directory, { withFileTypes: true })
-    .filter(entry => entry.isDirectory() && PAPER_NAME.test(entry.name))
-    .map(entry => {
-      const folder = resolve(directory, entry.name);
-      const info = readJson<ExamInfo>(resolve(folder, 'paper.json'));
-      if (Object.hasOwn(info, 'problems')) throw new Error(`${entry.name}/paper.json: author questions in questions/*.md`);
-      const questions = resolve(folder, 'questions');
-      const files = readdirSync(questions, { withFileTypes: true }).filter(file => file.isFile() && file.name.endsWith('.md'));
-      const problems = files.map(file => {
-        const path = resolve(questions, file.name);
-        const problem = articles ? articles.find(article => resolve(article.filePath) === path)?.problem
-          : readQuestionMarkdown(readFileSync(path, 'utf8'), path);
-        if (!problem) throw new Error(`${path}: missing from the Astro questions collection`);
-        if (file.name !== `q${problem.number}.md`) throw new Error(`${path}: filename must match question number q${problem.number}.md`);
-        return problem;
-      }).sort((a, b) => a.number - b.number);
-      const exam: Exam = { ...info, problems };
+  const names = new Set(Object.values(CONTENT_LOCALES).flatMap(locale =>
+    readdirSync(resolve(directory, locale), { withFileTypes: true }).filter(entry => entry.isDirectory() && PAPER_NAME.test(entry.name)).map(entry => entry.name)));
+  const papers: Paper[] = [...names].map(name => {
+      const directories = { en: resolve(directory, 'en', name), zh: resolve(directory, 'zh-cn', name) };
+      const localized = Object.fromEntries((Object.keys(CONTENT_LOCALES) as Locale[]).map(locale => {
+        const folder = directories[locale];
+        const info = readJson<InOneLanguage<ExamInfo>>(resolve(folder, 'paper.json'));
+        if (Object.hasOwn(info, 'problems')) throw new Error(`${folder}/paper.json: author questions in questions/*.md`);
+        const questions = resolve(folder, 'questions');
+        const resources = readJson<import('./markdown').QuestionResources>(resolve(folder, 'figure-sources.json'));
+        const problems = readdirSync(questions, { withFileTypes: true }).filter(file => file.isFile() && file.name.endsWith('.md')).map(file => {
+          const path = resolve(questions, file.name);
+          const problem = articles ? articles.find(article => resolve(article.filePath) === path)?.problem
+            : readQuestionMarkdown(readFileSync(path, 'utf8'), path, resources);
+          if (!problem) throw new Error(`${path}: missing from the Astro questions collection`);
+          if (file.name !== `q${problem.number}.md`) throw new Error(`${path}: filename must match question number q${problem.number}.md`);
+          return problem;
+        }).sort((a, b) => a.number - b.number);
+        return [locale, { ...info, problems }];
+      })) as Record<Locale, InOneLanguage<Exam>>;
+      const exam = joinTranslations<Exam>(localized.en, localized.zh, name);
       const match = /^e([1-9]\d*)-([fs]\d{2})$/.exec(exam.id);
-      if (!match || entry.name !== `exam${match[1]}_${match[2]}` || exam.number !== Number(match[1])
+      if (!match || name !== `exam${match[1]}_${match[2]}` || exam.number !== Number(match[1])
         || exam.year % 100 !== Number(match[2].slice(1))) {
-        throw new Error(`${entry.name}/paper.json: exam ID and number must match the paper folder`);
+        throw new Error(`${name}/paper.json: exam ID and number must match the paper folder`);
       }
-      const assetBase = `/papers/${entry.name}`;
-      const local = readJson<Record<string, SourceDocument>>(resolve(folder, 'documents.json'));
-      const owned: Record<string, SourceDocument> = {};
-      for (const [id, doc] of Object.entries(local)) {
-        if (Object.hasOwn(documents, id)) throw new Error(`${entry.name}: duplicate document ${id}`);
-        if (!/^sources\/[a-z0-9-]+\.pdf$/.test(doc.pdf) || !/^pages\/[a-z0-9-]+$/.test(doc.pageBase)) {
-          throw new Error(`${entry.name}/documents.json: use relative sources/*.pdf and pages/* asset paths`);
+      const assetBase = { en: `/papers/en/${name}`, zh: `/papers/zh-cn/${name}` };
+      const owned = { en: {}, zh: {} } as Paper['documents'];
+      for (const locale of Object.keys(CONTENT_LOCALES) as Locale[]) {
+        const folder = directories[locale], documents = documentsByLocale[locale];
+        const local = readJson<Record<string, SourceDocument>>(resolve(folder, 'documents.json'));
+        for (const [id, doc] of Object.entries(local)) {
+          if (Object.hasOwn(documents, id)) throw new Error(`${folder}: duplicate document ${id}`);
+          if (!/^sources\/[a-z0-9-]+\.pdf$/.test(doc.pdf) || !/^pages\/[a-z0-9-]+$/.test(doc.pageBase)) {
+            throw new Error(`${folder}/documents.json: use relative sources/*.pdf and pages/* asset paths`);
+          }
+          owned[locale][id] = { ...doc, pdf: `${assetBase[locale]}/${doc.pdf}`, pageBase: `${assetBase[locale]}/${doc.pageBase}` };
+          documents[id] = owned[locale][id];
         }
-        owned[id] = { ...doc, pdf: `${assetBase}/${doc.pdf}`, pageBase: `${assetBase}/${doc.pageBase}` };
-        documents[id] = owned[id];
+        if (!Object.hasOwn(owned[locale], exam.doc) || !Object.hasOwn(owned[locale], exam.solutionDoc))
+          throw new Error(`${folder}: the paper must own its exam and solution PDFs`);
+        if (!existsSync(resolve(folder, 'assets'))) throw new Error(`${folder}: missing assets directory`);
       }
-      if (!Object.hasOwn(owned, exam.doc) || !Object.hasOwn(owned, exam.solutionDoc)) {
-        throw new Error(`${entry.name}: the paper must own its exam and solution PDFs`);
-      }
-      if (!existsSync(resolve(folder, 'assets'))) throw new Error(`${entry.name}: missing assets directory`);
-      return { name: entry.name, directory: folder, assetBase, exam, documents: owned };
+      return { name, directory: directories.en, directories, assetBase, exam, documents: owned };
     });
   papers.sort((a, b) => a.exam.number - b.exam.number || a.exam.year - b.exam.year
     || Number(a.exam.id.includes('-f')) - Number(b.exam.id.includes('-f')) || a.name.localeCompare(b.name));
-  const checked = parseContent(papers.map(paper => paper.exam), formulas, documents);
-  return { ...checked, papers, examIndex: createExamIndex(checked.exams) };
+  const checked = parseContent(papers.map(paper => paper.exam), formulas, documentsByLocale.en);
+  parseContent(checked.exams, formulas, documentsByLocale.zh);
+  return { ...checked, documentsByLocale, papers, examIndex: createExamIndex(checked.exams) };
 }
 
 /** Resolve public asset URLs to canonical source files without staging. */
@@ -73,23 +83,39 @@ export function assetSource(path: string, directory = resolve('content')) {
     throw new Error(`Invalid local asset path: ${path}`);
   }
   if (path.startsWith('/papers/')) {
-    const [, , name, ...parts] = path.split('/');
-    if (!PAPER_NAME.test(name) || !parts.length) throw new Error(`Invalid paper asset path: ${path}`);
-    return resolve(directory, name, 'assets', ...parts);
+    const [, , locale, name, ...parts] = path.split('/');
+    if (!Object.values(CONTENT_LOCALES).includes(locale as 'en' | 'zh-cn') || !PAPER_NAME.test(name) || !parts.length) throw new Error(`Invalid paper asset path: ${path}`);
+    return resolve(directory, locale, name, 'assets', ...parts);
   }
   return resolve(directory, '../static', path.slice(1));
 }
 
 /** Copy only public assets. Markdown, JSON, extracted text and Python remain private. */
 export function stagePaperAssets(papers: Paper[], destination = resolve('static/papers')) {
-  mkdirSync(destination, { recursive: true });
-  const active = new Set(papers.map(paper => paper.name));
-  for (const entry of readdirSync(destination)) {
-    if (!active.has(entry)) rmSync(resolve(destination, entry), { recursive: true, force: true });
+  // Preserve unchanged files so watching the public directory does not turn a
+  // prose edit into hundreds of asset changes and browser reloads.
+  function sync(source: string, target: string) {
+    mkdirSync(target, { recursive: true });
+    const entries = readdirSync(source, { withFileTypes: true });
+    for (const name of readdirSync(target)) if (!entries.some(entry => entry.name === name))
+      rmSync(resolve(target, name), { recursive: true, force: true });
+    for (const entry of entries) {
+      const from = resolve(source, entry.name), to = resolve(target, entry.name);
+      if (entry.isDirectory()) sync(from, to);
+      else if (!existsSync(to) || !readFileSync(from).equals(readFileSync(to))) copyFileSync(from, to);
+    }
   }
-  for (const paper of papers) {
-    const target = resolve(destination, paper.name);
-    rmSync(target, { recursive: true, force: true });
-    cpSync(resolve(paper.directory, 'assets'), target, { recursive: true });
+  mkdirSync(destination, { recursive: true });
+  for (const entry of readdirSync(destination)) {
+    if (!Object.values(CONTENT_LOCALES).includes(entry as 'en' | 'zh-cn')) rmSync(resolve(destination, entry), { recursive: true, force: true });
+  }
+  for (const [locale, folder] of Object.entries(CONTENT_LOCALES) as [Locale, string][]) {
+    const localized = resolve(destination, folder);
+    mkdirSync(localized, { recursive: true });
+    for (const entry of readdirSync(localized)) if (!papers.some(paper => paper.name === entry)) rmSync(resolve(localized, entry), { recursive: true, force: true });
+    for (const paper of papers) {
+      const target = resolve(localized, paper.name);
+      sync(resolve(paper.directories[locale], 'assets'), target);
+    }
   }
 }

@@ -1,0 +1,433 @@
+
+--- PAGE 1 ---
+                                  Fields and Waves
+
+                               Exam 1
+
+                                              Fall 2026
+
+
+
+                        1                   /8
+
+                        2                   /8
+
+                        3                   /8
+
+                        4                   /8
+
+                         Total               /32
+
+
+
+
+                                    Name _______________________________
+
+
+
+                                      RIN _______________________________
+
+
+
+
+
+Notes:
+SHOW ALL WORK. BEGIN WITH FORMULAS, THEN SUBSTITUTE VALUES AND
+UNITS. No credit will be given for answers that appear without justification. Partial credit will
+be awarded where possible, so show your work so that we can follow your thought process.
+Where a “Primary Equation” is requested, write down the equation from the crib sheet you used
+to solve that part of the problem. Use the backs of pages if there is not enough room on the front.
+If you do, please indicate on the front of your exam that there is more work on the back of pages.
+
+Unless otherwise stated in a problem, provide at least 2 significant digits in answers. Ensure that
+your calculator is set to use radians for trigonometric functions (and not degrees) and include
+units with all numerical answers.
+
+At least skim through the entire exam before you begin and then start with the problems you
+know best.
+
+--- PAGE 2 ---
+Problem 1: Transmission Line Fundamentals [8 pts]
+
+a)  The transmission line model below consists of segments of length Δ𝑧≪𝜆 and the following circuit
+    element parameters:
+    •  𝑙= 0.3125 μH/m = 3.125 × 10−7 H/m
+    •  𝑐= 55.6 pF/m = 5.56 × 10−11 F/m
+
+
+
+
+
+     i)   Is the transmission line that is represented by the model above a lossy transmission line or a
+         lossless transmission line? Briefly explain.
+
+      The transmission line model represents a lossless line, as it lacks series resistance and parallel
+       conductance elements.
+
+
+
+
+
+      ii)  Calculate the velocity factor and characteristic impedance of the transmission line.
+
+                                       Velocity Factor:
+         Primary   𝒖 = 𝟏/√𝒍𝒄     𝑣𝑓 = 𝑢/𝑐
+         Equations:  𝒁𝟎 = √𝒍                 1                    1
+                                  𝒄       𝑣𝑓 = (      )                        = 𝟎. 𝟖                             𝑚                                           1/2
+                                     3 × 108            𝐻           𝐹
+                                                    𝑠  [(3.125 × 10−7 𝑚) (5.56 × 10−11 𝑚)]
+
+           Characteristic Impedance:
+
+                  𝐻
+                3.125 × 10−7                𝑚
+         𝑍0 = √          = 𝟕𝟒. 𝟗𝟕𝛀                      𝐹
+                5.56 × 10−11                𝑚
+
+
+      iii) If the transmission line length is 𝐿= 60m, calculate the time delay 𝑇𝑑 of the transmission line.
+
+         Primary                                      60 𝑚
+         Equation:             𝐿= 𝑢⋅𝑇𝑑            𝑇𝑑 = 𝐿/𝑢 =       𝑚
+                                                           0.8 · 3 × 108                                                                    𝑠
+                                          𝑇𝑑 = 250 × 10−9 𝑠 = 𝟐𝟓𝟎 𝒏𝒔
+
+
+
+
+
+                                          1
+
+--- PAGE 3 ---
+b) Now consider the DC circuit below, which contains a switch that closes at 𝑡= 0, and a transmission
+    line with the same properties as specified by the model in part a).
+
+
+
+
+
+    For the bounce diagram below, calculate the following parameters:
+    •   All reflection coefficients
+    •   All voltage amplitudes
+    •  The voltage at the load 𝑉𝐿 at 𝑡= 𝑇𝑑
+    •  The voltage at the input to the transmission line 𝑉𝑖𝑛 at 𝑡= 2𝑇𝑑
+
+                                  𝑍𝐿−𝑍0  25𝛺−75𝛺
+                                                 𝛤𝐿 =     =          −𝟏/𝟐                                 𝑍𝐿+ 𝑍0  25𝛺+ 75𝛺=
+                                  𝑍𝑔−𝑍0  75𝛺−75𝛺
+                                               𝛤𝑔 =     =           𝟎                                𝑍𝑔+ 𝑍0  75𝛺+ 75𝛺=
+
+                                      +         𝑍0            75𝛺
+                                           𝑉1 = 𝑉𝑔·     = 12𝑉·       = 𝟔𝑽
+                                                 𝑍0 + 𝑅𝑔      75𝛺+ 75𝛺
+                                           𝑉1− = 𝑉1 + 𝛤𝐿 = 6𝑉⋅(−1 = −𝟑𝑽                                                          2)
+                                          𝑉2+ = 𝑉1+𝛤𝐿𝛤𝑔 = 𝟎𝑽
+                                          𝑉2− = 𝑉1+𝛤𝐿2𝛤𝑔 = 𝟎𝑽
+
+                                         𝑉𝐿(𝑇𝑑) = 𝑉1+ 𝑉1− = 6𝑉+ (−3𝑉) = 𝟑𝑽
+                                          𝑉𝑖𝑛(2𝑇𝑑) = 𝑉1+ + 𝑉1−+ 𝑉2+ = 𝟑𝑽
+
+
+
+
+
+                                          2
+
+--- PAGE 4 ---
+Problem 2: Damaged Transmission Line [8 pts]
+
+The transmission line in Circuit A below has been damaged, resulting in an abrupt change in its
+characteristic impedance at a point somewhere along the transmission line.
+
+           Circuit A
+
+
+
+
+
+We can model Circuit A above by replacing the transmission line between the point of the damage and
+the load by an effective input impedance 𝑍eff, as shown in Circuit B below.
+           Circuit B
+
+
+
+
+
+Using a directional coupler, it has been determined that the steady-state forward-traveling voltage wave on
+the transmission line between its input and 𝑍eff in Circuit B is given by the phasor 𝑉̃+(𝑧) = 5𝑒−𝑗2𝜋𝑧 V,
+and the backward-traveling voltage wave is given by the phasor 𝑉̃−(𝑧) = 3𝑒𝑗2𝜋𝑧 V.
+
+a)  Write the expression for the total voltage wave on the transmission line between its input and 𝑍eff in
+    the time domain.
+
+     𝑉(𝑧, 𝑡) = 𝑅𝑒[(𝑉̃+ + 𝑉̃−)𝑒𝑗𝜔𝑡]
+   = 𝑅𝑒[(5𝑒−𝑗2𝜋𝑧+ 3𝑒𝑗2𝜋𝑧)𝑒𝑗3𝜋×108 𝑡] 𝑉
+   = 𝟓𝐜𝐨𝐬(𝟑𝝅× 𝟏𝟎𝟖𝒕−𝟐𝝅𝒛) + 𝟑𝐜𝐨𝐬(𝟑𝝅× 𝟏𝟎𝟖𝒕+ 𝟐𝝅𝒛) 𝑽
+
+
+
+
+
+b)  Calculate the reflection coefficient between the transmission line and 𝑍eff.
+
+     Primary        𝑽𝟎−                     𝑉0−   3𝑉
+          𝚪=  +                  𝛤𝐿 =  + =       𝟎. 𝟔     Equation:       𝑽𝟎                     𝑉0  5𝑉=
+
+
+
+
+
+                                          3
+
+--- PAGE 5 ---
+c)  Calculate the standing wave ratio.
+     Primary       𝟏+ |𝚪|                  1 + |𝛤|  1 + 0.6   1.6                          𝑆𝑊𝑅=     =     =  = 𝟒         𝑺𝑾𝑹=     Equation:        𝟏−|𝚪|                  1 −|𝛤|  1 −0.6   0.4
+
+
+
+d)  Calculate the maximum voltage on the transmission line. How does this voltage compare with the
+   maximum voltage on the transmission line when Circuit A is undamaged? Briefly explain.
+
+     Primary
+           𝑽𝒎𝒂𝒙= |𝑽𝟎+| + |𝑽𝟎−|     Equation:
+
+
+   𝑉𝑚𝑎𝑥= |𝑉0+| + |𝑉0−| = 5𝑉+ 3𝑉= 𝟖𝑽
+
+
+    The maximum voltage in this case is larger than when Circuit A is undamaged. In Circuit A, the
+     line is matched to the load and there are no reflections, so 𝑉𝑚𝑎𝑥= 5𝑉.
+
+e)  Calculate the time-average power delivered to 𝑍eff. How does this delivered power compare with the
+   power delivered to the load when Circuit A is undamaged? Briefly explain.
+
+     Primary           |𝑽𝟎+|𝟐
+            𝑷𝒂𝒗𝒆=     (𝟏−|𝚪|𝟐)     Equation:         𝟐𝒁𝟎
+
+                     |𝑉0+|2             |5𝑉|2
+    𝑉𝑚𝑎𝑥= 𝑃𝑎𝑣𝑒=      (1 −|Γ|2) =       (1 −0.62) = 𝟎. 𝟏𝟔𝑾
+                  2𝑍0           2 ⋅50Ω
+
+
+     The delivered power in this case is lower than when Circuit A is undamaged. Since the line and
+     load are matched in Circuit A, 𝑃𝑎𝑣𝑔= 0.25𝑊, since there is no reflected power.
+
+
+f)  Calculate the value of the impedance 𝑍eff. Did the damage to the transmission line increase or
+    decrease its characteristic impedance at that location?
+
+     Primary      𝒁𝒆𝒇𝒇−𝒁𝟎
+         𝚪=
+     Equation:     𝒁𝒆𝒇𝒇+ 𝒁𝟎
+
+
+        𝑍𝑒𝑓𝑓−𝑍0
+   𝛤=       →𝛤(𝑍𝑒𝑓𝑓+ 𝑍0) = 𝑍𝑒𝑓𝑓−𝑍0
+        𝑍𝑒𝑓𝑓+ 𝑍0
+     𝑍𝑒𝑓𝑓(𝛤−1) = −𝑍0(𝛤+ 1)
+          𝛤+ 1         0.6 + 1
+    𝑍𝑒𝑓𝑓= −𝑍0    = −50Ω     = 𝟐𝟎𝟎𝜴
+          𝛤−1         0.6 −1
+
+     The damage increased 𝑍0.
+
+
+
+                                          4
+
+--- PAGE 6 ---
+Problem 3: Impedance Matching [8 pts]
+
+In each of the cases below:
+    1.  Calculate 𝑍in.
+    2.  State whether or not the generator circuit sees a matched load.
+
+Briefly justify your answer using a transmission line property or impedance matching method. Answers
+relying solely on the general mathematical equation for 𝑍𝑖𝑛 will receive reduced credit.
+
+a)  The generator circuit is connected to the load via a transmission line of length 𝐿= 𝜆/6 and
+    characteristic impedance 𝑍0 = 50Ω.
+
+
+
+
+
+                                         Since 𝑅𝐿= 50Ω = 𝑍0, the transmission line is      𝑍in = 𝟓𝟎𝛀
+                                     matched to the load.
+
+
+     Matched?  Yes
+
+
+b)  The generator circuit is connected to the load via a transmission line of length 𝐿= 𝜆/2 and
+    characteristic impedance 𝑍0 = 50Ω.
+
+
+
+
+
+                                       For 𝐿= 𝜆/2, 𝑍𝑖𝑛= 𝑅𝐿, so 𝑍𝑖𝑛= 25𝛺, which is      𝑍in = 𝟐𝟓𝛀
+                                      matched to 𝑅𝑔.
+
+
+     Matched?  Yes
+
+
+
+                                          5
+
+--- PAGE 7 ---
+c)  The generator circuit is connected to the load via a transmission line of length 𝐿= 𝜆/4 and
+    characteristic impedance 𝑍0 = 50Ω.
+
+
+
+
+
+                                                                                       (50𝛺)2
+      𝑍in = 𝟐𝟓𝛀                           For 𝐿= 𝜆/4, 𝑍𝑖𝑛= 𝑍02/𝑅𝐿 → 𝑍𝑖𝑛= 100𝛺= 25𝛺
+
+                                            So, the transmission line + load are matched to the
+                                                generator.
+     Matched?  Yes
+
+
+
+d)  The generator circuit is connected to a feedline of characteristic impedance 𝑍0 = 50Ω. The feedline is
+    connected to the parallel combination of two other transmission lines:
+    •   a line of length 𝑑, input admittance 𝑌𝑑, and terminating impedance 𝑍𝐿
+   •   a line of length 𝑙, input admittance 𝑌𝑠, and an open-circuit termination
+
+
+
+
+
+                                         1      1              1
+      𝑍in = 𝟓𝟎𝛀                      𝑍𝑖𝑛=  =                                                          𝑌𝑖𝑛  𝑌𝑑+ 𝑌𝑠= (0.02 + 𝑗0.04)𝑆−𝑗0.04𝑆
+                                       1
+                          = 0.02𝑆= 50𝛺
+     Matched?  Yes
+                                      The transmission line network is matched to the
+                                               generator via single stub matching.
+
+
+
+
+
+                                          6
+
+--- PAGE 8 ---
+Problem 4: Impedance Matching with a Smith Chart [8 pts]
+
+The load in the circuit below is to be matched to a 𝑍0 = 50Ω feedline using a quarter-wave transformer of
+characteristic impedance 𝑍0𝑇 and a length of transmission line 𝑑 of characteristic impedance 𝑍0. The
+velocity factor of the transmission line of length 𝑑 is 0.85 and the frequency of the signal on the line is
+𝑓= 100 MHz = 100 × 106 Hz.
+
+
+
+
+
+a)  Calculate the normalized load impedance. Plot it on the Smith chart.
+
+     Primary                                      (150 −𝑗50)𝛺
+            𝐳𝐋= 𝒁𝑳/𝒁𝟎           𝑧𝐿= 𝑍𝐿/𝑍0 =         = 𝟑−𝒋     Equation:                                    50𝛺
+
+
+
+
+
+b) What are the two values of purely real input impedance 𝑍𝑖𝑛,𝑑 that the transmission line of length 𝑑
+    could present? Show your work on the Smith chart. Give your impedances in unnormalized format.
+
+                                            𝑍𝑖𝑛,𝑑,1 = 0.26 ⋅50Ω = 14.5Ω      𝑍𝑖𝑛,𝑑,1 = 𝟏𝟒. 𝟓𝛀
+
+
+
+
+
+                                             𝑍𝑖𝑛,𝑑,2 = 3.4 ⋅50Ω = 170Ω      𝑍𝑖𝑛,𝑑,2 = 𝟏𝟕𝟎𝛀
+
+
+
+
+
+                                          7
+
+--- PAGE 9 ---
+c)  Choose one of the two values of 𝑍𝑖𝑛,𝑑 from part b). How long 𝑑 (in meters) must the transmission line
+   be to present your chosen input impedance 𝑍𝑖𝑛,𝑑? Show your work on the Smith chart.
+               𝑚
+       𝑢   (0.85 ⋅3 × 108 𝑠)
+   𝜆= 𝑓=   100 × 106𝐻𝑧  = 2.55 𝑚
+
+     For 𝑍𝑖𝑛,𝑑= 14.5Ω: 𝑑= 0.5𝜆−0.267𝜆= 0.233𝜆→𝑑= 𝟎. 𝟓𝟗𝟒 𝒎
+
+                    OR
+
+     For 𝑍𝑖𝑛,𝑑= 170Ω: 𝑑= 0.233𝜆+ 0.25𝜆= 0.483𝜆→𝑑= 𝟏. 𝟐𝟑 𝒎
+
+d)  For the case you chose in part c), find the characteristic impedance 𝑍0𝑇 of the quarter-wave
+    transformer that matches the load network to the 𝑍0 = 50Ω feedline.
+
+     Primary
+             𝒁𝒊𝒏= 𝒁𝟎𝑻𝟐/𝒁𝑳     Equation:
+
+     For 𝑍𝑖𝑛,𝑑= 14.5𝛺: 𝑍0𝑇= √50𝛺· 14.5𝛺= 𝟐𝟔. 𝟗𝟑 𝜴
+
+                OR
+
+     For 𝑍𝑖𝑛,𝑑= 170𝛺: 𝑍0𝑇= √50𝛺· 170𝛺= 𝟗𝟐. 𝟐𝟎 𝜴
+
+
+
+
+
+e)  Once the transmission line and load are matched to the feedline, maximum power will be transferred
+   from the generator to the load in steady state. Where do reflections still occur in the system?
+    Circle all that apply.
+
+         a.  At the interface between the feedline and the input to the 𝑳= 𝝀/𝟒 line.
+
+        b.  At the interface between the 𝑳= 𝝀/𝟒 line and the input to the line of length 𝒅.
+
+         c.  At the interface between the line of length 𝒅 and the load 𝒁𝑳.
+
+         d. No reflections occur anywhere in the system since the feedline is matched to the load.
+
+
+
+
+
+                                          8
+
+--- PAGE 10 ---
+                                                                                         𝑑2 = 0.483𝜆
+
+
+
+
+
+                                            𝑧𝑖𝑛,𝑑,1 = 0.26                                                𝑧𝑖𝑛,𝑑,2 = 3.4
+0.5𝜆
+
+
+                                                                                                          0.25𝜆
+
+                                                   𝑧𝐿= 3 −𝑗
+
+
+
+                                                                                                       0.267𝜆
+
+
+
+
+
+         𝑑1 = 0.233𝜆
+
+
+
+
+
+                                                     9

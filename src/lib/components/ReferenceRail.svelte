@@ -12,7 +12,7 @@
   import { problemFormulas } from '#lib/catalog';
   import type { Problem, Locale, SourceRef, SourceDocument } from '#lib/types';
   let {problem,locale,documents,onsource,onlibrary}: {problem:Problem;locale:Locale;documents:Record<string,SourceDocument>;onsource:(s:SourceRef)=>void;onlibrary:(kind:string)=>void}=$props();
-  const formulas=$derived(problemFormulas(problem));
+  const formulas=$derived(problemFormulas(problem,locale));
   let tab=$state('formulas');
 </script>
 <div class="reference-content">

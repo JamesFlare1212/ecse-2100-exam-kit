@@ -6,12 +6,12 @@ import { loadAstroContent } from '../../../content/astro.server';
 import type { StudyPageData } from '#lib/types';
 
 export const getStaticPaths = (async () => {
-  const { papers, examIndex, documents } = await loadAstroContent();
+  const { papers, examIndex, documentsByLocale } = await loadAstroContent();
   return papers.flatMap(paper => {
     const { problems, ...exam } = paper.exam;
     return problems.map(problem => ({
       params: { problem: problem.id },
-      props: { data: { examIndex, documents, exam, problem, assetBase: paper.assetBase } },
+      props: { data: { examIndex, documents: documentsByLocale, exam, problem, assetBase: paper.assetBase } },
     }));
   });
 }) satisfies GetStaticPaths;

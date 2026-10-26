@@ -6,48 +6,23 @@
   import Check from '@lucide/svelte/icons/check';
   import Info from '@lucide/svelte/icons/info';
   import FileText from '@lucide/svelte/icons/file-text';
-  import Math from './Math.svelte';
   import RichText from './RichText.svelte';
-  import ReferencedText from './ReferencedText.svelte';
-  import FormulaLink from './FormulaLink.svelte';
+  import SolutionBody from './SolutionBody.svelte';
   import Figure from './Figure.svelte';
-  import { formulaById } from '#lib/catalog';
-  import { formulaReferences } from '../../../content/text';
-  import { conclusionMath } from '#lib/answer-math';
   import type { Part, SourceRef, ExamInfo } from '#lib/types';
   import type { StudyState } from '#lib/study.svelte';
   let {part,study,exam,dark,assetBase,onsource}: {assetBase:string;part:Part;study:StudyState;exam:ExamInfo;dark:boolean;onsource:(s:SourceRef)=>void}=$props();
   const done=$derived(Boolean(study.completed[part.id]));
-  const conclusion=$derived(conclusionMath(part.steps.at(-1)?.math,part.answer));
+  const sourceNote=$derived(part.note?.[study.locale]);
   function source(solution=false){onsource({doc:solution?exam.solutionDoc:exam.doc,page:solution?part.solutionPage:part.sourcePage,label:{zh:solution?'官方解答原页':'原始试题',en:solution?'Official solution page':'Original question'}});}
 </script>
 <Accordion.Item value={part.id} class="problem-part" data-part={part.id}>
   <Accordion.Trigger class="part-trigger" level={3}><span class:complete={done} class="part-letter">{#if done}<Check aria-label={study.locale==='zh'?'已掌握':'Mastered'}/>{:else}{part.label}{/if}</span><span class="part-prompt" lang={study.locale==='zh'?'zh-CN':'en'} data-original-prompt><RichText text={part.prompt[study.locale]}/></span>{#if part.points>0}<Badge variant="outline">{part.points} {study.locale==='zh'?'分':'pts'}</Badge>{/if}</Accordion.Trigger>
   {#if part.questionFigure}<div class="part-question-figure"><Figure {assetBase} name={part.questionFigure.name} locale={study.locale} {dark} caption={part.questionFigure.caption} original={part.questionFigure.source} {onsource}/></div>{/if}
   <Accordion.Content class="part-content">
-      <div class="solution-steps">
-        {#each part.steps as step,i(i)}
-          {@const inlineRefs = step.text ? formulaReferences(step.text[study.locale]) : []}
-          {@const remainingRefs = step.refs.filter(id=>!inlineRefs.includes(id))}
-          <div class="solution-step" data-answer={i===part.steps.length-1?part.id:undefined}>
-            <div class="step-content">
-              {#if step.text}<p class="solution-annotation" data-authored-annotation><ReferencedText text={step.text[study.locale]} locale={study.locale} documents={study.catalog.documents} {onsource}/></p>{/if}
-              {#if remainingRefs.length}<p class="solution-annotation">{study.locale==='zh'?'使用':'Use'} {#each remainingRefs as id,i(id)}{#if i}{study.locale==='zh'?'、':', '}{/if}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} inline/>{/each}{study.locale==='zh'?'：':':'}</p>{/if}
-              <div class="derivation-equations">
-                {#if i===part.steps.length-1}
-                  {#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}
-                  <Math tex={conclusion.result} display/>
-                {:else}
-                  <Math tex={step.math} display/>
-                {/if}
-              </div>
-              {#if i===part.steps.length-1&&part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}
-            </div>
-          </div>
-        {/each}
-      </div>
+      <SolutionBody body={part.solution[study.locale]} partId={part.id} locale={study.locale} documents={study.catalog.documents} {onsource}/>
       {#if part.figure}<Figure {assetBase} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
-      {#if part.note}<Alert.Root class="solution-note"><Info aria-hidden="true"/><Alert.Title>{study.locale==='zh'?'核对说明':'Source check'}</Alert.Title><Alert.Description><RichText text={part.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
+      {#if sourceNote}<Alert.Root class="solution-note"><Info aria-hidden="true"/><Alert.Title>{study.locale==='zh'?'核对说明':'Source check'}</Alert.Title><Alert.Description><RichText text={sourceNote}/></Alert.Description></Alert.Root>{/if}
     <div class="part-actions">
       <div class="flex flex-wrap items-center gap-2">
         <Button variant={done?'secondary':'outline'} size="sm" onclick={()=>study.completed[part.id]=!done}><Check data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?(done?'已掌握 · 撤销':'标记已掌握'):(done?'Mastered · undo':'Mark as mastered')}</Button>

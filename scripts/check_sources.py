@@ -36,10 +36,10 @@ def check_image(page, region=None):
             assert decoded.format == 'WEBP' and decoded.size == sheet.size
 
 
-def main():
-    documents = load_documents()
+def main(locale):
+    documents = load_documents(locale)
     formulas = json.loads((ROOT / 'content/formulas.json').read_text())
-    exams = [paper['exam'] for paper in papers()]
+    exams = [paper['exam'] for paper in papers(locale)]
     citations = [formula['source'] for formula in formulas]
     for exam in exams:
         for problem in exam['problems']:
@@ -69,4 +69,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    for locale in ['en', 'zh-cn']:
+        main(locale)

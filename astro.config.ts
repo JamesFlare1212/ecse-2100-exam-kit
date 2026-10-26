@@ -14,7 +14,8 @@ export default defineConfig({
     plugins: [tailwindcss(), papersPlugin()],
     server: { watch: {
       usePolling: true, interval: 700,
-      ignored: ['**/.git/**', '**/.astro/**', '**/build/**', '**/static/**', '**/content/**/extracted/**', '**/.agents/**', '**/scripts/**', '**/design-system/**'],
+      // Vite must observe staged paper additions/removals to update its public-file cache.
+      ignored: ['**/.git/**', '**/.astro/**', '**/build/**', '**/content/**/extracted/**', '**/.agents/**', '**/scripts/**', '**/design-system/**'],
     } },
   },
 });

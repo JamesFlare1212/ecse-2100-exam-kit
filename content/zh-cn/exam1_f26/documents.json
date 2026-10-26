@@ -1,0 +1,54 @@
+{
+  "e1-f26": {
+    "id": "e1-f26",
+    "title": "Exam 1 · Fall 2026 · Questions & solutions",
+    "kind": "exam",
+    "pages": 10,
+    "pdf": "sources/e1-f26.pdf",
+    "pageBase": "pages/e1-f26",
+    "sizes": [
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ],
+      [
+        612,
+        792
+      ]
+    ],
+    "original": "Exams/Exam_1_F26_Solutions.pdf",
+    "sha256": "bd11c5e8b7b9f511fac6e953a548037872aa836cd1f3471a72e8319871cdd0f4"
+  }
+}

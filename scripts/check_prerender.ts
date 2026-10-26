@@ -46,7 +46,7 @@ for (const { problem } of problemEntries) {
   assert.ok(!('problems' in data.exam), `${problem.id}: exam metadata excludes other solutions`);
   for (const exam of data.examIndex) for (const question of exam.problems) {
     assert.ok(!('guide' in question), `${problem.id}: index excludes guides`);
-    for (const part of question.parts) assert.ok(!('steps' in part) && !('answer' in part), `${problem.id}: index excludes solutions`);
+    for (const part of question.parts) assert.ok(!('solution' in part), `${problem.id}: index excludes solutions`);
   }
 }
 console.log(`Prerender verified: ${ids.length} problem HTML pages, ${parts} question parts, isolated page data.`);

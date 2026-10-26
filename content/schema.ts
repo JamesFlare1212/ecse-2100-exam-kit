@@ -3,6 +3,7 @@ import { fromMarkdown } from 'mdast-util-from-markdown';
 import { math } from 'micromark-extension-math';
 import { mathFromMarkdown } from 'mdast-util-math';
 import type { Exam, Formula, SourceDocument } from './types.ts';
+import { formulaReferences, displayEquations } from './text';
 
 type Rule = (value: unknown, path: string) => void;
 function fail(path: string, message: string): never {
@@ -57,6 +58,10 @@ const richText: Rule = (value, path) => {
   }
 };
 const localized = object({ zh: richText, en: richText });
+const optionalLocalized: Rule = (value, path) => {
+  object({}, { zh: richText, en: richText })(value, path);
+  if (!Object.keys(value as object).length) fail(path, 'expected at least one language');
+};
 const region: Rule = (value, path) => {
   if (!Array.isArray(value) || value.length !== 4 || value.some(n => typeof n !== 'number' || !Number.isFinite(n))) fail(path, 'expected [x, y, width, height]');
   const [x, y, width, height] = value as number[];
@@ -64,12 +69,11 @@ const region: Rule = (value, path) => {
 };
 const originalFigure = object({ doc: text, page: positive, region });
 const source = object({ doc: text, page: positive, label: localized }, { region });
-const step = object({ math: tex, refs: array(text) }, { text: localized });
 const part = object({
-  id: text, label: text, points: natural, prompt: localized, steps: array(step, 1),
-  answer: tex, sourcePage: positive, solutionPage: positive,
+  id: text, label: text, points: natural, prompt: localized, solution: localized,
+  sourcePage: positive, solutionPage: positive,
 }, {
-  answerText: localized, note: localized, figure: text, figureCaption: localized,
+  note: optionalLocalized, figure: text, figureCaption: localized,
   questionFigure: object({ name: text, source: originalFigure, caption: localized }),
 });
 const problem = object({
@@ -77,9 +81,9 @@ const problem = object({
   id: text, number: positive, title: localized, topic: localized, statement: localized,
   givens: array(tex), points: natural, figure: text, figureCaption: localized,
   originalFigure, lectures: array(source, 1),
-  guide: object({ concept: localized, known: localized, goal: localized, approach: localized }),
+  guide: localized,
   parts: array(part, 1),
-}, { figureAtParts: boolean, note: localized });
+}, { figureAtParts: boolean, note: optionalLocalized });
 const exam = object({
   id: text, number: positive, term: localized, year: positive, points: natural,
   doc: text, solutionDoc: text, questionsOnly: boolean, problems: array(problem, 1),
@@ -115,8 +119,8 @@ export function parseContent(rawExams: unknown, rawFormulas: unknown, rawDocumen
   for (const [id, doc] of Object.entries(documents)) {
     if (id !== doc.id) fail(`documents.${id}.id`, 'must match its registry key');
     if (doc.sizes.length !== doc.pages) fail(`documents.${id}.sizes`, 'must describe every PDF page');
-    if (!/^\/(?:papers\/exam[1-9]\d*_[fs]\d{2}\/)?sources\//.test(doc.pdf)
-      || !/^\/(?:papers\/exam[1-9]\d*_[fs]\d{2}\/)?pages\//.test(doc.pageBase)) fail(`documents.${id}`, 'source assets must use local paths');
+    if (!/^\/(?:papers\/(?:en|zh-cn)\/exam[1-9]\d*_[fs]\d{2}\/)?sources\//.test(doc.pdf)
+      || !/^\/(?:papers\/(?:en|zh-cn)\/exam[1-9]\d*_[fs]\d{2}\/)?pages\//.test(doc.pageBase)) fail(`documents.${id}`, 'source assets must use local language-scoped paths');
   }
   const formulaIds = new Set<string>();
   for (const f of formulas) {
@@ -137,8 +141,12 @@ export function parseContent(rawExams: unknown, rawFormulas: unknown, rawDocumen
         page(e.doc, p.sourcePage, `${p.id}.sourcePage`); page(e.solutionDoc, p.solutionPage, `${p.id}.solutionPage`);
         if (p.questionFigure) page(p.questionFigure.source.doc, p.questionFigure.source.page, `${p.id}.questionFigure`);
         if (p.figure && !p.figureCaption) fail(`${p.id}.figureCaption`, 'solution figures need bilingual captions');
-        for (const [index, s] of p.steps.entries()) for (const ref of s.refs) {
-          if (!formulaIds.has(ref)) fail(`${p.id}.steps[${index}].refs`, `unknown formula ${ref}`);
+        for (const locale of ['en','zh'] as const) {
+          if (!/\\boxed\s*\{/.test(displayEquations(p.solution[locale]).at(-1) ?? ''))
+            fail(`${p.id}.solution.${locale}`, 'expected a displayed boxed result');
+          let refs: string[];
+          try { refs = formulaReferences(p.solution[locale]); } catch (error) { fail(`${p.id}.solution.${locale}`, String(error)); }
+          for (const ref of refs) if (!formulaIds.has(ref)) fail(`${p.id}.solution.${locale}`, `unknown formula ${ref}`);
         }
       }
     }
