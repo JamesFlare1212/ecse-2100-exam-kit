@@ -47,7 +47,7 @@
     "id": "impedance",
     "title": {
       "zh": "无损线特性阻抗",
-      "en": "Characteristic impedance"
+      "en": "Lossless-line characteristic impedance"
     },
     "math": "Z_0=\\frac{V_0^+}{I_0^+}=-\\frac{V_0^-}{I_0^-}=\\sqrt{\\frac{l}{c}}",
     "source": {
@@ -95,7 +95,7 @@
     "id": "phasor",
     "title": {
       "zh": "电压行波相量",
-      "en": "Traveling-wave voltage"
+      "en": "Traveling-wave voltage phasor"
     },
     "math": "\\widetilde V(z)=V^+e^{-j\\beta z}+V^-e^{j\\beta z}",
     "source": {

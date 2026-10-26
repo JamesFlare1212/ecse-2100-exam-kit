@@ -1,8 +1,9 @@
 import type { Catalog } from './catalog';
 import type { Locale } from './types';
 import { DEFAULT_PROBLEM_ID } from './problem-navigation';
+import { STORAGE_KEY } from './locale';
 
-export const STORAGE_KEY = 'ecse2100-fieldnotes-v1';
+export { STORAGE_KEY } from './locale';
 export type Mode = 'study' | 'practice';
 const problemRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*$/;
 const partRecord = /^e[1-9]\d*-[fs]\d{2}-q[1-9]\d*-[a-z0-9]+$/;

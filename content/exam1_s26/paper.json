@@ -1412,7 +1412,7 @@
             {
               "text": {
                 "zh": "两个正切值都为负，所以反正切给出的主值也都为负。传播距离要求非负，因此各加一个周期 $\\pi$，再除以 $2\\pi$，而不是给最终距离随意加负号。",
-                "en": "Both tangent values are negative, so both principal arctangents are negative. For nonnegative distances, add the tangent period $\\pi$ to each angle before dividing by $2\\pi$."
+                "en": "Both tangent values are negative, so both principal arctangents are negative. For nonnegative distances, add the tangent period $\\pi$ to each angle before dividing by $2\\pi$, rather than arbitrarily changing the sign of the final distance."
               },
               "math": "\\begin{aligned}2\\pi d_1/\\lambda&=\\arctan(-6.241969)+\\pi\\\\&\\approx-1.411940+\\pi\\\\d_1/\\lambda&\\approx0.275283\\\\2\\pi d_2/\\lambda&=\\arctan(-0.958031)+\\pi\\\\&\\approx-0.763967+\\pi\\\\d_2/\\lambda&\\approx0.378411\\end{aligned}",
               "refs": []

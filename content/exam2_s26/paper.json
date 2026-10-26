@@ -1178,7 +1178,7 @@
       "guide": {
         "concept": {
           "zh": "本题考查有体电荷时的柱对称高斯定律、电势积分和微分电容，不能直接套用无体电荷的同轴公式。",
-          "en": "This problem combines cylindrical Gauss's law, potential integration and differential capacitance in the presence of volume charge."
+          "en": "This problem combines cylindrical Gauss's law, potential integration and differential capacitance in the presence of volume charge. Do not directly apply the coaxial formulas for a gap without volume charge."
         },
         "known": {
           "zh": "内、外导体半径为 $a$、$b$，内表面电荷密度为 $\\rho_{sa}$，外导体接地；间隙介电常数为 $\\varepsilon$，体电荷密度为 $\\rho(r)=\\rho_0a/r$。",
@@ -1460,7 +1460,7 @@
             },
             {
               "text": {
-                "zh": "用 $R_L$、$R_R$ 分别表示观察点到左、右电荷列的距离；每列上下电荷到平面的距离相同。",
+                "zh": "用 $R_L$、$R_R$ 分别表示观察点 $P$ 到左、右电荷列的距离；同一列中，真实电荷和镜像电荷到 $P$ 的距离相同。",
                 "en": "Use $R_L$ and $R_R$ for distances from $P$ to the left and right charge columns. Within a column, real and image distances to $P$ agree."
               },
               "math": "R_L=\\sqrt{(x+x_0)^2+z_0^2},\\qquad R_R=\\sqrt{(x-x_0)^2+z_0^2}",

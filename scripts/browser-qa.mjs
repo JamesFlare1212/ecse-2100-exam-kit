@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
+import {checkI18n} from './browser-i18n-qa.mjs';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const destination=process.env.QA_ARTIFACTS??resolve(root,'artifacts');
@@ -33,6 +34,7 @@ async function revealAll(){
   await button.click();
 }
 try {
+  await checkI18n(browser,base,record);
   const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:1440,height:1000}});
   try {
     const staticPage=await staticContext.newPage();

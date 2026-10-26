@@ -287,7 +287,7 @@
             {
               "text": {
                 "zh": "最大功率传输要求源看到的输入阻抗与 $75\\,\\Omega$ 源电阻匹配；按原题采用无损匹配近似。",
-                "en": "Maximum power transfer requires the input seen by the source to match its $75\\,\\Omega$ resistance. Use the source’s lossless matching approximation."
+                "en": "Maximum power transfer requires the input seen by the source to match its $75\\,\\Omega$ resistance. Use the exam’s lossless matching approximation."
               },
               "math": "Z_{\\mathrm{in}}=R_g=75\\,\\Omega",
               "refs": []
@@ -341,7 +341,7 @@
             {
               "text": {
                 "zh": "这是重复阻抗的半波长度，不是把 $75\\,\\Omega$ 变换成另一电阻的四分之一波长。",
-                "en": "This is the half-wave impedance-repeat length."
+                "en": "This is the half-wave impedance-repeat length, rather than a quarter wavelength that transforms $75\\,\\Omega$ into a different resistance."
               },
               "math": "L_{\\min}=0.510\\,\\mathrm m",
               "refs": []
@@ -514,7 +514,7 @@
             {
               "text": {
                 "zh": "因此最初入射到线路的电压是 $1\\,\\mathrm{V}$，而非整个源脉冲的 $3\\,\\mathrm{V}$。",
-                "en": "The initially launched voltage is therefore $1\\,\\mathrm{V}$."
+                "en": "The initially launched voltage is therefore $1\\,\\mathrm{V}$, rather than the full $3\\,\\mathrm{V}$ source pulse."
               },
               "math": "V_1^+=1.00\\,\\mathrm V",
               "refs": []

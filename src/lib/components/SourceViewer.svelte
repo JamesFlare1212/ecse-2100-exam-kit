@@ -52,7 +52,7 @@
       <div class="source-stage" bind:this={stage}>
         {#if failed}<p class="source-failed">{locale==='zh'?'预览暂不可用，可通过下方按钮打开原始 PDF。':'Preview unavailable. Open the original PDF using the button below.'}</p>{:else}
           <div class="source-paper" bind:this={paper} style:width={`${zoom}%`} style:aspect-ratio={`${doc.sizes[page-1][0]} / ${doc.sizes[page-1][1]}`}>
-            <img src={`${doc.pageBase}/${page}.webp`} alt={`${doc.title}, ${locale==='zh'?'第':'page'} ${page}`} onload={focusRegion} onerror={()=>failed=true}/>
+            <img src={`${doc.pageBase}/${page}.webp`} alt={locale==='zh'?`${doc.title}，第 ${page} 页`:`${doc.title}, page ${page}`} onload={focusRegion} onerror={()=>failed=true}/>
             {#if region}<div class="source-highlight" data-source-highlight style:left={`${region[0]*100}%`} style:top={`${region[1]*100}%`} style:width={`${region[2]*100}%`} style:height={`${region[3]*100}%`} role="img" aria-label={locale==='zh'?'原公式位置':'Original formula location'}></div>{/if}
           </div>
         {/if}
