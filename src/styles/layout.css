@@ -8,6 +8,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.markdown-list { display:block; margin:.5em 0; }
+.markdown-list-item { display:flex; align-items:baseline; gap:.5em; }
+.markdown-list-item>span:last-child { min-width:0; }
+.markdown-quote { display:block; border-inline-start:2px solid var(--border); padding-inline-start:1em; }
+.markdown-code-block { display:block; overflow:auto; white-space:pre; padding:.75em; background:var(--muted); border-radius:var(--radius); }
+.markdown-rule { display:block; border-top:1px solid var(--border); margin-block:1em; }
+.rich-text a { color:var(--formula); text-decoration:underline; text-underline-offset:3px; }
+
 :root {
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);

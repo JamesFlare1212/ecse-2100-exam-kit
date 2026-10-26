@@ -10,19 +10,19 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-打开终端显示的地址（默认 http://localhost:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
+打开终端显示的地址（默认 http://127.0.0.1:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。已包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
 
-每套试卷是 `content/exam1_f26/` 这样的独立 paper 目录，包含 `paper.json`、PDF 来源记录、图源坐标、图像/PDF 资源、提取文本和对应的 `generate_figures.py`。构建自动扫描符合命名规则的目录；新增或移除 paper 无需修改导入清单，导航、考试分类和数量也由数据生成。修改 JSON 后直接运行 `bun run build` 即可更新页面；Bun/TypeScript 校验内容，Vite/SvelteKit 直接读取 JSON 并生成静态 HTML，没有题库编译步骤或生成的 JSON 副本。题库结构、校验和编辑约定见 [content/README.md](content/README.md)。开发服务器也会监听 paper 的新增、移除、JSON 编辑和资源变化。`assets/` 是资源源文件，构建和开发启动时自动复制到 Git 忽略的 `static/papers/`；不要手工编辑暂存目录。
+每道大题是一篇 Markdown 文章，例如 `content/exam1_f26/questions/q1.md`，按试卷目录归档。YAML frontmatter 保存稳定 ID、双语标题、分值、图和来源元数据；正文直接编辑原题、中文译文、导读、完整推导、公式与纠错说明。`paper.json` 只保存试卷元数据。构建自动发现试卷与文章，导航、考试分类和数量由数据生成；新增或移除 paper 无需修改导入清单。编辑规则见 [content/README.md](content/README.md)。开发服务器监听 Markdown、新增/移除文章、元数据及资源变化。`assets/` 是资源源文件，开发和构建自动复制到 Git 忽略的 `static/papers/`，不要手工编辑暂存目录。
 
-每题使用独立路径，如 `/problems/e2-s26-q3/`。构建时枚举全部 20 题，生成 `build/problems/<题目 ID>/index.html`，HTML 已包含对应题目的标题、题干及所有小问；关闭 JavaScript 仍能阅读题面。根路径静态跳转至默认题目。SvelteKit 接管交互后，切题会加载该题预生成的数据并更新浏览器历史，支持刷新、前进后退和在新标签页打开。完整解答题库仅由构建端读取，前端共享的是不含解答的导航与搜索索引，每页只携带当前题目的完整内容；个人显示偏好与学习进度仍在浏览器恢复。
+Astro 内容集合负责发现文章和校验 frontmatter，Markdown 语法树解析器保留双语正文和原始 TeX；现有内容校验继续检查公式、页码、引用和几何区域。数据仅在内存中组装，没有中间题库 JSON。每题保留独立路径，如 `/problems/e2-s26-q3/`，输出 `build/problems/<题目 ID>/index.html`；关闭 JavaScript 仍能阅读标题、题干和全部小问。根路径静态跳转至默认题目。Astro ClientRouter 处理切题与浏览器历史，持久化 Svelte 学习界面保留跨页面状态。每页只携带当前题的完整解答及不含解答的导航/搜索索引；偏好、进度和旧版记录仍保存在同一个 localStorage 中。
 
-技术栈：Svelte 5、SvelteKit 3、Vite 8、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Inter、Noto Sans SC 与 KaTeX 字体均随应用提供，不访问 Google Fonts。为支持 OneDrive / WSL 文件系统，Vite 开发服务器启用了文件轮询。
+技术栈：Astro 7、Svelte 5、TypeScript、Tailwind CSS 4、原生 shadcn-svelte / Bits UI、Bun、KaTeX。Astro 命令通过 Bun 运行时执行；Inter、Noto Sans SC 和 KaTeX 字体均本地提供。为支持 OneDrive / WSL 文件系统，开发服务器启用了文件轮询。
 
-类型检查使用正式版 TypeScript 7.0.2 原生编译器，按 [svelte-check 官方方案](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check#typescript-7-supports)并存两个依赖：`@typescript/native` 是 `typescript@^7.0.2` 的 npm 别名；`typescript@~6.0.3` 为 SvelteKit 配置同步和 Svelte 文件转换提供仍需的 JavaScript 编译器 API。`bun run check` 与 `bun run check:watch` 均通过 `svelte-check --tsgo` 调用 TS7，CI 使用相同命令。保留 TS6 的兼容 API 符合 [TypeScript 官方迁移说明](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)；Svelte 编辑器仍使用兼容工具链。Dependabot 继续更新原生编译器，兼容依赖 `typescript` 暂不自动升级主版本。
+Astro 页面由 `astro check` 检查，Svelte 与 TypeScript 检查使用正式版 TypeScript 7.0.2 原生编译器，按 [svelte-check 官方方案](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check#typescript-7-supports)并存两个依赖：`@typescript/native` 是 `typescript@^7.0.2` 的 npm 别名；`typescript@~6.0.3` 为 Astro 检查工具和 Svelte 文件转换提供仍需的 JavaScript 编译器 API。`bun run check` 与 `bun run check:watch` 中的 Svelte 检查通过 `svelte-check --tsgo` 调用 TS7，CI 使用相同命令。保留 TS6 的兼容 API 符合 [TypeScript 官方迁移说明](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)；Svelte 编辑器仍使用兼容工具链。Dependabot 继续更新原生编译器，兼容依赖 `typescript` 暂不自动升级主版本。
 
 ## 已实现
 
-- Exam 1：Fall 2025、Spring 2026、Fall 2026；Exam 2：Fall 2025、Spring 2026。英文标题、题干和全部小问均转录试卷原文，只调整数学排版与换行；中文模式直接展示原题的忠实翻译，标题、题干和小问随全局语言一起切换。93 小问共 470 个双语推导步骤，每问 3–9 步：先展示公式，再代入实际条件或数值，展开积分、边界条件、逐次反射和代数化简。最终结果融入最后一步算式，仅用 KaTeX `\boxed{}` 强调。
+- Exam 1：Fall 2025、Spring 2026、Fall 2026；Exam 2：Fall 2025、Spring 2026。英文标题、题干和全部小问均转录试卷原文，只调整数学排版与换行；中文模式直接展示原题的忠实翻译，标题、题干和小问随全局语言一起切换。93 小问共 536 个双语推导步骤：先展示公式，再代入实际条件或数值，展开积分、边界条件、逐次反射和代数化简。最终结果融入最后一步算式，仅用 KaTeX `\boxed{}` 强调。
 - 44 幅可复现的 Matplotlib 原生 SVG，每幅提供浅色与深色版本。30 幅题图按原卷的视角、几何结构、坐标轴、标注与已知/未知量复刻；同轴线和微带线保留 3D 视角。多电路题的图放在各自小问旁。另有 14 幅辅助解题图，只在展开解答后显示。SVG 标注整体放大 30% 并使用粗体数学字体，避开箭头与线条。题图均可切换至原始 PDF 裁图，也可打开完整原卷。
 - 球对称题图使用统一正交投影，保持赤道线的远近遮挡、共同球心及半径箭头端点。题面与高斯面解答图均使用静态 SVG，不载入交互三维组件。
 - 29 条公式索引：优先采用 crib 原式；悬浮可查看原始截图，点击打开 PDF 页图并以矩形框定位。原表没有的初始分压式明确引用 Lecture 04。
@@ -73,7 +73,7 @@ https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp
 
 ## 校验与重新生成
 
-GitHub Actions 配置位于 `.github/workflows/ci.yml`，在推送到 `main`、创建或更新 PR 时自动运行，也支持手动触发。前端任务按 `package.json` 指定的 Bun 版本安装锁定依赖，直接校验 JSON 题库，并运行下面的类型检查、测试和静态构建，全程无需 Python。独立的 Python 图像工具任务覆盖 3.12 和 3.14，验证依赖一致性、25 个 PDF 的 SHA-256 与页尺寸、全部页面的文字提取、引用区域渲染与 WebP 编解码，以及全部图形两种主题的标注和球形几何；不会改写原始素材，也不会上传课程 PDF 或站点构建产物。图形检查失败时保留 7 天的诊断图片和报告。
+GitHub Actions 配置位于 `.github/workflows/ci.yml`，在推送到 `main`、创建或更新 PR 时自动运行，也支持手动触发。前端任务按 `package.json` 指定的 Bun 版本安装锁定依赖，校验 Markdown 题库和元数据，并运行下面的类型检查、测试和静态构建，全程无需 Python。独立的 Python 图像工具任务覆盖 3.12 和 3.14，验证依赖一致性、25 个 PDF 的 SHA-256 与页尺寸、全部页面的文字提取、引用区域渲染与 WebP 编解码，以及全部图形两种主题的标注和球形几何；不会改写原始素材，也不会上传课程 PDF 或站点构建产物。图形检查失败时保留 7 天的诊断图片和报告。
 
 Dependabot 配置位于 `.github/dependabot.yml`，每周一纽约时间 09:00 检查 GitHub Actions、根目录的 Bun 依赖和 `scripts/requirements.txt` 中的 Python 依赖。Actions 更新按组提出；Bun / Python 次版本与补丁更新分别按生态分组提出 PR，主版本更新单独提出，不自动合并。
 
@@ -87,11 +87,11 @@ bun run build
 
 内容测试包含所有小问与双语字段、KaTeX 公式、748 个页图、SVG 两种主题、PDF 页码与矩形引用，还包括匹配、源/负载边界、瞬态级数、功率、Gauss、电势梯度、微分电容、镜像法及电流密度的一致性检查。
 
-`bun run content:check` 直接校验 JSON 的双语字段、KaTeX 公式、ID、引用关系、PDF 页码与引用矩形，不改写内容。`bun run build` 先执行该校验，再直接从 JSON 静态渲染；最后自动运行 `scripts/check_prerender.ts`，核对全部 20 个 HTML 中实际渲染的题干与 93 个小问，以及每页的 hydration 数据只包含当前题目的完整记录。paper 通过文件系统自动发现，导航与搜索数据通过 TypeScript 在内存中投影，由布局的 server load 提供，无独立索引文件。新增目录自动纳入构建，移除目录会清理对应的静态页面和资源；默认 paper 缺席时，根路径跳转到现有题目。暂时移除的 paper 的本地学习记录会保留，但不计入当前进度。投影与题库的一致性也包含在 `bun test` 中。
+`bun run content:check` 校验 Markdown 的双语章节、KaTeX 公式、ID、引用关系、PDF 页码与引用矩形，不改写内容。`bun run build` 先执行校验，再由 Astro 内容集合构建静态页面；最后自动运行 `scripts/check_prerender.ts`，核对全部 20 个 HTML 中实际渲染的题干与 93 个小问，以及每页 Svelte 岛的序列化数据只包含当前题目的完整记录。导航与搜索数据由 TypeScript 在内存中投影，无独立索引文件。新增目录自动纳入构建，移除目录会清理对应的静态页面和资源；默认 paper 缺席时，根路径跳转到现有题目。暂时移除的 paper 的本地学习记录会保留，但不计入当前进度。投影与题库的一致性也包含在 `bun test` 中。
 
 原生类型检查的回归测试在隔离目录中植入 Svelte 脚本、组件属性和通过 `#lib` 引入的 `.svelte.ts` rune 类型错误，检查 TS7 能逐项报错；修正后必须通过，避免迁移时漏掉诊断。
 
-交付时检查结果：Svelte / TypeScript 为 0 错误、0 警告；36 项测试通过（12045 次断言）；静态构建通过。另以真实 Chromium 验证了 40 项浏览器场景，覆盖全部题目、470 个推导步骤的公式显示与逐步揭示、公式原页定位、多页缩略图独立滚动与切页、长讲义、原图切换、练习与数据持久化、中英文、主题，以及 4 种手机 / 平板尺寸；无未捕获异常或失败请求。全部 20 题、93 小问、470 个步骤均在 375px 手机宽度下完整展开检查，无页面横向溢出。原题英文正文中 267 个文字片段与 PDF 提取文本直接匹配，另 2 个因公式排版打乱提取顺序的片段已对照原页人工核验。
+`bun test` 覆盖正文解析错误、翻译完整性、原题措辞、KaTeX、来源坐标、内容发现和独立物理数值核对。`scripts/browser-qa.mjs` 使用真实 Chromium 检查全部 20 题、93 小问和 536 个步骤，覆盖无脚本阅读、浏览器历史、双语、主题、练习、存储兼容、侧栏、搜索、原图和 PDF 查看器，以及手机和平板尺寸。原题英文继续与独立提取的 PDF 文本核对；因公式排版打乱提取顺序的片段保留人工核验记录。
 
 `python3 scripts/check_figures.py` 在相同 Matplotlib 环境中检查全部 44 幅图的两种主题，共 88 组：文字边界框不重叠，球形图的半径共享球心、箭头止于对应边界、法向从高斯面径向向外，球形文字避开曲线和引线。检查不改写静态素材，逐图 PNG 和报告写入 Git 忽略的 `artifacts/figure-review/`。
 
@@ -101,7 +101,7 @@ bun run build
 
 ```bash
 PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs \
-QA_URL=http://localhost:4173 node scripts/browser-qa.mjs
+QA_URL=http://localhost:4173 bun scripts/browser-qa.mjs
 ```
 
 若浏览器装在自定义位置，同时设置 `PLAYWRIGHT_BROWSERS_PATH`。结果写入 Git 忽略的 `artifacts/`，测试使用独立浏览器上下文，不修改日常浏览器进度。
@@ -119,4 +119,4 @@ python3 scripts/generate_figures.py
 python3 content/exam1_f26/generate_figures.py
 ```
 
-每个 paper 的 `paper.json` 将原始英文题干、中文译文、导读、完整推导和纠错说明集中保存；`documents.json` 保存该 paper 的原始 PDF 来源和散列，路径相对于它的 `assets/`；`figure-sources.json` 保存原始裁图区域，`generate_figures.py` 保存该 paper 的题图和解题图配置。`scripts/plotting.py` 与 `scripts/question_primitives.py` 只提供共用绘图工具，`scripts/generate_figures.py` 自动发现各 paper 的绘图入口，支持 `--paper exam1_f26`。Python 不编译或改写题库 JSON。PDF 图像工具直接读取 paper 内的 PDF 和共享课程 PDF，只有重新从外部导入时才使用 `--source-dir ..`，并核验已有 SHA-256 记录。
+每个 paper 的 `questions/q{number}.md` 保存原始英文题干、中文译文、导读、完整推导和纠错说明；`paper.json` 仅存试卷元数据。`documents.json` 保存原始 PDF 来源和散列，路径相对于该 paper 的 `assets/`；`figure-sources.json` 保存裁图区域，`generate_figures.py` 保存绘图配置。共享绘图工具与自动发现入口保持不变。Python 仅用 PyYAML 读取文章 frontmatter 中的资源引用以核验来源，不读取或改写正文。PDF 图像工具直接读取 paper 内的 PDF 和共享课程 PDF，只有重新从外部导入时才使用 `--source-dir ..`，并核验已有 SHA-256 记录。

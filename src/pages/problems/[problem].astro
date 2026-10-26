@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import StudyDesk from '#lib/components/StudyDesk.svelte';
+import { loadAstroContent } from '../../../content/astro.server';
+import type { StudyPageData } from '#lib/types';
+
+export const getStaticPaths = (async () => {
+  const { papers, examIndex, documents } = await loadAstroContent();
+  return papers.flatMap(paper => {
+    const { problems, ...exam } = paper.exam;
+    return problems.map(problem => ({
+      params: { problem: problem.id },
+      props: { data: { examIndex, documents, exam, problem, assetBase: paper.assetBase } },
+    }));
+  });
+}) satisfies GetStaticPaths;
+
+interface Props { data: StudyPageData }
+const { data } = Astro.props;
+const parts = data.examIndex.reduce((sum, exam) => sum + exam.problems.reduce((n, problem) => n + problem.parts.length, 0), 0);
+---
+<Base title={data.problem.title.zh} description={`ECSE 2100 场与波 I：${data.examIndex.length} 份历年试卷、${parts} 个双语详解小问，以及附来源的公式与课程讲义。`}>
+  <StudyDesk data={data} client:load transition:persist="study-desk" />
+</Base>

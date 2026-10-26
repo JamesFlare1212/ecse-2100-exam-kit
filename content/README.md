@@ -1,79 +1,126 @@
-# Pluggable course papers
+# Markdown paper library
 
-Each folder matching `exam{number}_{f|s}{year}` is discovered automatically.
+Each problem is one bilingual Markdown article, grouped under its source paper:
+`content/exam1_f26/questions/q1.md`. Start with an existing article such as
+[Fall 2026, Question 1](exam1_f26/questions/q1.md).
+
+Paper folders matching `exam{number}_{f|s}{year}` are discovered automatically.
 `exam1_f26` means Exam 1, Fall 2026; `exam2_s26` means Exam 2, Spring 2026.
-No import list or generated registry is maintained.
+There is no import list or generated registry.
 
-```text
-content/
-  exam1_f26/
-    paper.json                 # Complete bilingual questions, guides and solutions
-    documents.json             # This paper's PDF metadata and SHA-256 provenance
-    figure-sources.json        # Exact crop regions and multi-panel geometry
-    generate_figures.py        # This paper's question and solution drawings
-    extracted/                 # Original PDF text for transcription checks
-    assets/
-      sources/                 # Preserved exam and solution PDFs
-      pages/                   # Pre-rendered PDF pages, grouped by document ID
-      figures/                 # SVGs in both themes and generation provenance
-      original-figures/        # Original PDF figure crops
-  exam1_f25/
-  exam1_s26/
-  exam2_f25/
-  exam2_s26/
-  formulas.json                # Shared crib and lecture formulas
-  documents.json               # Shared crib and lecture PDF metadata
-  extracted/                  # Shared crib and lecture text
-```
+## Paper ownership
 
-JSON is edited and consumed directly. `paper.json` keeps the existing stable IDs
-such as `e1-f26` and `e1-f26-q1` so links and local learning records survive moves.
-The exam number, year and ID must match its folder name. A paper's document
-paths are relative to its `assets/`, for example `sources/e1-f26.pdf` and
-`pages/e1-f26`. Source filenames, page dimensions and SHA-256 must be preserved.
-Shared course documents continue to use their local paths under `static/`.
+Each paper directory contains:
 
-`types.ts` defines the independent data model; `schema.ts` checks bilingual
-fields, equations, IDs, citations and page bounds. `papers.server.ts` discovers
-papers and combines their metadata. `navigation.ts` selects searchable question
-text in memory. The browser receives that index and the selected problem's full
-content, while the entire solution bank remains on the build side.
+- `paper.json`: paper metadata only (ID, number, term, year, total score and PDF IDs).
+- `questions/q1.md`, `q2.md`, etc.: the only authored question and solution sources.
+- `documents.json`: preserved PDF filenames, page dimensions and SHA-256 provenance.
+- `figure-sources.json`: original figure crops and multi-panel geometry.
+- `generate_figures.py`: question and solution drawing configuration.
+- `extracted/`: original PDF text for transcription checks.
+- `assets/sources/`: original exam and solution PDFs.
+- `assets/pages/`: PDF page images, grouped by document ID.
+- `assets/figures/`: static SVGs in both themes and drawing provenance.
+- `assets/original-figures/`: original PDF figure crops.
 
-## Add or remove a paper
+Shared formulas and lecture provenance remain in `content/formulas.json` and
+`content/documents.json`. Their existing local resource paths are unchanged.
 
-1. Create a folder such as `exam1_f27`, author `paper.json` and its source records.
-2. Add the PDFs, page images, SVGs, original crops and extracted PDF text to that
-   folder, with paths matching its metadata and figure names.
-3. Put drawing configuration in `generate_figures.py`, exporting
-   `render_figures(save, dark)`. Existing papers show the interface. Shared
-   drawing primitives live in `scripts/plotting.py` and
-   `scripts/question_primitives.py`; they contain no paper registration list.
-4. Run `bun run build`. Pages, navigation and public assets are included
-   automatically, including new exam-number tabs. Run `bun test` for full checks.
+## Writing an article
 
-Move a paper outside `content/` to unplug it, then rebuild. Its pages and staged
-assets disappear automatically. The root link selects an available problem if
-its usual default is absent. Historical local progress, bookmarks, reveal counts
-and legacy notes survive, but inactive records do not count toward progress.
+The YAML frontmatter contains metadata, not the question or worked prose:
+
+- Stable problem ID, number, bilingual title/topic, points and given equations.
+- Figure names, bilingual captions, PDF page/crop coordinates and lecture references.
+- A `parts` array with each part's stable ID, printed label, points, source and
+  solution page, and optional question/solution figure metadata.
+
+Preserve IDs such as `e1-f26-q1` and `e1-f26-q1-ai`; URLs, bookmarks and learning
+records depend on them. The filename must match `number`, for example `q1.md`.
+YAML plain or single-quoted TeX uses a single backslash: `\epsilon`, not `\\epsilon`.
+Quoted strings containing TeX should use single quotes to avoid YAML escapes.
+
+The Markdown body uses these exact headings:
+
+- `## Question`: `### English` for verbatim original wording and `### 中文` for
+  its faithful translation.
+- `## Guide`: four subsections, `### Concepts`, `### Givens`, `### Goal` and
+  `### Approach`. Each contains `#### English` and `#### 中文` prose.
+- `## Part a`, or the exact printed label from frontmatter, such as `## Part a(i)`.
+  Its `### Question` contains `#### English` and `#### 中文`.
+- Each part has consecutive `### Step 1`, `### Step 2`, etc. Every step contains
+  `#### English`, `#### 中文` and `#### Equation`. Put one display equation
+  between `$$` lines under Equation. Equations are shared by the two languages.
+- An optional `#### References` under a step is a Markdown list of typed links,
+  for example `- [velocity](formula:velocity)`. IDs refer to `formulas.json`.
+- `### Answer` holds one display equation for the final result. An optional
+  `### Answer text` holds bilingual concluding prose. The interface incorporates
+  the result into the last derivation step using KaTeX boxed emphasis, without
+  displaying an extra answer heading or card.
+- `### Source correction` inside a part, or `## Source correction` for the whole
+  problem, contains the appropriately nested English and Chinese sections.
+
+Body text supports paragraphs, emphasis, lists, inline code, fenced code and
+links; math uses `$...$` or display `$$` blocks. Raw HTML is escaped and links
+cannot execute script URLs. Source figures are attached through metadata so
+both themes, original-image switching and PDF citation actions remain available.
+Headings are structural: do not add arbitrary subheadings inside a prose section.
+
+Every worked part starts with its governing equation, followed by actual
+substitutions and intermediate algebra or calculus. Retain all integration
+elements, limits, antiderivatives, boundary constants, units, vector directions
+and source-correction notes. Do not silently repair an original question's givens.
+The guide introduces actual givens and starting ideas, never computed answers.
+
+## Discovery, validation and pages
+
+Astro's `questions` collection in `src/content.config.ts` discovers the articles
+and validates frontmatter. `content/markdown.ts` reads the body through a Markdown
+syntax tree, preserving the original strings and TeX. `content/papers.server.ts`
+assembles papers in memory; `schema.ts` validates translations, equations, IDs,
+formula references, PDF pages and citation bounds. CLI checks use the same parser
+and schema as Astro pages. No intermediate question-bank JSON is written.
+
+Astro prerenders `/problems/{stable-id}/` for every active article. Each page
+contains its own full problem and only a solution-free navigation/search index
+for other problems. The Svelte study island preserves shared interaction state
+across Astro navigation; browser history, deep links and local progress still work.
+Native Bits UI portals use `#fieldnotes-overlays`, an independently persisted
+mount point, so dialogs, sheets and tooltips remain usable after a page swap.
+
+## Add, edit or remove a paper
+
+1. Create a folder such as `exam1_f27` and author its metadata-only `paper.json`.
+2. Add one complete bilingual `questions/q{number}.md` per problem.
+3. Add source records, PDFs, page images, SVGs, original crops and extracted text.
+   Resource paths in `documents.json` are relative to that paper's `assets/`.
+4. Add `generate_figures.py`, exporting `render_figures(save, dark)`.
+5. Run `bun run check`, `bun test` and `bun run build`.
+
+Changing Markdown updates the site directly. The development server watches
+article additions/removals, metadata changes and asset changes. Navigation,
+exam-number tabs and counts derive from active content.
+
+Move a whole paper outside `content/` to unplug it, then rebuild. Its routes and
+staged assets disappear. Historical progress, bookmarks, reveal counts and legacy
+notes survive, but inactive records do not count toward active progress.
 
 `bun run content:check` validates without generating content. `bun run
-papers:prepare` copies only paper `assets/` into the ignored `static/papers/`
-staging directory; ordinary development and builds do this automatically. JSON,
-Python and extracted text are never staged as public files. The dev server also
-watches additions, removals and edits, including asset changes. Edit canonical
-files inside each paper, not the staging directory.
+papers:prepare` copies only `assets/` into the ignored `static/papers/` staging
+directory. Markdown, JSON, extracted text and Python sources are never staged.
+Edit canonical assets in the owning paper, never the staging directory.
 
-## Drawings
+## Drawings and source checks
 
 ```bash
 python3 content/exam1_f26/generate_figures.py
 python3 scripts/generate_figures.py --paper exam1_f26
 python3 scripts/generate_figures.py
 python3 scripts/check_figures.py
+python3 scripts/check_sources.py
 ```
 
-Drawing output stays in the owning paper's `assets/`. Python only handles
-scientific drawings, PDF image assets and their checks; site builds require only
-Bun. JSON TeX commands require escaped backslashes, for example `"\\epsilon"`.
-Preserve literal original questions, faithful translations, complete derivations
-and source-correction notes. Results belong in the solution, not in the givens.
+Python handles scientific drawings, PDF image assets and verification only.
+It reads YAML frontmatter to find citation metadata, never the worked Markdown
+body. Install `scripts/requirements.txt` for offline source tools. Ordinary site
+development and builds require only Bun and the JavaScript dependencies.

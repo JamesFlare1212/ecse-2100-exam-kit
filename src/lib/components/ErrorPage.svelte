@@ -1,19 +1,23 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { page } from '$app/state';
+  import { onMount, tick } from 'svelte';
   import { Button } from '#lib/components/ui/button';
   import * as Empty from '#lib/components/ui/empty';
   import { readSavedLocale, saveLocale } from '#lib/locale';
   import type { Locale } from '#lib/types';
 
+  let { status = 404 }: { status?: number } = $props();
   let locale = $state<Locale>('zh');
   const t = (zh: string, en: string) => locale === 'zh' ? zh : en;
-  const title = $derived(page.status === 404
+  const title = $derived(status === 404
     ? t('找不到这道题', 'Problem not found')
     : t('页面暂时无法打开', 'Unable to open this page'));
 
-  onMount(() => { locale = readSavedLocale(); });
-  $effect(() => { document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en'; });
+  onMount(() => { locale = readSavedLocale(); void tick().then(() => delete document.documentElement.dataset.localePending); });
+  $effect(() => {
+    document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+    document.title = `${title} · Fieldnotes · ECSE 2100`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t('返回习题室继续学习。', 'Return to the study room to keep learning.'));
+  });
 
   function changeLocale() {
     locale = locale === 'zh' ? 'en' : 'zh';
@@ -21,17 +25,12 @@
   }
 </script>
 
-<svelte:head>
-  <title>{title} · Fieldnotes · ECSE 2100</title>
-  <meta name="description" content={t('返回习题室继续学习。', 'Return to the study room to keep learning.')} />
-</svelte:head>
-
 <main class="error-page">
   <Empty.Root>
     <Empty.Header>
-      <p>{page.status} · Fieldnotes</p>
+      <p>{status} · Fieldnotes</p>
       <Empty.Title><h1>{title}</h1></Empty.Title>
-      <Empty.Description>{page.status === 404
+      <Empty.Description>{status === 404
         ? t('链接可能已失效，或这份试卷暂未收录。', 'The link may be outdated, or this paper may be unavailable.')
         : t('请稍后重试，或返回习题室选择其他题目。', 'Try again later, or return to the study room to choose another problem.')}</Empty.Description>
     </Empty.Header>

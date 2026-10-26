@@ -2,7 +2,8 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from
 import { resolve } from 'node:path';
 import { parseContent } from './schema.ts';
 import { createExamIndex } from './navigation.ts';
-import type { Exam, Formula, SourceDocument } from './types.ts';
+import { readQuestionMarkdown, type MarkdownQuestion } from './markdown.ts';
+import type { Exam, ExamInfo, Formula, SourceDocument } from './types.ts';
 
 export const PAPER_NAME = /^exam[1-9]\d*_[fs]\d{2}$/;
 export interface Paper {
@@ -18,14 +19,26 @@ function readJson<T>(path: string): T {
 }
 
 /** Discover complete paper folders; no source list or generated registry. */
-export function loadContent(directory = resolve('content')) {
+export function loadContent(directory = resolve('content'), articles?: readonly MarkdownQuestion[]) {
   const documents = readJson<Record<string, SourceDocument>>(resolve(directory, 'documents.json'));
   const formulas = readJson<Formula[]>(resolve(directory, 'formulas.json'));
   const papers: Paper[] = readdirSync(directory, { withFileTypes: true })
     .filter(entry => entry.isDirectory() && PAPER_NAME.test(entry.name))
     .map(entry => {
       const folder = resolve(directory, entry.name);
-      const exam = readJson<Exam>(resolve(folder, 'paper.json'));
+      const info = readJson<ExamInfo>(resolve(folder, 'paper.json'));
+      if (Object.hasOwn(info, 'problems')) throw new Error(`${entry.name}/paper.json: author questions in questions/*.md`);
+      const questions = resolve(folder, 'questions');
+      const files = readdirSync(questions, { withFileTypes: true }).filter(file => file.isFile() && file.name.endsWith('.md'));
+      const problems = files.map(file => {
+        const path = resolve(questions, file.name);
+        const problem = articles ? articles.find(article => resolve(article.filePath) === path)?.problem
+          : readQuestionMarkdown(readFileSync(path, 'utf8'), path);
+        if (!problem) throw new Error(`${path}: missing from the Astro questions collection`);
+        if (file.name !== `q${problem.number}.md`) throw new Error(`${path}: filename must match question number q${problem.number}.md`);
+        return problem;
+      }).sort((a, b) => a.number - b.number);
+      const exam: Exam = { ...info, problems };
       const match = /^e([1-9]\d*)-([fs]\d{2})$/.exec(exam.id);
       if (!match || entry.name !== `exam${match[1]}_${match[2]}` || exam.number !== Number(match[1])
         || exam.year % 100 !== Number(match[2].slice(1))) {
@@ -67,7 +80,7 @@ export function assetSource(path: string, directory = resolve('content')) {
   return resolve(directory, '../static', path.slice(1));
 }
 
-/** Copy only public assets. JSON, extracted text and Python remain private. */
+/** Copy only public assets. Markdown, JSON, extracted text and Python remain private. */
 export function stagePaperAssets(papers: Paper[], destination = resolve('static/papers')) {
   mkdirSync(destination, { recursive: true });
   const active = new Set(papers.map(paper => paper.name));

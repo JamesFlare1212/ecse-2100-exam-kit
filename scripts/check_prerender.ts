@@ -1,4 +1,4 @@
-/** Validate the deliverable HTML and per-page data after adapter-static runs. */
+/** Validate Astro's deliverable HTML and isolated per-page island data. */
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -26,21 +26,27 @@ for (const { problem } of problemEntries) {
     parts++;
   }
 
-  // SvelteKit serializes server load data as reference arrays. The complete
-  // Problem records in this static payload must belong to this page alone.
-  const payload = JSON.parse(readFileSync(resolve(directory, '__data.json'), 'utf8'));
-  const problemIds: string[] = [];
-  for (const node of payload.nodes) {
-    if (node?.type !== 'data') continue;
-    const rootData = node.data[0];
-    if (rootData && 'exam' in rootData) {
-      assert.ok(!('problems' in node.data[rootData.exam]), `${problem.id}: exam metadata excludes other solutions`);
-    }
-    for (const value of node.data) {
-      if (!value || typeof value !== 'object' || Array.isArray(value)) continue;
-      if ('wording' in value && 'guide' in value && 'parts' in value) problemIds.push(node.data[value.id]);
-    }
+  const islands = [...html.matchAll(/<astro-island\b[^>]*\bprops="([^"]+)"/g)];
+  assert.equal(islands.length, 1, `${problem.id}: one connected study island`);
+  const encoded = islands[0][1].replaceAll('&quot;', '"').replaceAll('&#39;', "'")
+    .replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&');
+  // Astro tags serialized values: 0 = object/scalar, 1 = array. Our page
+  // data is intentionally plain JSON, with no executable values or classes.
+  function revive(value: unknown): unknown {
+    assert.ok(Array.isArray(value), 'Astro value must have a type tag');
+    const [type, raw] = value;
+    if (type === 1) return raw.map(revive);
+    assert.equal(type, 0, `Unexpected serialized data type ${type}`);
+    if (raw && typeof raw === 'object') return Object.fromEntries(Object.entries(raw).map(([key, entry]) => [key, revive(entry)]));
+    return raw;
   }
-  assert.deepEqual(problemIds, [problem.id], `${problem.id}: isolated hydration data`);
+  const payload = JSON.parse(encoded);
+  const data = revive(payload.data) as import('../content/types').StudyPageData;
+  assert.deepEqual(data.problem, problem, `${problem.id}: lossless hydration data`);
+  assert.ok(!('problems' in data.exam), `${problem.id}: exam metadata excludes other solutions`);
+  for (const exam of data.examIndex) for (const question of exam.problems) {
+    assert.ok(!('guide' in question), `${problem.id}: index excludes guides`);
+    for (const part of question.parts) assert.ok(!('steps' in part) && !('answer' in part), `${problem.id}: index excludes solutions`);
+  }
 }
 console.log(`Prerender verified: ${ids.length} problem HTML pages, ${parts} question parts, isolated page data.`);

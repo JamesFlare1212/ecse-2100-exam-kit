@@ -1,16 +1,16 @@
 // Optional end-to-end QA. Install Playwright separately, or point PLAYWRIGHT_MODULE
 // at an isolated install. Run against `bun run preview --host 127.0.0.1`.
 import assert from 'node:assert/strict';
-import {mkdir,readFile,readdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {checkI18n} from './browser-i18n-qa.mjs';
+import {loadContent} from '../content/papers.server.ts';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const destination=process.env.QA_ARTIFACTS??resolve(root,'artifacts');
 const base=process.env.QA_URL??'http://localhost:4173';
-const examDirectory=resolve(root,'content');
-const exams=await Promise.all((await readdir(examDirectory)).filter(name=>/^exam[1-9]\d*_[fs]\d{2}$/.test(name)).sort().map(async name=>JSON.parse(await readFile(resolve(examDirectory,name,'paper.json'),'utf8'))));
+const {exams}=loadContent(resolve(root,'content'));
 await mkdir(destination,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:'light',reducedMotion:'reduce'});
@@ -327,6 +327,8 @@ try {
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('.svg'));
   record('Original figure / Matplotlib SVG switch');
   await page.getByRole('radio',{name:'练习',exact:true}).click();
+  await page.waitForFunction(()=>document.querySelector('.solution-section-heading button')?.getAttribute('aria-expanded')==='false'
+    && [...document.querySelectorAll('.solution-step')].every(element=>!element.checkVisibility()));
   assert.equal(await page.locator('[data-answer]:visible').count(),0);
   assert.equal(await page.locator('.solution-step:visible').count(),0);
   assert.equal(await page.locator('.worked-solution textarea').count(),0);
@@ -374,7 +376,7 @@ try {
   await page.getByRole('dialog').getByRole('tab',{name:'Exam 1',exact:true}).click();
   await page.waitForFunction(()=>JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')).selected==='e1-f26-q1');
   await page.getByRole('dialog').waitFor({state:'detached'});
-  assert.equal(await page.getByRole('dialog').count(),0);record('Mobile navigation drawer selects an exam and closes');
+  assert.equal(await page.getByRole('dialog').count(),0);record('Mobile navigation drawer selects an exam after client navigation and closes');
   await page.getByRole('button',{name:'打开公式与课件',exact:true}).click();
   await page.getByRole('dialog').waitFor();await page.keyboard.press('Escape');record('Mobile formula / lecture drawer works');
   await page.getByRole('button',{name:'Lecture 02',exact:true}).click();

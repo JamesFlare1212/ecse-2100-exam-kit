@@ -1,5 +1,5 @@
 import { papers } from '../../content/catalog.server';
 
-// SvelteKit prevents this complete solution bank from entering client bundles.
+// Build/CLI-only entrypoint. Client components use the solution-free catalog.ts.
 export { exams, examIndex, documents, papers } from '../../content/catalog.server';
 export const problemEntries = papers.flatMap(paper => paper.exam.problems.map(problem => ({ exam: paper.exam, problem, paper })));

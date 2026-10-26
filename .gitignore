@@ -13,6 +13,8 @@ __pycache__/
 .netlify
 .wrangler
 /.svelte-kit
+/.svelte-check
+/.astro
 /build
 
 # OS

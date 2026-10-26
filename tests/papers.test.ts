@@ -15,6 +15,10 @@ function fixture() {
     const exam = JSON.parse(readFileSync(resolve(original, 'paper.json'), 'utf8').replaceAll('e1-f25', id));
     exam.year = year;
     writeFileSync(resolve(directory, 'paper.json'), JSON.stringify(exam));
+    mkdirSync(resolve(directory, 'questions'));
+    for (const question of ['q1', 'q2', 'q3', 'q4']) {
+      writeFileSync(resolve(directory, 'questions', `${question}.md`), readFileSync(resolve(original, 'questions', `${question}.md`), 'utf8').replaceAll('e1-f25', id));
+    }
     writeFileSync(resolve(directory, 'documents.json'), readFileSync(resolve(original, 'documents.json'), 'utf8').replaceAll('e1-f25', id));
     writeFileSync(resolve(directory, 'assets/figures/test.svg'), '<svg/>');
     return directory;
@@ -37,6 +41,7 @@ describe('Pluggable paper folders', () => {
       stagePaperAssets(both.papers, staged);
       expect(readFileSync(resolve(staged, 'exam1_f27/figures/test.svg'), 'utf8')).toBe('<svg/>');
       expect(existsSync(resolve(staged, 'exam1_f27/paper.json'))).toBe(false);
+      expect(existsSync(resolve(staged, 'exam1_f27/questions/q1.md'))).toBe(false);
       rmSync(first, { recursive: true });
       const remaining = loadContent(root);
       stagePaperAssets(remaining.papers, staged);

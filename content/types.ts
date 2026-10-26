@@ -71,3 +71,10 @@ export interface SourceDocument {
   id: string; title: string; kind: string; pages: number; pdf: string;
   pageBase: string; sizes: number[][]; original: string; sha256: string;
 }
+export interface StudyPageData {
+  examIndex: ExamIndex[];
+  documents: Record<string, SourceDocument>;
+  exam: ExamInfo;
+  problem: Problem;
+  assetBase: string;
+}

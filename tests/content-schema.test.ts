@@ -3,7 +3,7 @@ import { exams, formulas, documents } from '../content/catalog.server';
 import { parseContent } from '../content/schema';
 import type { Exam } from '../content/types';
 
-describe('Authored JSON validation', () => {
+describe('Authored question and metadata validation', () => {
   test('uses the source objects without rewriting question or solution data', () => {
     const input = structuredClone(exams);
     const before = JSON.stringify(input);
@@ -36,5 +36,11 @@ describe('Authored JSON validation', () => {
     const input = structuredClone(formulas);
     input[0].note = {zh: '关系 $\\frac{$', en: 'Relation $a$'};
     expect(() => parseContent(exams, input, documents)).toThrow(/formulas\[0\]\.note\.zh.*invalid TeX/);
+  });
+
+  test('validates visible Markdown prose without treating syntax or link destinations as equations', () => {
+    const input = structuredClone(exams);
+    input[0].problems[0].guide.approach.en += '\n\n> **Recall** [the lecture](/sources/lecture.pdf?page=2).\n\n- Check the boundary.';
+    expect(parseContent(input, formulas, documents).exams).toBe(input);
   });
 });

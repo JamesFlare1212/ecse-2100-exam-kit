@@ -1,6 +1,7 @@
 <script lang="ts">
   import {onMount,tick,untrack} from 'svelte';
-  import {goto} from '$app/navigation';
+  import {navigate} from 'astro:transitions/client';
+  import {BitsConfig} from 'bits-ui';
   import * as Tabs from '#lib/components/ui/tabs';
   import * as ToggleGroup from '#lib/components/ui/toggle-group';
   import * as Accordion from '#lib/components/ui/accordion';
@@ -40,10 +41,9 @@
   import {provideFormulaPreviews} from '#lib/formula-preview.svelte';
   import {createCatalog} from '#lib/catalog';
   import {problemPath} from '#lib/problem-navigation';
-  import type {SourceRef} from '#lib/types';
-  import type {PageProps} from './$types';
+  import type {SourceRef,StudyPageData} from '#lib/types';
 
-  let {data}:PageProps=$props();
+  let {data}:{data:StudyPageData}=$props();
   const formulaPreviews=provideFormulaPreviews();
   const catalog=$derived(createCatalog(data.examIndex,data.documents));
   const assetBase=$derived(data.assetBase);
@@ -72,13 +72,19 @@
   $effect(()=>{study.selected=problem.id;openParts=[];view='learn';formulaPreviews.active=null;});
   $effect(()=>{const serialized=study.serialize();if(study.ready)study.persist(serialized);});
   $effect(()=>{if(study.ready){document.documentElement.classList.toggle('dark',dark);document.documentElement.lang=study.locale==='zh'?'zh-CN':'en';document.documentElement.style.colorScheme=dark?'dark':'light';document.documentElement.dataset.navigation=study.navigationOpen?'open':'closed';document.documentElement.dataset.references=study.referencesOpen?'open':'closed';}});
+  $effect(()=>{
+    if(!study.ready)return;
+    document.title=`${problem.title[study.locale]} · Fieldnotes · ECSE 2100`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content',t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`));
+    void tick().then(()=>delete document.documentElement.dataset.localePending);
+  });
 
   function library(kind:string){libraryKind=kind;libraryOpen=true;navOpen=false;}
   function openSource(ref:SourceRef){source=ref;railOpen=false;}
   async function select(id:string,part?:string){
     if(!catalog.problemIds.has(id))return;
     navOpen=false;view='learn';
-    await goto(problemPath(id),{reset:false});await tick();
+    await navigate(problemPath(id));await tick();
     if(part){openParts=[part];await tick();document.querySelector(`[data-part="${part}"]`)?.scrollIntoView({block:'start',behavior:'instant'});}
     else{window.scrollTo({top:0,behavior:'instant'});document.getElementById('problem-title')?.focus({preventScroll:true});}
   }
@@ -117,8 +123,8 @@
   });
 </script>
 
-<svelte:head><title>{problem.title[study.locale]} · Fieldnotes · ECSE 2100</title><meta name="description" content={t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`)}/></svelte:head>
 <a class="skip-link" href="#main-content">{t('跳至题目','Skip to problem')}</a>
+<BitsConfig defaultPortalTo="#fieldnotes-overlays">
 <Tooltip.Provider delayDuration={250}>
   <div class="app-shell" data-navigation={study.navigationOpen?'open':'closed'}>
     <aside id="exam-navigation" class="desktop-navigation" aria-label={t('试卷导航','Exam navigation')} aria-hidden={compactNavigation||!study.navigationOpen} inert={compactNavigation||!study.navigationOpen}><Navigation {study} onselect={select} onlibrary={library}/></aside>
@@ -174,3 +180,4 @@
   <Library bind:open={libraryOpen} bind:kind={libraryKind} {study} onsource={openSource} onselect={select}/>
   <SourceViewer {source} {documents} locale={study.locale} onclose={()=>source=null}/>
 </Tooltip.Provider>
+</BitsConfig>
