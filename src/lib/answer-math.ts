@@ -69,6 +69,14 @@ export function emphasizeAnswer(answer:string):string {
 }
 
 export function conclusionMath(calculation:string|undefined,answer:string):{calculation?:string;result:string} {
+  // Logical lead-ins express the derivation, rather than a second copy of its result.
+  const lead=/^\s*(\\(?:therefore|because)\b(?:\s|\\quad|\\qquad|\\,|\\;)*)/.exec(calculation??'');
+  if(lead){
+    const conclusion=conclusionMath(calculation!.slice(lead[0].length),answer);
+    return conclusion.calculation
+      ? {calculation:lead[1]+conclusion.calculation,result:conclusion.result}
+      : {result:lead[1]+conclusion.result};
+  }
   const result=emphasizeAnswer(answer);
   if(!calculation)return {result};
   if(normalize(calculation)===normalize(answer))return {result};

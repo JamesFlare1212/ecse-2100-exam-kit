@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseQuestionBody, readQuestionMarkdown } from '../content/markdown';
 import { renderText } from '../src/lib/math';
+import { conclusionMath } from '../src/lib/answer-math';
 
 const source = readFileSync(resolve(import.meta.dir, '../content/exam1_f26/questions/q1.md'), 'utf8');
 
@@ -12,7 +13,7 @@ describe('Markdown question articles', () => {
     expect(problem.id).toBe('e1-f26-q1');
     expect(problem.parts[0].id).toBe('e1-f26-q1-ai');
     expect(problem.statement.en).toContain('$\\Delta z\\ll\\lambda$');
-    expect(problem.parts[0].steps[0].math).toBe('\\gamma=\\alpha+j\\beta=\\sqrt{(r+j\\omega l)(g+j\\omega c)}');
+    expect(problem.parts[0].steps[0].math).toBe('\\gamma=\\alpha+j\\beta');
     expect(problem.parts[0].steps[0].refs).toEqual(['lossy-wave']);
     expect(problem.parts.at(-1)?.questionFigure?.source.page).toBe(3);
     expect(problem.guide.known.zh).toContain('$60\\,\\mathrm m$');
@@ -22,6 +23,30 @@ describe('Markdown question articles', () => {
     const changed = source.replace('This problem connects', '```text\n## Part fake\n```\n\nThis problem connects');
     expect(readQuestionMarkdown(changed).guide.concept.en).toContain('## Part fake');
     expect(readQuestionMarkdown(changed).parts).toHaveLength(4);
+  });
+
+  test('allows an equation without compulsory narration or an arbitrary step count', () => {
+    const changed = source
+      .replace(/### Step 1\n[\s\S]*?#### Equation/, '### Step 1\n\n#### Equation')
+      .replace(/### Step 2\n[\s\S]*?(?=### Answer\n)/, '');
+    const part = readQuestionMarkdown(changed).parts[0];
+    expect(part.steps).toHaveLength(1);
+    expect(part.steps[0].text).toBeUndefined();
+    expect(part.steps[0].math).toContain('\\gamma=');
+    expect(part.steps[0].refs).toEqual(['lossy-wave']);
+  });
+
+  test('still requires both translations when an annotation is supplied', () => {
+    const changed = source.replace(/(### Step 1\n[\s\S]*?)#### 中文[\s\S]*?(?=#### Equation)/, '$1');
+    expect(() => readQuestionMarkdown(changed)).toThrow('missing section 中文');
+  });
+
+  test('keeps a mathematical therefore symbol without repeating the final answer', () => {
+    const result = conclusionMath('\\therefore\\quad E=Q/(4\\pi\\epsilon r^2)', 'E=Q/(4\\pi\\epsilon r^2)');
+    expect(result.calculation).toBeUndefined();
+    expect(result.result).toStartWith('\\therefore\\quad ');
+    expect(result.result.match(/\\boxed\{/g)).toHaveLength(1);
+    expect(renderText(`$$${result.result}$$`)).toContain('katex-display');
   });
 
   const cases: [string, (text: string) => string, RegExp][] = [

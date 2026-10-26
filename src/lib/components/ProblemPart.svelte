@@ -25,7 +25,23 @@
   <Accordion.Content class="part-content">
       <div class="solution-steps">
         {#each part.steps as step,i(i)}
-          <div class="solution-step" data-answer={i===part.steps.length-1?part.id:undefined}><span class="step-number">{String(i+1).padStart(2,'0')}</span><div class="step-content"><p><RichText text={step.text[study.locale]}/></p>{#if i===part.steps.length-1}{#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}<Math tex={conclusion.result} display/>{#if part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}{:else if step.math}<Math tex={step.math} display/>{/if}{#if step.refs.length}<div class="step-references">{#each step.refs as id(id)}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} compact/>{/each}</div>{/if}</div></div>
+          <div class="solution-step" data-answer={i===part.steps.length-1?part.id:undefined}>
+            <div class="step-content">
+              {#if step.text}<p class="solution-annotation"><RichText text={step.text[study.locale]}/></p>{/if}
+              <div class="derivation-line">
+                <div class="derivation-equations">
+                  {#if i===part.steps.length-1}
+                    {#if conclusion.calculation}<Math tex={conclusion.calculation} display/>{/if}
+                    <Math tex={conclusion.result} display/>
+                  {:else}
+                    <Math tex={step.math} display/>
+                  {/if}
+                </div>
+                {#if step.refs.length}<div class="equation-references" aria-label={study.locale==='zh'?'本式来源':'Equation sources'}>{#each step.refs as id(id)}<FormulaLink documents={study.catalog.documents} formula={formulaById[id]} locale={study.locale} {onsource} compact/>{/each}</div>{/if}
+              </div>
+              {#if i===part.steps.length-1&&part.answerText}<p><RichText text={part.answerText[study.locale]}/></p>{/if}
+            </div>
+          </div>
         {/each}
       </div>
       {#if part.figure}<Figure {assetBase} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}

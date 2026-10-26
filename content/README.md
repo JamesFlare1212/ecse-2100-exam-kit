@@ -48,11 +48,20 @@ The Markdown body uses these exact headings:
   `### Approach`. Each contains `#### English` and `#### 中文` prose.
 - `## Part a`, or the exact printed label from frontmatter, such as `## Part a(i)`.
   Its `### Question` contains `#### English` and `#### 中文`.
-- Each part has consecutive `### Step 1`, `### Step 2`, etc. Every step contains
-  `#### English`, `#### 中文` and `#### Equation`. Put one display equation
-  between `$$` lines under Equation. Equations are shared by the two languages.
+- Each part has consecutive `### Step 1`, `### Step 2`, etc., with as many
+  equation groups as the calculation needs. `#### Equation` is required and
+  holds one display equation between `$$` lines; use `aligned` for a calculation
+  chain. Equations are shared by the two languages. Use `\because` and
+  `\therefore` in TeX where they clarify a condition or deduction.
+- For short lead-ins, add both `#### English` and `#### 中文` under that step;
+  they appear before its equation. Prefer this flow: “use these crib sheet
+  formulas” → “given …, find …” → “substitute … into …” → “this gives …”.
+  Identify question-supplied definitions and earlier derived results accurately.
+  Annotations remain optional; do not repeat prose for every algebraic line.
 - An optional `#### References` under a step is a Markdown list of typed links,
   for example `- [velocity](formula:velocity)`. IDs refer to `formulas.json`.
+  These source links appear beside that group's equation, never in a detached
+  list at the bottom of the solution.
 - `### Answer` holds one display equation for the final result. An optional
   `### Answer text` holds bilingual concluding prose. The interface incorporates
   the result into the last derivation step using KaTeX boxed emphasis, without

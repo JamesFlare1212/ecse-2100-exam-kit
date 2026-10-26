@@ -56,6 +56,7 @@ try {
   await goto('e2-s26-q1');
   await page.evaluate(()=>{
     const data=JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1'));
+    data.mode='practice';
     data.revealed={'e2-s26-q1-a':20,'e2-s26-q2-a':1,'e2-s26-q2-b':0};
     localStorage.setItem('ecse2100-fieldnotes-v1',JSON.stringify(data));
   });
@@ -75,7 +76,10 @@ try {
   }
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
   assert.equal((await stored()).revealed['e2-s26-q2-b'],0);
-  record('Every part opens its full solution regardless of legacy saved step counts');
+  assert.equal((await stored()).mode,'practice');
+  assert.equal(await page.getByRole('group',{name:'学习模式',exact:true}).count(),0);
+  assert.equal(await page.getByRole('radio',{name:/^(精读|练习|Learn|Practice)$/}).count(),0);
+  record('One solution view replaces reading modes while preserving the retired preference and reveal records');
 
   await goto('e2-s26-q3');
   await page.evaluate(()=>window.__fieldnotesDocument='same-page');
@@ -188,6 +192,8 @@ try {
       const actual=renderedSteps.find(item=>item.id===part.id);
       assert.equal(actual.count,part.steps.length,part.id);
       assert.equal(actual.firstEquation,part.steps[0].math,part.id);
+      const refs=await page.locator(`[data-part="${part.id}"] .solution-step`).evaluateAll(nodes=>nodes.map(node=>node.querySelectorAll('.derivation-line .equation-references .formula-link').length));
+      assert.deepEqual(refs,part.steps.map(step=>step.refs.length),part.id);
       stepCount+=actual.count;
     }
     for(const result of await page.locator('[data-answer]').evaluateAll(nodes=>nodes.map(node=>({box:Boolean(node.querySelector('.fbox')),background:getComputedStyle(node).backgroundColor,border:getComputedStyle(node).borderTopWidth})))) {
@@ -326,14 +332,15 @@ try {
   await page.getByRole('radio',{name:'矢量复刻',exact:true}).click();
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('.svg'));
   record('Original figure / Matplotlib SVG switch');
-  await page.getByRole('radio',{name:'练习',exact:true}).click();
+  const solutionToggle=page.locator('.solution-section-heading button');
+  if(await solutionToggle.getAttribute('aria-expanded')==='true')await solutionToggle.click();
   await page.waitForFunction(()=>document.querySelector('.solution-section-heading button')?.getAttribute('aria-expanded')==='false'
     && [...document.querySelectorAll('.solution-step')].every(element=>!element.checkVisibility()));
   assert.equal(await page.locator('[data-answer]:visible').count(),0);
   assert.equal(await page.locator('.solution-step:visible').count(),0);
   assert.equal(await page.locator('.worked-solution textarea').count(),0);
   assert.equal(await page.locator('[id^="attempt-"]').count(),0);
-  record('Practice uses a notebook workflow with no per-part text entry');
+  record('The unified solution view has no mode switch or per-part text entry');
   const practicePart=page.locator('[data-part="e2-s26-q3-a"]');
   const expectedPracticeSteps=exams.flatMap(e=>e.problems).find(q=>q.id==='e2-s26-q3').parts[0].steps.length;
   await practicePart.locator('.part-trigger').click();
@@ -342,7 +349,7 @@ try {
   assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
   await page.getByRole('button',{name:'标记已掌握',exact:true}).first().click();
-  record('Practice starts collapsed and opens full solutions; mastery and legacy records remain independent');
+  record('Solutions collapse and reopen in full; mastery and legacy records remain independent');
   assert.equal(await page.getByRole('tab',{name:'我的笔记',exact:true}).count(),0);
   assert.equal(await page.locator('textarea').count(),0);
   await page.getByRole('button',{name:'收藏此题',exact:true}).click();
@@ -357,7 +364,6 @@ try {
   assert.ok(await page.locator('html').evaluate(e=>e.classList.contains('dark')));
   assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).endsWith('-dark.svg'));
   record('Locale, theme, mastery and bookmarks persist after reload without a notes UI');
-  await page.getByRole('radio',{name:'Learn',exact:true}).click();
   await revealAll();
   await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:resolve(destination,'desktop-dark-en.png')});
   await page.getByRole('button',{name:'Switch to light mode',exact:true}).click();

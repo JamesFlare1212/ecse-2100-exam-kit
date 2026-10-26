@@ -64,9 +64,9 @@ const region: Rule = (value, path) => {
 };
 const originalFigure = object({ doc: text, page: positive, region });
 const source = object({ doc: text, page: positive, label: localized }, { region });
-const step = object({ text: localized, math: tex, refs: array(text) });
+const step = object({ math: tex, refs: array(text) }, { text: localized });
 const part = object({
-  id: text, label: text, points: natural, prompt: localized, steps: array(step, 3),
+  id: text, label: text, points: natural, prompt: localized, steps: array(step, 1),
   answer: tex, sourcePage: positive, solutionPage: positive,
 }, {
   answerText: localized, note: localized, figure: text, figureCaption: localized,

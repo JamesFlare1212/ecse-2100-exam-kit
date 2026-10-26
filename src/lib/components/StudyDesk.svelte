@@ -3,7 +3,6 @@
   import {navigate} from 'astro:transitions/client';
   import {BitsConfig} from 'bits-ui';
   import * as Tabs from '#lib/components/ui/tabs';
-  import * as ToggleGroup from '#lib/components/ui/toggle-group';
   import * as Accordion from '#lib/components/ui/accordion';
   import * as Sheet from '#lib/components/ui/sheet';
   import * as Tooltip from '#lib/components/ui/tooltip';
@@ -11,7 +10,6 @@
   import {Button,buttonVariants} from '#lib/components/ui/button';
   import {Badge} from '#lib/components/ui/badge';
   import {Separator} from '#lib/components/ui/separator';
-  import BookOpen from '@lucide/svelte/icons/book-open';
   import FileText from '@lucide/svelte/icons/file-text';
   import Moon from '@lucide/svelte/icons/moon';
   import Sun from '@lucide/svelte/icons/sun';
@@ -24,7 +22,6 @@
   import PanelRight from '@lucide/svelte/icons/panel-right';
   import PanelLeft from '@lucide/svelte/icons/panel-left';
   import GraduationCap from '@lucide/svelte/icons/graduation-cap';
-  import NotebookPen from '@lucide/svelte/icons/notebook-pen';
   import Layers from '@lucide/svelte/icons/layers';
   import ChevronsUp from '@lucide/svelte/icons/chevrons-up';
   import Info from '@lucide/svelte/icons/info';
@@ -92,7 +89,6 @@
     if(openParts.length){openParts=[];return;}
     openParts=problem.parts.map(p=>p.id);
   }
-  function changeMode(mode:string){if(mode==='study'||mode==='practice'){study.mode=mode;openParts=[];}}
   function focusOutsidePanel(id:string,toggle:string){
     if(document.getElementById(id)?.contains(document.activeElement))
       document.querySelector<HTMLElement>('[data-sidebar-toggle="'+toggle+'"]')?.focus({preventScroll:true});
@@ -149,7 +145,7 @@
           <div class="problem-meta"><Badge variant="outline">Exam {exam.number}</Badge><span>{exam.term[study.locale]} {exam.year}</span><span class="metadata-dot">·</span><span>{problem.points} {t('分','points')}</span><span class="metadata-dot">·</span><span>{problem.parts.length} {t('小问','parts')}</span></div>
           <div class="problem-title-row"><div><p class="problem-kicker">{t('题目','PROBLEM')} {String(problem.number).padStart(2,'0')}</p><h1 id="problem-title" lang={study.locale==='zh'?'zh-CN':'en'} tabindex="-1">{problem.title[study.locale]}</h1></div><Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'outline',size:'icon'})} onclick={()=>study.bookmarks[problem.id]=!study.bookmarks[problem.id]} aria-label={t(study.bookmarks[problem.id]?'取消收藏':'收藏此题',study.bookmarks[problem.id]?'Remove bookmark':'Bookmark problem')} aria-pressed={Boolean(study.bookmarks[problem.id])}>{#if study.bookmarks[problem.id]}<BookmarkCheck aria-hidden="true"/>{:else}<Bookmark aria-hidden="true"/>{/if}</Tooltip.Trigger><Tooltip.Content>{t(study.bookmarks[problem.id]?'已收藏':'留待再次练习',study.bookmarks[problem.id]?'Saved':'Save for another attempt')}</Tooltip.Content></Tooltip.Root></div>
           <p class="problem-subtitle">{problem.topic[study.locale]}<span>·</span>{t('先写方程，再代入数值。','Start with the equation. Then work through the numbers.')}</p>
-          <div class="study-options"><div class="lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>Number(l.doc.slice(-2))))] as number(number)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>Number(l.doc.slice(-2))===number)!)}>Lecture {String(number).padStart(2,'0')}</Button>{/each}</div><ToggleGroup.Root type="single" variant="outline" size="sm" value={study.mode} onValueChange={changeMode} aria-label={t('学习模式','Study mode')}><ToggleGroup.Item value="study"><BookOpen aria-hidden="true"/>{t('精读','Learn')}</ToggleGroup.Item><ToggleGroup.Item value="practice"><NotebookPen aria-hidden="true"/>{t('练习','Practice')}</ToggleGroup.Item></ToggleGroup.Root></div>
+          <div class="problem-lectures lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>Number(l.doc.slice(-2))))] as number(number)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>Number(l.doc.slice(-2))===number)!)}>Lecture {String(number).padStart(2,'0')}</Button>{/each}</div>
           {#if study.storageError}<Alert.Root><Info aria-hidden="true"/><Alert.Title>{t('浏览器存储暂不可用','Browser storage is unavailable')}</Alert.Title><Alert.Description>{t('本次仍可练习，但学习进度和收藏可能无法保存。','You can keep working, but progress and bookmarks may not be saved.')}</Alert.Description></Alert.Root>{/if}
           <Tabs.Root bind:value={view} class="problem-tabs">
             <Tabs.List variant="line" class="problem-tab-list"><Tabs.Trigger value="learn"><Layers aria-hidden="true"/>{t('题目与推导','Problem & solution')}</Tabs.Trigger><Tabs.Trigger value="source"><FileText aria-hidden="true"/>{t('试卷原页','Source pages')}</Tabs.Trigger></Tabs.List>
@@ -158,7 +154,6 @@
               {#if !problem.figureAtParts}<Figure {assetBase} name={problem.figure} locale={study.locale} {dark} caption={problem.figureCaption} original={problem.originalFigure} onsource={openSource}/>{/if}
               <section class="worked-solution" aria-label={t('分步解答','Worked solution')}><div class="solution-section-heading"><div class="section-label"><span>02</span>{t('一步一步推导','WORK IT THROUGH')}</div><Button variant="ghost" size="sm" onclick={toggleSolutions} aria-controls="worked-parts" aria-expanded={openParts.length>0}>{#if openParts.length}{t('收起全部推导','Collapse all steps')}<ChevronsUp data-icon="inline-end" aria-hidden="true"/>{:else}{t('展开全部推导','Reveal all steps')}<Layers data-icon="inline-end" aria-hidden="true"/>{/if}</Button></div>
                 <ProblemOverview {problem} locale={study.locale} onsource={openSource}/>
-                {#if study.mode==='practice'}<p class="solution-intro">{t('在自己的本子上练习，需要时点击小问查看完整解答。','Work in your notebook, then open a part to view its full solution when you need it.')}</p>{/if}
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
               {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]}/></Alert.Description></Alert.Root>{/if}

@@ -91,9 +91,10 @@ export function parseQuestionBody(metadata: unknown, body: string, file = 'quest
     });
   }
   function step(section: Section): Step {
-    branch(section, ['English', '中文', 'Equation'], ['References']);
+    branch(section, ['Equation'], ['English', '中文', 'References']);
+    const annotated = section.children.some(entry => entry.name === 'English' || entry.name === '中文');
     return {
-      text: { en: leaf(child(section, 'English')), zh: leaf(child(section, '中文')) },
+      ...(annotated ? { text: { en: leaf(child(section, 'English')), zh: leaf(child(section, '中文')) } } : {}),
       math: equation(child(section, 'Equation')),
       refs: section.children.some(entry => entry.name === 'References') ? references(child(section, 'References')) : [],
     };
@@ -115,7 +116,7 @@ export function parseQuestionBody(metadata: unknown, body: string, file = 'quest
     const section = child(root, `Part ${part.label}`);
     for (const name of ['prompt', 'steps', 'answer', 'answerText', 'note']) if (Object.hasOwn(part, name)) fail(section, `${name} belongs in the Markdown body`);
     const steps = section.children.filter(entry => /^Step \d+$/.test(entry.name));
-    if (steps.length < 3) fail(section, 'expected at least three worked steps');
+    if (!steps.length) fail(section, 'expected at least one equation group');
     steps.forEach((entry, index) => { if (entry.name !== `Step ${index + 1}`) fail(entry, 'steps must be numbered consecutively from 1'); });
     branch(section, ['Question', ...steps.map(entry => entry.name), 'Answer'], ['Answer text', 'Source correction']);
     return {

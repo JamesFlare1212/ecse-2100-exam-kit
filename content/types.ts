@@ -9,7 +9,8 @@ export interface Formula {
   source: SourceRef;
   note?: Localized;
 }
-export interface Step { text: Localized; math?: string; refs: string[] }
+/** An equation group, optionally annotated; logical symbols belong in its TeX. */
+export interface Step { math: string; refs: string[]; text?: Localized }
 export interface OriginalFigure { doc:string; page:number; region:Region }
 export interface ProblemGuide {
   concept: Localized;
