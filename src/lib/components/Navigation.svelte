@@ -18,7 +18,9 @@
   let {study,onselect,onlibrary}: {study:StudyState;onselect:(id:string)=>void;onlibrary:(kind:string)=>void}=$props();
   const selected=$derived(study.catalog.findProblem(study.selected));
   let openExam=$state(untrack(()=>study.catalog.findProblem(study.selected).exam.id));
-  const progress=$derived(study.count([...study.catalog.partIds]));
+  const exams=$derived(study.catalog.exams.filter(exam=>exam.number===selected.exam.number));
+  const partIds=$derived(exams.flatMap(exam=>exam.problems.flatMap(problem=>problem.parts.map(part=>part.id))));
+  const progress=$derived(study.count(partIds));
   const examNumbers=$derived([...new Set(study.catalog.exams.map(exam=>exam.number))]);
   const home=$derived(study.catalog.findProblem(DEFAULT_PROBLEM_ID).problem.id);
   $effect(()=>{openExam=selected.exam.id;});
@@ -31,7 +33,7 @@
       <Tabs.List class="w-full">{#each examNumbers as number(number)}<Tabs.Trigger value={String(number)}>Exam {number}</Tabs.Trigger>{/each}</Tabs.List>
     </Tabs.Root>
     <Accordion.Root type="single" value={openExam} onValueChange={(v)=>openExam=v} class="exam-list">
-      {#each study.catalog.exams.filter(e=>e.number===selected.exam.number).toReversed() as exam(exam.id)}
+      {#each exams.toReversed() as exam(exam.id)}
         <Accordion.Item value={exam.id}>
           <Accordion.Trigger class="exam-trigger"><span class="exam-season">{exam.term[study.locale]} {exam.year}<small>{exam.points} {study.locale==='zh'?'分':'pts'} · {exam.problems.length} {study.locale==='zh'?'题':'problems'}</small></span></Accordion.Trigger>
           <Accordion.Content>
@@ -59,8 +61,8 @@
     <div class="nav-tip"><span class="tiny-label">A BETTER WAY TO STUDY</span><p>{study.locale==='zh'?'不只记住答案，\n更要找到它的来处。':'Go beyond the answer.\nFind where it comes from.'}</p><Button variant="link" size="sm" onclick={()=>onlibrary('crib')}>{study.locale==='zh'?'从公式表开始':'Start with the crib sheet'}<ArrowUpRight data-icon="inline-end" aria-hidden="true"/></Button></div>
   </div>
   <div class="nav-progress">
-    <div class="progress-summary"><span>{study.locale==='zh'?'学习进度':'Your progress'}</span><strong>{progress}<span> / {study.catalog.totalParts}</span></strong></div>
-    <Progress value={progress} max={study.catalog.totalParts} aria-label={study.locale==='zh'?'已掌握的小问':'Parts marked mastered'}/>
+    <div class="progress-summary"><span>{study.locale==='zh'?'学习进度':'Your progress'}</span><strong>{progress}<span> / {partIds.length}</span></strong></div>
+    <Progress value={progress} max={partIds.length} aria-label={`Exam ${selected.exam.number} · ${study.locale==='zh'?'已掌握的小问':'Parts marked mastered'}`}/>
     <div class="local-status"><ShieldCheck aria-hidden="true"/>{study.locale==='zh'?'学习进度保存在此浏览器':'Progress saved in this browser'}</div>
   </div>
 </div>
