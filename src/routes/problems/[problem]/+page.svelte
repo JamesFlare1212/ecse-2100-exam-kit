@@ -37,12 +37,14 @@
   import ProblemPart from '#lib/components/ProblemPart.svelte';
   import ProblemOverview from '#lib/components/ProblemOverview.svelte';
   import {StudyState} from '#lib/study.svelte';
+  import {provideFormulaPreviews} from '#lib/formula-preview.svelte';
   import {createCatalog} from '#lib/catalog';
   import {problemPath} from '#lib/problem-navigation';
   import type {SourceRef} from '#lib/types';
   import type {PageProps} from './$types';
 
   let {data}:PageProps=$props();
+  const formulaPreviews=provideFormulaPreviews();
   const catalog=$derived(createCatalog(data.examIndex,data.documents));
   const assetBase=$derived(data.assetBase);
   const documents=$derived(catalog.documents);
@@ -67,7 +69,7 @@
   const navigationLabel=$derived(compactNavigation?t('打开试卷导航','Open exam navigation'):t(study.navigationOpen?'收起试卷导航':'展开试卷导航',study.navigationOpen?'Collapse exam navigation':'Expand exam navigation'));
   const referencesLabel=$derived(compactReferences?t('打开公式与课件','Open formulas and lectures'):t(study.referencesOpen?'收起公式与课件侧栏':'展开公式与课件侧栏',study.referencesOpen?'Collapse reference sidebar':'Expand reference sidebar'));
 
-  $effect(()=>{study.selected=problem.id;openParts=[problem.parts[0].id];view='learn';});
+  $effect(()=>{study.selected=problem.id;openParts=[problem.parts[0].id];view='learn';formulaPreviews.active=null;});
   $effect(()=>{const serialized=study.serialize();if(study.ready)study.persist(serialized);});
   $effect(()=>{if(study.ready){document.documentElement.classList.toggle('dark',dark);document.documentElement.lang=study.locale==='zh'?'zh-CN':'en';document.documentElement.style.colorScheme=dark?'dark':'light';document.documentElement.dataset.navigation=study.navigationOpen?'open':'closed';document.documentElement.dataset.references=study.referencesOpen?'open':'closed';}});
 
@@ -124,7 +126,7 @@
     <div class="workspace">
       <header class="topbar">
         <div class="toolbar-breadcrumb">
-          <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon'})} data-sidebar-toggle="navigation" onclick={toggleNavigation} aria-label={navigationLabel} aria-controls={compactNavigation?'mobile-exam-navigation':'exam-navigation'} aria-expanded={compactNavigation?navOpen:study.navigationOpen} aria-keyshortcuts="Control+b Meta+b"><PanelLeft aria-hidden="true"/></Tooltip.Trigger><Tooltip.Content>{navigationLabel}{#if !compactNavigation} · Ctrl / ⌘ B{/if}</Tooltip.Content></Tooltip.Root>
+          <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon',highlightExpanded:false})} data-sidebar-toggle="navigation" onclick={toggleNavigation} aria-label={navigationLabel} aria-controls={compactNavigation?'mobile-exam-navigation':'exam-navigation'} aria-expanded={compactNavigation?navOpen:study.navigationOpen} aria-keyshortcuts="Control+b Meta+b"><PanelLeft aria-hidden="true"/></Tooltip.Trigger><Tooltip.Content>{navigationLabel}{#if !compactNavigation} · Ctrl / ⌘ B{/if}</Tooltip.Content></Tooltip.Root>
           <Separator orientation="vertical" class="h-5"/>
           <span class="course-label">ECSE 2100</span><ChevronRight aria-hidden="true"/><span>{t('习题室','Study room')}</span>
         </div>
@@ -133,7 +135,7 @@
           <Separator orientation="vertical" class="h-5"/>
           <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'sm'})} onclick={()=>study.locale=study.locale==='zh'?'en':'zh'} aria-label={t('Switch to English','切换为中文')}><span class="language-switch">{study.locale==='zh'?'EN':'中文'}</span></Tooltip.Trigger><Tooltip.Content>{t('切换为英文','Switch to Chinese')}</Tooltip.Content></Tooltip.Root>
           <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon'})} onclick={()=>study.theme=dark?'light':'dark'} aria-label={t(dark?'切换浅色主题':'切换深色主题',dark?'Switch to light mode':'Switch to dark mode')}>{#if dark}<Sun aria-hidden="true"/>{:else}<Moon aria-hidden="true"/>{/if}</Tooltip.Trigger><Tooltip.Content>{t(dark?'浅色主题':'深色主题',dark?'Light mode':'Dark mode')}</Tooltip.Content></Tooltip.Root>
-          <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon'})} data-sidebar-toggle="references" onclick={toggleReferences} aria-label={referencesLabel} aria-controls={compactReferences?'mobile-reference-sidebar':'reference-sidebar'} aria-expanded={compactReferences?railOpen:study.referencesOpen}><PanelRight aria-hidden="true"/></Tooltip.Trigger><Tooltip.Content>{referencesLabel}</Tooltip.Content></Tooltip.Root>
+          <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon',highlightExpanded:false})} data-sidebar-toggle="references" onclick={toggleReferences} aria-label={referencesLabel} aria-controls={compactReferences?'mobile-reference-sidebar':'reference-sidebar'} aria-expanded={compactReferences?railOpen:study.referencesOpen}><PanelRight aria-hidden="true"/></Tooltip.Trigger><Tooltip.Content>{referencesLabel}</Tooltip.Content></Tooltip.Root>
         </div>
       </header>
       <div class="reading-layout" data-references={study.referencesOpen?'open':'closed'}>
@@ -154,7 +156,7 @@
                 {#if study.mode==='practice'}<p class="solution-intro">{t('在自己的本子上练习，需要时再逐步查看解答。','Work in your notebook, then reveal the solution when you need it.')}</p>{/if}
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
-              {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description>{problem.note[study.locale]}</Alert.Description></Alert.Root>{/if}
+              {#if problem.note}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]}/></Alert.Description></Alert.Root>{/if}
               <div class="problem-completion"><div><CircleCheck aria-hidden="true"/><span>{completed}/{problem.parts.length} {t('小问已掌握','parts mastered')}</span></div><span>{t('掌握后自行标记，进度自动保存。','Mark your understanding; progress saves automatically.')}</span></div>
             </Tabs.Content>
             <Tabs.Content value="source"><div class="source-tab-heading"><p>{t('保留原始试卷版式、插图与题号。点击页面可放大查看。','Original layout, figures and numbering. Open any page to inspect it.')}</p>{#if !exam.questionsOnly}<Alert.Root><Info aria-hidden="true"/><Alert.Description>{t('本地仅有含官方答案版本，原页会显示答案。练习可使用“题目与推导”中的网页原生题目。','Only a combined questions/solutions PDF is available. Source pages show answers; use the native problem view for practice.')}</Alert.Description></Alert.Root>{/if}</div>

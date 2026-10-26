@@ -87,8 +87,8 @@
       }
     },
     "note": {
-      "zh": "在负载参考面使用 ΓL；其他参考面需包含传播相位。",
-      "en": "Use ΓL at the load reference plane; include propagation phase at other planes."
+      "zh": "在负载参考面使用 $\\Gamma_L$；其他参考面需包含传播相位。",
+      "en": "Use $\\Gamma_L$ at the load reference plane; include propagation phase at other planes."
     }
   },
   {
@@ -267,8 +267,8 @@
       }
     },
     "note": {
-      "zh": "原表的简化式采用可忽略的并联漏电导 g；一般低损耗式还含 gZ₀/2。",
-      "en": "The crib simplification assumes negligible shunt conductance g; the general low-loss expression also includes gZ₀/2."
+      "zh": "原表的简化式采用可忽略的并联漏电导 $g$；一般低损耗式还含 $gZ_0/2$。",
+      "en": "The crib simplification assumes negligible shunt conductance $g$; the general low-loss expression also includes $gZ_0/2$."
     }
   },
   {
@@ -347,7 +347,7 @@
       "zh": "高斯定律",
       "en": "Gauss’s law"
     },
-    "math": "\\oiint\\mathbf D\\cdot d\\mathbf S=\\iiint\\rho\\,d\\mathcal V=Q_{\\mathrm{enc}}",
+    "math": "\\oiint\\vec{D}\\cdot d\\vec{S}=\\iiint\\rho\\,d\\mathcal V=Q_{\\mathrm{enc}}",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -369,7 +369,7 @@
       "zh": "电位移与电场",
       "en": "Electric displacement"
     },
-    "math": "\\mathbf D=\\epsilon\\mathbf E",
+    "math": "\\vec{D}=\\epsilon\\vec{E}",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -391,7 +391,7 @@
       "zh": "静电场无旋",
       "en": "Conservative electrostatic field"
     },
-    "math": "\\oint\\mathbf E\\cdot d\\mathbf l=0,\\qquad\\nabla\\times\\mathbf E=0",
+    "math": "\\oint\\vec{E}\\cdot d\\vec{l}=0,\\qquad\\nabla\\times\\vec{E}=0",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -413,7 +413,7 @@
       "zh": "点电荷电场与力",
       "en": "Coulomb’s law"
     },
-    "math": "\\mathbf E=\\frac{q}{4\\pi\\epsilon r^2}\\,\\hat{\\mathbf r},\\qquad\\mathbf F_{12}=\\frac{q_1q_2}{4\\pi\\epsilon r^2}\\,\\hat{\\mathbf r}",
+    "math": "\\vec{E}=\\frac{q}{4\\pi\\epsilon r^2}\\,\\hat{r},\\qquad\\vec{F}_{12}=\\frac{q_1q_2}{4\\pi\\epsilon r^2}\\,\\hat{r}",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -435,7 +435,7 @@
       "zh": "电势差",
       "en": "Potential difference"
     },
-    "math": "V(b)-V(a)=-\\int_a^b\\mathbf E\\cdot d\\mathbf l",
+    "math": "V(b)-V(a)=-\\int_a^b\\vec{E}\\cdot d\\vec{l}",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -457,7 +457,7 @@
       "zh": "由电势求电场",
       "en": "Electric field from potential"
     },
-    "math": "\\mathbf E=-\\nabla V",
+    "math": "\\vec{E}=-\\nabla V",
     "source": {
       "doc": "crib",
       "page": 4,
@@ -495,8 +495,8 @@
       }
     },
     "note": {
-      "zh": "沿用原表法向 n₂₁，从材料 2 指向材料 1。无自由面电荷时 D₁ₙ=D₂ₙ。",
-      "en": "The original normal n₂₁ points from material 2 to material 1. With no free surface charge, D₁ₙ=D₂ₙ."
+      "zh": "沿用原表法向 $\\hat n_{21}$，从材料 2 指向材料 1。无自由面电荷时 $D_{1n}=D_{2n}$。",
+      "en": "The original normal $\\hat n_{21}$ points from material 2 to material 1. With no free surface charge, $D_{1n}=D_{2n}$."
     }
   },
   {
@@ -521,8 +521,8 @@
       }
     },
     "note": {
-      "zh": "固定空间电荷存在时采用小信号定义 dQ/dV，见 S26 Exam 2 第 3(d) 小问。",
-      "en": "With fixed space charge, use differential capacitance dQ/dV; see S26 Exam 2, 3(d)."
+      "zh": "固定空间电荷存在时采用小信号定义 $dQ/dV$，见 S26 Exam 2 第 3(d) 小问。",
+      "en": "With fixed space charge, use differential capacitance $dQ/dV$; see S26 Exam 2, 3(d)."
     }
   },
   {
@@ -531,7 +531,7 @@
       "zh": "电场能量",
       "en": "Electric field energy"
     },
-    "math": "W_e=\\frac12\\iiint\\epsilon|\\mathbf E|^2\\,d\\mathcal V=\\frac12 CV^2",
+    "math": "W_e=\\frac12\\iiint\\epsilon|\\vec{E}|^2\\,d\\mathcal V=\\frac12 CV^2",
     "source": {
       "doc": "crib",
       "page": 5,
@@ -597,7 +597,7 @@
       "zh": "微观欧姆定律",
       "en": "Microscopic Ohm’s law"
     },
-    "math": "\\mathbf J=\\sigma\\mathbf E",
+    "math": "\\vec{J}=\\sigma\\vec{E}",
     "source": {
       "doc": "crib",
       "page": 5,
@@ -641,7 +641,7 @@
       "zh": "电流密度的通量",
       "en": "Current-density flux"
     },
-    "math": "I_c=\\iint\\mathbf J_c\\cdot d\\mathbf S=\\iint\\sigma\\mathbf E\\cdot d\\mathbf S",
+    "math": "I_c=\\iint\\vec{J}_c\\cdot d\\vec{S}=\\iint\\sigma\\vec{E}\\cdot d\\vec{S}",
     "source": {
       "doc": "crib",
       "page": 7,

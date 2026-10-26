@@ -14,6 +14,10 @@ describe('Authored JSON validation', () => {
   const cases: [string, (exam: Exam) => void, RegExp][] = [
     ['missing translation', e => { Reflect.deleteProperty(e.problems[0].statement, 'zh'); }, /statement\.zh/],
     ['unescaped TeX control character', e => { e.problems[0].statement.en += '\b'; }, /control character/],
+    ['bare current-density symbol', e => { e.problems[0].parts[0].steps[0].text.zh += ' 电流密度 J'; }, /KaTeX delimiters/],
+    ['Unicode math in prose', e => { e.problems[0].parts[0].note = {zh:'密度 ρ₀',en:'Density $\\rho_0$'}; }, /KaTeX delimiters/],
+    ['broken inline equation', e => { e.problems[0].guide.known.en += ' $\\frac{$'; }, /guide\.known\.en.*invalid TeX/],
+    ['unclosed math delimiter', e => { e.problems[0].parts[0].steps[0].text.en += ' $J'; }, /unmatched math delimiter/],
     ['invalid equation', e => { e.problems[0].parts[0].steps[0].math = '\\frac{'; }, /steps\[0\]\.math.*invalid TeX/],
     ['unknown formula reference', e => { e.problems[0].parts[0].steps[0].refs.push('missing-formula'); }, /unknown formula missing-formula/],
     ['duplicate part ID', e => { e.problems[0].parts.push(structuredClone(e.problems[0].parts[0])); }, /duplicate ID/],
@@ -25,5 +29,11 @@ describe('Authored JSON validation', () => {
     const input = structuredClone(exams);
     mutate(input[0]);
     expect(() => parseContent(input, formulas, documents)).toThrow(error);
+  });
+
+  test('validates inline mathematics in shared formula notes too', () => {
+    const input = structuredClone(formulas);
+    input[0].note = {zh: '关系 $\\frac{$', en: 'Relation $a$'};
+    expect(() => parseContent(exams, input, documents)).toThrow(/formulas\[0\]\.note\.zh.*invalid TeX/);
   });
 });

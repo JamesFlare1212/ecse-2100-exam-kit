@@ -5,7 +5,7 @@ import katex from 'katex';
 import {exams,examIndex,problemEntries,documents} from '../src/lib/catalog.server';
 import {createCatalog,formulas} from '../src/lib/catalog';
 import {assetSource} from '../content/papers.server';
-import {renderText} from '../src/lib/math';
+import {plainText,renderText} from '../src/lib/math';
 import {conclusionMath} from '../src/lib/answer-math';
 
 const root=resolve(import.meta.dir,'..');
@@ -152,6 +152,44 @@ describe('Complete, bilingual and source-addressable content',()=>{
     expect(visualChecks).toBe(problemEntries.some(entry=>entry.problem.id==='e2-s26-q3')?2:0);
   });
   test('text renderer escapes markup while preserving mathematical typesetting',()=>{const html=renderText('<img src=x onerror=alert(1)> $a^2$');expect(html).toContain('&lt;img');expect(html).not.toContain('<img');expect(html).toContain('katex');});
+  test('figure text alternatives preserve symbols without exposing TeX or markup',()=>{
+    const caption=plainText('高斯面 $a<R<b$，法向 $\\hat r$，电场 $\\vec E$。');
+    expect(caption).toContain('a<R<b');
+    expect(caption).toContain('E⃗');
+    expect(caption).not.toMatch(/\$|\\|<(?:math|span|mi|mo)\b/);
+  });
+  test('current-density vectors keep the question’s arrow notation throughout the derivation',()=>{
+    const strip=problemEntries.find(({problem})=>problem.id==='e2-s26-q1')?.problem;
+    if(!strip)return;
+    for(const locale of ['zh','en'] as const){
+      expect(strip.statement[locale]).toMatch(/\\vec\s*J/);
+      expect(strip.parts[0].steps[0].text[locale]).toMatch(/\$\\vec\s*J\$/);
+    }
+    expect(strip.parts[0].steps[0].math).toContain('\\vec{J}\\cdot d\\vec{S}');
+    expect(formulas.find(f=>f.id==='ohm')?.math).toBe('\\vec{J}=\\sigma\\vec{E}');
+    expect(strip.parts[0].answer).toContain('J_0');
+    expect(strip.parts[0].answer).not.toContain('\\vec');
+  });
+  test('worked integrals retain antiderivatives, endpoint subtraction and intermediate algebra',()=>{
+    const calculations=(id:string)=>problemEntries.flatMap(({problem})=>problem.parts)
+      .find(part=>part.id===id)?.steps.map(step=>step.math).join('\n');
+    const milestones:Record<string,string[]>={
+      'e2-s26-q1-a':['[J_0y]_0^W','[z]_{-0.5h}^{-0.4h}','(-0.4h+0.5h)','[z]_{0.4h}^{0.5h}','I_{\\mathrm{middle}}'],
+      'e2-f25-q1-b':['(-\\cos\\pi)-(-\\cos0)','\\frac{R^3}{3}-\\frac{0^3}{3}'],
+      'e2-f25-q1-d':['(-\\cos\\pi)-(-\\cos0)','\\frac{a^3}{3}-\\frac{0^3}{3}'],
+      'e2-f25-q2-b':['[x]_0^L','[y]_0^W','[z]_{H/2}^H','[z]_0^{H/2}'],
+      'e2-f25-q3-a':['\\int0\\,dr','[\\ln(s/a)]_a^r','V(a)=A\\ln1+B=0','V(b)=A\\ln(b/a)=-V_0'],
+      'e2-f25-q3-b':['\\frac1{r/a}\\frac d{dr}(r/a)','\\frac ar\\frac1a'],
+      'e2-s26-q3-a':['[r^\\prime]_a^R=R-a','[\\phi]_0^{2\\pi}','[z]_0^\\ell'],
+      'e2-s26-q3-b':['[\\ln(s/a)]_r^b','\\ln(b/a)-\\ln(r/a)','[s]_r^b=b-r'],
+      'e1-s26-q4-c':['g-gbt+gbt+gt^2','129600-59800=69800','0.274760-j0.725907'],
+    };
+    for(const[id,required]of Object.entries(milestones)){
+      const math=calculations(id);
+      if(!math)continue; // Unplugged papers are deliberately absent from the active catalog.
+      for(const expression of required)expect(math,`${id}: ${expression}`).toContain(expression);
+    }
+  });
 });
 
 type C={re:number;im:number};
@@ -161,6 +199,31 @@ const div=(a:C,b:C):C=>{const d=b.re*b.re+b.im*b.im;return{re:(a.re*b.re+a.im*b.
 const scale=(a:C,n:number):C=>({re:a.re*n,im:a.im*n});
 function input(z:C,d:number):C {const t=Math.tan(2*Math.PI*d);return div(add(z,{re:0,im:t}),add({re:1,im:0},mul({re:0,im:t},z)));}
 describe('Independent physical and numerical consistency checks',()=>{
+  test('numerical quadrature agrees with the expanded current, Gaussian charge and potential integrals',()=>{
+    function integrate(f:(x:number)=>number,a:number,b:number){
+      const n=400,h=(b-a)/n;
+      let sum=f(a)+f(b);
+      for(let i=1;i<n;i++)sum+=(i%2?4:2)*f(a+i*h);
+      return sum*h/3;
+    }
+    const J0=3.7,W=1.3,h=.8;
+    const inner=(z:number)=>integrate(()=>Math.abs(z)>.4*h?J0:0,0,W);
+    // One-sided interval endpoints do not change the integral; evaluate inside each layer.
+    const current=integrate(()=>inner(-.45*h),-.5*h,-.4*h)
+      +integrate(()=>inner(0),-.4*h,.4*h)
+      +integrate(()=>inner(.45*h),.4*h,.5*h);
+    expect(current).toBeCloseTo(.2*J0*W*h,10);
+    const rho=2.1,R=1.7;
+    const angular=integrate(()=>1,0,2*Math.PI)*integrate(Math.sin,0,Math.PI);
+    expect(angular).toBeCloseTo(4*Math.PI,8);
+    expect(rho*angular*integrate(r=>r*r,0,R)).toBeCloseTo(4*Math.PI*rho*R**3/3,8);
+    const a=1.2,b=4,eps=2.3,rho0=.7,sa=3,r=2;
+    const enclosed=2*Math.PI*a*sa+2*Math.PI*integrate(s=>rho0*a/s*s,a,r);
+    expect(enclosed).toBeCloseTo(2*Math.PI*a*(sa+rho0*(r-a)),10);
+    const field=(s:number)=>a/(eps*s)*(sa+rho0*(s-a));
+    const potential=-integrate(field,b,r);
+    expect(potential).toBeCloseTo(a/eps*((sa-a*rho0)*Math.log(b/r)+rho0*(b-r)),9);
+  });
   test('both exact single-stub branches match each stated load',()=>{
     for(const [z,branches] of [[{re:2,im:1},[[.19879180882521663,.375],[.375,.125]]],[{re:.5,im:1.8},[[.27528271387830444,.30758870570883495],[.3784108474800829,.19241129429116505]]]] as [C,number[][]][]){
       for(const [d,l] of branches){const y=div({re:1,im:0},input(z,d));expect(y.re).toBeCloseTo(1,10);expect(y.im+Math.tan(2*Math.PI*l)).toBeCloseTo(0,10);}

@@ -17,3 +17,17 @@ export function renderText(text: string) {
   }
   return result + escape(text.slice(offset)).replaceAll('\n','<br>');
 }
+
+/** Text alternatives use KaTeX's Unicode MathML, without spoken TeX commands. */
+export function plainText(text: string) {
+  return text.replace(/\$\$([\s\S]*?)\$\$|\$([^$\n]+)\$/g, (_, display, inline) => {
+    const html = renderMath(display ?? inline);
+    return (html.match(/<math\b[^>]*>([\s\S]*?)<\/math>/)?.[1] ?? '')
+      .replace(/<annotation\b[^>]*>[\s\S]*?<\/annotation>/g, '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&#(x[\da-f]+|\d+);/gi, (_, code) => String.fromCodePoint(
+        code.startsWith('x') ? parseInt(code.slice(1), 16) : Number(code),
+      ))
+      .replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>');
+  });
+}

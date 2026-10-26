@@ -79,60 +79,60 @@
                 "zh": "先写公式表中的高斯定律：闭合面的电位移通量等于面内自由电荷。",
                 "en": "Begin with the crib equation: displacement flux through a closed surface equals its enclosed free charge."
               },
-              "math": "\\oiint_S\\mathbf D\\cdot d\\mathbf S=\\iiint_{\\mathcal V}\\rho\\,d\\mathcal V=Q_{\\mathrm{enc}}",
+              "math": "\\oiint_S\\vec{D}\\cdot d\\vec{S}=\\iiint_{\\mathcal V}\\rho\\,d\\mathcal V=Q_{\\mathrm{enc}}",
               "refs": [
                 "gauss"
               ]
             },
             {
               "text": {
-                "zh": "球对称使电场沿径向；同一半径上的场强相同。这里用 R 表示固定的高斯面半径，避免和积分变量混淆。",
-                "en": "Spherical symmetry makes the field radial and constant at a fixed radius. Use R for the fixed Gaussian radius, distinct from integration coordinates."
+                "zh": "球对称使电场沿径向；同一半径上的场强相同。这里用 $R$ 表示固定的高斯面半径，避免和积分变量混淆。",
+                "en": "Spherical symmetry makes the field radial and constant at a fixed radius. Use $R$ for the fixed Gaussian radius, distinct from integration coordinates."
               },
-              "math": "\\mathbf E(R)=E_r(R)\\hat{\\mathbf r},\\qquad \\mathbf D(R)=\\epsilon_0 E_r(R)\\hat{\\mathbf r}",
+              "math": "\\vec{E}(R)=E_r(R)\\hat{r},\\qquad \\vec{D}(R)=\\epsilon_0 E_r(R)\\hat{r}",
               "refs": [
                 "constitutive"
               ]
             },
             {
               "text": {
-                "zh": "先画半径 a 的带电实心球和半径 b 的导体薄壳，再在实心球内画与二者同心的虚线球面。",
-                "en": "Draw the charged solid sphere of radius a and the conducting shell of radius b, then a concentric dashed Gaussian sphere inside the solid sphere."
+                "zh": "先画半径 $a$ 的带电实心球和半径 $b$ 的导体薄壳，再在实心球内画与二者同心的虚线球面。",
+                "en": "Draw the charged solid sphere of radius $a$ and the conducting shell of radius $b$, then a concentric dashed Gaussian sphere inside the solid sphere."
               },
-              "math": "0<R<a<b,\\qquad S_R:\\ |\\mathbf x|=R",
+              "math": "0<R<a<b,\\qquad S_R:\\ |\\vec{x}|=R",
               "refs": []
             },
             {
               "text": {
-                "zh": "在同一个球心上标出 a、b、R 三根半径箭头；R 箭头必须止于虚线面，法向从该面向外。",
-                "en": "Start all three radius arrows a, b and R at the same center. End R on the dashed surface and draw its outward normal from that surface."
+                "zh": "在同一个球心上标出 $a$、$b$、$R$ 三根半径箭头；$R$ 箭头必须止于虚线面，法向从该面向外。",
+                "en": "Start all three radius arrows $a$, $b$ and $R$ at the same center. End $R$ on the dashed surface and draw its outward normal from that surface."
               },
-              "math": "d\\mathbf S=\\hat{\\mathbf r}\\,R^2\\sin\\theta\\,d\\theta\\,d\\phi,\\quad 0\\le\\theta\\le\\pi,\\quad 0\\le\\phi<2\\pi",
+              "math": "d\\vec{S}=\\hat{r}\\,R^2\\sin\\theta\\,d\\theta\\,d\\phi,\\quad 0\\le\\theta\\le\\pi,\\quad 0\\le\\phi<2\\pi",
               "refs": [
                 "geometry"
               ]
             },
             {
               "text": {
-                "zh": "该闭合面只包围半径 R 内的体电荷；a 与 b 是材料边界，不是此问选取的高斯面。",
-                "en": "The closed surface encloses only the volume charge within R. The radii a and b are material boundaries, not the chosen Gaussian surface."
+                "zh": "该闭合面只包围半径 $R$ 内的体电荷；$a$ 与 $b$ 是材料边界，不是此问选取的高斯面。",
+                "en": "The closed surface encloses only the volume charge within $R$. The radii $a$ and $b$ are material boundaries, not the chosen Gaussian surface."
               },
-              "math": "S_R:\\ |\\mathbf x|=R,\\quad 0<R<a",
+              "math": "S_R:\\ |\\vec{x}|=R,\\quad 0<R<a",
               "refs": []
             }
           ],
-          "answer": "S_R:\\ |\\mathbf x|=R,\\quad 0<R<a",
+          "answer": "S_R:\\ |\\vec{x}|=R,\\quad 0<R<a",
           "sourcePage": 2,
           "solutionPage": 2,
           "figure": "sphere-inner",
           "spatialFigure": "e2-f25-q1",
           "figureCaption": {
-            "zh": "同心球截面，虚线表示半径 0<R<a 的闭合高斯球面；半径 a、b、R 共享球心。",
-            "en": "Concentric-sphere section with the closed Gaussian sphere at 0<R<a; radii a, b and R share one center."
+            "zh": "同心球截面，虚线表示半径 $0<R<a$ 的闭合高斯球面；半径 $a$、$b$、$R$ 共享球心。",
+            "en": "Concentric-sphere section with the closed Gaussian sphere at $0<R<a$; radii $a$, $b$ and $R$ share one center."
           },
           "note": {
-            "zh": "原解的高斯面草图在内球附近标了 ρsa，但题干给定的是均匀体电荷密度 ρ₀。本图按题干使用 ρ₀；虚线圆是三维闭合高斯球面的截面，R 为其半径。a、b、R 都从同一球心量起。",
-            "en": "The official Gaussian-surface sketches label the inner sphere with ρsa, but the prompt specifies uniform volume density ρ₀. These diagrams use ρ₀ from the prompt. The dashed circle is a section of a closed spherical Gaussian surface of radius R; a, b and R share one center."
+            "zh": "原解的高斯面草图在内球附近标了 $\\rho_{sa}$，但题干给定的是均匀体电荷密度 $\\rho_{0}$。本图按题干使用 $\\rho_{0}$；虚线圆是三维闭合高斯球面的截面，$R$ 为其半径。$a$、$b$、$R$ 都从同一球心量起。",
+            "en": "The official Gaussian-surface sketches label the inner sphere with $\\rho_{sa}$, but the prompt specifies uniform volume density $\\rho_{0}$. These diagrams use $\\rho_{0}$ from the prompt. The dashed circle is a section of a closed spherical Gaussian surface of radius $R$; $a$, $b$ and $R$ share one center."
           },
           "id": "e2-f25-q1-a"
         },
@@ -146,10 +146,10 @@
           "steps": [
             {
               "text": {
-                "zh": "从原始高斯定律开始，并用本构关系把 D 换成电场。",
-                "en": "Start from Gauss’s law and substitute the constitutive relation for D."
+                "zh": "从原始高斯定律开始，并用本构关系把 $\\vec D$ 换成电场。",
+                "en": "Start from Gauss’s law and substitute the constitutive relation for $\\vec D$."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}},\\qquad \\mathbf D=\\epsilon_0\\mathbf E",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}},\\qquad \\vec{D}=\\epsilon_0\\vec{E}",
               "refs": [
                 "gauss",
                 "constitutive"
@@ -157,10 +157,10 @@
             },
             {
               "text": {
-                "zh": "在半径固定为 R 的球面上代入径向场和球坐标面积元，先保留点积。",
-                "en": "On the sphere of fixed radius R, substitute the radial field and spherical area element, retaining the dot product."
+                "zh": "在半径固定为 $R$ 的球面上代入径向场和球坐标面积元，先保留点积。",
+                "en": "On the sphere of fixed radius $R$, substitute the radial field and spherical area element, retaining the dot product."
               },
-              "math": "\\Phi_D=\\int_0^{2\\pi}\\!\\int_0^\\pi [\\epsilon_0E_r(R)\\hat{\\mathbf r}]\\cdot[\\hat{\\mathbf r}R^2\\sin\\theta]\\,d\\theta\\,d\\phi",
+              "math": "\\Phi_D=\\int_0^{2\\pi}\\!\\int_0^\\pi [\\epsilon_0E_r(R)\\hat{r}]\\cdot[\\hat{r}R^2\\sin\\theta]\\,d\\theta\\,d\\phi",
               "refs": [
                 "geometry"
               ]
@@ -175,16 +175,32 @@
             },
             {
               "text": {
-                "zh": "分别求两个角积分，不能直接省略球面积的来源。",
-                "en": "Evaluate both angular integrals explicitly to obtain the spherical area factor."
+                "zh": "先算方位角积分。被积函数是 $1$，原函数就是方位角本身，代入上限再减下限。",
+                "en": "Evaluate the azimuthal integral first. Its integrand is $1$, whose antiderivative is the angle itself; subtract the lower-limit value from the upper-limit value."
               },
-              "math": "\\int_0^{2\\pi}d\\phi=2\\pi,\\quad [-\\cos\\theta]_0^\\pi=2,\\quad \\Phi_D=4\\pi\\epsilon_0R^2E_r(R)",
+              "math": "\\int_0^{2\\pi}1\\,d\\phi=[\\phi]_0^{2\\pi}=2\\pi-0=2\\pi",
               "refs": []
             },
             {
               "text": {
-                "zh": "另算包围电荷：密度为常数，径向积分从 0 到高斯半径 R。用 r′ 作为体积分变量。",
-                "en": "Compute enclosed charge separately. Density is constant and the radial limit is R; use r′ as the volume integration variable."
+                "zh": "再算极角积分。因为 $\\frac{d}{d\\theta}(-\\cos\\theta)=\\sin\\theta$，原函数是 $-\\cos\\theta$；减去下限处的负数会变成加号。",
+                "en": "Next evaluate the polar-angle integral. Since $\\frac{d}{d\\theta}(-\\cos\\theta)=\\sin\\theta$, an antiderivative is $-\\cos\\theta$. Subtracting the negative lower-limit value gives a plus sign."
+              },
+              "math": "\\begin{aligned}\\int_0^\\pi\\sin\\theta\\,d\\theta&=[-\\cos\\theta]_0^\\pi\\\\&=(-\\cos\\pi)-(-\\cos0)\\\\&=-(-1)+1=2\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两个角积分代回通量式。它们的乘积为 $4\\pi$；球面上的固定半径和场强始终在积分号外。",
+                "en": "Substitute both angular integrals into the flux expression. Their product is $4\\pi$; the fixed surface radius and field remain outside the integrals."
+              },
+              "math": "\\Phi_D=\\epsilon_0E_r(R)R^2(2\\pi)(2)=4\\pi\\epsilon_0R^2E_r(R)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "另算包围电荷：密度为常数，径向积分从 0 到高斯半径 $R$。用 $r'$ 作为体积分变量。",
+                "en": "Compute enclosed charge separately. Density is constant and the radial limit is $R$; use $r'$ as the volume integration variable."
               },
               "math": "Q_{\\mathrm{enc}}=\\int_0^{2\\pi}\\!\\int_0^\\pi\\!\\int_0^R \\rho_0(r^\\prime)^2\\sin\\theta\\,dr^\\prime d\\theta d\\phi",
               "refs": [
@@ -193,30 +209,46 @@
             },
             {
               "text": {
-                "zh": "将三个积分相乘，逐项求值。外面的薄壳没有被这个高斯面包围。",
-                "en": "Evaluate the three factors. The outer conducting shell is not enclosed by this surface."
+                "zh": "把不依赖积分变量的密度提出。径向、极角和方位角的积分范围彼此独立，所以可以写成三个单积分的乘积。",
+                "en": "Take the constant density outside. The radial, polar-angle and azimuthal-angle bounds are independent, so the triple integral separates into three single integrals."
               },
-              "math": "Q_{\\mathrm{enc}}=\\rho_0(2\\pi)(2)\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^R=\\frac{4\\pi\\rho_0R^3}{3}",
+              "math": "Q_{\\mathrm{enc}}=\\rho_0\\left(\\int_0^{2\\pi}d\\phi\\right)\\left(\\int_0^\\pi\\sin\\theta\\,d\\theta\\right)\\left(\\int_0^R(r^\\prime)^2\\,dr^\\prime\\right)",
               "refs": []
             },
             {
               "text": {
-                "zh": "令通量等于包围电荷，两边除以 4πε₀R²；R³/R² 留下 R。",
-                "en": "Equate flux and enclosed charge, then divide by 4πε₀R²; R³/R² leaves R."
+                "zh": "径向部分使用幂函数积分规则：指数加一，再除以新的指数。这里积分变量是 $r^\\prime$，固定边界半径不会参与求原函数。",
+                "en": "Use the power rule for the radial integral: add one to the exponent and divide by the new exponent. The integration variable is $r^\\prime$; the fixed boundary radius is a limit, not an integration variable."
+              },
+              "math": "\\begin{aligned}\\int_0^R(r^\\prime)^2\\,dr^\\prime&=\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^R\\\\&=\\frac{R^3}{3}-\\frac{0^3}{3}\\\\&=\\frac{R^3}{3}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把径向积分和两个已求出的角积分相乘。此高斯面以外的电荷不计入包围电荷。",
+                "en": "Multiply the radial integral by the two angular integrals already evaluated. Charges outside this Gaussian surface are excluded."
+              },
+              "math": "Q_{\\mathrm{enc}}=\\rho_0(2\\pi)(2)\\frac{R^3}{3}=\\frac{4\\pi\\rho_0R^3}{3}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "令通量等于包围电荷，两边除以 $4\\pi\\epsilon_{0}R^{2}$；$R^{3}/R^{2}$ 留下 $R$。",
+                "en": "Equate flux and enclosed charge, then divide by $4\\pi\\epsilon_{0}R^{2}$; $R^{3}/R^{2}$ leaves $R$."
               },
               "math": "4\\pi\\epsilon_0R^2E_r(R)=\\frac{4\\pi\\rho_0R^3}{3}\\quad\\Longrightarrow\\quad E_r(R)=\\frac{\\rho_0R^3}{3\\epsilon_0R^2}",
               "refs": []
             },
             {
               "text": {
-                "zh": "最后把任意高斯半径 R 改记为观察半径 r，并补回径向单位矢量。",
-                "en": "Relabel the arbitrary Gaussian radius R as the observation radius r and restore the radial unit vector."
+                "zh": "最后把任意高斯半径 $R$ 改记为观察半径 $r$，并补回径向单位矢量。",
+                "en": "Relabel the arbitrary Gaussian radius $R$ as the observation radius $r$ and restore the radial unit vector."
               },
-              "math": "\\mathbf E(r)=\\frac{\\rho_0 r}{3\\epsilon_0}\\hat{\\mathbf r}",
+              "math": "\\vec{E}(r)=\\frac{\\rho_0 r}{3\\epsilon_0}\\hat{r}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E(r)=\\frac{\\rho_0 r}{3\\epsilon_0}\\hat{\\mathbf r}",
+          "answer": "\\vec{E}(r)=\\frac{\\rho_0 r}{3\\epsilon_0}\\hat{r}",
           "sourcePage": 2,
           "solutionPage": 2,
           "id": "e2-f25-q1-b"
@@ -234,23 +266,23 @@
                 "zh": "仍从闭合面高斯定律出发，球对称要求使用同心球面。",
                 "en": "Again use Gauss’s law on a closed surface; spherical symmetry suggests a concentric sphere."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}}",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}}",
               "refs": [
                 "gauss"
               ]
             },
             {
               "text": {
-                "zh": "将虚线高斯面画在半径 a 的实心球之外、半径 b 的导体薄壳之内。",
-                "en": "Place the dashed Gaussian sphere outside the solid sphere of radius a and inside the shell of radius b."
+                "zh": "将虚线高斯面画在半径 $a$ 的实心球之外、半径 $b$ 的导体薄壳之内。",
+                "en": "Place the dashed Gaussian sphere outside the solid sphere of radius $a$ and inside the shell of radius $b$."
               },
-              "math": "a<R<b,\\qquad S_R:\\ |\\mathbf x|=R",
+              "math": "a<R<b,\\qquad S_R:\\ |\\vec{x}|=R",
               "refs": []
             },
             {
               "text": {
-                "zh": "a、b、R 都从同一个球心量起。高斯面包围整个带电实心球，但不包围外壳电荷。",
-                "en": "Measure a, b and R from the same center. The Gaussian sphere encloses the whole charged solid sphere but excludes the shell charge."
+                "zh": "$a$、$b$、$R$ 都从同一个球心量起。高斯面包围整个带电实心球，但不包围外壳电荷。",
+                "en": "Measure $a$, $b$ and $R$ from the same center. The Gaussian sphere encloses the whole charged solid sphere but excludes the shell charge."
               },
               "math": "Q_{\\mathrm{enc}}=\\iiint_{r^\\prime<a}\\rho_0\\,d\\mathcal V,\\qquad Q_b\\ \\text{excluded}",
               "refs": [
@@ -259,10 +291,10 @@
             },
             {
               "text": {
-                "zh": "在高斯面上标出向外法向。原题含等号时，b 处的场须取介质一侧 b⁻ 的极限。",
-                "en": "Mark the outward surface normal. At the printed endpoint b, the dielectric-region field means the one-sided limit b⁻."
+                "zh": "在高斯面上标出向外法向。原题含等号时，$b$ 处的场须取介质一侧 $b^{-}$ 的极限。",
+                "en": "Mark the outward surface normal. At the printed endpoint $b$, the dielectric-region field means the one-sided limit $b^{-}$."
               },
-              "math": "d\\mathbf S=\\hat{\\mathbf r}R^2\\sin\\theta\\,d\\theta\\,d\\phi",
+              "math": "d\\vec{S}=\\hat{r}R^2\\sin\\theta\\,d\\theta\\,d\\phi",
               "refs": []
             },
             {
@@ -270,17 +302,17 @@
                 "zh": "图中虚线球面的半径满足下式，后续积分在这一个固定半径上进行。",
                 "en": "The dashed spherical surface has the following radius range; the subsequent flux integral uses this fixed radius."
               },
-              "math": "S_R:\\ |\\mathbf x|=R,\\quad a<R<b",
+              "math": "S_R:\\ |\\vec{x}|=R,\\quad a<R<b",
               "refs": []
             }
           ],
-          "answer": "S_R:\\ |\\mathbf x|=R,\\quad a<R<b",
+          "answer": "S_R:\\ |\\vec{x}|=R,\\quad a<R<b",
           "sourcePage": 2,
           "solutionPage": 3,
           "figure": "sphere-middle",
           "figureCaption": {
-            "zh": "同心球截面，高斯球面位于 a<R<b，只包围内球体电荷；虚线为高斯面截线。",
-            "en": "Concentric-sphere section with a<R<b; the dashed Gaussian surface encloses only the solid-sphere volume charge."
+            "zh": "同心球截面，高斯球面位于 $a<R<b$，只包围内球体电荷；虚线为高斯面截线。",
+            "en": "Concentric-sphere section with $a<R<b$; the dashed Gaussian surface encloses only the solid-sphere volume charge."
           },
           "id": "e2-f25-q1-c"
         },
@@ -294,10 +326,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先写高斯定律及 D 与 E 的关系，取 a<R<b 的同心球面。",
-                "en": "Write Gauss’s law and the D–E relation on a concentric sphere with a<R<b."
+                "zh": "先写高斯定律及 $\\vec D$ 与 $\\vec E$ 的关系，取 $a<R<b$ 的同心球面。",
+                "en": "Write Gauss’s law and the $\\vec D\\text{–}\\vec E$ relation on a concentric sphere with $a<R<b$."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}},\\qquad\\mathbf D=\\epsilon_0\\mathbf E",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}},\\qquad\\vec{D}=\\epsilon_0\\vec{E}",
               "refs": [
                 "gauss",
                 "constitutive"
@@ -315,26 +347,58 @@
             },
             {
               "text": {
-                "zh": "展开角积分，得到通量系数。",
-                "en": "Evaluate the angular factors to obtain the flux coefficient."
+                "zh": "先算方位角积分。被积函数是 $1$，原函数就是方位角本身，代入上限再减下限。",
+                "en": "Evaluate the azimuthal integral first. Its integrand is $1$, whose antiderivative is the angle itself; subtract the lower-limit value from the upper-limit value."
+              },
+              "math": "\\int_0^{2\\pi}1\\,d\\phi=[\\phi]_0^{2\\pi}=2\\pi-0=2\\pi",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再算极角积分。因为 $\\frac{d}{d\\theta}(-\\cos\\theta)=\\sin\\theta$，原函数是 $-\\cos\\theta$；减去下限处的负数会变成加号。",
+                "en": "Next evaluate the polar-angle integral. Since $\\frac{d}{d\\theta}(-\\cos\\theta)=\\sin\\theta$, an antiderivative is $-\\cos\\theta$. Subtracting the negative lower-limit value gives a plus sign."
+              },
+              "math": "\\begin{aligned}\\int_0^\\pi\\sin\\theta\\,d\\theta&=[-\\cos\\theta]_0^\\pi\\\\&=(-\\cos\\pi)-(-\\cos0)\\\\&=-(-1)+1=2\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两个角积分代回通量式。它们的乘积为 $4\\pi$；球面上的固定半径和场强始终在积分号外。",
+                "en": "Substitute both angular integrals into the flux expression. Their product is $4\\pi$; the fixed surface radius and field remain outside the integrals."
               },
               "math": "\\Phi_D=\\epsilon_0E_r(R)R^2(2\\pi)(2)=4\\pi\\epsilon_0R^2E_r(R)",
               "refs": []
             },
             {
               "text": {
-                "zh": "体电荷只存在于 0≤r′≤a。即使高斯半径为 R，电荷积分上限仍是 a。",
-                "en": "Volume charge exists only for 0≤r′≤a. The charge integral ends at a even though the Gaussian radius is R."
+                "zh": "体电荷只存在于 $0\\le r'\\le a$。即使高斯半径为 $R$，电荷积分上限仍是 $a$。",
+                "en": "Volume charge exists only for $0\\le r'\\le a$. The charge integral ends at $a$ even though the Gaussian radius is $R$."
               },
               "math": "Q_{\\mathrm{enc}}=\\int_0^{2\\pi}\\!\\int_0^\\pi\\!\\int_0^a \\rho_0(r^\\prime)^2\\sin\\theta\\,dr^\\prime d\\theta d\\phi",
               "refs": []
             },
             {
               "text": {
-                "zh": "径向积分为 a³/3，角积分乘出 4π；a 到 R 的无电荷区不增加包围电荷。",
-                "en": "The radial integral gives a³/3 and the angular integrals give 4π. The charge-free region from a to R adds no enclosed charge."
+                "zh": "把不依赖积分变量的密度提出。径向、极角和方位角的积分范围彼此独立，所以可以写成三个单积分的乘积。",
+                "en": "Take the constant density outside. The radial, polar-angle and azimuthal-angle bounds are independent, so the triple integral separates into three single integrals."
               },
-              "math": "Q_{\\mathrm{enc}}=\\rho_0(2\\pi)(2)\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^a=\\frac{4\\pi\\rho_0a^3}{3}",
+              "math": "Q_{\\mathrm{enc}}=\\rho_0\\left(\\int_0^{2\\pi}d\\phi\\right)\\left(\\int_0^\\pi\\sin\\theta\\,d\\theta\\right)\\left(\\int_0^a(r^\\prime)^2\\,dr^\\prime\\right)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "径向部分使用幂函数积分规则：指数加一，再除以新的指数。这里积分变量是 $r^\\prime$，固定边界半径不会参与求原函数。",
+                "en": "Use the power rule for the radial integral: add one to the exponent and divide by the new exponent. The integration variable is $r^\\prime$; the fixed boundary radius is a limit, not an integration variable."
+              },
+              "math": "\\begin{aligned}\\int_0^a(r^\\prime)^2\\,dr^\\prime&=\\left[\\frac{(r^\\prime)^3}{3}\\right]_0^a\\\\&=\\frac{a^3}{3}-\\frac{0^3}{3}\\\\&=\\frac{a^3}{3}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把径向积分和两个已求出的角积分相乘。此高斯面以外的电荷不计入包围电荷。",
+                "en": "Multiply the radial integral by the two angular integrals already evaluated. Charges outside this Gaussian surface are excluded."
+              },
+              "math": "Q_{\\mathrm{enc}}=\\rho_0(2\\pi)(2)\\frac{a^3}{3}=\\frac{4\\pi\\rho_0a^3}{3}",
               "refs": []
             },
             {
@@ -347,14 +411,14 @@
             },
             {
               "text": {
-                "zh": "改用观察坐标 r 表示结果。r=a 时与内区结果连续；r=b 表示 b⁻。",
-                "en": "Express the result using observation radius r. It is continuous with the inner result at a; the endpoint b means b⁻."
+                "zh": "改用观察坐标 $r$ 表示结果。$r=a$ 时与内区结果连续；$r=b$ 表示 $b^{-}$。",
+                "en": "Express the result using observation radius $r$. It is continuous with the inner result at $a$; the endpoint $b$ means $b^{-}$."
               },
-              "math": "\\mathbf E(r)=\\frac{\\rho_0 a^3}{3\\epsilon_0 r^2}\\hat{\\mathbf r}",
+              "math": "\\vec{E}(r)=\\frac{\\rho_0 a^3}{3\\epsilon_0 r^2}\\hat{r}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E(r)=\\frac{\\rho_0 a^3}{3\\epsilon_0 r^2}\\hat{\\mathbf r}",
+          "answer": "\\vec{E}(r)=\\frac{\\rho_0 a^3}{3\\epsilon_0 r^2}\\hat{r}",
           "sourcePage": 3,
           "solutionPage": 3,
           "id": "e2-f25-q1-d"
@@ -372,23 +436,23 @@
                 "zh": "先写闭合面的高斯定律；所选面现在必须包住实心球和导体薄壳。",
                 "en": "Begin with Gauss’s law; the chosen closed surface must now enclose both the solid sphere and conducting shell."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}}",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}}",
               "refs": [
                 "gauss"
               ]
             },
             {
               "text": {
-                "zh": "以同一球心画半径 R>b 的虚线球面，并从球心画出 R 箭头至虚线面。",
-                "en": "Draw a concentric dashed sphere with R>b and a radius arrow from the common center to that dashed surface."
+                "zh": "以同一球心画半径 $R>b$ 的虚线球面，并从球心画出 $R$ 箭头至虚线面。",
+                "en": "Draw a concentric dashed sphere with $R>b$ and a radius arrow from the common center to that dashed surface."
               },
               "math": "0<a<b<R",
               "refs": []
             },
             {
               "text": {
-                "zh": "分别标明 a 内的体电荷和 b 上的表面电荷；外面的虚线才是高斯面。",
-                "en": "Distinguish the volume charge within a, the surface charge at b and the outer dashed Gaussian surface."
+                "zh": "分别标明 $a$ 内的体电荷和 $b$ 上的表面电荷；外面的虚线才是高斯面。",
+                "en": "Distinguish the volume charge within $a$, the surface charge at $b$ and the outer dashed Gaussian surface."
               },
               "math": "Q_{\\mathrm{enc}}=Q_a+Q_b,\\qquad Q_b=-Q_a",
               "refs": []
@@ -398,17 +462,17 @@
                 "zh": "面法向仍向外。零场结论来自下一问的电荷相消，而不是改变高斯面形状。",
                 "en": "The surface normal remains outward. The zero field follows from charge cancellation in the next part, not from changing the surface geometry."
               },
-              "math": "S_R:\\ |\\mathbf x|=R,\\quad R>b",
+              "math": "S_R:\\ |\\vec{x}|=R,\\quad R>b",
               "refs": []
             }
           ],
-          "answer": "S_R:\\ |\\mathbf x|=R,\\quad R>b",
+          "answer": "S_R:\\ |\\vec{x}|=R,\\quad R>b",
           "sourcePage": 3,
           "solutionPage": 3,
           "figure": "sphere-outer",
           "figureCaption": {
-            "zh": "同心球截面，高斯球面位于 R>b，同时包围等量异号的内球与外壳电荷。",
-            "en": "Concentric-sphere section with R>b; the Gaussian surface encloses the equal and opposite sphere and shell charges."
+            "zh": "同心球截面，高斯球面位于 $R>b$，同时包围等量异号的内球与外壳电荷。",
+            "en": "Concentric-sphere section with $R>b$; the Gaussian surface encloses the equal and opposite sphere and shell charges."
           },
           "id": "e2-f25-q1-e"
         },
@@ -425,7 +489,7 @@
                 "zh": "在壳外同心球面应用高斯定律，并代入真空本构关系。",
                 "en": "Apply Gauss’s law outside the shell and substitute the vacuum constitutive relation."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}},\\qquad\\mathbf D=\\epsilon_0\\mathbf E",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}},\\qquad\\vec{D}=\\epsilon_0\\vec{E}",
               "refs": [
                 "gauss",
                 "constitutive"
@@ -433,10 +497,10 @@
             },
             {
               "text": {
-                "zh": "球对称使通量积分化为球面积乘径向电位移。",
-                "en": "Spherical symmetry reduces the flux to spherical area times radial displacement."
+                "zh": "\\u58F3\\u5916\\u4ECD\\u662F\\u540C\\u5FC3\\u7403\\u9762\\uFF0C\\u4E24\\u4E2A\\u7AEF\\u70B9\\u4EE3\\u5165\\u4E0E\\u524D\\u9762\\u76F8\\u540C\\u3002\\u5199\\u51FA\\u4E24\\u4E2A\\u89D2\\u79EF\\u5206\\u7684\\u539F\\u51FD\\u6570\\u540E\\u76F8\\u4E58\\uFF0C\\u518D\\u4E58\\u56FA\\u5B9A\\u7684 $\\epsilon_0E_r(R)R^2$\\u3002",
+                "en": "The exterior surface is still a concentric sphere. Evaluate the two angular antiderivatives at the same bounds as before, multiply them, and then multiply by the fixed factor $\\epsilon_0E_r(R)R^2$."
               },
-              "math": "\\Phi_D=\\epsilon_0E_r(R)R^2(2\\pi)(2)=4\\pi\\epsilon_0R^2E_r(R)",
+              "math": "\\begin{aligned}\\Phi_D&=\\epsilon_0E_r(R)R^2\\left(\\int_0^{2\\pi}d\\phi\\right)\\left(\\int_0^\\pi\\sin\\theta\\,d\\theta\\right)\\\\&=\\epsilon_0E_r(R)R^2[\\phi]_0^{2\\pi}[-\\cos\\theta]_0^\\pi\\\\&=\\epsilon_0E_r(R)R^2(2\\pi-0)[-(-1)-(-1)]\\\\&=4\\pi\\epsilon_0R^2E_r(R)\\end{aligned}",
               "refs": []
             },
             {
@@ -449,8 +513,8 @@
             },
             {
               "text": {
-                "zh": "代入定律并除以非零的 4πε₀R²。由球对称性，零总通量在这里推出场本身为零。",
-                "en": "Substitute and divide by nonzero 4πε₀R². With spherical symmetry, zero flux here implies zero field itself."
+                "zh": "代入定律并除以非零的 $4\\pi\\epsilon_{0}R^{2}$。由球对称性，零总通量在这里推出场本身为零。",
+                "en": "Substitute and divide by nonzero $4\\pi\\epsilon_{0}R^{2}$. With spherical symmetry, zero flux here implies zero field itself."
               },
               "math": "4\\pi\\epsilon_0R^2E_r(R)=0\\quad\\Longrightarrow\\quad E_r(R)=0",
               "refs": []
@@ -460,11 +524,11 @@
                 "zh": "恢复矢量形式并注明适用区域。",
                 "en": "Restore vector notation and state the domain."
               },
-              "math": "\\mathbf E(r)=\\mathbf 0\\quad(r>b)",
+              "math": "\\vec{E}(r)=\\mathbf 0\\quad(r>b)",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E(r)=\\mathbf 0\\quad(r>b)",
+          "answer": "\\vec{E}(r)=\\mathbf 0\\quad(r>b)",
           "sourcePage": 3,
           "solutionPage": 3,
           "id": "e2-f25-q1-f"
@@ -482,7 +546,7 @@
                 "zh": "比较电势差前，先写原表的电势积分及本构关系。",
                 "en": "Before comparing potentials, write the crib potential integral and constitutive relation."
               },
-              "math": "V(b)-V(a)=-\\int_a^b\\mathbf E\\cdot d\\mathbf l,\\qquad\\mathbf D=\\epsilon\\mathbf E",
+              "math": "V(b)-V(a)=-\\int_a^b\\vec{E}\\cdot d\\vec{l},\\qquad\\vec{D}=\\epsilon\\vec{E}",
               "refs": [
                 "potential",
                 "constitutive"
@@ -490,8 +554,8 @@
             },
             {
               "text": {
-                "zh": "更换介质时保持题设自由电荷不变，因此同一高斯面上的 D 仍由同一个包围电荷确定。",
-                "en": "Replacing the dielectric leaves the specified free charges fixed, so D on a given Gaussian surface is set by the same enclosed charge."
+                "zh": "更换介质时保持题设自由电荷不变，因此同一高斯面上的 $\\vec D$ 仍由同一个包围电荷确定。",
+                "en": "Replacing the dielectric leaves the specified free charges fixed, so $\\vec D$ on a given Gaussian surface is set by the same enclosed charge."
               },
               "math": "D_r(r)=\\frac{Q_a}{4\\pi r^2}=\\frac{\\rho_0a^3}{3r^2}",
               "refs": [
@@ -500,32 +564,48 @@
             },
             {
               "text": {
-                "zh": "分别除以新旧介电常数得到两个电场；不能把 D 和 E 同时按相同比例缩小。",
-                "en": "Divide by the new and old permittivities to obtain the fields; D does not decrease along with E."
+                "zh": "分别除以新旧介电常数得到两个电场；不能把 $\\vec D$ 和 $\\vec E$ 同时按相同比例缩小。",
+                "en": "Divide by the new and old permittivities to obtain the fields; $\\vec D$ does not decrease along with $\\vec E$."
               },
               "math": "E_\\epsilon(r)=\\frac{\\rho_0a^3}{3\\epsilon r^2}=\\frac{\\epsilon_0}{\\epsilon}E_{\\mathrm{vac}}(r)",
               "refs": []
             },
             {
               "text": {
-                "zh": "沿径向从 a 到 b 积分。若用 V(a)−V(b)，电势积分外侧负号相应反转。",
-                "en": "Integrate radially from a to b. For V(a)−V(b), reverse the leading sign accordingly."
+                "zh": "沿径向从 $a$ 到 $b$ 积分。若用 $V(a)-V(b)$，电势积分外侧负号相应反转。",
+                "en": "Integrate radially from $a$ to $b$. For $V(a)-V(b)$, reverse the leading sign accordingly."
               },
               "math": "V(a)-V(b)=\\frac{\\rho_0a^3}{3\\epsilon}\\int_a^b r^{-2}\\,dr",
               "refs": []
             },
             {
               "text": {
-                "zh": "写出原函数并代入上下限。",
-                "en": "Write the antiderivative and evaluate both limits."
+                "zh": "先求原函数：幂函数的指数从 $-2$ 变成 $-1$，再除以 $-1$，得到负的倒数。",
+                "en": "Find the antiderivative first: increase the power from $-2$ to $-1$ and divide by $-1$, giving a negative reciprocal."
               },
-              "math": "V(a)-V(b)=\\frac{\\rho_0a^3}{3\\epsilon}\\left[-\\frac1r\\right]_a^b=\\frac{\\rho_0a^3}{3\\epsilon}\\left(\\frac1a-\\frac1b\\right)",
+              "math": "\\int r^{-2}\\,dr=\\frac{r^{-1}}{-1}+C=-\\frac1r+C",
               "refs": []
             },
             {
               "text": {
-                "zh": "诱导偶极的极化响应减小同一自由电荷产生的电场。取绝对值比较，结论不依赖 ρ₀ 的符号。",
-                "en": "The induced-dipole polarization response reduces the field for the same free charge. Compare magnitudes so the conclusion is independent of the sign of ρ₀."
+                "zh": "定积分中同一个积分常数会相消。按“上限减下限”代入，注意减去下限处的负号。",
+                "en": "The same integration constant cancels in a definite integral. Substitute upper minus lower, keeping the negative sign at the lower limit."
+              },
+              "math": "\\begin{aligned}\\int_a^b r^{-2}\\,dr&=\\left[-\\frac1r\\right]_a^b\\\\&=\\left(-\\frac1b\\right)-\\left(-\\frac1a\\right)\\\\&=\\frac1a-\\frac1b\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把定积分的值乘回场强中的常数系数，得到电势差，再与真空结果比较。",
+                "en": "Multiply the definite-integral value by the field coefficient to obtain the potential difference before comparing with vacuum."
+              },
+              "math": "V(a)-V(b)=\\frac{\\rho_0a^3}{3\\epsilon}\\left(\\frac1a-\\frac1b\\right)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "诱导偶极的极化响应减小同一自由电荷产生的电场。取绝对值比较，结论不依赖 $\\rho_{0}$ 的符号。",
+                "en": "The induced-dipole polarization response reduces the field for the same free charge. Compare magnitudes so the conclusion is independent of the sign of $\\rho_{0}$."
               },
               "math": "|\\Delta V_\\epsilon|=\\frac{\\epsilon_0}{\\epsilon}|\\Delta V_{\\mathrm{vac}}|<|\\Delta V_{\\mathrm{vac}}|",
               "refs": []
@@ -538,8 +618,8 @@
         }
       ],
       "note": {
-        "zh": "场在导体薄壳处有跳变：a≤r≤b 的公式应理解为介质内极限，不能把介质中的场值当成导体内的场。",
-        "en": "The field jumps at the conducting shell. Interpret the a≤r≤b expression as a dielectric-side limit, not the field inside the conductor."
+        "zh": "场在导体薄壳处有跳变：$a\\le r\\le b$ 的公式应理解为介质内极限，不能把介质中的场值当成导体内的场。",
+        "en": "The field jumps at the conducting shell. Interpret the $a\\le r\\le b$ expression as a dielectric-side limit, not the field inside the conductor."
       },
       "wording": "original",
       "guide": {
@@ -573,8 +653,8 @@
         "en": "Boundary conditions · energy"
       },
       "statement": {
-        "zh": "下方系统中，位于 $x=0$ 和 $x=L$ 的两块导体板之间填充了两种不同的电介质：\n• 区域 1 占据 $\\frac{H}{2}<z\\le H$，其介电常数为 $\\varepsilon_1$。\n• 区域 2 占据 $0\\le z<H/2$，其介电常数为 $\\varepsilon_2$。\n\n位于 $x=0$ 的板保持恒定电势 $V_0$，位于 $x=L$ 的板保持恒定电势 $V_1$。板在 z 方向的高度为 $H$，在 y 方向的深度为 $W$。\n区域 1 的电场给定为 $\\vec E_1(x)=\\frac{V_1-V_0}{L}\\hat x$。",
-        "en": "In the system below, the space between two conducting plates located at $x=0$ and $x=L$ is filled with two different dielectrics:\n• Region 1 occupies the space $\\frac{H}{2}<z\\le H$ and has permittivity $\\varepsilon_1$.\n• Region 2 occupies the space $0\\le z<H/2$ and has permittivity $\\varepsilon_2$.\n\nThe plate at $x=0$ is held at a constant potential $V_0$, while the plate at $x=L$ is held at a constant potential $V_1$. The plates have height $H$ in the z-dimension and depth $W$ in the y-direction.\nThe electric field in region 1 is given by $\\vec E_1(x)=\\frac{V_1-V_0}{L}\\hat x$."
+        "zh": "下方系统中，位于 $x=0$ 和 $x=L$ 的两块导体板之间填充了两种不同的电介质：\n• 区域 1 占据 $\\frac{H}{2}<z\\le H$，其介电常数为 $\\varepsilon_1$。\n• 区域 2 占据 $0\\le z<H/2$，其介电常数为 $\\varepsilon_2$。\n\n位于 $x=0$ 的板保持恒定电势 $V_0$，位于 $x=L$ 的板保持恒定电势 $V_1$。板在 $z$ 方向的高度为 $H$，在 $y$ 方向的深度为 $W$。\n区域 1 的电场给定为 $\\vec E_1(x)=\\frac{V_1-V_0}{L}\\hat x$。",
+        "en": "In the system below, the space between two conducting plates located at $x=0$ and $x=L$ is filled with two different dielectrics:\n• Region 1 occupies the space $\\frac{H}{2}<z\\le H$ and has permittivity $\\varepsilon_1$.\n• Region 2 occupies the space $0\\le z<H/2$ and has permittivity $\\varepsilon_2$.\n\nThe plate at $x=0$ is held at a constant potential $V_0$, while the plate at $x=L$ is held at a constant potential $V_1$. The plates have height $H$ in the $z$-dimension and depth $W$ in the $y$-direction.\nThe electric field in region 1 is given by $\\vec E_1(x)=\\frac{V_1-V_0}{L}\\hat x$."
       },
       "givens": [
         "A_1=A_2=HW/2",
@@ -626,10 +706,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先写切向电场连续条件及本构关系。介质分界面法向为 z，题中的电场沿 x，属于切向分量。",
-                "en": "Write tangential-field continuity and the constitutive relation. The dielectric interface normal is z, so the x-directed field is tangential."
+                "zh": "先写切向电场连续条件及本构关系。介质分界面法向为 $z$，题中的电场沿 $x$，属于切向分量。",
+                "en": "Write tangential-field continuity and the constitutive relation. The dielectric interface normal is $z$, so the $x$-directed field is tangential."
               },
-              "math": "E_{1t}=E_{2t},\\qquad\\mathbf D_2=\\epsilon_2\\mathbf E_2",
+              "math": "E_{1t}=E_{2t},\\qquad\\vec{D}_2=\\epsilon_2\\vec{E}_2",
               "refs": [
                 "boundary",
                 "constitutive"
@@ -637,45 +717,53 @@
             },
             {
               "text": {
-                "zh": "用给定的两块等势板求电位函数：无边缘效应时电位随 x 线性变化。",
-                "en": "Find the potential from the stated plate potentials: without fringing it varies linearly with x."
+                "zh": "用给定的两块等势板求电位函数：无边缘效应时电位随 $x$ 线性变化。",
+                "en": "Find the potential from the stated plate potentials: without fringing it varies linearly with $x$."
               },
               "math": "V(x)=V_0+\\frac{V_1-V_0}{L}x,\\quad V(0)=V_0,\\quad V(L)=V_1",
               "refs": []
             },
             {
               "text": {
-                "zh": "按 E=−∇V 求导。题面与官方答案给出的正号和板电位矛盾，下面使用与板电位一致的方向。",
-                "en": "Differentiate using E=−∇V. The printed positive sign conflicts with the plate potentials; use the direction consistent with those potentials."
+                "zh": "\\u5BF9\\u7EBF\\u6027\\u7535\\u52BF\\u9010\\u9879\\u6C42\\u5BFC\\u3002\\u677F\\u7535\\u4F4D $V_0$\\u3001$V_1$ \\u548C\\u95F4\\u8DDD $L$ \\u90FD\\u662F\\u5E38\\u6570\\uFF0C\\u53EA\\u6709\\u8DEF\\u5F84\\u5750\\u6807 $x$ \\u662F\\u53D8\\u91CF\\uFF0C\\u56E0\\u6B64\\u5E38\\u6570\\u9879\\u7684\\u5BFC\\u6570\\u4E3A\\u96F6\\uFF0C\\u800C $x$ \\u5BF9\\u81EA\\u8EAB\\u7684\\u5BFC\\u6570\\u4E3A $1$\\u3002",
+                "en": "Differentiate the linear potential term by term. The plate potentials $V_0$, $V_1$ and separation $L$ are constants; only the path coordinate $x$ varies. The constant term has derivative zero and $x$ has derivative $1$."
               },
-              "math": "\\mathbf E_1=-\\frac{dV}{dx}\\hat{\\mathbf x}=-\\frac{V_1-V_0}{L}\\hat{\\mathbf x}",
+              "math": "\\begin{aligned}\\frac{dV}{dx}&=\\frac d{dx}\\left[V_0+\\frac{V_1-V_0}{L}x\\right]\\\\&=0+\\frac{V_1-V_0}{L}(1)\\\\&=\\frac{V_1-V_0}{L}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "按 $\\vec E=-\\nabla V$ 求导。题面与官方答案给出的正号和板电位矛盾，下面使用与板电位一致的方向。",
+                "en": "Differentiate using $\\vec E=-\\nabla V$. The printed positive sign conflicts with the plate potentials; use the direction consistent with those potentials."
+              },
+              "math": "\\vec{E}_1=-\\frac{dV}{dx}\\hat{x}=-\\frac{V_1-V_0}{L}\\hat{x}",
               "refs": [
                 "gradient"
               ]
             },
             {
               "text": {
-                "zh": "切向连续给出 E₂=E₁；再将它代入 D₂=ε₂E₂，法向分量均为零。",
-                "en": "Tangential continuity gives E₂=E₁. Substitute this into D₂=ε₂E₂; both normal components are zero."
+                "zh": "切向连续给出 $\\vec E_2=\\vec E_1$；再将它代入 $\\vec D_2=\\epsilon_2\\vec E_2$，法向分量均为零。",
+                "en": "Tangential continuity gives $\\vec E_2=\\vec E_1$. Substitute this into $\\vec D_2=\\epsilon_2\\vec E_2$; both normal components are zero."
               },
               "math": "E_{2x}=E_{1x}=\\frac{V_0-V_1}{L},\\qquad D_{2x}=\\epsilon_2\\frac{V_0-V_1}{L}",
               "refs": []
             },
             {
               "text": {
-                "zh": "组合为所求两个矢量。若沿用试卷印出的场方向，E 和 D 的符号一起反转，后面的能量不变。",
-                "en": "Assemble the requested vectors. Following the printed field instead reverses both E and D; the later energy is unchanged."
+                "zh": "组合为所求两个矢量。若沿用试卷印出的场方向，$\\vec E$ 和 $\\vec D$ 的符号一起反转，后面的能量不变。",
+                "en": "Assemble the requested vectors. Following the printed field instead reverses both $\\vec E$ and $\\vec D$; the later energy is unchanged."
               },
-              "math": "\\mathbf E_2=\\frac{V_0-V_1}{L}\\hat{\\mathbf x},\\quad\\mathbf D_2=\\epsilon_2\\frac{V_0-V_1}{L}\\hat{\\mathbf x}",
+              "math": "\\vec{E}_2=\\frac{V_0-V_1}{L}\\hat{x},\\quad\\vec{D}_2=\\epsilon_2\\frac{V_0-V_1}{L}\\hat{x}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_2=\\frac{V_0-V_1}{L}\\hat{\\mathbf x},\\quad\\mathbf D_2=\\epsilon_2\\frac{V_0-V_1}{L}\\hat{\\mathbf x}",
+          "answer": "\\vec{E}_2=\\frac{V_0-V_1}{L}\\hat{x},\\quad\\vec{D}_2=\\epsilon_2\\frac{V_0-V_1}{L}\\hat{x}",
           "sourcePage": 4,
           "solutionPage": 5,
           "note": {
-            "zh": "原题与官方解把 E 写成 +(V₁−V₀)/L，与所给边界电位及 E=−∇V 不一致。这里采用物理一致的负号；若按题面给定场作答，D 同时反号，后续能量和电容不受影响。",
-            "en": "The prompt and official solution print +(V₁−V₀)/L, inconsistent with the stated potentials and E=−∇V. This version uses the consistent minus sign. Taking the printed field instead also reverses D; energy and capacitance remain unchanged."
+            "zh": "原题与官方解把 $\\vec E$ 写成 $+(V_1-V_0)/L$，与所给边界电位及 $\\vec E=-\\nabla V$ 不一致。这里采用物理一致的负号；若按题面给定场作答，$\\vec D$ 同时反号，后续能量和电容不受影响。",
+            "en": "The prompt and official solution print $+(V_1-V_0)/L$, inconsistent with the stated potentials and $\\vec E=-\\nabla V$. This version uses the consistent minus sign. Taking the printed field instead also reverses $\\vec D$; energy and capacitance remain unchanged."
           },
           "id": "e2-f25-q2-a"
         },
@@ -692,7 +780,7 @@
                 "zh": "先写电场能量的体积分原式；两种介质须分别积分后相加。",
                 "en": "Begin with the field-energy volume integral; integrate each dielectric separately and then add."
               },
-              "math": "W_e=\\frac12\\iiint_{\\mathcal V}\\epsilon|\\mathbf E|^2\\,d\\mathcal V=W_{e1}+W_{e2}",
+              "math": "W_e=\\frac12\\iiint_{\\mathcal V}\\epsilon|\\vec{E}|^2\\,d\\mathcal V=W_{e1}+W_{e2}",
               "refs": [
                 "energy"
               ]
@@ -702,31 +790,55 @@
                 "zh": "两区域的场强大小相同，平方后电场方向或题面符号差异不会影响能量。",
                 "en": "The field magnitudes agree in both regions. Squaring removes dependence on field direction or the printed sign."
               },
-              "math": "|\\mathbf E_1|^2=|\\mathbf E_2|^2=\\frac{(V_1-V_0)^2}{L^2}",
+              "math": "|\\vec{E}_1|^2=|\\vec{E}_2|^2=\\frac{(V_1-V_0)^2}{L^2}",
               "refs": []
             },
             {
               "text": {
-                "zh": "区域 1 的三个积分范围分别为 x 从 0 到 L、y 从 0 到 W、z 从 H/2 到 H。",
-                "en": "For region 1, integrate x from 0 to L, y from 0 to W and z from H/2 to H."
+                "zh": "区域 1 的三个积分范围分别为 $x$ 从 0 到 $L$、$y$ 从 0 到 $W$、$z$ 从 $H/2$ 到 $H$。",
+                "en": "For region 1, integrate $x$ from 0 to $L$, $y$ from 0 to $W$ and $z$ from $H/2$ to $H$."
               },
               "math": "W_{e1}=\\frac12\\int_{H/2}^H\\!\\int_0^W\\!\\int_0^L\\epsilon_1\\frac{(V_1-V_0)^2}{L^2}\\,dx\\,dy\\,dz",
               "refs": []
             },
             {
               "text": {
-                "zh": "被积函数为常数，三个积分给出 L、W、H/2。",
-                "en": "The integrand is constant; the three integrals give L, W and H/2."
+                "zh": "区域 1 的被积函数是常数。先对 $x$ 积分，再对 $y$ 积分，每次都写出原函数和端点。",
+                "en": "The region-1 integrand is constant. Integrate over $x$ and then $y$, showing the antiderivative and endpoint substitution each time."
               },
-              "math": "W_{e1}=\\frac12\\epsilon_1\\frac{(V_1-V_0)^2}{L^2}\\,LW\\frac H2=\\frac{\\epsilon_1HW}{4L}(V_1-V_0)^2",
+              "math": "\\begin{aligned}\\int_0^L1\\,dx&=[x]_0^L=L-0=L\\\\\\int_0^W L\\,dy&=L[y]_0^W=L(W-0)=LW\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "区域 2 只改变介电常数和 z 的积分范围；同样得到一半板间体积。",
-                "en": "Region 2 changes only the permittivity and z bounds; its volume is the other half of the gap."
+                "zh": "最后算区域 1 的 $z$ 积分。它的下限是 $H/2$，所以高度为 $H-H/2$。再把能量密度系数乘回来。",
+                "en": "Evaluate the final $z$ integral in region 1. Its lower limit is $H/2$, so the height is $H-H/2$. Then restore the energy-density coefficient."
               },
-              "math": "W_{e2}=\\frac12\\int_0^{H/2}\\!\\int_0^W\\!\\int_0^L\\epsilon_2\\frac{(V_1-V_0)^2}{L^2}\\,dx\\,dy\\,dz=\\frac{\\epsilon_2HW}{4L}(V_1-V_0)^2",
+              "math": "\\begin{aligned}\\int_{H/2}^H LW\\,dz&=LW[z]_{H/2}^H\\\\&=LW(H-H/2)=\\frac{LWH}{2}\\\\W_{e1}&=\\frac{\\epsilon_1(V_1-V_0)^2}{2L^2}\\frac{LWH}{2}\\\\&=\\frac{\\epsilon_1HW}{4L}(V_1-V_0)^2\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "区域 2 也先完整列出三重积分。电场大小相同，但介电常数改为 $\\epsilon_2$，厚度区间改为 $0$ 到 $H/2$。",
+                "en": "Set up the full triple integral for region 2 as well. The field magnitude is the same, but its permittivity is $\\epsilon_2$ and the height interval is $0$ to $H/2$."
+              },
+              "math": "W_{e2}=\\frac{\\epsilon_2(V_1-V_0)^2}{2L^2}\\int_0^{H/2}\\!\\int_0^W\\!\\int_0^L1\\,dx\\,dy\\,dz",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "区域 2 的内两层积分仍给出 $LW$。对最后一层写出上限减下限，得到另一半体积。",
+                "en": "The two inner integrals in region 2 again give $LW$. For the last integral, explicitly subtract the lower limit from the upper limit to obtain the other half of the volume."
+              },
+              "math": "\\begin{aligned}\\int_0^L1\\,dx&=[x]_0^L=L\\\\\\int_0^W L\\,dy&=L[y]_0^W=LW\\\\\\int_0^{H/2}LW\\,dz&=LW[z]_0^{H/2}\\\\&=LW(H/2-0)=\\frac{LWH}{2}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "乘回区域 2 的系数。分母的 $2$ 来自能量公式，另一个 $2$ 来自半高度；分子的一个 $L$ 与分母的 $L^2$ 约去。",
+                "en": "Restore the region-2 coefficient. One factor of $2$ comes from the energy formula and the other from the half-height; one numerator factor of $L$ cancels against $L^2$."
+              },
+              "math": "\\begin{aligned}W_{e2}&=\\frac{\\epsilon_2(V_1-V_0)^2}{2L^2}\\frac{LWH}{2}\\\\&=\\frac{\\epsilon_2HW}{4L}(V_1-V_0)^2\\end{aligned}",
               "refs": []
             },
             {
@@ -779,7 +891,7 @@
             },
             {
               "text": {
-                "zh": "化简系数，并检查量纲为 F。",
+                "zh": "化简系数，并检查量纲为 $\\mathrm{F}$。",
                 "en": "Simplify the coefficient and check that the dimension is farads."
               },
               "math": "C=\\frac{(\\epsilon_1+\\epsilon_2)HW}{2L}",
@@ -811,16 +923,16 @@
             },
             {
               "text": {
-                "zh": "两区域各占 H/2 的高度，面积均为 HW/2；场方向上的板间距都是 L。",
-                "en": "Each region occupies half the height, so each area is HW/2 and both field-direction gaps are L."
+                "zh": "两区域各占 $H/2$ 的高度，面积均为 $HW/2$；场方向上的板间距都是 $L$。",
+                "en": "Each region occupies half the height, so each area is $HW/2$ and both field-direction gaps are $L$."
               },
               "math": "A_1=A_2=\\frac{HW}{2},\\qquad C_1=\\frac{\\epsilon_1HW}{2L},\\quad C_2=\\frac{\\epsilon_2HW}{2L}",
               "refs": []
             },
             {
               "text": {
-                "zh": "同一板上的两部分电荷相加，把 Qᵢ=CᵢΔV 逐项代入。",
-                "en": "Add the two charge contributions on a plate and substitute Qᵢ=CᵢΔV."
+                "zh": "同一板上的两部分电荷相加，把 $Q_{i}=C_{i}\\Delta V$ 逐项代入。",
+                "en": "Add the two charge contributions on a plate and substitute $Q_{i}=C_{i}\\Delta V$."
               },
               "math": "Q=Q_1+Q_2=C_1\\Delta V+C_2\\Delta V=(C_1+C_2)\\Delta V",
               "refs": []
@@ -940,48 +1052,64 @@
             },
             {
               "text": {
-                "zh": "忽略端部效应，柱对称使电位只依赖 r，φ 与 z 的导数项都为零。",
-                "en": "Neglecting end effects, cylindrical symmetry makes V depend only on r; the φ and z derivative terms vanish."
+                "zh": "忽略端部效应，柱对称使电位只依赖 $r$，$\\phi$ 与 $z$ 的导数项都为零。",
+                "en": "Neglecting end effects, cylindrical symmetry makes $V$ depend only on $r$; the $\\phi$ and $z$ derivative terms vanish."
               },
               "math": "\\nabla^2V=\\frac1r\\frac{d}{dr}\\left(r\\frac{dV}{dr}\\right)=0",
               "refs": []
             },
             {
               "text": {
-                "zh": "乘以 r 并积分一次，把第一个积分常数记为 A。",
-                "en": "Multiply by r and integrate once, calling the first constant A."
+                "zh": "因为 $r>0$，两边先乘 $r$。把 $r\\,dV/dr$ 暂时看成一个整体：这个整体的导数为零，所以它等于一个常数。",
+                "en": "Since $r>0$, multiply both sides by $r$. Treat $r\\,dV/dr$ as one quantity: its derivative is zero, so that quantity is a constant."
               },
-              "math": "\\frac{d}{dr}\\left(r\\frac{dV}{dr}\\right)=0\\quad\\Longrightarrow\\quad r\\frac{dV}{dr}=A",
+              "math": "\\begin{aligned}\\frac{d}{dr}\\left(r\\frac{dV}{dr}\\right)&=0\\\\\\int\\frac{d}{dr}\\left(r\\frac{dV}{dr}\\right)dr&=\\int0\\,dr\\\\r\\frac{dV}{dr}&=A\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "除以 r 再积分一次；用无量纲 r/a 写对数，第二个常数记为 B。",
-                "en": "Divide by r and integrate again. Use dimensionless r/a in the logarithm and call the second constant B."
+                "zh": "再除以 $r$，将电势对半径的导数单独留在左边。用 $s$ 作为第二次积分的变量，避免与观察点 $r$ 混淆。",
+                "en": "Divide by $r$ to isolate the potential derivative. Use $s$ for the second integration so it is distinct from the observation radius $r$."
               },
-              "math": "\\frac{dV}{dr}=\\frac Ar\\quad\\Longrightarrow\\quad V(r)=A\\ln(r/a)+B",
+              "math": "\\frac{dV}{dr}=\\frac Ar,\\qquad V(r)-V(a)=\\int_a^r\\frac As\\,ds",
               "refs": []
             },
             {
               "text": {
-                "zh": "先代入内导体接地边界，解出 B。",
-                "en": "Apply the grounded inner-conductor boundary first to determine B."
+                "zh": "常数 $A$ 提到积分号外。正半径区间内，$1/s$ 的原函数是对数；定积分给出两个对数之差，并可合并为无量纲比值的对数。",
+                "en": "Take the constant $A$ outside. For positive radii, an antiderivative of $1/s$ is a logarithm. The definite integral gives a difference of logarithms, which combines into the logarithm of a dimensionless ratio."
+              },
+              "math": "\\begin{aligned}V(r)-V(a)&=A\\int_a^r\\frac1s\\,ds\\\\&=A[\\ln(s/a)]_a^r\\\\&=A[\\ln(r/a)-\\ln(a/a)]\\\\&=A\\ln(r/a)\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把内导体处尚待确定的电势记为常数 $B$，写成含两个常数的通解，再逐一使用边界条件。",
+                "en": "Write the as-yet unspecified inner-conductor potential as a constant $B$. This gives a general solution containing two constants, to be fixed by the boundary conditions."
+              },
+              "math": "B=V(a),\\qquad V(r)=A\\ln(r/a)+B",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先代入内导体接地边界，解出 $B$。",
+                "en": "Apply the grounded inner-conductor boundary first to determine $B$."
               },
               "math": "V(a)=A\\ln1+B=0\\quad\\Longrightarrow\\quad B=0",
               "refs": []
             },
             {
               "text": {
-                "zh": "再代入外导体电位，解出 A。",
-                "en": "Apply the outer-conductor potential next to determine A."
+                "zh": "再代入外导体电位，解出 $A$。",
+                "en": "Apply the outer-conductor potential next to determine $A$."
               },
               "math": "V(b)=A\\ln(b/a)=-V_0\\quad\\Longrightarrow\\quad A=-\\frac{V_0}{\\ln(b/a)}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把两个常数代回通解；在 a 和 b 分别得到 0 与 −V₀。",
-                "en": "Substitute both constants into the general solution; the boundary values are 0 at a and −V₀ at b."
+                "zh": "把两个常数代回通解；在 $a$ 和 $b$ 分别得到 0 与 $-V_{0}$。",
+                "en": "Substitute both constants into the general solution; the boundary values are 0 at $a$ and $-V_0$ at $b$."
               },
               "math": "V(r)=-V_0\\frac{\\ln(r/a)}{\\ln(b/a)}",
               "refs": []
@@ -1005,7 +1133,7 @@
                 "zh": "先写原表的梯度关系与本构关系。",
                 "en": "Begin with the crib gradient and constitutive relations."
               },
-              "math": "\\mathbf E=-\\nabla V,\\qquad \\mathbf D=\\epsilon\\mathbf E",
+              "math": "\\vec{E}=-\\nabla V,\\qquad \\vec{D}=\\epsilon\\vec{E}",
               "refs": [
                 "gradient",
                 "constitutive"
@@ -1013,38 +1141,46 @@
             },
             {
               "text": {
-                "zh": "电位只依赖 r，梯度只保留径向分量。",
-                "en": "The potential depends only on r, so retain only the radial gradient component."
+                "zh": "电位只依赖 $r$，梯度只保留径向分量。",
+                "en": "The potential depends only on $r$, so retain only the radial gradient component."
               },
-              "math": "\\mathbf E=-\\frac{dV}{dr}\\hat{\\mathbf r}",
+              "math": "\\vec{E}=-\\frac{dV}{dr}\\hat{r}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把上问的 V(r) 代入，保留外侧负号。",
-                "en": "Substitute the preceding V(r), keeping the leading minus sign."
+                "zh": "把上问的 $V(r)$ 代入，保留外侧负号。",
+                "en": "Substitute the preceding $V(r)$, keeping the leading minus sign."
               },
-              "math": "\\mathbf E=-\\frac d{dr}\\left[-\\frac{V_0}{\\ln(b/a)}\\ln(r/a)\\right]\\hat{\\mathbf r}",
+              "math": "\\vec{E}=-\\frac d{dr}\\left[-\\frac{V_0}{\\ln(b/a)}\\ln(r/a)\\right]\\hat{r}",
               "refs": []
             },
             {
               "text": {
-                "zh": "对 ln(r/a) 求导为 1/r，两个负号抵消。",
-                "en": "The derivative of ln(r/a) is 1/r, and the two minus signs cancel."
+                "zh": "对复合函数使用链式法则：先对对数内部的量求导。因为 $a$ 是固定半径，$r/a$ 的导数为 $1/a$。",
+                "en": "Apply the chain rule to the composite logarithm. Since $a$ is a fixed radius, the derivative of $r/a$ is $1/a$."
               },
-              "math": "\\mathbf E=\\frac{V_0}{\\ln(b/a)}\\frac1r\\hat{\\mathbf r}",
+              "math": "\\begin{aligned}\\frac d{dr}\\ln(r/a)&=\\frac1{r/a}\\frac d{dr}(r/a)\\\\&=\\frac ar\\frac1a\\\\&=\\frac1r\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "最后乘以介电常数，得到 D；V₀>0 时方向由内导体指向外导体。",
-                "en": "Multiply by permittivity to obtain D, pointing from the inner toward the outer conductor when V₀>0."
+                "zh": "电势中的负号与电场定义前面的负号相乘为正，再乘刚求出的导数。",
+                "en": "The minus sign in the potential and the minus sign in the electric-field definition multiply to a plus sign; then insert the derivative just calculated."
               },
-              "math": "\\mathbf D(r)=\\frac{\\epsilon V_0}{r\\ln(b/a)}\\hat{\\mathbf r}",
+              "math": "\\begin{aligned}\\vec E&=-\\left[-\\frac{V_0}{\\ln(b/a)}\\right]\\frac1r\\hat r\\\\&=\\frac{V_0}{r\\ln(b/a)}\\hat r\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "最后乘以介电常数，得到 $\\vec D$；$V_{0}>0$ 时方向由内导体指向外导体。",
+                "en": "Multiply by permittivity to obtain $\\vec D$, pointing from the inner toward the outer conductor when $V_{0}>0$."
+              },
+              "math": "\\vec{D}(r)=\\frac{\\epsilon V_0}{r\\ln(b/a)}\\hat{r}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf D(r)=\\frac{\\epsilon V_0}{r\\ln(b/a)}\\hat{\\mathbf r}",
+          "answer": "\\vec{D}(r)=\\frac{\\epsilon V_0}{r\\ln(b/a)}\\hat{r}",
           "sourcePage": 7,
           "solutionPage": 7,
           "id": "e2-f25-q3-b"
@@ -1059,28 +1195,28 @@
           "steps": [
             {
               "text": {
-                "zh": "从法向 D 的跳变条件开始。导体内部静电场为零，因此表面电荷由介质侧的法向 D 决定。",
-                "en": "Start with the normal-D jump condition. The electrostatic field inside a conductor is zero, leaving the dielectric-side normal D."
+                "zh": "从法向 $\\vec D$ 的跳变条件开始。导体内部静电场为零，因此表面电荷由介质侧的法向 $\\vec D$ 决定。",
+                "en": "Start with the normal-$\\vec D$ jump condition. The electrostatic field inside a conductor is zero, leaving the dielectric-side normal $\\vec D$."
               },
-              "math": "D_{1n}-D_{2n}=\\rho_s,\\qquad \\rho_s=\\mathbf D_{\\mathrm{dielectric}}\\cdot\\hat{\\mathbf n}_{\\mathrm{out}}",
+              "math": "D_{1n}-D_{2n}=\\rho_s,\\qquad \\rho_s=\\vec{D}_{\\mathrm{dielectric}}\\cdot\\hat{n}_{\\mathrm{out}}",
               "refs": [
                 "boundary"
               ]
             },
             {
               "text": {
-                "zh": "内导体朝向介质的外法向为 +r̂；将上问的 D 取在 a⁺。",
-                "en": "The inner conductor’s normal into the dielectric is +r̂. Evaluate the preceding D at a⁺."
+                "zh": "内导体朝向介质的外法向为 $+\\hat{r}$；将上问的 $\\vec D$ 取在 $a^{+}$。",
+                "en": "The inner conductor’s normal into the dielectric is $+\\hat{r}$. Evaluate the preceding $\\vec D$ at $a^{+}$."
               },
-              "math": "\\hat{\\mathbf n}_a=+\\hat{\\mathbf r},\\qquad \\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)}(\\hat{\\mathbf r}\\cdot\\hat{\\mathbf r})",
+              "math": "\\hat{n}_a=+\\hat{r},\\qquad \\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)}(\\hat{r}\\cdot\\hat{r})",
               "refs": []
             },
             {
               "text": {
-                "zh": "外导体的内表面朝向介质的法向为 −r̂；取 b⁻ 后点积产生负号。",
-                "en": "At the outer conductor’s inner surface the normal into the dielectric is −r̂. Evaluating at b⁻ therefore introduces a minus sign."
+                "zh": "外导体的内表面朝向介质的法向为 $-\\hat{r}$；取 $b^{-}$ 后点积产生负号。",
+                "en": "At the outer conductor’s inner surface the normal into the dielectric is $-\\hat{r}$. Evaluating at $b^{-}$ therefore introduces a minus sign."
               },
-              "math": "\\hat{\\mathbf n}_b=-\\hat{\\mathbf r},\\qquad \\rho_{sb}=\\frac{\\epsilon V_0}{b\\ln(b/a)}(\\hat{\\mathbf r}\\cdot[-\\hat{\\mathbf r}])",
+              "math": "\\hat{n}_b=-\\hat{r},\\qquad \\rho_{sb}=\\frac{\\epsilon V_0}{b\\ln(b/a)}(\\hat{r}\\cdot[-\\hat{r}])",
               "refs": []
             },
             {
@@ -1093,8 +1229,8 @@
             },
             {
               "text": {
-                "zh": "写出两个表面电荷密度，单位均为 C/m²。",
-                "en": "State both surface charge densities, each in C/m²."
+                "zh": "写出两个表面电荷密度，单位均为 $\\mathrm{C}/\\mathrm{m}^{2}$。",
+                "en": "State both surface charge densities, each in $\\mathrm{C}/\\mathrm{m}^{2}$."
               },
               "math": "\\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)},\\quad\\rho_{sb}=-\\frac{\\epsilon V_0}{b\\ln(b/a)}",
               "refs": []
@@ -1126,13 +1262,19 @@
             },
             {
               "text": {
-                "zh": "取任意长度 ℓ 的内导体，柱面面积为 2πaℓ，均匀面密度可移出积分。",
-                "en": "Take an inner-conductor segment of arbitrary length ℓ. Its cylindrical area is 2πaℓ and the surface density is uniform."
+                "zh": "先积分内导体表面电荷，面积元必须用内导体半径 $a$。均匀面密度与半径都是常数。",
+                "en": "Integrate the inner-conductor surface charge first. Its area element uses the inner-conductor radius $a$; both the surface density and radius are constant."
               },
-              "math": "Q=\\int_0^\\ell\\!\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi\\,dz=2\\pi a\\ell\\rho_{sa}",
-              "refs": [
-                "geometry"
-              ]
+              "math": "Q=\\int_0^\\ell\\!\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi\\,dz",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先做方位角积分，写出原函数及端点；再把结果作为常数放入长度方向的积分。",
+                "en": "Do the angular integral first, showing its antiderivative and endpoints. Then insert its result as a constant in the length integral."
+              },
+              "math": "\\begin{aligned}\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi&=\\rho_{sa}a[\\phi]_0^{2\\pi}\\\\&=2\\pi a\\rho_{sa}\\\\Q&=\\int_0^\\ell2\\pi a\\rho_{sa}\\,dz\\\\&=2\\pi a\\rho_{sa}[z]_0^\\ell\\\\&=2\\pi a\\rho_{sa}(\\ell-0)\\end{aligned}",
+              "refs": []
             },
             {
               "text": {
@@ -1144,16 +1286,16 @@
             },
             {
               "text": {
-                "zh": "对每单位长度使用同一电容定义，约去电压 V₀。",
-                "en": "Use the same definition per unit length and cancel V₀."
+                "zh": "对每单位长度使用同一电容定义，约去电压 $V_{0}$。",
+                "en": "Use the same definition per unit length and cancel $V_{0}$."
               },
               "math": "C^\\prime=\\frac{Q^\\prime}{V_0}=\\frac{2\\pi\\epsilon V_0}{V_0\\ln(b/a)}",
               "refs": []
             },
             {
               "text": {
-                "zh": "所得量纲为 F/m。",
-                "en": "The resulting dimension is F/m."
+                "zh": "所得量纲为 $\\mathrm{F}/\\mathrm{m}$。",
+                "en": "The resulting dimension is $\\mathrm{F}/\\mathrm{m}$."
               },
               "math": "C^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}\\quad[\\mathrm{F/m}]",
               "refs": []
@@ -1197,12 +1339,12 @@
         "en": "Coulomb’s law · superposition"
       },
       "statement": {
-        "zh": "两个半径为 $a$ 的导体球位于 x 轴上：一个位于 $x=-d$，总表面电荷为 $Q$；另一个位于 $x=d$，总表面电荷为 $-Q$。\n下图给出了这一系统的示意图。",
-        "en": "Two conducting spheres of radius $a$ are located on the x-axis: One sphere is located at $x=-d$ and has total surface charge $Q$, while the other sphere is located $x=d$ and has total surface charge $-Q$.\nA diagram of this system is shown below."
+        "zh": "两个半径为 $a$ 的导体球位于 $x$ 轴上：一个位于 $x=-d$，总表面电荷为 $Q$；另一个位于 $x=d$，总表面电荷为 $-Q$。\n下图给出了这一系统的示意图。",
+        "en": "Two conducting spheres of radius $a$ are located on the $x$-axis: One sphere is located at $x=-d$ and has total surface charge $Q$, while the other sphere is located $x=d$ and has total surface charge $-Q$.\nA diagram of this system is shown below."
       },
       "givens": [
-        "\\mathbf r_+=(-d,0,0)",
-        "\\mathbf r_-=(d,0,0)",
+        "\\vec{r}_+=(-d,0,0)",
+        "\\vec{r}_-=(d,0,0)",
         "P=(0,0,z)"
       ],
       "points": 10,
@@ -1250,10 +1392,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先写高斯定律，取包围孤立导体球的同心球面，半径 R>a。",
-                "en": "Begin with Gauss’s law on a concentric sphere of radius R>a enclosing the isolated conducting sphere."
+                "zh": "先写高斯定律，取包围孤立导体球的同心球面，半径 $R>a$。",
+                "en": "Begin with Gauss’s law on a concentric sphere of radius $R>a$ enclosing the isolated conducting sphere."
               },
-              "math": "\\oiint_{S_R}\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}}=Q",
+              "math": "\\oiint_{S_R}\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}}=Q",
               "refs": [
                 "gauss"
               ]
@@ -1263,7 +1405,7 @@
                 "zh": "由球对称性，代入径向电场、本构关系和面积元。",
                 "en": "By spherical symmetry, substitute the radial field, constitutive relation and surface element."
               },
-              "math": "\\Phi_D=\\int_0^{2\\pi}\\!\\int_0^\\pi(\\epsilon_0E_r(R)\\hat{\\mathbf r})\\cdot(\\hat{\\mathbf r}R^2\\sin\\theta)\\,d\\theta d\\phi",
+              "math": "\\Phi_D=\\int_0^{2\\pi}\\!\\int_0^\\pi(\\epsilon_0E_r(R)\\hat{r})\\cdot(\\hat{r}R^2\\sin\\theta)\\,d\\theta d\\phi",
               "refs": [
                 "constitutive",
                 "geometry"
@@ -1271,22 +1413,30 @@
             },
             {
               "text": {
-                "zh": "点积为 1，两个角积分分别为 2π 和 2。",
-                "en": "The unit-vector dot product is one and the angular integrals are 2π and 2."
+                "zh": "两个径向单位矢量的点积为 $1$。把固定半径和场强提出后，留下两个角积分。",
+                "en": "The dot product of the radial unit vectors is $1$. Taking the fixed radius and field outside leaves two angular integrals."
               },
-              "math": "\\Phi_D=4\\pi\\epsilon_0R^2E_r(R)=Q",
+              "math": "\\Phi_D=\\epsilon_0E_r(R)R^2\\left(\\int_0^{2\\pi}d\\phi\\right)\\left(\\int_0^\\pi\\sin\\theta\\,d\\theta\\right)",
               "refs": []
             },
             {
               "text": {
-                "zh": "两边除以球面积和介电常数，再把 R 改记为观察半径 r。",
-                "en": "Divide by spherical area and permittivity, then relabel R as observation radius r."
+                "zh": "分别代入两个角积分的原函数。极角部分是负余弦，上限为 $\\pi$、下限为 $0$，不是直接用角度相减。",
+                "en": "Evaluate the antiderivative of each angular integrand. The polar-angle antiderivative is negative cosine, evaluated at $\\pi$ and $0$; it is not the difference of the angle limits."
               },
-              "math": "\\mathbf E=\\frac{Q}{4\\pi\\epsilon_0r^2}\\hat{\\mathbf r}",
+              "math": "\\begin{aligned}\\int_0^{2\\pi}d\\phi&=[\\phi]_0^{2\\pi}=2\\pi\\\\\\int_0^\\pi\\sin\\theta\\,d\\theta&=[-\\cos\\theta]_0^\\pi\\\\&=-(-1)-(-1)=2\\\\\\Phi_D&=4\\pi\\epsilon_0R^2E_r(R)=Q\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "两边除以球面积和介电常数，再把 $R$ 改记为观察半径 $r$。",
+                "en": "Divide by spherical area and permittivity, then relabel $R$ as observation radius $r$."
+              },
+              "math": "\\vec{E}=\\frac{Q}{4\\pi\\epsilon_0r^2}\\hat{r}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E=\\frac{Q}{4\\pi\\epsilon_0r^2}\\hat{\\mathbf r}",
+          "answer": "\\vec{E}=\\frac{Q}{4\\pi\\epsilon_0r^2}\\hat{r}",
           "sourcePage": 8,
           "solutionPage": 9,
           "id": "e2-f25-q4-a"
@@ -1304,7 +1454,7 @@
                 "zh": "从库仑定律和叠加原理出发。按官方解采用各球等效为球心点电荷的近似。",
                 "en": "Start with Coulomb’s law and superposition, using the official approximation that each sphere acts as a point charge at its center."
               },
-              "math": "\\mathbf E_i(P)=\\frac{q_i}{4\\pi\\epsilon_0}\\frac{\\mathbf R_i}{|\\mathbf R_i|^3},\\qquad\\mathbf E_{\\mathrm{tot}}=\\sum_i\\mathbf E_i",
+              "math": "\\vec{E}_i(P)=\\frac{q_i}{4\\pi\\epsilon_0}\\frac{\\vec{R}_i}{|\\vec{R}_i|^3},\\qquad\\vec{E}_{\\mathrm{tot}}=\\sum_i\\vec{E}_i",
               "refs": [
                 "coulomb"
               ]
@@ -1312,33 +1462,33 @@
             {
               "text": {
                 "zh": "先写两个球心和观察点，再逐项相减得到从电荷到观察点的位移。",
-                "en": "Write both centers and the observation point, then subtract each center from P."
+                "en": "Write both centers and the observation point, then subtract each center from $P$."
               },
-              "math": "\\begin{aligned}\\mathbf r_+&=(-d,0,0),&\\mathbf R_+&=(d,0,z)\\\\\\mathbf r_-&=(d,0,0),&\\mathbf R_-&=(-d,0,z)\\end{aligned}",
+              "math": "\\begin{aligned}\\vec{r}_+&=(-d,0,0),&\\vec{R}_+&=(d,0,z)\\\\\\vec{r}_-&=(d,0,0),&\\vec{R}_-&=(-d,0,z)\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "两个距离相同。将正电荷 +Q 及其位移代入。",
-                "en": "The distances agree. Substitute +Q and its displacement first."
+                "zh": "两个距离相同。将正电荷 $+Q$ 及其位移代入。",
+                "en": "The distances agree. Substitute $+Q$ and its displacement first."
               },
-              "math": "|\\mathbf R_+|=|\\mathbf R_-|=\\sqrt{d^2+z^2},\\qquad\\mathbf E_+=\\frac{Q(d\\hat{\\mathbf x}+z\\hat{\\mathbf z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
+              "math": "|\\vec{R}_+|=|\\vec{R}_-|=\\sqrt{d^2+z^2},\\qquad\\vec{E}_+=\\frac{Q(d\\hat{x}+z\\hat{z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
               "refs": []
             },
             {
               "text": {
-                "zh": "负电荷必须连同自身符号代入；其 x 分量为正、z 分量与正电荷的相反。",
-                "en": "Include the negative charge sign explicitly; its x component is positive and its z component opposes that of +Q."
+                "zh": "负电荷必须连同自身符号代入；其 $x$ 分量为正、$z$ 分量与正电荷的相反。",
+                "en": "Include the negative charge sign explicitly; its $x$ component is positive and its $z$ component opposes that of $+Q$."
               },
-              "math": "\\mathbf E_-=\\frac{(-Q)(-d\\hat{\\mathbf x}+z\\hat{\\mathbf z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}=\\frac{Q(d\\hat{\\mathbf x}-z\\hat{\\mathbf z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
+              "math": "\\vec{E}_-=\\frac{(-Q)(-d\\hat{x}+z\\hat{z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}=\\frac{Q(d\\hat{x}-z\\hat{z})}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
               "refs": []
             },
             {
               "text": {
-                "zh": "逐分量相加：z 分量抵消，x 分量为两倍。",
-                "en": "Add components: the z components cancel and the x components double."
+                "zh": "逐分量相加：$z$ 分量抵消，$x$ 分量为两倍。",
+                "en": "Add components: the $z$ components cancel and the $x$ components double."
               },
-              "math": "\\mathbf E_{\\mathrm{tot}}=\\frac{Q[(d+d)\\hat{\\mathbf x}+(z-z)\\hat{\\mathbf z}]}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
+              "math": "\\vec{E}_{\\mathrm{tot}}=\\frac{Q[(d+d)\\hat{x}+(z-z)\\hat{z}]}{4\\pi\\epsilon_0(d^2+z^2)^{3/2}}",
               "refs": []
             },
             {
@@ -1346,11 +1496,11 @@
                 "zh": "化简为题目要求的笛卡尔坐标形式。",
                 "en": "Simplify to the requested Cartesian vector form."
               },
-              "math": "\\mathbf E_{\\mathrm{tot}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+              "math": "\\vec{E}_{\\mathrm{tot}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_{\\mathrm{tot}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+          "answer": "\\vec{E}_{\\mathrm{tot}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
           "sourcePage": 8,
           "solutionPage": 9,
           "id": "e2-f25-q4-b"
@@ -1368,37 +1518,37 @@
                 "zh": "先写点电荷受力公式，使用前一问中两个源电荷产生的外场。",
                 "en": "Begin with the force on a point charge, using the external field from the two source charges."
               },
-              "math": "\\mathbf F=q_{\\mathrm{test}}\\mathbf E_{\\mathrm{ext}}",
+              "math": "\\vec{F}=q_{\\mathrm{test}}\\vec{E}_{\\mathrm{ext}}",
               "refs": [
                 "coulomb"
               ]
             },
             {
               "text": {
-                "zh": "题目放入的试探电荷是 −Q，不能只代入正的电荷大小。",
-                "en": "The inserted test charge is −Q; retain its sign rather than using only its magnitude."
+                "zh": "题目放入的试探电荷是 $-Q$，不能只代入正的电荷大小。",
+                "en": "The inserted test charge is $-Q$; retain its sign rather than using only its magnitude."
               },
-              "math": "q_{\\mathrm{test}}=-Q,\\qquad\\mathbf E_{\\mathrm{ext}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+              "math": "q_{\\mathrm{test}}=-Q,\\qquad\\vec{E}_{\\mathrm{ext}}=\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
               "refs": []
             },
             {
               "text": {
-                "zh": "完整相乘，电荷因子变为 −Q²。按题目采用既定外场，不另计算试探电荷引起的球面电荷重分布。",
-                "en": "Multiply explicitly to obtain −Q². Follow the specified external-field model without adding redistribution of the conducting-sphere charges."
+                "zh": "完整相乘，电荷因子变为 $-Q^{2}$。按题目采用既定外场，不另计算试探电荷引起的球面电荷重分布。",
+                "en": "Multiply explicitly to obtain $-Q^{2}$. Follow the specified external-field model without adding redistribution of the conducting-sphere charges."
               },
-              "math": "\\mathbf F=(-Q)\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+              "math": "\\vec{F}=(-Q)\\frac{Qd}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
               "refs": []
             },
             {
               "text": {
-                "zh": "力沿 −x 方向。",
-                "en": "The force points along −x."
+                "zh": "力沿 $-x$ 方向。",
+                "en": "The force points along $-x$."
               },
-              "math": "\\mathbf F=-\\frac{Q^2d}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+              "math": "\\vec{F}=-\\frac{Q^2d}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf F=-\\frac{Q^2d}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{\\mathbf x}",
+          "answer": "\\vec{F}=-\\frac{Q^2d}{2\\pi\\epsilon_0(d^2+z^2)^{3/2}}\\hat{x}",
           "sourcePage": 9,
           "solutionPage": 10,
           "id": "e2-f25-q4-c"
@@ -1416,37 +1566,37 @@
                 "zh": "先写两端点电势差的线积分原式。",
                 "en": "Begin with the line integral for the potential difference between the endpoints."
               },
-              "math": "V(P)-V(O)=-\\int_O^P\\mathbf E\\cdot d\\mathbf l",
+              "math": "V(P)-V(O)=-\\int_O^P\\vec{E}\\cdot d\\vec{l}",
               "refs": [
                 "potential"
               ]
             },
             {
               "text": {
-                "zh": "选择题目两点之间的 z 轴直线路径，用 ζ 作为积分变量，z 保留给终点。",
-                "en": "Choose the straight z-axis path. Use ζ as the integration variable and reserve z for the endpoint."
+                "zh": "选择题目两点之间的 $z$ 轴直线路径，用 $\\zeta$ 作为积分变量，$z$ 保留给终点。",
+                "en": "Choose the straight $z$-axis path. Use $\\zeta$ as the integration variable and reserve $z$ for the endpoint."
               },
-              "math": "\\mathbf r(\\zeta)=(0,0,\\zeta),\\quad 0\\le\\zeta\\le z,\\quad d\\mathbf l=\\hat{\\mathbf z}\\,d\\zeta",
+              "math": "\\vec{r}(\\zeta)=(0,0,\\zeta),\\quad 0\\le\\zeta\\le z,\\quad d\\vec{l}=\\hat{z}\\,d\\zeta",
               "refs": []
             },
             {
               "text": {
-                "zh": "把沿路径的电场代入；它始终只有 x 分量。题目只要求列式，到这里即可给出完整积分。",
-                "en": "Substitute the field along the path, which has only an x component. This already provides the complete integral requested."
+                "zh": "把沿路径的电场代入；它始终只有 $x$ 分量。题目只要求列式，到这里即可给出完整积分。",
+                "en": "Substitute the field along the path, which has only an $x$ component. This already provides the complete integral requested."
               },
-              "math": "V(P)-V(O)=-\\int_0^z\\frac{Qd\\hat{\\mathbf x}}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\cdot\\hat{\\mathbf z}\\,d\\zeta",
+              "math": "V(P)-V(O)=-\\int_0^z\\frac{Qd\\hat{x}}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\cdot\\hat{z}\\,d\\zeta",
               "refs": []
             },
             {
               "text": {
-                "zh": "额外核对：x̂·ẑ=0，所以积分的被积函数处处为零。",
-                "en": "As a check, x̂·ẑ=0, making the integrand zero everywhere."
+                "zh": "额外核对：路径切向为 $\\hat z$，而电场只有 $\\hat x$ 分量。两者垂直，所以点积逐点为零。题目只要求列式，上一步的积分已经是完整作答。",
+                "en": "As an optional check, the path tangent is $\\hat z$ while the field has only an $\\hat x$ component. They are perpendicular, so the dot product vanishes at every point. The preceding integral already fully answers the question, which requests setup only."
               },
-              "math": "V(P)-V(O)=-\\int_0^z\\frac{Qd\\,\\hat{\\mathbf x}\\cdot\\hat{\\mathbf z}}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\,d\\zeta=0",
+              "math": "\\begin{aligned}\\hat x\\cdot\\hat z&=0\\\\V(P)-V(O)&=-\\int_0^z\\frac{Qd(0)}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\,d\\zeta\\\\&=-\\int_0^z0\\,d\\zeta=-[0\\zeta]_0^z=0\\end{aligned}",
               "refs": []
             }
           ],
-          "answer": "V(P)-V(O)=-\\int_0^z\\frac{Qd\\,\\hat{\\mathbf x}\\cdot\\hat{\\mathbf z}}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\,d\\zeta=0",
+          "answer": "V(P)-V(O)=-\\int_0^z\\frac{Qd\\,\\hat{x}\\cdot\\hat{z}}{2\\pi\\epsilon_0(d^2+\\zeta^2)^{3/2}}\\,d\\zeta=0",
           "sourcePage": 9,
           "solutionPage": 10,
           "id": "e2-f25-q4-d"
@@ -1464,17 +1614,17 @@
                 "zh": "先写静电场的 Maxwell–Faraday 方程：闭合路径上的环流为零。",
                 "en": "Begin with the electrostatic Maxwell–Faraday equation: circulation around a closed path is zero."
               },
-              "math": "\\oint\\mathbf E\\cdot d\\mathbf l=0,\\qquad\\nabla\\times\\mathbf E=0",
+              "math": "\\oint\\vec{E}\\cdot d\\vec{l}=0,\\qquad\\nabla\\times\\vec{E}=0",
               "refs": [
                 "conservative"
               ]
             },
             {
               "text": {
-                "zh": "取两条由同一起点 A 到同一终点 B 的路径 C₁、C₂，将第二条反向后闭合。",
-                "en": "Take two paths C₁ and C₂ from the same A to the same B; reverse the second to form a closed loop."
+                "zh": "取两条由同一起点 $A$ 到同一终点 $B$ 的路径 $C_{1}$、$C_{2}$，将第二条反向后闭合。",
+                "en": "Take two paths $C_{1}$ and $C_{2}$ from the same $A$ to the same $B$; reverse the second to form a closed loop."
               },
-              "math": "0=\\oint_{C_1-C_2}\\mathbf E\\cdot d\\mathbf l=\\int_{C_1}\\mathbf E\\cdot d\\mathbf l-\\int_{C_2}\\mathbf E\\cdot d\\mathbf l",
+              "math": "0=\\oint_{C_1-C_2}\\vec{E}\\cdot d\\vec{l}=\\int_{C_1}\\vec{E}\\cdot d\\vec{l}-\\int_{C_2}\\vec{E}\\cdot d\\vec{l}",
               "refs": []
             },
             {
@@ -1482,7 +1632,7 @@
                 "zh": "移项表明两条路径的积分相等，再乘电势定义中的负号。",
                 "en": "Rearrange to show equal path integrals, then apply the minus sign in the potential definition."
               },
-              "math": "-\\int_{C_1}\\mathbf E\\cdot d\\mathbf l=-\\int_{C_2}\\mathbf E\\cdot d\\mathbf l=V(B)-V(A)",
+              "math": "-\\int_{C_1}\\vec{E}\\cdot d\\vec{l}=-\\int_{C_2}\\vec{E}\\cdot d\\vec{l}=V(B)-V(A)",
               "refs": [
                 "potential"
               ]
@@ -1507,8 +1657,8 @@
         }
       ],
       "note": {
-        "zh": "适用范围：两个真实导体球会相互极化，严格外场一般不等于球心点电荷叠加。这里沿用原卷模型；相距很远 a≪d 时可作近似。",
-        "en": "Model limitation: real conducting spheres polarize one another, so their exact fields are not generally center-point-charge fields. This follows the exam model; it is a useful approximation when a≪d."
+        "zh": "适用范围：两个真实导体球会相互极化，严格外场一般不等于球心点电荷叠加。这里沿用原卷模型；相距很远 $a\\ll d$ 时可作近似。",
+        "en": "Model limitation: real conducting spheres polarize one another, so their exact fields are not generally center-point-charge fields. This follows the exam model; it is a useful approximation when $a\\ll d$."
       },
       "wording": "original",
       "guide": {

@@ -137,24 +137,24 @@
             },
             {
               "text": {
-                "zh": "扫频改变 βL；若有明显负载失配，输入阻抗通常随频率改变，源端分压也会改变。",
-                "en": "Sweeping frequency changes βL. With load mismatch, input impedance and hence the source divider generally vary with frequency."
+                "zh": "扫频改变 $\\beta L$；若有明显负载失配，输入阻抗通常随频率改变，源端分压也会改变。",
+                "en": "Sweeping frequency changes $\\beta L$. With load mismatch, input impedance and hence the source divider generally vary with frequency."
               },
               "math": "V_{\\mathrm{in}}=V_g\\frac{Z_{\\mathrm{in}}}{R_g+Z_{\\mathrm{in}}},\\qquad \\beta=\\frac{2\\pi f}{u}",
               "refs": []
             },
             {
               "text": {
-                "zh": "按题设固定源和低损耗近似，输入幅度不随扫频变化，采用官方的匹配推断 ΓL≈0。",
-                "en": "For the stated fixed-source, low-loss model, follow the official inference that constant input amplitude indicates ΓL≈0."
+                "zh": "按题设固定源和低损耗近似，输入幅度不随扫频变化，采用官方的匹配推断 $\\Gamma_L\\approx0$。",
+                "en": "For the stated fixed-source, low-loss model, follow the official inference that constant input amplitude indicates $\\Gamma_L\\approx0$."
               },
               "math": "\\Gamma_L\\approx0\\quad\\Longrightarrow\\quad Z_L-Z_0\\approx0",
               "refs": []
             },
             {
               "text": {
-                "zh": "负载是 50 Ω，所以推断出的特性阻抗也是约 50 Ω。",
-                "en": "The 50 Ω load therefore implies approximately the same characteristic impedance."
+                "zh": "负载是 $50\\,\\Omega$，所以推断出的特性阻抗也是约 $50\\,\\Omega$。",
+                "en": "The $50\\,\\Omega$ load therefore implies approximately the same characteristic impedance."
               },
               "math": "Z_0\\approx50\\,\\Omega",
               "refs": []
@@ -185,15 +185,15 @@
             },
             {
               "text": {
-                "zh": "使用 a) 从时延测出的未舍入波速，并把频率换成 Hz。",
-                "en": "Use the unrounded speed measured in a) and convert frequency to Hz."
+                "zh": "使用 a) 从时延测出的未舍入波速，并把频率换成 $\\mathrm{Hz}$。",
+                "en": "Use the unrounded speed measured in a) and convert frequency to $\\mathrm{Hz}$."
               },
               "math": "u=2.5510204\\times10^8\\,\\mathrm{m/s},\\qquad f=100\\,\\mathrm{MHz}=100\\times10^6\\,\\mathrm{Hz}",
               "refs": []
             },
             {
               "text": {
-                "zh": "代入数值，s⁻¹ 与 m/s 中的时间单位约去。",
+                "zh": "代入数值，$\\mathrm s^{-1}$ 与 $\\mathrm{m}/\\mathrm{s}$ 中的时间单位约去。",
                 "en": "Substitute the values and cancel the time units."
               },
               "math": "\\lambda=\\frac{2.5510204\\times10^8\\,\\mathrm{m/s}}{100\\times10^6\\,\\mathrm{s^{-1}}}",
@@ -223,8 +223,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先写需要联立的两条原表公式；低损耗近似下使用无损线的 Z₀ 与波速关系。",
-                "en": "Begin with both crib equations, using the lossless relations for Z₀ and speed in the low-loss approximation."
+                "zh": "先写需要联立的两条原表公式；低损耗近似下使用无损线的 $Z_{0}$ 与波速关系。",
+                "en": "Begin with both crib equations, using the lossless relations for $Z_{0}$ and speed in the low-loss approximation."
               },
               "math": "Z_0=\\sqrt{\\frac lc},\\qquad u=\\frac1{\\sqrt{lc}}",
               "refs": [
@@ -234,32 +234,40 @@
             },
             {
               "text": {
-                "zh": "将 Z₀ 除以 u，根号相乘后只剩 l；将 Z₀ 乘 u 得到 1/c。",
-                "en": "Divide Z₀ by u to isolate l; multiply Z₀ by u to obtain 1/c."
+                "zh": "\\u5148\\u6C42 $Z_0/u$\\u3002\\u5206\\u6BCD\\u7684\\u5012\\u6570\\u53D8\\u6210\\u4E58\\u6CD5\\uFF1B\\u4E24\\u4E2A\\u6B63\\u5E73\\u65B9\\u6839\\u76F8\\u4E58\\u53EF\\u5408\\u5230\\u540C\\u4E00\\u4E2A\\u6839\\u53F7\\u5185\\uFF0C\\u7EA6\\u53BB\\u7535\\u5BB9\\u540E\\u5F97\\u5230 $l^2$\\u3002\\u7535\\u611F\\u4E3A\\u6B63\\uFF0C\\u6240\\u4EE5\\u6B63\\u5E73\\u65B9\\u6839\\u4E3A $l$\\u3002",
+                "en": "First form $Z_0/u$. Division by the reciprocal becomes multiplication. Combine the two positive square roots, cancel capacitance and obtain $l^2$. Since inductance is positive, its positive square root is $l$."
               },
-              "math": "\\frac{Z_0}{u}=\\sqrt{\\frac lc}\\sqrt{lc}=l,\\qquad Z_0u=\\frac{\\sqrt{l/c}}{\\sqrt{lc}}=\\frac1c",
+              "math": "\\begin{aligned}\\frac{Z_0}{u}&=\\frac{\\sqrt{l/c}}{1/\\sqrt{lc}}\\\\&=\\sqrt{l/c}\\sqrt{lc}\\\\&=\\sqrt{(l/c)(lc)}=\\sqrt{l^2}=l\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "先代入求每单位长度电感，保留 H/m 单位。",
-                "en": "Substitute to obtain inductance per unit length, retaining H/m."
+                "zh": "\\u518D\\u6C42 $Z_0u$\\u3002\\u6839\\u53F7\\u76F8\\u9664\\u540E\\u5148\\u7EA6\\u53BB\\u7535\\u611F\\uFF0C\\u518D\\u5BF9 $1/c^2$ \\u5F00\\u6B63\\u5E73\\u65B9\\u6839\\u3002\\u6700\\u540E\\u53D6\\u5012\\u6570\\uFF0C\\u628A $c$ \\u5355\\u72EC\\u7559\\u5728\\u5DE6\\u4FA7\\u3002",
+                "en": "Next form $Z_0u$. Combine the square-root ratio, cancel inductance and take the positive square root of $1/c^2$. Finally invert to isolate $c$."
+              },
+              "math": "\\begin{aligned}Z_0u&=\\frac{\\sqrt{l/c}}{\\sqrt{lc}}\\\\&=\\sqrt{\\frac{l/c}{lc}}=\\sqrt{\\frac1{c^2}}=\\frac1c\\\\c&=\\frac1{Z_0u}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先代入求每单位长度电感，保留 $\\mathrm{H}/\\mathrm{m}$ 单位。",
+                "en": "Substitute to obtain inductance per unit length, retaining $\\mathrm{H}/\\mathrm{m}$."
               },
               "math": "l=\\frac{Z_0}{u}=\\frac{50}{2.5510204\\times10^8}=1.9600\\times10^{-7}\\,\\mathrm{H/m}",
               "refs": []
             },
             {
               "text": {
-                "zh": "再独立代入求电容，不要把分母中的 Z₀ 漏掉。",
-                "en": "Substitute separately for capacitance, retaining Z₀ in the denominator."
+                "zh": "再独立代入求电容，不要把分母中的 $Z_{0}$ 漏掉。",
+                "en": "Substitute separately for capacitance, retaining $Z_{0}$ in the denominator."
               },
               "math": "c=\\frac1{Z_0u}=\\frac1{50(2.5510204\\times10^8)}=7.8400\\times10^{-11}\\,\\mathrm{F/m}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把 H、F 分别换为 nH、pF；此处沿用未舍入时延，原解的微小差别来自中间舍入。",
-                "en": "Convert H and F to nH and pF. The small difference from the official inductance comes from its intermediate rounding."
+                "zh": "把 $\\mathrm H$、$\\mathrm F$ 分别换为 $\\mathrm{nH}$、$\\mathrm{pF}$；此处沿用未舍入时延，原解的微小差别来自中间舍入。",
+                "en": "Convert $\\mathrm H$ and $\\mathrm F$ to $\\mathrm{nH}$ and $\\mathrm{pF}$. The small difference from the official inductance comes from its intermediate rounding."
               },
               "math": "l=196.0\\,\\mathrm{nH/m},\\qquad c=78.40\\,\\mathrm{pF/m}",
               "refs": []
@@ -269,8 +277,8 @@
           "sourcePage": 3,
           "solutionPage": 3,
           "note": {
-            "zh": "使用未舍入的 392 ns 得 l=196.0 nH/m；官方先取 vf=0.85 得 196.1 nH/m，属于舍入差异。",
-            "en": "Using the unrounded 392 ns gives l=196.0 nH/m. The official 196.1 nH/m uses vf rounded to 0.85."
+            "zh": "使用未舍入的 $392\\,\\mathrm{ns}$ 得 $l=196.0\\,\\mathrm{nH}/\\mathrm{m}$；官方先取 $\\mathrm{vf}=0.85$ 得 $196.1\\,\\mathrm{nH}/\\mathrm{m}$，属于舍入差异。",
+            "en": "Using the unrounded $392\\,\\mathrm{ns}$ gives $l=196.0\\,\\mathrm{nH}/\\mathrm{m}$. The official $196.1\\,\\mathrm{nH}/\\mathrm{m}$ uses $\\mathrm{vf}$ rounded to 0.85."
           },
           "id": "e1-s26-q1-d"
         },
@@ -302,10 +310,10 @@
             },
             {
               "text": {
-                "zh": "两边取自然对数；指数的负号不能省去。",
-                "en": "Take natural logarithms on both sides, keeping the minus sign."
+                "zh": "\\u5BF9\\u7B49\\u5F0F\\u4E24\\u8FB9\\u53D6\\u81EA\\u7136\\u5BF9\\u6570\\u3002\\u56E0\\u4E3A\\u81EA\\u7136\\u5BF9\\u6570\\u4E0E\\u6307\\u6570\\u51FD\\u6570\\u4E92\\u4E3A\\u53CD\\u51FD\\u6570\\uFF0C\\u53F3\\u8FB9\\u4F1A\\u7559\\u4E0B\\u5B8C\\u6574\\u6307\\u6570\\uFF0C\\u5305\\u542B\\u8D1F\\u53F7\\u548C\\u7EBF\\u957F\\u3002",
+                "en": "Take natural logarithms of both sides. The natural logarithm and exponential are inverse functions, so the entire exponent remains, including its minus sign and line length."
               },
-              "math": "\\ln(0.904)=-\\alpha(100\\,\\mathrm m)",
+              "math": "\\begin{aligned}\\ln(0.904)&=\\ln\\!\\left(e^{-\\alpha(100\\,\\mathrm m)}\\right)\\\\\\ln(e^x)&=x\\\\\\ln(0.904)&=-\\alpha(100\\,\\mathrm m)\\end{aligned}",
               "refs": []
             },
             {
@@ -318,8 +326,8 @@
             },
             {
               "text": {
-                "zh": "幅度的指数衰减用 Np/m 表示，不是功率衰减或 dB/m。",
-                "en": "This amplitude attenuation is in Np/m, rather than a power coefficient or dB/m."
+                "zh": "幅度的指数衰减用 $\\mathrm{Np}/\\mathrm{m}$ 表示，不是功率衰减或 $\\mathrm{dB}/\\mathrm{m}$。",
+                "en": "This amplitude attenuation is in $\\mathrm{Np}/\\mathrm{m}$, rather than a power coefficient or $\\mathrm{dB}/\\mathrm{m}$."
               },
               "math": "\\alpha=1.00926\\times10^{-3}\\,\\mathrm{Np/m}",
               "refs": []
@@ -340,8 +348,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先写原表低损耗衰减公式。按该题模型忽略并联漏电导 g。",
-                "en": "Begin with the crib low-loss attenuation equation, neglecting shunt conductance g in this model."
+                "zh": "先写原表低损耗衰减公式。按该题模型忽略并联漏电导 $g$。",
+                "en": "Begin with the crib low-loss attenuation equation, neglecting shunt conductance $g$ in this model."
               },
               "math": "\\alpha=\\frac r{2Z_0}",
               "refs": [
@@ -350,24 +358,24 @@
             },
             {
               "text": {
-                "zh": "两边乘 2Z₀，先解出未知串联电阻密度。",
-                "en": "Multiply both sides by 2Z₀ to isolate series resistance per length."
+                "zh": "两边乘 $2Z_{0}$，先解出未知串联电阻密度。",
+                "en": "Multiply both sides by $2Z_{0}$ to isolate series resistance per length."
               },
               "math": "r=2Z_0\\alpha",
               "refs": []
             },
             {
               "text": {
-                "zh": "代入未舍入的衰减系数和 b) 的 50 Ω 特性阻抗。",
-                "en": "Insert the unrounded attenuation and the 50 Ω characteristic impedance from b)."
+                "zh": "代入未舍入的衰减系数和 b) 的 $50\\,\\Omega$ 特性阻抗。",
+                "en": "Insert the unrounded attenuation and the $50\\,\\Omega$ characteristic impedance from b)."
               },
               "math": "r=2(50\\,\\Omega)(1.0092592\\times10^{-3}\\,\\mathrm{m^{-1}})",
               "refs": []
             },
             {
               "text": {
-                "zh": "化简并检查单位是 Ω/m。",
-                "en": "Simplify and check the units are Ω/m."
+                "zh": "化简并检查单位是 $\\Omega/\\mathrm{m}$。",
+                "en": "Simplify and check the units are $\\Omega/\\mathrm{m}$."
               },
               "math": "r=0.10093\\,\\Omega/\\mathrm m\\approx0.10\\,\\Omega/\\mathrm m",
               "refs": []
@@ -466,8 +474,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先写原表的端点电压反射系数；负载端和源端都以同一个线路 Z₀ 为参考。",
-                "en": "Begin with the crib endpoint voltage reflection coefficient, referencing both ends to the same line Z₀."
+                "zh": "先写原表的端点电压反射系数；负载端和源端都以同一个线路 $Z_{0}$ 为参考。",
+                "en": "Begin with the crib endpoint voltage reflection coefficient, referencing both ends to the same line $Z_{0}$."
               },
               "math": "\\Gamma=\\frac{Z-Z_0}{Z+Z_0}",
               "refs": [
@@ -476,16 +484,16 @@
             },
             {
               "text": {
-                "zh": "负载端代入 150 Ω 和 50 Ω，先算差再算和。",
-                "en": "At the load insert 150 Ω and 50 Ω, evaluating the difference and sum separately."
+                "zh": "负载端代入 $150\\,\\Omega$ 和 $50\\,\\Omega$，先算差再算和。",
+                "en": "At the load insert $150\\,\\Omega$ and $50\\,\\Omega$, evaluating the difference and sum separately."
               },
               "math": "\\Gamma_L=\\frac{150-50}{150+50}=\\frac{100}{200}=+0.50",
               "refs": []
             },
             {
               "text": {
-                "zh": "源端返回波看到 30 Ω 源电阻，因此对应系数为负。",
-                "en": "A wave returning to the source sees its 30 Ω resistance, giving a negative coefficient."
+                "zh": "源端返回波看到 $30\\,\\Omega$ 源电阻，因此对应系数为负。",
+                "en": "A wave returning to the source sees its $30\\,\\Omega$ resistance, giving a negative coefficient."
               },
               "math": "\\Gamma_g=\\frac{30-50}{30+50}=\\frac{-20}{80}=-0.25",
               "refs": []
@@ -525,32 +533,32 @@
             },
             {
               "text": {
-                "zh": "t=0 时把 10 V、30 Ω、50 Ω 代入，得到第一正向阶跃。",
-                "en": "At t=0 substitute 10 V, 30 Ω and 50 Ω to obtain the first forward step."
+                "zh": "$t=0$ 时把 $10\\,\\mathrm{V}$、$30\\,\\Omega$、$50\\,\\Omega$ 代入，得到第一正向阶跃。",
+                "en": "At $t=0$ substitute $10\\,\\mathrm{V}$, $30\\,\\Omega$ and $50\\,\\Omega$ to obtain the first forward step."
               },
               "math": "V_1^+=(10\\,\\mathrm V)\\frac{50}{30+50}=10\\frac58=6.25\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "50 ps 时到达负载，第一反向波乘负载反射系数 +0.5。",
-                "en": "At 50 ps the wave reaches the load; multiply by +0.5 for the first backward wave."
+                "zh": "$50\\,\\mathrm{ps}$ 时到达负载，第一反向波乘负载反射系数 $+0.5$。",
+                "en": "At $50\\,\\mathrm{ps}$ the wave reaches the load; multiply by $+0.5$ for the first backward wave."
               },
               "math": "V_1^-=\\Gamma_LV_1^+=0.5(6.25)=3.125\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "100 ps 时反向波到源，再乘 −0.25，得到第二正向阶跃。",
-                "en": "At 100 ps the return reaches the source; multiply by −0.25 for the second forward step."
+                "zh": "$100\\,\\mathrm{ps}$ 时反向波到源，再乘 $-0.25$，得到第二正向阶跃。",
+                "en": "At $100\\,\\mathrm{ps}$ the return reaches the source; multiply by $-0.25$ for the second forward step."
               },
               "math": "V_2^+=\\Gamma_gV_1^-=-0.25(3.125)=-0.78125\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "150 ps 时第二正向阶跃到负载，再乘 +0.5；两次反射的负号不能丢失。",
-                "en": "At 150 ps the second forward step reaches the load; multiply by +0.5, retaining its negative sign."
+                "zh": "$150\\,\\mathrm{ps}$ 时第二正向阶跃到负载，再乘 $+0.5$；两次反射的负号不能丢失。",
+                "en": "At $150\\,\\mathrm{ps}$ the second forward step reaches the load; multiply by $+0.5$, retaining its negative sign."
               },
               "math": "V_2^-=\\Gamma_LV_2^+=0.5(-0.78125)=-0.390625\\,\\mathrm V",
               "refs": []
@@ -569,8 +577,8 @@
           "solutionPage": 4,
           "figure": "bounce-s26",
           "figureCaption": {
-            "zh": "持续 DC 阶跃的反弹图：各行波按 50 ps 单程时延传播，端点电压需累加历史阶跃。",
-            "en": "Bounce diagram of a sustained DC step with 50 ps transit time; endpoint voltages include previous steps."
+            "zh": "持续 DC 阶跃的反弹图：各行波按 $50\\,\\mathrm{ps}$ 单程时延传播，端点电压需累加历史阶跃。",
+            "en": "Bounce diagram of a sustained DC step with $50\\,\\mathrm{ps}$ transit time; endpoint voltages include previous steps."
           },
           "id": "e1-s26-q2-b",
           "questionFigure": {
@@ -612,40 +620,40 @@
             },
             {
               "text": {
-                "zh": "第一行波传播时间为 50 ps，未到达前，负载处仍没有电压变化。",
-                "en": "The first transit takes 50 ps, so the load voltage remains unchanged before that arrival."
+                "zh": "第一行波传播时间为 $50\\,\\mathrm{ps}$，未到达前，负载处仍没有电压变化。",
+                "en": "The first transit takes $50\\,\\mathrm{ps}$, so the load voltage remains unchanged before that arrival."
               },
               "math": "V_L(t)=0\\quad(0\\le t<50\\,\\mathrm{ps})",
               "refs": []
             },
             {
               "text": {
-                "zh": "50 ps 到达时代入 V₁⁺ 与 ΓL，求第一次阶跃后的平台值。",
-                "en": "At 50 ps substitute V₁⁺ and ΓL to obtain the first plateau."
+                "zh": "$50\\,\\mathrm{ps}$ 到达时代入 $V_{1}^{+}$ 与 $\\Gamma_L$，求第一次阶跃后的平台值。",
+                "en": "At $50\\,\\mathrm{ps}$ substitute $V_{1}^{+}$ and $\\Gamma_L$ to obtain the first plateau."
               },
               "math": "V_L(50^+\\,\\mathrm{ps})=0+(1+0.5)(6.25)=9.375\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "100 ps 的反射发生在源端；还需再传播 50 ps 才影响负载，所以中间平台保持不变。",
-                "en": "The 100 ps reflection occurs at the source and needs another 50 ps to affect the load, so the intermediate plateau stays unchanged."
+                "zh": "$100\\,\\mathrm{ps}$ 的反射发生在源端；还需再传播 $50\\,\\mathrm{ps}$ 才影响负载，所以中间平台保持不变。",
+                "en": "The $100\\,\\mathrm{ps}$ reflection occurs at the source and needs another $50\\,\\mathrm{ps}$ to affect the load, so the intermediate plateau stays unchanged."
               },
               "math": "V_L(t)=9.375\\,\\mathrm V\\quad(50\\le t<150\\,\\mathrm{ps})",
               "refs": []
             },
             {
               "text": {
-                "zh": "150 ps 第二次入射带来负的增量。源持续接通，所以新平台要在旧平台上累加。",
-                "en": "The second arrival at 150 ps gives a negative increment. With the source still on, add it to the existing plateau."
+                "zh": "$150\\,\\mathrm{ps}$ 第二次入射带来负的增量。源持续接通，所以新平台要在旧平台上累加。",
+                "en": "The second arrival at $150\\,\\mathrm{ps}$ gives a negative increment. With the source still on, add it to the existing plateau."
               },
               "math": "\\Delta V_{L,2}=(1+0.5)(-0.78125)=-1.171875\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "将增量加到 9.375 V，按右连续理想阶跃标记端点。",
-                "en": "Add the increment to 9.375 V and mark right-continuous ideal-step values."
+                "zh": "将增量加到 $9.375\\,\\mathrm{V}$，按右连续理想阶跃标记端点。",
+                "en": "Add the increment to $9.375\\,\\mathrm{V}$ and mark right-continuous ideal-step values."
               },
               "math": "V_L(150^+\\,\\mathrm{ps})=9.375-1.171875=8.203125\\,\\mathrm V",
               "refs": []
@@ -656,8 +664,8 @@
           "solutionPage": 5,
           "figure": "load-step-s26",
           "figureCaption": {
-            "zh": "负载电压在 50 ps 上升至 9.375 V，在 150 ps 降至 8.203125 V。",
-            "en": "Load voltage rises to 9.375 V at 50 ps and falls to 8.203125 V at 150 ps."
+            "zh": "负载电压在 $50\\,\\mathrm{ps}$ 上升至 $9.375\\,\\mathrm{V}$，在 $150\\,\\mathrm{ps}$ 降至 $8.203125\\,\\mathrm{V}$。",
+            "en": "Load voltage rises to $9.375\\,\\mathrm{V}$ at $50\\,\\mathrm{ps}$ and falls to $8.203125\\,\\mathrm{V}$ at $150\\,\\mathrm{ps}$."
           },
           "id": "e1-s26-q2-c"
         },
@@ -687,16 +695,24 @@
             },
             {
               "text": {
-                "zh": "代入 10 V、30 Ω 和 150 Ω。",
-                "en": "Substitute 10 V, 30 Ω and 150 Ω."
+                "zh": "代入 $10\\,\\mathrm{V}$、$30\\,\\Omega$ 和 $150\\,\\Omega$。",
+                "en": "Substitute $10\\,\\mathrm{V}$, $30\\,\\Omega$ and $150\\,\\Omega$."
               },
               "math": "V_\\infty=(10\\,\\mathrm V)\\frac{150}{30+150}=\\frac{1500}{180}\\,\\mathrm V",
               "refs": []
             },
             {
               "text": {
-                "zh": "也可对反弹图求和：第一负载增量为 9.375 V，每次往返乘 ΓgΓL=−1/8。",
-                "en": "Alternatively sum the bounce increments: the first is 9.375 V and each round trip multiplies it by ΓgΓL=−1/8."
+                "zh": "\\u82E5\\u7528\\u53CD\\u5F39\\u5E8F\\u5217\\u6C42\\u548C\\uFF0C\\u5148\\u770B\\u6709\\u9650\\u9879\\u7684\\u7B49\\u6BD4\\u7EA7\\u6570\\u3002\\u5C06\\u7EA7\\u6570\\u4E58\\u4EE5\\u516C\\u6BD4\\u540E\\u76F8\\u51CF\\uFF0C\\u4E2D\\u95F4\\u9879\\u9010\\u4E00\\u62B5\\u6D88\\uFF1B\\u53EA\\u6709\\u5728\\u516C\\u6BD4\\u7684\\u6A21\\u5C0F\\u4E8E $1$ \\u65F6\\u624D\\u80FD\\u518D\\u53D6\\u65E0\\u9650\\u9879\\u6781\\u9650\\u3002",
+                "en": "For the bounce-series check, start with a finite geometric sum. Multiply by the common ratio and subtract so the interior terms cancel. Take the infinite limit only when the ratio magnitude is less than $1$."
+              },
+              "math": "\\begin{aligned}S_N&=1+q+q^2+\\cdots+q^N\\\\qS_N&=q+q^2+\\cdots+q^{N+1}\\\\(1-q)S_N&=1-q^{N+1}\\\\S_N&=\\frac{1-q^{N+1}}{1-q}\\\\|q|<1&\\quad\\Longrightarrow\\quad\\lim_{N\\to\\infty}S_N=\\frac1{1-q}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "也可对反弹图求和：第一负载增量为 $9.375\\,\\mathrm{V}$，每次往返乘 $\\Gamma_g\\Gamma_L=-1/8$。",
+                "en": "Alternatively sum the bounce increments: the first is $9.375\\,\\mathrm{V}$ and each round trip multiplies it by $\\Gamma_g\\Gamma_L=-1/8$."
               },
               "math": "V_\\infty=9.375\\sum_{n=0}^\\infty(-1/8)^n=\\frac{9.375}{1-(-1/8)}",
               "refs": [
@@ -803,8 +819,8 @@
           "steps": [
             {
               "text": {
-                "zh": "此问两端都是 100 Ω，优先使用原表的半波阻抗重复性质。",
-                "en": "Both terminations are 100 Ω, so start with the crib half-wave impedance-repeat property."
+                "zh": "此问两端都是 $100\\,\\Omega$，优先使用原表的半波阻抗重复性质。",
+                "en": "Both terminations are $100\\,\\Omega$, so start with the crib half-wave impedance-repeat property."
               },
               "math": "L=\\frac{\\lambda}{2}\\quad\\Longrightarrow\\quad Z_{\\mathrm{in}}=Z_L",
               "refs": [
@@ -813,8 +829,8 @@
             },
             {
               "text": {
-                "zh": "无论选 25、50 还是 75 Ω 电缆，半波线都将 100 Ω 负载重复为 100 Ω 输入，等于源电阻。",
-                "en": "A half-wave line of 25, 50 or 75 Ω repeats the 100 Ω load as a 100 Ω input, matching the source."
+                "zh": "无论选 25、50 还是 $75\\,\\Omega$ 电缆，半波线都将 $100\\,\\Omega$ 负载重复为 $100\\,\\Omega$ 输入，等于源电阻。",
+                "en": "A half-wave line of 25, 50 or $75\\,\\Omega$ repeats the $100\\,\\Omega$ load as a $100\\,\\Omega$ input, matching the source."
               },
               "math": "Z_{\\mathrm{in}}=100\\,\\Omega=R_g,\\qquad Z_0\\in\\{25,50,75\\}\\,\\Omega",
               "refs": []
@@ -889,16 +905,16 @@
             },
             {
               "text": {
-                "zh": "先解出待选电缆的特性阻抗，代入 50 Ω 与 12.5 Ω。",
-                "en": "Solve for the cable characteristic impedance and substitute 50 Ω and 12.5 Ω."
+                "zh": "先解出待选电缆的特性阻抗，代入 $50\\,\\Omega$ 与 $12.5\\,\\Omega$。",
+                "en": "Solve for the cable characteristic impedance and substitute $50\\,\\Omega$ and $12.5\\,\\Omega$."
               },
               "math": "Z_0=\\sqrt{R_gR_L}=\\sqrt{(50\\,\\Omega)(12.5\\,\\Omega)}=\\sqrt{625}\\,\\Omega=25\\,\\Omega",
               "refs": []
             },
             {
               "text": {
-                "zh": "三种给定电缆中，25 Ω 对应类型 #1。再由统一的速度因子求波长。",
-                "en": "Among the available cables, 25 Ω is type #1. Next calculate wavelength using the common velocity factor."
+                "zh": "三种给定电缆中，$25\\,\\Omega$ 对应类型 #1。再由统一的速度因子求波长。",
+                "en": "Among the available cables, $25\\,\\Omega$ is type #1. Next calculate wavelength using the common velocity factor."
               },
               "math": "\\lambda=\\frac{0.65(3\\times10^8)}{200\\times10^6}=0.975\\,\\mathrm m",
               "refs": [
@@ -907,8 +923,8 @@
             },
             {
               "text": {
-                "zh": "取四分之一波长，并核对反演后确实为 50 Ω。",
-                "en": "Choose a quarter wavelength and verify the transformed resistance is 50 Ω."
+                "zh": "取四分之一波长，并核对反演后确实为 $50\\,\\Omega$。",
+                "en": "Choose a quarter wavelength and verify the transformed resistance is $50\\,\\Omega$."
               },
               "math": "L=\\frac{0.975}{4}=0.24375\\,\\mathrm m,\\qquad \\frac{25^2}{12.5}=50\\,\\Omega",
               "refs": []
@@ -964,8 +980,8 @@
             },
             {
               "text": {
-                "zh": "由频率求角频率，并把 1 μF 写为 10⁻⁶ F。",
-                "en": "Calculate angular frequency and express 1 μF as 10⁻⁶ F."
+                "zh": "由频率求角频率，并把 $1\\,\\mu\\mathrm F$ 写为 $10^{-6}\\,\\mathrm{F}$。",
+                "en": "Calculate angular frequency and express $1\\,\\mu\\mathrm F$ as $10^{-6}\\,\\mathrm{F}$."
               },
               "math": "\\omega=2\\pi(200\\times10^6)\\,\\mathrm{rad/s},\\qquad C=10^{-6}\\,\\mathrm F",
               "refs": [
@@ -974,8 +990,8 @@
             },
             {
               "text": {
-                "zh": "利用 1/j=−j 求电容阻抗，并与 50 Ω 相加。",
-                "en": "Use 1/j=−j for the capacitor impedance and add the 50 Ω resistor."
+                "zh": "利用 $1/j=-j$ 求电容阻抗，并与 $50\\,\\Omega$ 相加。",
+                "en": "Use $1/j=-j$ for the capacitor impedance and add the $50\\,\\Omega$ resistor."
               },
               "math": "Z_C=-\\frac j{2\\pi(200\\times10^6)(10^{-6})}=-j7.95775\\times10^{-4}\\,\\Omega,\\qquad Z_L=50-j7.95775\\times10^{-4}\\,\\Omega",
               "refs": []
@@ -990,8 +1006,8 @@
             },
             {
               "text": {
-                "zh": "Xc² 远小于 50²，因此实部约为 50 Ω，虚部为小的正电抗。",
-                "en": "Since Xc² is negligible relative to 50², the real part is approximately 50 Ω with a small positive reactance."
+                "zh": "$X_c^{2}$ 远小于 $50^{2}$，因此实部约为 $50\\,\\Omega$，虚部为小的正电抗。",
+                "en": "Since $X_c^{2}$ is negligible relative to $50^{2}$, the real part is approximately $50\\,\\Omega$ with a small positive reactance."
               },
               "math": "Z_{\\mathrm{in}}\\approx(50+j7.95775\\times10^{-4})\\,\\Omega",
               "refs": []
@@ -1039,8 +1055,8 @@
             },
             {
               "text": {
-                "zh": "令支节输入阻抗为零，即 cot(βℓ)=0，选择最短正电长度 π/2。",
-                "en": "Set the stub input to zero, requiring cot(βℓ)=0; choose the shortest positive electrical length π/2."
+                "zh": "令支节输入阻抗为零，即 $\\cot(\\beta\\ell)=0$，选择最短正电长度 $\\pi/2$。",
+                "en": "Set the stub input to zero, requiring $\\cot(\\beta\\ell)=0$; choose the shortest positive electrical length $\\pi/2$."
               },
               "math": "\\beta\\ell=\\frac\\pi2,\\qquad\\ell=\\frac{\\pi/2}{2\\pi/\\lambda}=\\frac\\lambda4",
               "refs": [
@@ -1049,8 +1065,8 @@
             },
             {
               "text": {
-                "zh": "短路支节并联任何有限负载都会把节点 A 的总阻抗压为零。",
-                "en": "A shorted shunt branch makes the total impedance at A zero for any finite parallel load."
+                "zh": "短路支节并联任何有限负载都会把节点 $\\mathrm{A}$ 的总阻抗压为零。",
+                "en": "A shorted shunt branch makes the total impedance at $A$ zero for any finite parallel load."
               },
               "math": "Z_A=\\frac{Z_sZ_L}{Z_s+Z_L}=\\frac{0\\cdot Z_L}{0+Z_L}=0",
               "refs": []
@@ -1067,8 +1083,8 @@
             },
             {
               "text": {
-                "zh": "由共同速度因子和频率求得 λ=0.975 m，再取四分之一波长。",
-                "en": "The common velocity factor and frequency give λ=0.975 m; take one quarter of it."
+                "zh": "由共同速度因子和频率求得 $\\lambda=0.975\\,\\mathrm{m}$，再取四分之一波长。",
+                "en": "The common velocity factor and frequency give $\\lambda=0.975\\,\\mathrm{m}$; take one quarter of it."
               },
               "math": "\\ell=\\frac\\lambda4=0.24375\\,\\mathrm m,\\qquad|\\Gamma_A|=1",
               "refs": []
@@ -1191,8 +1207,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先写归一化定义。这里 z 为无量纲负载阻抗，参考阻抗取该题馈线的 Z₀。",
-                "en": "Begin with normalization. The load impedance z is dimensionless and referenced to the feedline Z₀."
+                "zh": "先写归一化定义。这里 $z$ 为无量纲负载阻抗，参考阻抗取该题馈线的 $Z_{0}$。",
+                "en": "Begin with normalization. The load impedance $z$ is dimensionless and referenced to the feedline $Z_{0}$."
               },
               "math": "z_L=\\frac{Z_L}{Z_0}",
               "refs": [
@@ -1201,16 +1217,16 @@
             },
             {
               "text": {
-                "zh": "把复负载的实部和虚部分别除以 Z₀，保留电抗的正号。",
-                "en": "Divide the real and imaginary parts by Z₀ separately, preserving the positive reactance."
+                "zh": "把复负载的实部和虚部分别除以 $Z_{0}$，保留电抗的正号。",
+                "en": "Divide the real and imaginary parts by $Z_{0}$ separately, preserving the positive reactance."
               },
               "math": "z_L=\\frac{(25+j90)\\,\\Omega}{50\\,\\Omega}=0.5+j1.8",
               "refs": []
             },
             {
               "text": {
-                "zh": "在 Smith 阻抗图中找 r=Re(zL) 圆与 x=Im(zL)>0 弧的交点；也可用反射系数验证坐标。",
-                "en": "On the impedance chart intersect the r=Re(zL) circle with the positive-x reactance arc; verify the plotted coordinate with the reflection coefficient."
+                "zh": "在 Smith 阻抗图中找 $r=\\operatorname{Re}(z_L)$ 圆与 $x=\\operatorname{Im}(z_L)>0$ 弧的交点；也可用反射系数验证坐标。",
+                "en": "On the impedance chart intersect the $r=\\operatorname{Re}(z_L)$ circle with the positive-$x$ reactance arc; verify the plotted coordinate with the reflection coefficient."
               },
               "math": "\\Gamma_z=\\frac{z_L-1}{z_L+1}",
               "refs": [
@@ -1219,8 +1235,16 @@
             },
             {
               "text": {
-                "zh": "将已归一化的复数代入，得到该点的 Γ 平面坐标；它位于上半平面。",
-                "en": "Substitute the normalized complex impedance to obtain its Γ-plane coordinate, in the upper half-plane."
+                "zh": "\\u5148\\u628A\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u540C\\u4E58\\u5206\\u6BCD\\u7684\\u5171\\u8F6D\\u6570\\u3002\\u9010\\u9879\\u76F8\\u4E58\\u65F6\\u4FDD\\u7559 $j^2=-1$\\uFF0C\\u5426\\u5219\\u5B9E\\u90E8\\u7684\\u7B26\\u53F7\\u5BB9\\u6613\\u7B97\\u9519\\u3002",
+                "en": "Multiply numerator and denominator by the denominator's complex conjugate. Keep $j^2=-1$ explicit when expanding, so the real-part sign stays correct."
+              },
+              "math": "\\begin{aligned}\\Gamma_z&=\\frac{(-0.5+j1.8)(1.5-j1.8)}{(1.5+j1.8)(1.5-j1.8)}\\\\(-0.5+j1.8)(1.5-j1.8)&=-0.75+j0.9+j2.7-j^2(3.24)\\\\&=2.49+j3.60\\\\(1.5+j1.8)(1.5-j1.8)&=1.5^2+1.8^2=5.49\\\\\\Gamma_z&=\\frac{2.49}{5.49}+j\\frac{3.60}{5.49}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将已归一化的复数代入，得到该点的 $\\Gamma$ 平面坐标；它位于上半平面。",
+                "en": "Substitute the normalized complex impedance to obtain its $\\Gamma$-plane coordinate, in the upper half-plane."
               },
               "math": "\\Gamma_z=\\frac{-0.5+j1.8}{1.5+j1.8}\\approx0.453552+j0.655738",
               "refs": []
@@ -1241,10 +1265,18 @@
           "steps": [
             {
               "text": {
-                "zh": "先写归一化导纳定义，再代入 Y=1/Z，说明为什么结果是 1/zL。",
-                "en": "Begin with normalized admittance and substitute Y=1/Z to show why it equals 1/zL."
+                "zh": "先写归一化导纳定义，再代入 $Y=1/Z$，说明为什么结果是 $1/z_L$。",
+                "en": "Begin with normalized admittance and substitute $Y=1/Z$ to show why it equals $1/z_L$."
               },
               "math": "y_L=\\frac{Y_L}{Y_0}=\\frac{1/Z_L}{1/Z_0}=\\frac{Z_0}{Z_L}=\\frac1{z_L}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "\\u590D\\u6570 $u+jv$ \\u7684\\u5171\\u8F6D\\u6570\\u662F $u-jv$\\u3002\\u4E24\\u8005\\u76F8\\u4E58\\u65F6\\uFF0C\\u4E24\\u4E2A\\u4EA4\\u53C9\\u9879\\u4E00\\u6B63\\u4E00\\u8D1F\\u800C\\u76F8\\u6D88\\uFF0C\\u6700\\u540E\\u7684 $-j^2v^2$ \\u53D8\\u6210\\u6B63\\u7684 $v^2$\\u3002",
+                "en": "The conjugate of $u+jv$ is $u-jv$. Their cross terms cancel, and the final term $-j^2v^2$ becomes positive $v^2$."
+              },
+              "math": "\\begin{aligned}(u+jv)(u-jv)&=u^2-juv+juv-j^2v^2\\\\&=u^2+v^2\\\\\\frac1{u+jv}&=\\frac{u-jv}{u^2+v^2}\\end{aligned}",
               "refs": []
             },
             {
@@ -1257,8 +1289,8 @@
             },
             {
               "text": {
-                "zh": "在同一阻抗网格上读取导纳时，表示坐标应关于图心反转，即旋转 180°。这不是让实际负载的反射改变符号。",
-                "en": "Reading admittance on the same impedance grid requires reversing the displayed point through the center, a 180° rotation; the actual load reflection does not change sign."
+                "zh": "在同一阻抗网格上读取导纳时，表示坐标应关于图心反转，即旋转 $180^\\circ$。这不是让实际负载的反射改变符号。",
+                "en": "Reading admittance on the same impedance grid requires reversing the displayed point through the center, a $180^\\circ$ rotation; the actual load reflection does not change sign."
               },
               "math": "\\Gamma_y=\\frac{y_L-1}{y_L+1}=\\frac{1-z_L}{1+z_L}=-\\Gamma_z",
               "refs": [
@@ -1289,69 +1321,116 @@
           "steps": [
             {
               "text": {
-                "zh": "先从原表输入阻抗式取倒数并归一化，得到向源移动距离 d 后的输入导纳。",
-                "en": "Begin by taking the reciprocal of the crib input-impedance equation and normalizing to obtain admittance a distance d toward the source."
+                "zh": "\\u5148\\u5199\\u516C\\u5F0F\\u8868\\u4E2D\\u7684\\u65E0\\u635F\\u7EBF\\u8F93\\u5165\\u963B\\u6297\\uFF0C\\u518D\\u9664\\u4EE5\\u53C2\\u8003\\u963B\\u6297\\u5F97\\u5230\\u5F52\\u4E00\\u5316\\u8F93\\u5165\\u963B\\u6297\\u3002\\u4E3B\\u7EBF\\u548C\\u8D1F\\u8F7D\\u4F7F\\u7528\\u540C\\u4E00\\u4E2A\\u53C2\\u8003\\u963B\\u6297\\u3002",
+                "en": "Start from the crib's lossless input impedance, then divide by the reference impedance. The line and load use the same reference impedance."
               },
-              "math": "y_d=\\frac{y_L+jt}{1+jy_Lt},\\qquad t=\\tan(\\beta d),\\quad\\beta=\\frac{2\\pi}{\\lambda}",
+              "math": "\\begin{aligned}Z_{\\mathrm{in},d}&=Z_0\\frac{Z_L+jZ_0\\tan(\\beta d)}{Z_0+jZ_L\\tan(\\beta d)}\\\\z_d&=\\frac{Z_{\\mathrm{in},d}}{Z_0}=\\frac{z_L+jt}{1+jz_Lt}\\\\t&=\\tan(\\beta d),\\qquad\\beta=\\frac{2\\pi}{\\lambda}\\end{aligned}",
               "refs": [
-                "zin",
-                "wave"
+                "zin"
               ]
             },
             {
               "text": {
-                "zh": "把负载导纳分成 g+jb，将分母写成实部 1−bt 与虚部 gt。",
-                "en": "Write load admittance as g+jb and express the denominator with real part 1−bt and imaginary part gt."
+                "zh": "\\u5BFC\\u7EB3\\u662F\\u963B\\u6297\\u7684\\u5012\\u6570\\u3002\\u5206\\u5B50\\u3001\\u5206\\u6BCD\\u540C\\u65F6\\u9664\\u4EE5 $z_L$\\uFF0C\\u5C31\\u80FD\\u7528\\u5DF2\\u7ECF\\u6C42\\u51FA\\u7684\\u8D1F\\u8F7D\\u5BFC\\u7EB3 $y_L=1/z_L$ \\u8868\\u793A\\u3002",
+                "en": "Admittance is the reciprocal of impedance. Divide numerator and denominator by $z_L$ to express the result using the previously calculated load admittance $y_L=1/z_L$."
+              },
+              "math": "\\begin{aligned}y_d&=\\frac1{z_d}=\\frac{1+jz_Lt}{z_L+jt}\\\\&=\\frac{1/z_L+jt}{1+jt/z_L}\\\\&=\\frac{y_L+jt}{1+jy_Lt}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把负载导纳分成 $g+jb$，将分母写成实部 $1-bt$ 与虚部 $gt$。",
+                "en": "Write load admittance as $g+jb$ and express the denominator with real part $1-bt$ and imaginary part $gt$."
               },
               "math": "g=\\frac{50}{349},\\quad b=-\\frac{180}{349},\\quad |y_L|^2=\\frac{100}{349}",
               "refs": []
             },
             {
               "text": {
-                "zh": "乘分母共轭数，单独取实部。匹配实部要求实际输入电导等于 Y₀，即归一化实部等于 1。",
-                "en": "Multiply by the denominator conjugate and take the real part. Matching conductance to Y₀ requires normalized real part one."
+                "zh": "\\u628A $y_L=g+jb$ \\u4EE3\\u5165\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u3002\\u5206\\u6BCD\\u91CC\\u7684 $j\\cdot j=-1$\\uFF0C\\u56E0\\u6B64\\u5B9E\\u90E8\\u662F $1-bt$\\uFF0C\\u865A\\u90E8\\u662F $gt$\\u3002",
+                "en": "Substitute $y_L=g+jb$ into numerator and denominator. Since $j\\cdot j=-1$, the denominator has real part $1-bt$ and imaginary part $gt$."
+              },
+              "math": "\\begin{aligned}y_L+jt&=g+j(b+t)\\\\1+jy_Lt&=1+j(g+jb)t\\\\&=(1-bt)+jgt\\\\y_d&=\\frac{g+j(b+t)}{(1-bt)+jgt}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\u540C\\u4E58\\u5206\\u6BCD\\u7684\\u5171\\u8F6D\\u6570\\u3002\\u8FD9\\u6837\\u5206\\u6BCD\\u53D8\\u6210\\u5B9E\\u6570\\uFF0C\\u624D\\u53EF\\u4EE5\\u5206\\u522B\\u8BFB\\u53D6\\u5B9E\\u90E8\\u548C\\u865A\\u90E8\\u3002",
+                "en": "Multiply numerator and denominator by the denominator's conjugate. The denominator becomes real, allowing the real and imaginary parts to be read separately."
+              },
+              "math": "y_d=\\frac{[g+j(b+t)][(1-bt)-jgt]}{(1-bt)^2+(gt)^2}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "\\u5C55\\u5F00\\u5206\\u5B50\\u7684\\u5B9E\\u90E8\\u548C\\u865A\\u90E8\\u3002\\u5B9E\\u90E8\\u4E2D\\u7684\\u4E24\\u9879 $-gbt$ \\u4E0E $gbt$ \\u6070\\u597D\\u76F8\\u6D88\\uFF0C\\u7559\\u4E0B $g(1+t^2)$\\u3002",
+                "en": "Expand the numerator into real and imaginary terms. The real-part terms $-gbt$ and $gbt$ cancel, leaving $g(1+t^2)$."
+              },
+              "math": "\\begin{aligned}N_{\\mathrm{real}}&=g(1-bt)+(b+t)gt\\\\&=g-gbt+gbt+gt^2\\\\&=g(1+t^2)\\\\N_{\\mathrm{imag}}&=(b+t)(1-bt)-g^2t\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "乘分母共轭数，单独取实部。匹配实部要求实际输入电导等于 $Y_{0}$，即归一化实部等于 1。",
+                "en": "Multiply by the denominator conjugate and take the real part. Matching conductance to $Y_{0}$ requires normalized real part one."
               },
               "math": "\\Re(y_d)=\\frac{g(1+t^2)}{(1-bt)^2+(gt)^2}=1",
               "refs": []
             },
             {
               "text": {
-                "zh": "展开分母并把右边移到左边，得到可逐项代入的二次方程。",
-                "en": "Expand the denominator and collect terms to obtain the quadratic for substitution."
+                "zh": "\\u5148\\u5C55\\u5F00\\u5206\\u6BCD\\uFF0C\\u518D\\u5C06\\u5339\\u914D\\u6761\\u4EF6\\u4E24\\u8FB9\\u540C\\u4E58\\u5206\\u6BCD\\u3002\\u6700\\u540E\\u628A\\u5DE6\\u8FB9\\u7684 $g+gt^2$ \\u79FB\\u5230\\u53F3\\u8FB9\\uFF0C\\u5E76\\u6309 $t$ \\u7684\\u5E42\\u6B21\\u6574\\u7406\\u3002",
+                "en": "Expand the denominator and multiply the matching condition by it. Move $g+gt^2$ to the right and group by powers of $t$."
               },
-              "math": "(g^2+b^2-g)t^2-2bt+(1-g)=0",
+              "math": "\\begin{aligned}(1-bt)^2+(gt)^2&=1-2bt+(b^2+g^2)t^2\\\\g+gt^2&=1-2bt+(b^2+g^2)t^2\\\\0&=(g^2+b^2-g)t^2-2bt+(1-g)\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把本题的 g、b 代入并求根；两个根对应 Smith 图与 g=1 圆的两个交点。",
-                "en": "Substitute this load’s g and b and solve. The two roots correspond to the intersections with the g=1 circle on the Smith chart."
+                "zh": "\\u9010\\u9879\\u4EE3\\u5165\\u672C\\u9898\\u7684\\u7535\\u5BFC\\u548C\\u7535\\u7EB3\\u3002\\u4E09\\u4E2A\\u7CFB\\u6570\\u6709\\u5171\\u540C\\u5206\\u6BCD $349$\\uFF0C\\u4E24\\u8FB9\\u4E58 $349$ \\u540E\\u5F97\\u5230\\u6574\\u6570\\u7CFB\\u6570\\u65B9\\u7A0B\\u3002",
+                "en": "Substitute this problem's conductance and susceptance term by term. All three coefficients share denominator $349$; multiplying both sides by $349$ gives integer coefficients."
               },
-              "math": "50t^2+360t+299=0\\quad\\Longrightarrow\\quad t=\\frac{-360\\pm\\sqrt{69800}}{100}",
+              "math": "\\begin{aligned}g^2+b^2-g&=\\frac{100}{349}-\\frac{50}{349}=\\frac{50}{349}\\\\-2b&=\\frac{360}{349},\\qquad1-g=\\frac{299}{349}\\\\\\frac{50}{349}t^2+\\frac{360}{349}t+\\frac{299}{349}&=0\\\\50t^2+360t+299&=0\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "列出两个 t 值，再由 t=tan(2πd/λ) 选 0≤d<λ/2 的分支。",
-                "en": "List both t values, then choose branches satisfying 0≤d<λ/2 using t=tan(2πd/λ)."
+                "zh": "\\u8FD9\\u6B21\\u4E8C\\u6B21\\u5F0F\\u4E0D\\u6613\\u56E0\\u5F0F\\u5206\\u89E3\\uFF0C\\u4F7F\\u7528\\u6C42\\u6839\\u516C\\u5F0F\\u3002\\u5148\\u7B97\\u5224\\u522B\\u5F0F\\uFF0C\\u518D\\u4EE3\\u5165\\u5206\\u5B50\\u4E2D\\u7684\\u6B63\\u8D1F\\u4E24\\u4E2A\\u5206\\u652F\\uFF1B\\u8D1F\\u7684\\u6839\\u4E0D\\u80FD\\u76F4\\u63A5\\u4E22\\u5F03\\uFF0C\\u56E0\\u4E3A\\u5B83\\u4EEC\\u5BF9\\u5E94\\u6B63\\u7684\\u4F20\\u64AD\\u8DDD\\u79BB\\u5206\\u652F\\u3002",
+                "en": "This quadratic is not easily factored, so use the quadratic formula. Compute the discriminant, then retain both signs in the numerator. Negative roots are valid because they correspond to positive-distance tangent branches."
+              },
+              "math": "\\begin{aligned}\\Delta&=360^2-4(50)(299)\\\\&=129600-59800=69800\\\\t&=\\frac{-360\\pm\\sqrt{69800}}{2(50)}\\\\t_1&=\\frac{-360-\\sqrt{69800}}{100}\\\\t_2&=\\frac{-360+\\sqrt{69800}}{100}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "列出两个 $t$ 值，再由 $t=\\tan(2\\pi d/\\lambda)$ 选 $0\\le d<\\lambda/2$ 的分支。",
+                "en": "List both $t$ values, then choose branches satisfying $0\\le d<\\lambda/2$ using $t=\\tan(2\\pi d/\\lambda)$."
               },
               "math": "t_1=-6.241969,\\quad t_2=-0.958031",
               "refs": []
             },
             {
               "text": {
-                "zh": "反正切的负值要加 π 后再除以 2π；距离按 λ/2 周期重复。图上对应从负载向源顺时针旋转。",
-                "en": "For a negative arctangent add π before dividing by 2π. Distances repeat modulo λ/2; on the chart rotate clockwise toward the source."
+                "zh": "\\u4E24\\u4E2A\\u6B63\\u5207\\u503C\\u90FD\\u4E3A\\u8D1F\\uFF0C\\u6240\\u4EE5\\u53CD\\u6B63\\u5207\\u7ED9\\u51FA\\u7684\\u4E3B\\u503C\\u4E5F\\u90FD\\u4E3A\\u8D1F\\u3002\\u4F20\\u64AD\\u8DDD\\u79BB\\u8981\\u6C42\\u975E\\u8D1F\\uFF0C\\u56E0\\u6B64\\u5404\\u52A0\\u4E00\\u4E2A\\u5468\\u671F $\\pi$\\uFF0C\\u518D\\u9664\\u4EE5 $2\\pi$\\uFF0C\\u800C\\u4E0D\\u662F\\u7ED9\\u6700\\u7EC8\\u8DDD\\u79BB\\u968F\\u610F\\u52A0\\u8D1F\\u53F7\\u3002",
+                "en": "Both tangent values are negative, so both principal arctangents are negative. For nonnegative distances, add the tangent period $\\pi$ to each angle before dividing by $2\\pi$."
               },
-              "math": "\\frac{d_1}{\\lambda}=\\frac{\\pi+\\arctan(-6.241969)}{2\\pi}=0.275283,\\quad\\frac{d_2}{\\lambda}=0.378411",
+              "math": "\\begin{aligned}2\\pi d_1/\\lambda&=\\arctan(-6.241969)+\\pi\\\\&\\approx-1.411940+\\pi\\\\d_1/\\lambda&\\approx0.275283\\\\2\\pi d_2/\\lambda&=\\arctan(-0.958031)+\\pi\\\\&\\approx-0.763967+\\pi\\\\d_2/\\lambda&\\approx0.378411\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把两个距离对应的 t 代回输入导纳式，验证实部确为 1，并保留待抵消的虚部。",
-                "en": "Substitute each t back into the admittance formula to verify real part one and retain the susceptance to be cancelled."
+                "zh": "\\u628A\\u7B2C\\u4E00\\u6839\\u4EE3\\u56DE\\u5B8C\\u6574\\u7684\\u590D\\u6570\\u5206\\u5F0F\\u3002\\u5148\\u8BA1\\u7B97\\u5206\\u5B50\\u548C\\u5206\\u6BCD\\uFF0C\\u518D\\u4E58\\u5206\\u6BCD\\u5171\\u8F6D\\u6570\\uFF1B\\u4EE5\\u4E0B\\u5C0F\\u6570\\u53EA\\u7528\\u4E8E\\u5C55\\u793A\\u8FD0\\u7B97\\uFF0C\\u6700\\u7EC8\\u7ED3\\u679C\\u4F7F\\u7528\\u672A\\u820D\\u5165\\u503C\\u6838\\u5BF9\\u3002",
+                "en": "Insert the first root into the full complex fraction. Evaluate numerator and denominator before multiplying by the denominator conjugate. These decimals illustrate the calculation; verify the result using unrounded values."
               },
-              "math": "y_{d,1}=\\frac{y_L+j(-6.241969)}{1+jy_L(-6.241969)}\\approx1+j2.641969,\\quad y_{d,2}\\approx1-j2.641969",
+              "math": "\\begin{aligned}y_{d,1}&\\approx\\frac{0.143266-j6.757728}{-2.219354-j0.894265}\\\\&\\approx\\frac{(0.143266-j6.757728)(-2.219354+j0.894265)}{(-2.219354)^2+0.894265^2}\\\\&\\approx\\frac{5.725240+j15.125907}{5.725240}\\\\&\\approx1+j2.641969\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "\\u7B2C\\u4E8C\\u6839\\u4E5F\\u5FC5\\u987B\\u4EE3\\u56DE\\u539F\\u5F0F\\uFF0C\\u4E0D\\u80FD\\u53EA\\u628A\\u7B2C\\u4E00\\u7EC4\\u7B54\\u6848\\u7684\\u7B26\\u53F7\\u51ED\\u7A7A\\u6539\\u53D8\\u3002\\u540C\\u6837\\u505A\\u590D\\u6570\\u9664\\u6CD5\\u540E\\uFF0C\\u5F97\\u5230\\u5B9E\\u90E8\\u4E3A $1$\\u3001\\u865A\\u90E8\\u76F8\\u53CD\\u7684\\u53E6\\u4E00\\u4EA4\\u70B9\\u3002",
+                "en": "Substitute the second root independently rather than changing the first answer's sign without calculation. Complex division gives another intersection with real part $1$ and opposite imaginary part."
+              },
+              "math": "\\begin{aligned}y_{d,2}&\\approx\\frac{0.143266-j1.473790}{0.505887-j0.137254}\\\\&\\approx\\frac{(0.143266-j1.473790)(0.505887+j0.137254)}{0.505887^2+0.137254^2}\\\\&\\approx\\frac{0.274760-j0.725907}{0.274760}\\\\&\\approx1-j2.641969\\end{aligned}",
               "refs": []
             },
             {
@@ -1367,8 +1446,8 @@
           "sourcePage": 8,
           "solutionPage": 8,
           "note": {
-            "zh": "核对：官方图给出 d≈0.271λ、ℓ≈0.305λ、b≈2.82，另一分支写 d≈0.318λ。直接代入给定 zL=0.5+j1.8 后，精确结果为本页数值；另一分支 d=0.378411λ、ℓ=0.192411λ。已用输入导纳方程独立校验。",
-            "en": "Check: the official chart gives d≈0.271λ, ℓ≈0.305λ, b≈2.82 and an alternative d≈0.318λ. Direct substitution of zL=0.5+j1.8 gives the values here; the other exact branch is d=0.378411λ, ℓ=0.192411λ. Both are independently checked with the input-admittance equation."
+            "zh": "核对：官方图给出 $d\\approx0.271\\lambda$、$\\ell\\approx0.305\\lambda$、$b\\approx2.82$，另一分支写 $d\\approx0.318\\lambda$。直接代入给定 $z_L=0.5+j1.8$ 后，精确结果为本页数值；另一分支 $d=0.378411\\lambda$、$\\ell=0.192411\\lambda$。已用输入导纳方程独立校验。",
+            "en": "Check: the official chart gives $d\\approx0.271\\lambda$, $\\ell\\approx0.305\\lambda$, $b\\approx2.82$ and an alternative $d\\approx0.318\\lambda$. Direct substitution of $z_L=0.5+j1.8$ gives the values here; the other exact branch is $d=0.378411\\lambda$, $\\ell=0.192411\\lambda$. Both are independently checked with the input-admittance equation."
           },
           "figureCaption": {
             "zh": "按给定负载精确计算的导纳 Smith 图；两组匹配结果在推导中分别核验。",
@@ -1387,8 +1466,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先写原表开路传输线阻抗，再取倒数并用 Y₀=1/Z₀ 归一化。",
-                "en": "Begin with the crib open-line impedance, then invert and normalize with Y₀=1/Z₀."
+                "zh": "先写原表开路传输线阻抗，再取倒数并用 $Y_{0}=1/Z_{0}$ 归一化。",
+                "en": "Begin with the crib open-line impedance, then invert and normalize with $Y_{0}=1/Z_{0}$."
               },
               "math": "Z_s=-jZ_0\\cot(\\beta\\ell),\\qquad y_s=\\frac{1/Z_s}{1/Z_0}=j\\tan(\\beta\\ell)",
               "refs": [
@@ -1397,8 +1476,16 @@
             },
             {
               "text": {
-                "zh": "支节并联时导纳相加，目标是总归一化导纳为 1。若主线为 1+jB，支节必须为 −jB。",
-                "en": "Parallel admittances add and the target total is one. If the main line is 1+jB, the stub must supply −jB."
+                "zh": "\\u628A\\u5F00\\u8DEF\\u652F\\u8282\\u963B\\u6297\\u53D6\\u5012\\u6570\\u65F6\\uFF0C\\u5148\\u7EA6\\u53BB\\u53C2\\u8003\\u963B\\u6297\\u3002\\u518D\\u5229\\u7528 $1/(-j)=j$ \\u548C $1/\\cot\\theta=\\tan\\theta$\\uFF0C\\u9010\\u6B65\\u5F97\\u5230\\u6240\\u7528\\u7684\\u5BFC\\u7EB3\\u5F0F\\u3002",
+                "en": "When taking the open-stub impedance reciprocal, cancel the reference impedance first. Then use $1/(-j)=j$ and $1/\\cot\\theta=\\tan\\theta$ to obtain the admittance formula step by step."
+              },
+              "math": "\\begin{aligned}y_s&=\\frac{Z_0}{-jZ_0\\cot(\\beta\\ell)}\\\\&=\\frac1{-j}\\frac1{\\cot(\\beta\\ell)}\\\\\\frac1{-j}&=\\frac j{(-j)j}=j\\\\y_s&=j\\tan(\\beta\\ell)\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "支节并联时导纳相加，目标是总归一化导纳为 1。若主线为 $1+jB$，支节必须为 $-jB$。",
+                "en": "Parallel admittances add and the target total is one. If the main line is $1+jB$, the stub must supply $-jB$."
               },
               "math": "y_{\\mathrm{in}}=y_d+y_s=1,\\qquad y_s=1-(1+jB)=-jB",
               "refs": []

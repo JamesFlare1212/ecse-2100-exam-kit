@@ -30,12 +30,23 @@ const object = (required: Record<string, Rule>, optional: Record<string, Rule> =
     else if (!Object.hasOwn(required, key)) fail(`${path}.${key}`, 'unknown field');
   }
 };
-const localized = object({ zh: text, en: text });
 const tex: Rule = (value, path) => {
   text(value, path);
   try { katex.renderToString(value as string, { throwOnError: true, strict: 'ignore', trust: false }); }
   catch (error) { fail(path, `invalid TeX: ${error instanceof Error ? error.message : String(error)}`); }
 };
+const richText: Rule = (value, path) => {
+  text(value, path);
+  const prose = (value as string).replace(/\$\$([\s\S]*?)\$\$|\$([^$\n]+)\$/g, (_, display, inline) => {
+    tex(display ?? inline, path);
+    return ' ';
+  });
+  if (prose.includes('$')) fail(path, 'unmatched math delimiter');
+  if (/[α-ωΑ-Ωℓ₀-₉ₙᵢ⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺′∝≤≥∫×−≈̂≪=<>°%]|\bJ\b/u.test(prose)) {
+    fail(path, 'mathematical symbols must use KaTeX delimiters');
+  }
+};
+const localized = object({ zh: richText, en: richText });
 const region: Rule = (value, path) => {
   if (!Array.isArray(value) || value.length !== 4 || value.some(n => typeof n !== 'number' || !Number.isFinite(n))) fail(path, 'expected [x, y, width, height]');
   const [x, y, width, height] = value as number[];

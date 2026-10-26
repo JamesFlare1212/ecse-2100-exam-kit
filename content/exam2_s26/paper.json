@@ -23,12 +23,12 @@
         "en": "Current density · resistance"
       },
       "statement": {
-        "zh": "如课堂所述，由于趋肤效应，频率较高时电流倾向于靠近导体表面流动。考虑下方微带线，其性质如下：\n• 宽度（y 方向）：$W$\n• 高度（z 方向）：$h$\n• 长度（x 方向）：无限长\n• 电导率：$\\sigma$\n\n微带线中的电流密度分布给定为：\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{当 }0.4h\\le z<0.5h\\\\0&\\text{当 }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{当 }-0.5h<z\\le-0.4h\\end{cases}$$\n忽略由微带线有限宽度引起的电场边缘效应。",
-        "en": "As discussed in class, due to the skin effect, current prefers to flow closer to the surfaces of a conductor at higher frequencies. Consider the microstrip line below, which has the following properties:\n• Width (in y-dimension): $W$\n• Height (in z-dimension): $h$\n• Length (in x-dimension): infinite\n• Conductivity: $\\sigma$\n\nThe current density distribution in the microstrip line is given by:\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{for }0.4h\\le z<0.5h\\\\0&\\text{for }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{for }-0.5h<z\\le-0.4h\\end{cases}$$\nIgnore any electric field fringing effects due to the finite width of the microstrip line."
+        "zh": "如课堂所述，由于趋肤效应，频率较高时电流倾向于靠近导体表面流动。考虑下方微带线，其性质如下：\n• 宽度（$y$ 方向）：$W$\n• 高度（$z$ 方向）：$h$\n• 长度（$x$ 方向）：无限长\n• 电导率：$\\sigma$\n\n微带线中的电流密度分布给定为：\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{当 }0.4h\\le z<0.5h\\\\0&\\text{当 }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{当 }-0.5h<z\\le-0.4h\\end{cases}$$\n忽略由微带线有限宽度引起的电场边缘效应。",
+        "en": "As discussed in class, due to the skin effect, current prefers to flow closer to the surfaces of a conductor at higher frequencies. Consider the microstrip line below, which has the following properties:\n• Width (in $y$-dimension): $W$\n• Height (in $z$-dimension): $h$\n• Length (in $x$-dimension): infinite\n• Conductivity: $\\sigma$\n\nThe current density distribution in the microstrip line is given by:\n$$\\vec J(z)=\\begin{cases}J_0\\hat x&\\text{for }0.4h\\le z<0.5h\\\\0&\\text{for }-0.4h<z<0.4h\\\\J_0\\hat x&\\text{for }-0.5h<z\\le-0.4h\\end{cases}$$\nIgnore any electric field fringing effects due to the finite width of the microstrip line."
       },
       "givens": [
         "0.4h\\le |z|\\le0.5h",
-        "\\mathbf J=J_0\\hat{\\mathbf x}",
+        "\\vec{J}=J_0\\hat{x}",
         "A_{\\mathrm{eff}}=0.2Wh"
       ],
       "points": 6,
@@ -76,42 +76,82 @@
           "steps": [
             {
               "text": {
-                "zh": "先写公式表中的电流密度通量公式，总电流是穿过截面的 J 的法向分量积分。",
-                "en": "Begin with the crib current-density flux equation: integrate the normal component of J over the cross-section."
+                "zh": "先写公式表中的电流密度通量公式，总电流是穿过截面的 $\\vec J$ 的法向分量积分。",
+                "en": "Begin with the crib current-density flux equation: integrate the normal component of $\\vec J$ over the cross-section."
               },
-              "math": "I=\\iint_S\\mathbf J\\cdot d\\mathbf S",
+              "math": "I=\\iint_S\\vec{J}\\cdot d\\vec{S}",
               "refs": [
                 "current"
               ]
             },
             {
               "text": {
-                "zh": "电流沿 +x，所以选 yz 截面、外法向 +x̂；按原图 y 从 0 到 W，z 从 −0.5h 到 0.5h。",
-                "en": "Current flows along +x, so choose a yz cross-section with normal +x̂. As drawn, y runs from 0 to W and z from −0.5h to 0.5h."
+                "zh": "电流沿 $+x$，所以选 $yz$ 截面、外法向 $+\\hat{x}$；按原图 $y$ 从 0 到 $W$，$z$ 从 $-0.5h$ 到 $0.5h$。",
+                "en": "Current flows along $+x$, so choose a $yz$ cross-section with normal $+\\hat{x}$. As drawn, $y$ runs from 0 to $W$ and $z$ from $-0.5h$ to $0.5h$."
               },
-              "math": "d\\mathbf S=\\hat{\\mathbf x}\\,dy\\,dz,\\qquad \\hat{\\mathbf x}\\cdot\\hat{\\mathbf x}=1",
+              "math": "d\\vec{S}=\\hat{x}\\,dy\\,dz,\\qquad \\hat{x}\\cdot\\hat{x}=1",
               "refs": []
             },
             {
               "text": {
-                "zh": "将分段电流密度逐段代入。中间层 J=0，只有上下两层贡献。",
-                "en": "Substitute the piecewise current density. The middle has J=0, leaving the lower and upper layers."
+                "zh": "先把点积写成标量。载流层中电流密度和面法向同向，所以点积中的两个单位矢量相乘为 $1$；中间层的贡献为零。",
+                "en": "First reduce the dot product to a scalar. In each conducting layer the current density and surface normal point in the same direction, so the unit-vector dot product is $1$. The middle layer contributes zero."
               },
-              "math": "\\begin{aligned}I={}&\\int_{-0.5h}^{-0.4h}\\!\\int_0^W J_0\\,dy\\,dz\\\\&+\\int_{0.4h}^{0.5h}\\!\\int_0^W J_0\\,dy\\,dz\\end{aligned}",
+              "math": "\\begin{aligned}(J_0\\hat x)\\cdot(\\hat x\\,dy\\,dz)&=J_0(\\hat x\\cdot\\hat x)\\,dy\\,dz\\\\&=J_0\\,dy\\,dz\\\\\\vec 0\\cdot d\\vec S&=0\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "先对 y 积分得到 W，再代入两段 z 的上下限。",
-                "en": "Integrate over y to obtain W, then evaluate both z intervals."
+                "zh": "按厚度方向分成下表层、中间层和上表层，分别列出积分后相加。两个载流层的积分限不能合成整块导体的厚度。",
+                "en": "Split the thickness into the bottom layer, middle layer and top layer, then add their integrals. The two conducting intervals cannot be replaced by the full conductor thickness."
               },
-              "math": "I=J_0W\\bigl[(-0.4h)-(-0.5h)\\bigr]+J_0W\\bigl[(0.5h)-(0.4h)\\bigr]",
+              "math": "\\begin{aligned}I&=I_{\\mathrm{bottom}}+I_{\\mathrm{middle}}+I_{\\mathrm{top}}\\\\I_{\\mathrm{bottom}}&=\\int_{-0.5h}^{-0.4h}\\!\\int_0^W J_0\\,dy\\,dz\\\\I_{\\mathrm{middle}}&=\\int_{-0.4h}^{0.4h}\\!\\int_0^W 0\\,dy\\,dz=0\\\\I_{\\mathrm{top}}&=\\int_{0.4h}^{0.5h}\\!\\int_0^W J_0\\,dy\\,dz\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "每层厚度是 0.1h，总载流面积为 0.2Wh；电流量纲为 A。",
-                "en": "Each layer is 0.1h thick, giving total conducting area 0.2Wh and current in amperes."
+                "zh": "先算最里面的 $y$ 积分。对 $y$ 来说，$J_0$ 是常数；常数的原函数是这个常数乘积分变量。方括号表示“上限值减下限值”。",
+                "en": "Evaluate the inner $y$ integral first. The quantity $J_0$ is constant with respect to $y$, so an antiderivative is $J_0y$. Brackets mean the value at the upper limit minus the value at the lower limit."
+              },
+              "math": "\\begin{aligned}\\int_0^W J_0\\,dy&=[J_0y]_0^W\\\\&=J_0W-J_0(0)\\\\&=J_0W\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "将内层积分的结果放回下表层的外层积分。$J_0W$ 也不随 $z$ 变化，因此可以提出积分号，再写出原函数。",
+                "en": "Insert the inner-integral result into the bottom-layer integral. The quantity $J_0W$ is also independent of $z$, so take it outside and write the antiderivative."
+              },
+              "math": "\\begin{aligned}I_{\\mathrm{bottom}}&=\\int_{-0.5h}^{-0.4h}J_0W\\,dz\\\\&=J_0W\\int_{-0.5h}^{-0.4h}1\\,dz\\\\&=J_0W[z]_{-0.5h}^{-0.4h}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "先代入上限，再减去下限。下限本身为负数，因此减去它要变成加号；下表层厚度仍为正。",
+                "en": "Substitute the upper limit and subtract the lower limit. Because the lower limit is negative, subtracting it gives a plus sign; the bottom-layer thickness is positive."
+              },
+              "math": "\\begin{aligned}I_{\\mathrm{bottom}}&=J_0W[(-0.4h)-(-0.5h)]\\\\&=J_0W(-0.4h+0.5h)\\\\&=0.1J_0Wh\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "对上表层做同样的外层积分，明确写出原函数和两个端点。这里两个端点都为正。",
+                "en": "Do the same outer integral for the top layer, explicitly showing the antiderivative and both endpoints. Both limits are positive here."
+              },
+              "math": "\\begin{aligned}I_{\\mathrm{top}}&=\\int_{0.4h}^{0.5h}J_0W\\,dz\\\\&=J_0W[z]_{0.4h}^{0.5h}\\\\&=J_0W(0.5h-0.4h)\\\\&=0.1J_0Wh\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "现在把三部分电流相加，再提取共同因子。上下表层的电流方向相同，因此是相加，不会因下表层的坐标为负而相减。",
+                "en": "Now add the three currents and factor their common term. Both surface-layer currents point in the same direction, so they add; the negative coordinate of the bottom layer does not reverse its current."
+              },
+              "math": "\\begin{aligned}I&=0.1J_0Wh+0+0.1J_0Wh\\\\&=(0.1+0.1)J_0Wh\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "每层厚度是 $0.1h$，总载流面积为 $0.2Wh$；电流量纲为 $\\mathrm{A}$。",
+                "en": "Each layer is $0.1h$ thick, giving total conducting area $0.2Wh$ and current in amperes."
               },
               "math": "I=J_0W(0.1h+0.1h)=0.2J_0Wh",
               "refs": []
@@ -135,7 +175,7 @@
                 "zh": "先写电势差原式与微观欧姆定律。题目要求电压降的大小，符号约定应先明确。",
                 "en": "Begin with the potential integral and microscopic Ohm’s law. Define the voltage-drop sign before taking its magnitude."
               },
-              "math": "V(B)-V(A)=-\\int_A^B\\mathbf E\\cdot d\\mathbf l,\\qquad\\mathbf J=\\sigma\\mathbf E",
+              "math": "V(B)-V(A)=-\\int_A^B\\vec{E}\\cdot d\\vec{l},\\qquad\\vec{J}=\\sigma\\vec{E}",
               "refs": [
                 "potential",
                 "ohm"
@@ -143,32 +183,48 @@
             },
             {
               "text": {
-                "zh": "沿题设承载电流的表层取一条 x 方向路径；这一层的电场由 J₀/σ 给出。",
-                "en": "Choose an x-directed path in a current-carrying surface layer. Its electric field follows from J₀/σ."
+                "zh": "沿题设承载电流的表层取一条 $x$ 方向路径；这一层的电场由 $J_{0}/\\sigma$ 给出。",
+                "en": "Choose an $x$-directed path in a current-carrying surface layer. Its electric field follows from $J_{0}/\\sigma$."
               },
-              "math": "\\mathbf E=\\frac{\\mathbf J}{\\sigma}=\\frac{J_0}{\\sigma}\\hat{\\mathbf x},\\qquad d\\mathbf l=\\hat{\\mathbf x}\\,dx",
+              "math": "\\vec{E}=\\frac{\\vec{J}}{\\sigma}=\\frac{J_0}{\\sigma}\\hat{x},\\qquad d\\vec{l}=\\hat{x}\\,dx",
               "refs": []
             },
             {
               "text": {
-                "zh": "在长度 ℓ 上代入积分并计算单位矢量点积。",
-                "en": "Substitute into the integral over a length ℓ and evaluate the unit-vector dot product."
+                "zh": "在长度 $\\ell$ 上代入积分并计算单位矢量点积。",
+                "en": "Substitute into the integral over a length $\\ell$ and evaluate the unit-vector dot product."
               },
-              "math": "V(\\ell)-V(0)=-\\int_0^\\ell\\frac{J_0}{\\sigma}(\\hat{\\mathbf x}\\cdot\\hat{\\mathbf x})\\,dx",
+              "math": "V(\\ell)-V(0)=-\\int_0^\\ell\\frac{J_0}{\\sigma}(\\hat{x}\\cdot\\hat{x})\\,dx",
               "refs": []
             },
             {
               "text": {
-                "zh": "场强沿 x 不变，积分给出 ℓ。沿电流方向电位降低，因此电压降大小为正。",
-                "en": "The field is independent of x, so integration gives ℓ. Potential decreases along the current, making the drop magnitude positive."
+                "zh": "点积为 $1$ 后，把与 $x$ 无关的 $J_0/\\sigma$ 提到积分号外。剩下的是对常数 $1$ 的积分。",
+                "en": "After the dot product becomes $1$, take the $x$-independent factor $J_0/\\sigma$ outside. What remains is the integral of the constant $1$."
               },
-              "math": "V(0)-V(\\ell)=\\frac{J_0\\ell}{\\sigma},\\qquad V^\\prime=\\frac{|V(0)-V(\\ell)|}{\\ell}",
+              "math": "\\begin{aligned}V(\\ell)-V(0)&=-\\frac{J_0}{\\sigma}\\int_0^\\ell1\\,dx\\\\&=-\\frac{J_0}{\\sigma}[x]_0^\\ell\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "除以长度 ℓ，单位由 V 变为 V/m。",
-                "en": "Divide by ℓ to obtain volts per meter."
+                "zh": "代入上限和下限，得到沿电流方向的电势变化为负。若改写成“起点电势减终点电势”，整个式子两边都要乘负号。",
+                "en": "Evaluate both endpoints. The potential change along the current is negative. Reversing the potential-difference order multiplies both sides by minus one."
+              },
+              "math": "\\begin{aligned}V(\\ell)-V(0)&=-\\frac{J_0}{\\sigma}(\\ell-0)\\\\&=-\\frac{J_0\\ell}{\\sigma}\\\\V(0)-V(\\ell)&=\\frac{J_0\\ell}{\\sigma}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "单位长度电压降等于电压降大小除以长度。把刚算出的电势差完整代入，再约去共同的长度。",
+                "en": "The voltage-drop magnitude per unit length is the drop magnitude divided by length. Substitute the potential difference just calculated, then cancel the common length."
+              },
+              "math": "\\begin{aligned}V^\\prime&=\\frac{|V(0)-V(\\ell)|}{\\ell}\\\\&=\\frac{J_0\\ell/\\sigma}{\\ell}\\\\&=\\frac{J_0\\ell}{\\sigma\\ell}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "除以长度 $\\ell$，单位由 $\\mathrm{V}$ 变为 $\\mathrm{V}/\\mathrm{m}$。",
+                "en": "Divide by $\\ell$ to obtain volts per meter."
               },
               "math": "V^\\prime=\\frac{J_0}{\\sigma}",
               "refs": []
@@ -207,16 +263,24 @@
             },
             {
               "text": {
-                "zh": "约去电流密度 J₀，将 1/0.2 化为 5。",
-                "en": "Cancel J₀ and evaluate 1/0.2 as 5."
+                "zh": "复合分式不能直接“看出”约分。先把除以分母改成乘它的倒数，再把所有因子放进同一个分式。",
+                "en": "Make the cancellation explicit: dividing by the denominator means multiplying by its reciprocal. Then place all factors in one fraction."
               },
-              "math": "R^\\prime=\\frac1{0.2\\sigma Wh}=\\frac5{\\sigma Wh}",
+              "math": "\\begin{aligned}R^\\prime&=\\frac{J_0/\\sigma}{0.2J_0Wh}\\\\&=\\frac{J_0}{\\sigma}\\frac1{0.2J_0Wh}\\\\&=\\frac{J_0}{0.2\\sigma J_0Wh}\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "检查单位：(S/m)·m²= S·m，取倒数得到 Ω/m。",
-                "en": "Check units: (S/m)·m² is S·m, whose reciprocal is Ω/m."
+                "zh": "分子和分母中的 $J_0$ 相消。再用 $0.2=1/5$，所以除以 $0.2$ 等于乘 $5$。",
+                "en": "Cancel the factor $J_0$ from numerator and denominator. Since $0.2=1/5$, dividing by $0.2$ multiplies by $5$."
+              },
+              "math": "\\begin{aligned}R^\\prime&=\\frac1{0.2\\sigma Wh}\\\\&=\\frac1{(1/5)\\sigma Wh}\\\\&=\\frac5{\\sigma Wh}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "检查单位：$(\\mathrm{S/m})\\cdot\\mathrm m^2=\\mathrm S\\cdot\\mathrm m$，取倒数得到 $\\Omega/\\mathrm{m}$。",
+                "en": "Check units: $(\\mathrm{S/m})\\cdot\\mathrm m^2$ is $\\mathrm S\\cdot\\mathrm m$, whose reciprocal is $\\Omega/\\mathrm{m}$."
               },
               "math": "R^\\prime=\\frac{5}{\\sigma Wh}\\quad[\\Omega/\\mathrm m]",
               "refs": []
@@ -237,10 +301,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先用微观欧姆定律明确哪些量固定：题目保持同一个 J(z) 分布和同一截面。",
-                "en": "Use microscopic Ohm’s law to identify what stays fixed: the specified J(z) distribution and conductor cross-section."
+                "zh": "先用微观欧姆定律明确哪些量固定：题目保持同一个 $\\vec J(z)$ 分布和同一截面。",
+                "en": "Use microscopic Ohm’s law to identify what stays fixed: the specified $\\vec J(z)$ distribution and conductor cross-section."
               },
-              "math": "\\mathbf J=\\sigma\\mathbf E,\\qquad I=\\iint\\mathbf J\\cdot d\\mathbf S",
+              "math": "\\vec{J}=\\sigma\\vec{E},\\qquad I=\\iint\\vec{J}\\cdot d\\vec{S}",
               "refs": [
                 "ohm",
                 "current"
@@ -248,8 +312,8 @@
             },
             {
               "text": {
-                "zh": "固定电流密度与面积意味着总电流也不变。提高 σ 后，同一 J 所需的驱动电场更小。",
-                "en": "Fixed current density and area keep total current unchanged. Increasing σ requires less driving field for that same J."
+                "zh": "固定电流密度与面积意味着总电流也不变。提高 $\\sigma$ 后，同一 $\\vec J$ 所需的驱动电场更小。",
+                "en": "Fixed current density and area keep total current unchanged. Increasing $\\sigma$ requires less driving field for that same $\\vec J$."
               },
               "math": "I=0.2J_0Wh=\\text{constant},\\qquad E_x=\\frac{J_0}{\\sigma}",
               "refs": []
@@ -292,10 +356,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先写电流积分和欧姆定律。这次固定的是总电流 I，而不是原来的表层密度 J₀。",
-                "en": "Begin with the current integral and Ohm’s law. Here total current I is fixed, rather than the previous surface-layer density J₀."
+                "zh": "先写电流积分和欧姆定律。这次固定的是总电流 $I$，而不是原来的表层密度 $J_{0}$。",
+                "en": "Begin with the current integral and Ohm’s law. Here total current $I$ is fixed, rather than the previous surface-layer density $J_{0}$."
               },
-              "math": "I=\\iint\\mathbf J\\cdot d\\mathbf S,\\qquad\\mathbf E=\\frac{\\mathbf J}{\\sigma}",
+              "math": "I=\\iint\\vec{J}\\cdot d\\vec{S},\\qquad\\vec{E}=\\frac{\\vec{J}}{\\sigma}",
               "refs": [
                 "current",
                 "ohm"
@@ -303,8 +367,16 @@
             },
             {
               "text": {
-                "zh": "均匀分布使用整个 Wh 截面；先求新的电流密度。",
-                "en": "A uniform distribution uses the entire Wh cross-section. Compute the new current density first."
+                "zh": "均匀分布时，先把电流积分真正算一遍：两个方向上的密度都不变，所以逐层积分分别给出宽度和厚度。",
+                "en": "For a uniform distribution, evaluate the current integral explicitly. The density is constant in both directions, so the successive integrations give the width and thickness."
+              },
+              "math": "\\begin{aligned}I&=\\int_{-h/2}^{h/2}\\!\\int_0^W J_{\\mathrm{uniform}}\\,dy\\,dz\\\\&=J_{\\mathrm{uniform}}[y]_0^W[z]_{-h/2}^{h/2}\\\\&=J_{\\mathrm{uniform}}(W-0)[h/2-(-h/2)]\\\\&=J_{\\mathrm{uniform}}Wh\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "均匀分布使用整个 $Wh$ 截面；先求新的电流密度。",
+                "en": "A uniform distribution uses the entire $Wh$ cross-section. Compute the new current density first."
               },
               "math": "J_{\\mathrm{uniform}}=\\frac I{Wh}=\\frac{0.2J_0Wh}{Wh}=0.2J_0",
               "refs": []
@@ -319,8 +391,8 @@
             },
             {
               "text": {
-                "zh": "总电流保持不变，将电压降比代入 R′=V′/I。",
-                "en": "With total current unchanged, insert this voltage-drop ratio into R′=V′/I."
+                "zh": "总电流保持不变，将电压降比代入 $R'=V'/I$。",
+                "en": "With total current unchanged, insert this voltage-drop ratio into $R'=V'/I$."
               },
               "math": "R^\\prime_{\\mathrm{uniform}}=\\frac{I/(\\sigma Wh)}{I}=\\frac1{\\sigma Wh},\\qquad R^\\prime_{\\mathrm{skin}}=\\frac5{\\sigma Wh}",
               "refs": [
@@ -329,8 +401,8 @@
             },
             {
               "text": {
-                "zh": "得到电阻减为五分之一，即下降 80%；物理原因是可供载流的有效面积扩大。",
-                "en": "Resistance becomes one fifth, an 80% reduction, because the available current-carrying area increases."
+                "zh": "得到电阻减为五分之一，即下降 $80\\%$；物理原因是可供载流的有效面积扩大。",
+                "en": "Resistance becomes one fifth, an $80\\%$ reduction, because the available current-carrying area increases."
               },
               "math": "R^\\prime_{\\mathrm{uniform}}=\\frac15 R^\\prime_{\\mathrm{skin}}",
               "refs": []
@@ -357,8 +429,8 @@
           "en": "Find total current $I$, voltage drop per unit length $V^\\prime$ and resistance per unit length $R^\\prime$, then explain the effects of conductivity and current distribution."
         },
         "approach": {
-          "zh": "先认清哪些区域真正载流，再选垂直于电流的横截面积分。得到总电流后，用 $\\mathbf J=\\sigma\\mathbf E$ 联系电场与电势降，最后回到电阻定义。",
-          "en": "Identify the current-carrying regions before integrating over a cross-section perpendicular to the current. Then use $\\mathbf J=\\sigma\\mathbf E$ to connect field and voltage drop, and apply the definition of resistance."
+          "zh": "先认清哪些区域真正载流，再选垂直于电流的横截面积分。得到总电流后，用 $\\vec{J}=\\sigma\\vec{E}$ 联系电场与电势降，最后回到电阻定义。",
+          "en": "Identify the current-carrying regions before integrating over a cross-section perpendicular to the current. Then use $\\vec{J}=\\sigma\\vec{E}$ to connect field and voltage drop, and apply the definition of resistance."
         }
       }
     },
@@ -378,7 +450,7 @@
         "en": "Shown below is a stack of three dielectric materials:\n• Dielectric 1: occupies the region $y>0.01\\,\\mathrm{m}$ and has permittivity $\\varepsilon_1=2\\varepsilon_0$\n• Dielectric 2: occupies the region $0<y<0.01\\,\\mathrm{m}$ and has permittivity $\\varepsilon_2=5\\varepsilon_0$\n• Dielectric 3: occupies the region $y<0$ and has permittivity $\\varepsilon_3=2\\varepsilon_0$\n\nThe electric field in dielectric 1 is given by:\n$$\\vec E_1=100\\hat x-100\\hat y$$"
       },
       "givens": [
-        "\\mathbf E_1=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+        "\\vec{E}_1=(100\\hat{x}-100\\hat{y})\\,\\mathrm{V/m}",
         "\\rho_s=0",
         "d=0.01\\,\\mathrm m"
       ],
@@ -438,7 +510,7 @@
                 "zh": "先写原表的两条静电边界条件和本构关系。",
                 "en": "Begin with both crib electrostatic boundary conditions and the constitutive relation."
               },
-              "math": "D_{1n}-D_{2n}=\\rho_s,\\quad E_{1t}=E_{2t},\\quad\\mathbf D_i=\\epsilon_i\\mathbf E_i",
+              "math": "D_{1n}-D_{2n}=\\rho_s,\\quad E_{1t}=E_{2t},\\quad\\vec{D}_i=\\epsilon_i\\vec{E}_i",
               "refs": [
                 "boundary",
                 "constitutive"
@@ -446,32 +518,32 @@
             },
             {
               "text": {
-                "zh": "分界面是 y=0.01 m，法向沿 y、切向沿 x。先将已知电场分解。",
-                "en": "The interface is y=0.01 m, with normal along y and tangent along x. Decompose the given field."
+                "zh": "分界面是 $y=0.01\\,\\mathrm{m}$，法向沿 $y$、切向沿 $x$。先将已知电场分解。",
+                "en": "The interface is $y=0.01\\,\\mathrm{m}$, with normal along $y$ and tangent along $x$. Decompose the given field."
               },
               "math": "E_{1t}=E_{1x}=100\\,\\mathrm{V/m},\\quad E_{1n}=E_{1y}=-100\\,\\mathrm{V/m},\\quad E_{1z}=0",
               "refs": []
             },
             {
               "text": {
-                "zh": "切向 E 连续，因此 x 分量直接传递，z 分量仍为零。",
-                "en": "Tangential E is continuous, so the x component carries across and the z component remains zero."
+                "zh": "切向 $\\vec E$ 连续，因此 $x$ 分量直接传递，$z$ 分量仍为零。",
+                "en": "Tangential $\\vec E$ is continuous, so the $x$ component carries across and the $z$ component remains zero."
               },
               "math": "E_{2x}=E_{1x}=100\\,\\mathrm{V/m},\\qquad E_{2z}=0",
               "refs": []
             },
             {
               "text": {
-                "zh": "无自由面电荷，令法向 D 的跳变为零，再解出 E₂y。",
-                "en": "There is no free surface charge. Set the normal-D jump to zero and solve for E₂y."
+                "zh": "无自由面电荷，令法向 $\\vec D$ 的跳变为零，再解出 $E_{2y}$。",
+                "en": "There is no free surface charge. Set the normal-$\\vec D$ jump to zero and solve for $E_{2y}$."
               },
-              "math": "\\epsilon_1E_{1y}-\\epsilon_2E_{2y}=0\\quad\\Longrightarrow\\quad E_{2y}=\\frac{\\epsilon_1}{\\epsilon_2}E_{1y}",
+              "math": "\\begin{aligned}\\epsilon_1E_{1y}-\\epsilon_2E_{2y}&=0\\\\\\epsilon_1E_{1y}&=\\epsilon_2E_{2y}\\\\E_{2y}&=\\frac{\\epsilon_1E_{1y}}{\\epsilon_2}\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "代入两个介电常数，约去 ε₀，保留已知 y 分量的负号。",
-                "en": "Insert both permittivities, cancel ε₀ and retain the negative y component."
+                "zh": "代入两个介电常数，约去 $\\epsilon_{0}$，保留已知 $y$ 分量的负号。",
+                "en": "Insert both permittivities, cancel $\\epsilon_{0}$ and retain the negative $y$ component."
               },
               "math": "E_{2y}=\\frac{2\\epsilon_0}{5\\epsilon_0}(-100)=-40\\,\\mathrm{V/m}",
               "refs": []
@@ -481,11 +553,11 @@
                 "zh": "把三个分量合成为矢量。",
                 "en": "Combine all three components into the vector."
               },
-              "math": "\\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "math": "\\vec{E}_2=(100\\hat{x}-40\\hat{y})\\,\\mathrm{V/m}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+          "answer": "\\vec{E}_2=(100\\hat{x}-40\\hat{y})\\,\\mathrm{V/m}",
           "sourcePage": 4,
           "solutionPage": 4,
           "id": "e2-s26-q2-a"
@@ -500,8 +572,8 @@
           "steps": [
             {
               "text": {
-                "zh": "在 y=0 的第二个介质界面再次使用切向 E 连续和法向 D 连续。",
-                "en": "At the second dielectric interface y=0, again use continuity of tangential E and normal D."
+                "zh": "在 $y=0$ 的第二个介质界面再次使用切向 $\\vec E$ 连续和法向 $\\vec D$ 连续。",
+                "en": "At the second dielectric interface $y=0$, again use continuity of tangential $\\vec E$ and normal $\\vec D$."
               },
               "math": "E_{2t}=E_{3t},\\qquad D_{2n}-D_{3n}=0",
               "refs": [
@@ -510,40 +582,40 @@
             },
             {
               "text": {
-                "zh": "上问给出 E₂x=100、E₂y=−40，法向和切向仍分别为 y 与 x。",
-                "en": "The preceding result gives E₂x=100 and E₂y=−40; y remains normal and x tangential."
+                "zh": "上问给出 $E_{2x}=100$、$E_{2y}=-40$，法向和切向仍分别为 $y$ 与 $x$。",
+                "en": "The preceding result gives $E_{2x}=100$ and $E_{2y}=-40$; $y$ remains normal and $x$ tangential."
               },
               "math": "E_{3x}=E_{2x}=100\\,\\mathrm{V/m},\\qquad E_{3z}=0",
               "refs": []
             },
             {
               "text": {
-                "zh": "先代入本构关系，再把 E₃y 单独移到一侧。",
-                "en": "Substitute the constitutive relation and isolate E₃y."
+                "zh": "先代入本构关系，再把 $E_{3y}$ 单独移到一侧。",
+                "en": "Substitute the constitutive relation and isolate $E_{3y}$."
               },
-              "math": "\\epsilon_2E_{2y}=\\epsilon_3E_{3y}\\quad\\Longrightarrow\\quad E_{3y}=\\frac{\\epsilon_2}{\\epsilon_3}E_{2y}",
+              "math": "\\begin{aligned}\\epsilon_2E_{2y}&=\\epsilon_3E_{3y}\\\\\\frac{\\epsilon_2E_{2y}}{\\epsilon_3}&=\\frac{\\epsilon_3E_{3y}}{\\epsilon_3}\\\\E_{3y}&=\\frac{\\epsilon_2}{\\epsilon_3}E_{2y}\\end{aligned}",
               "refs": [
                 "constitutive"
               ]
             },
             {
               "text": {
-                "zh": "代入 ε₂=5ε₀、ε₃=2ε₀ 和 −40 V/m。",
-                "en": "Substitute ε₂=5ε₀, ε₃=2ε₀ and −40 V/m."
+                "zh": "代入 $\\epsilon_{2}=5\\epsilon_{0}$、$\\epsilon_{3}=2\\epsilon_{0}$ 和 $-40\\,\\mathrm{V}/\\mathrm{m}$。",
+                "en": "Substitute $\\epsilon_{2}=5\\epsilon_{0}$, $\\epsilon_{3}=2\\epsilon_{0}$ and $-40\\,\\mathrm{V}/\\mathrm{m}$."
               },
               "math": "E_{3y}=\\frac{5\\epsilon_0}{2\\epsilon_0}(-40)=-100\\,\\mathrm{V/m}",
               "refs": []
             },
             {
               "text": {
-                "zh": "恢复完整矢量。因为 ε₃=ε₁，最终场与区域 1 一致。",
-                "en": "Restore the complete vector. Since ε₃=ε₁, the field agrees with region 1."
+                "zh": "恢复完整矢量。因为 $\\epsilon_{3}=\\epsilon_{1}$，最终场与区域 1 一致。",
+                "en": "Restore the complete vector. Since $\\epsilon_{3}=\\epsilon_{1}$, the field agrees with region 1."
               },
-              "math": "\\mathbf E_3=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "math": "\\vec{E}_3=(100\\hat{x}-100\\hat{y})\\,\\mathrm{V/m}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_3=(100\\hat{\\mathbf x}-100\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+          "answer": "\\vec{E}_3=(100\\hat{x}-100\\hat{y})\\,\\mathrm{V/m}",
           "sourcePage": 5,
           "solutionPage": 5,
           "id": "e2-s26-q2-b"
@@ -561,39 +633,47 @@
                 "zh": "先明确电势差的次序，再写原表的负线积分。",
                 "en": "Specify the order of the potential difference before writing the crib negative line integral."
               },
-              "math": "V_0=V(y=0.01)-V(y=0)=-\\int_{y=0}^{y=0.01}\\mathbf E_2\\cdot d\\mathbf l",
+              "math": "V_0=V(y=0.01)-V(y=0)=-\\int_{y=0}^{y=0.01}\\vec{E}_2\\cdot d\\vec{l}",
               "refs": [
                 "potential"
               ]
             },
             {
               "text": {
-                "zh": "选 x、z 不变的直线路径，仅有 dy 分量。",
-                "en": "Choose a straight path at fixed x and z, leaving only a dy component."
+                "zh": "选 $x$、$z$ 不变的直线路径，仅有 $dy$ 分量。",
+                "en": "Choose a straight path at fixed $x$ and $z$, leaving only a $dy$ component."
               },
-              "math": "d\\mathbf l=\\hat{\\mathbf y}\\,dy,\\qquad \\mathbf E_2=(100\\hat{\\mathbf x}-40\\hat{\\mathbf y})\\,\\mathrm{V/m}",
+              "math": "d\\vec{l}=\\hat{y}\\,dy,\\qquad \\vec{E}_2=(100\\hat{x}-40\\hat{y})\\,\\mathrm{V/m}",
               "refs": []
             },
             {
               "text": {
-                "zh": "展开点积，x̂·ŷ=0，ŷ·ŷ=1，因此切向的 100 V/m 不参与本次电势差。",
-                "en": "Expand the dot product: x̂·ŷ=0 and ŷ·ŷ=1, so the tangential 100 V/m does not contribute."
+                "zh": "展开点积，$\\hat x\\cdot\\hat y=0$，$\\hat y\\cdot\\hat y=1$，因此切向的 $100\\,\\mathrm{V}/\\mathrm{m}$ 不参与本次电势差。",
+                "en": "Expand the dot product: $\\hat x\\cdot\\hat y=0$ and $\\hat y\\cdot\\hat y=1$, so the tangential $100\\,\\mathrm{V}/\\mathrm{m}$ does not contribute."
               },
-              "math": "\\mathbf E_2\\cdot d\\mathbf l=[100(0)-40(1)]\\,dy=-40\\,dy",
+              "math": "\\vec{E}_2\\cdot d\\vec{l}=[100(0)-40(1)]\\,dy=-40\\,dy",
               "refs": []
             },
             {
               "text": {
-                "zh": "积分常数场，并把 0.01 m 代入上下限；外面的负号使结果为正。",
-                "en": "Integrate the constant field and substitute the 0.01 m limits. The leading minus sign makes the result positive."
+                "zh": "先处理积分前的负号。电场法向分量为负，因此电势定义的负号与它相乘为正；长度变量仍用带单位的上下限。",
+                "en": "Handle the leading minus sign first. The normal field component is negative, so the potential-definition minus sign makes the integrand positive. Keep units in the path limits."
               },
-              "math": "V_0=-\\int_0^{0.01}(-40)\\,dy=40[\\,y\\,]_0^{0.01}=40(0.01)\\,\\mathrm V",
+              "math": "\\begin{aligned}V_0&=-\\int_0^{0.01\\,\\mathrm m}(-40\\,\\mathrm{V/m})\\,dy\\\\&=(40\\,\\mathrm{V/m})\\int_0^{0.01\\,\\mathrm m}1\\,dy\\\\&=(40\\,\\mathrm{V/m})[y]_0^{0.01\\,\\mathrm m}\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "所求电势差为 +0.40 V，表示上表面的电位较高。",
-                "en": "The requested difference is +0.40 V, meaning the upper surface is at higher potential."
+                "zh": "明确代入上限减下限。米与每米相消，最后的单位为伏特。",
+                "en": "Explicitly subtract the lower-limit value from the upper-limit value. Meters cancel the per-meter factor, leaving volts."
+              },
+              "math": "\\begin{aligned}V_0&=(40\\,\\mathrm{V/m})(0.01\\,\\mathrm m-0\\,\\mathrm m)\\\\&=(40)(0.01)\\,\\mathrm V\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "所求电势差为 $+0.40\\,\\mathrm{V}$，表示上表面的电位较高。",
+                "en": "The requested difference is $+0.40\\,\\mathrm{V}$, meaning the upper surface is at higher potential."
               },
               "math": "V_0=+0.40\\,\\mathrm V",
               "refs": []
@@ -614,8 +694,8 @@
           "steps": [
             {
               "text": {
-                "zh": "用边界条件和 D=εE 作为解释起点；不是把全部电场都按 1/ε 缩放。",
-                "en": "Start from the boundary conditions and D=εE. The entire field does not scale uniformly as 1/ε."
+                "zh": "用边界条件和 $\\vec D=\\epsilon\\vec E$ 作为解释起点；不是把全部电场都按 $1/\\epsilon$ 缩放。",
+                "en": "Start from the boundary conditions and $\\vec D=\\epsilon\\vec E$. The entire field does not scale uniformly as $1/\\epsilon$."
               },
               "math": "D_{1n}=D_{2n}=D_{3n},\\qquad E_{1t}=E_{2t}=E_{3t}",
               "refs": [
@@ -625,8 +705,8 @@
             },
             {
               "text": {
-                "zh": "相同法向 D 下，介电常数最大的区域 2 具有最小的法向 E。",
-                "en": "For the same normal D, region 2 has the smallest normal E because its permittivity is largest."
+                "zh": "相同法向 $\\vec D$ 下，介电常数最大的区域 2 具有最小的法向 $\\vec E$。",
+                "en": "For the same normal $\\vec D$, region 2 has the smallest normal $\\vec E$ because its permittivity is largest."
               },
               "math": "E_{2n}=\\frac{D_n}{5\\epsilon_0},\\qquad E_{1n}=E_{3n}=\\frac{D_n}{2\\epsilon_0}",
               "refs": []
@@ -641,10 +721,10 @@
             },
             {
               "text": {
-                "zh": "比较题目问到的总场大小，必须使用各分量平方和，而不是只比较 y 分量。",
-                "en": "Compare total field magnitudes using the sum of squared components, rather than the y component alone."
+                "zh": "比较题目问到的总场大小，必须使用各分量平方和，而不是只比较 $y$ 分量。",
+                "en": "Compare total field magnitudes using the sum of squared components, rather than the $y$ component alone."
               },
-              "math": "|\\mathbf E_2|=\\sqrt{100^2+40^2}\\approx107.7\\,\\mathrm{V/m},\\quad |\\mathbf E_1|=|\\mathbf E_3|=\\sqrt{100^2+100^2}\\approx141.4\\,\\mathrm{V/m}",
+              "math": "|\\vec{E}_2|=\\sqrt{100^2+40^2}\\approx107.7\\,\\mathrm{V/m},\\quad |\\vec{E}_1|=|\\vec{E}_3|=\\sqrt{100^2+100^2}\\approx141.4\\,\\mathrm{V/m}",
               "refs": []
             },
             {
@@ -652,11 +732,11 @@
                 "zh": "因此区域 2 的总场较小，区域 1 和 3 的场强相同。",
                 "en": "Region 2 therefore has the smaller total field, while regions 1 and 3 agree."
               },
-              "math": "|\\mathbf E_2|<|\\mathbf E_1|=|\\mathbf E_3|",
+              "math": "|\\vec{E}_2|<|\\vec{E}_1|=|\\vec{E}_3|",
               "refs": []
             }
           ],
-          "answer": "|\\mathbf E_2|<|\\mathbf E_1|=|\\mathbf E_3|",
+          "answer": "|\\vec{E}_2|<|\\vec{E}_1|=|\\vec{E}_3|",
           "sourcePage": 5,
           "solutionPage": 5,
           "answerText": {
@@ -759,10 +839,10 @@
           "steps": [
             {
               "text": {
-                "zh": "先写原始高斯定律，再将电位移换成 εE。",
-                "en": "Begin with the original Gauss equation and substitute εE for displacement."
+                "zh": "先写原始高斯定律，再将电位移换成 $\\epsilon\\vec E$。",
+                "en": "Begin with the original Gauss equation and substitute $\\epsilon\\vec E$ for displacement."
               },
-              "math": "\\oiint_S\\mathbf D\\cdot d\\mathbf S=Q_{\\mathrm{enc}},\\qquad\\mathbf D=\\epsilon\\mathbf E",
+              "math": "\\oiint_S\\vec{D}\\cdot d\\vec{S}=Q_{\\mathrm{enc}},\\qquad\\vec{D}=\\epsilon\\vec{E}",
               "refs": [
                 "gauss",
                 "constitutive"
@@ -770,70 +850,102 @@
             },
             {
               "text": {
-                "zh": "选半径 R、长度 ℓ 的同轴闭合圆柱，高斯半径满足 a<R<b；端面的法向与径向电场垂直。",
-                "en": "Choose a coaxial closed cylinder of radius R and length ℓ, with a<R<b. End-cap normals are perpendicular to the radial field."
+                "zh": "选半径 $R$、长度 $\\ell$ 的同轴闭合圆柱，高斯半径满足 $a<R<b$；端面的法向与径向电场垂直。",
+                "en": "Choose a coaxial closed cylinder of radius $R$ and length $\\ell$, with $a<R<b$. End-cap normals are perpendicular to the radial field."
               },
-              "math": "\\mathbf E=E_r(R)\\hat{\\mathbf r},\\quad d\\mathbf S_{\\mathrm{side}}=\\hat{\\mathbf r}R\\,d\\phi\\,dz,\\quad \\mathbf E\\cdot d\\mathbf S_{\\mathrm{caps}}=0",
+              "math": "\\vec{E}=E_r(R)\\hat{r},\\quad d\\vec{S}_{\\mathrm{side}}=\\hat{r}R\\,d\\phi\\,dz,\\quad \\vec{E}\\cdot d\\vec{S}_{\\mathrm{caps}}=0",
               "refs": [
                 "geometry"
               ]
             },
             {
               "text": {
-                "zh": "代入柱侧面通量积分，依次计算 φ 和 z 积分。",
-                "en": "Substitute into the lateral-surface flux integral and evaluate the φ and z factors."
+                "zh": "柱侧面上半径固定为 $R$，场强不随方位角或轴向坐标变化。先写出点积，再对方位角积分。",
+                "en": "On the cylindrical side the radius is fixed at $R$, and the field is independent of angle and axial coordinate. Write the dot product before integrating over the angle."
               },
-              "math": "\\Phi_D=\\int_0^\\ell\\!\\int_0^{2\\pi}\\epsilon E_r(R)R\\,d\\phi\\,dz=2\\pi R\\ell\\epsilon E_r(R)",
+              "math": "\\begin{aligned}\\Phi_D&=\\int_0^\\ell\\!\\int_0^{2\\pi}(\\epsilon E_r(R)\\hat r)\\cdot(\\hat r R\\,d\\phi\\,dz)\\\\&=\\epsilon E_r(R)R\\int_0^\\ell[\\phi]_0^{2\\pi}\\,dz\\\\&=2\\pi\\epsilon E_r(R)R\\int_0^\\ell1\\,dz\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "包围电荷分成内导体表面电荷与 a 到 R 之间的体电荷。先积分内导体柱面。",
-                "en": "Split enclosed charge into the inner-conductor surface charge and volume charge from a to R. Integrate the inner surface first."
+                "zh": "再算长度方向的原函数和端点，得到整个闭合柱面的通量；两个端面贡献已经为零。",
+                "en": "Next evaluate the length antiderivative and endpoints. This gives the total closed-cylinder flux because both end-cap contributions are zero."
               },
-              "math": "Q_{\\mathrm{surface}}=\\int_0^\\ell\\!\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi\\,dz=2\\pi a\\ell\\rho_{sa}",
+              "math": "\\begin{aligned}\\Phi_D&=2\\pi\\epsilon E_r(R)R[z]_0^\\ell\\\\&=2\\pi\\epsilon E_r(R)R(\\ell-0)\\\\&=2\\pi R\\ell\\epsilon E_r(R)\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "体电荷积分必须使用变半径 r′；将密度 ρ₀a/r′ 和柱坐标体积元 r′dr′dφdz 同时代入。",
-                "en": "For volume charge use a varying radius r′. Substitute both ρ₀a/r′ and the cylindrical volume element r′dr′dφdz."
+                "zh": "包围电荷分成内导体面电荷与介质体电荷。面电荷的面积元用 $a$，而不是高斯半径 $R$。",
+                "en": "Split the enclosed charge into inner-conductor surface charge and dielectric volume charge. The surface-charge area element uses $a$, not the Gaussian radius $R$."
+              },
+              "math": "\\begin{aligned}Q_{\\mathrm{surface}}&=\\int_0^\\ell\\!\\int_0^{2\\pi}\\rho_{sa}a\\,d\\phi\\,dz\\\\&=\\rho_{sa}a\\int_0^\\ell[\\phi]_0^{2\\pi}\\,dz\\\\&=2\\pi a\\rho_{sa}[z]_0^\\ell\\\\&=2\\pi a\\ell\\rho_{sa}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "体电荷积分必须使用变半径 $r'$；将密度 $\\rho_0a/r'$ 和柱坐标体积元 $r'\\,dr'\\,d\\phi\\,dz$ 同时代入。",
+                "en": "For volume charge use a varying radius $r'$. Substitute both $\\rho_0a/r'$ and the cylindrical volume element $r'\\,dr'\\,d\\phi\\,dz$."
               },
               "math": "Q_{\\mathrm{volume}}=\\int_0^\\ell\\!\\int_0^{2\\pi}\\!\\int_a^R\\frac{\\rho_0a}{r^\\prime}\\,r^\\prime\\,dr^\\prime d\\phi dz",
               "refs": []
             },
             {
               "text": {
-                "zh": "密度中的 1/r′ 与体积元的 r′ 抵消，剩下常数的径向积分。",
-                "en": "The density’s 1/r′ cancels the volume element’s r′, leaving a constant radial integral."
+                "zh": "先在被积函数内部约去变半径。密度中的 $1/r^\\prime$ 与体积元中的 $r^\\prime$ 抵消，剩下的 $\\rho_0a$ 是常数。",
+                "en": "Cancel the varying-radius factors inside the integrand first. The $1/r^\\prime$ density factor cancels the $r^\\prime$ volume-element factor, leaving the constant $\\rho_0a$."
               },
-              "math": "Q_{\\mathrm{volume}}=2\\pi\\ell\\rho_0a\\int_a^R dr^\\prime=2\\pi\\ell\\rho_0a(R-a)",
+              "math": "\\begin{aligned}\\frac{\\rho_0a}{r^\\prime}r^\\prime&=\\rho_0a\\\\Q_{\\mathrm{volume}}&=\\rho_0a\\int_0^\\ell\\!\\int_0^{2\\pi}\\!\\int_a^R1\\,dr^\\prime\\,d\\phi\\,dz\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "把两项电荷相加后代入高斯定律，最后约去共同长度和 2π。",
-                "en": "Add both charge terms, substitute into Gauss’s law and cancel the common length and 2π."
+                "zh": "从最内层的径向积分开始。原函数是 $r^\\prime$，代入后得到外半径减内半径，而不是面积或体积。",
+                "en": "Start with the innermost radial integral. Its antiderivative is $r^\\prime$, so endpoint substitution gives outer radius minus inner radius, not an area or volume."
+              },
+              "math": "\\begin{aligned}\\int_a^R1\\,dr^\\prime&=[r^\\prime]_a^R=R-a\\\\Q_{\\mathrm{volume}}&=\\rho_0a(R-a)\\int_0^\\ell\\!\\int_0^{2\\pi}1\\,d\\phi\\,dz\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "再做方位角积分和轴向积分，逐一写出端点差，最后才把三个因子相乘。",
+                "en": "Then do the angular and axial integrals, writing each endpoint difference before multiplying the three factors."
+              },
+              "math": "\\begin{aligned}\\int_0^{2\\pi}1\\,d\\phi&=[\\phi]_0^{2\\pi}=2\\pi\\\\\\int_0^\\ell1\\,dz&=[z]_0^\\ell=\\ell\\\\Q_{\\mathrm{volume}}&=\\rho_0a(R-a)(2\\pi)\\ell\\\\&=2\\pi\\ell\\rho_0a(R-a)\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两项电荷相加后代入高斯定律，最后约去共同长度和 $2\\pi$。",
+                "en": "Add both charge terms, substitute into Gauss’s law and cancel the common length and $2\\pi$."
               },
               "math": "2\\pi R\\ell\\epsilon E_r(R)=2\\pi a\\ell[\\rho_{sa}+\\rho_0(R-a)]",
               "refs": []
             },
             {
               "text": {
-                "zh": "除以 εR，并把任意高斯半径 R 改记为观察半径 r。",
-                "en": "Divide by εR and relabel the arbitrary Gaussian radius R as observation radius r."
+                "zh": "两边先除以共同的非零因子 $2\\pi\\ell$，再除以 $\\epsilon R$。只有在做完固定高斯面的积分后，才把 $R$ 改记为观察半径 $r$。",
+                "en": "First divide both sides by the common nonzero factor $2\\pi\\ell$, then by $\\epsilon R$. Relabel $R$ as observation radius $r$ only after completing the fixed-surface integrals."
               },
-              "math": "\\mathbf E(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{\\mathbf r}",
+              "math": "\\begin{aligned}\\epsilon R E_r(R)&=a[\\rho_{sa}+\\rho_0(R-a)]\\\\E_r(R)&=\\frac{a[\\rho_{sa}+\\rho_0(R-a)]}{\\epsilon R}\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "除以 $\\epsilon R$，并把任意高斯半径 $R$ 改记为观察半径 $r$。",
+                "en": "Divide by $\\epsilon R$ and relabel the arbitrary Gaussian radius $R$ as observation radius $r$."
+              },
+              "math": "\\vec{E}(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{r}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{\\mathbf r}",
+          "answer": "\\vec{E}(r)=\\frac{a}{\\epsilon r}[\\rho_{sa}+\\rho_0(r-a)]\\hat{r}",
           "sourcePage": 6,
           "solutionPage": 6,
           "figure": "leaky-gauss",
           "figureCaption": {
-            "zh": "保持同轴线三维视角，标出 a<R<b 的闭合高斯圆柱及长度 ℓ。",
-            "en": "Coaxial geometry in its 3D perspective, showing a closed Gaussian cylinder with a<R<b and length ℓ."
+            "zh": "保持同轴线三维视角，标出 $a<R<b$ 的闭合高斯圆柱及长度 $\\ell$。",
+            "en": "Coaxial geometry in its 3D perspective, showing a closed Gaussian cylinder with $a<R<b$ and length $\\ell$."
           },
           "id": "e2-s26-q3-a"
         },
@@ -850,39 +962,63 @@
                 "zh": "先写电势差原式，参考点选题设接地的外导体。",
                 "en": "Begin with the potential-difference integral, referenced to the grounded outer conductor."
               },
-              "math": "V(r)-V(b)=-\\int_b^r\\mathbf E\\cdot d\\mathbf l,\\qquad V(b)=0",
+              "math": "V(r)-V(b)=-\\int_b^r\\vec{E}\\cdot d\\vec{l},\\qquad V(b)=0",
               "refs": [
                 "potential"
               ]
             },
             {
               "text": {
-                "zh": "选径向路径，积分变量用 s，避免和终点 r 混淆。",
-                "en": "Use a radial path and integration variable s, distinct from endpoint r."
+                "zh": "选径向路径，积分变量用 $s$，避免和终点 $r$ 混淆。",
+                "en": "Use a radial path and integration variable $s$, distinct from endpoint $r$."
               },
-              "math": "d\\mathbf l=\\hat{\\mathbf r}\\,ds,\\qquad V(r)=-\\int_b^r\\frac{a}{\\epsilon s}[\\rho_{sa}+\\rho_0(s-a)]\\,ds",
+              "math": "d\\vec{l}=\\hat{r}\\,ds,\\qquad V(r)=-\\int_b^r\\frac{a}{\\epsilon s}[\\rho_{sa}+\\rho_0(s-a)]\\,ds",
               "refs": []
             },
             {
               "text": {
-                "zh": "将括号展开成 1/s 项和常数项，再把积分上下限反转去掉外侧负号。",
-                "en": "Expand into a 1/s term and a constant, then reverse the limits to remove the leading minus sign."
+                "zh": "先展开被积函数，再将同类项合并；这一步能看出哪些项产生对数、哪些项产生线性函数。",
+                "en": "Expand the integrand and combine like terms first. This identifies the terms that produce a logarithm and those that produce a linear function."
               },
-              "math": "V(r)=\\frac a\\epsilon\\int_r^b\\left[\\frac{\\rho_{sa}-a\\rho_0}{s}+\\rho_0\\right]ds",
+              "math": "\\begin{aligned}\\frac{\\rho_{sa}+\\rho_0(s-a)}s&=\\frac{\\rho_{sa}+\\rho_0s-\\rho_0a}s\\\\&=\\frac{\\rho_{sa}-a\\rho_0}s+\\rho_0\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "分别积分：第一项产生对数，第二项产生线性距离。",
-                "en": "Integrate separately: the first term gives a logarithm and the second a linear distance."
+                "zh": "将积分上下限交换，定积分会多出一个负号，它正好抵消电势定义中的负号。再把和的积分拆成两个积分。",
+                "en": "Reversing a definite integral changes its sign, cancelling the minus sign in the potential definition. Then split the integral of a sum into two integrals."
               },
-              "math": "V(r)=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\,[\\ln s]_r^b+\\rho_0[s]_r^b\\right]",
+              "math": "\\begin{aligned}V(r)&=\\frac a\\epsilon\\int_r^b\\left[\\frac{\\rho_{sa}-a\\rho_0}s+\\rho_0\\right]ds\\\\&=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\int_r^b\\frac{ds}s+\\rho_0\\int_r^b1\\,ds\\right]\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "代入两端，使用 ln b−ln r=ln(b/r)。在 r=b 时对数项和线性项都为零。",
-                "en": "Evaluate both endpoints and use ln b−ln r=ln(b/r). Both terms vanish at r=b."
+                "zh": "第一项中半径为正。用无量纲比值的对数作原函数，代入上、下限后得到 $\\ln(b/r)$；这样也避免对有单位的长度单独取对数。",
+                "en": "The radius in the first term is positive. Use a logarithm of a dimensionless ratio as the antiderivative; evaluating its endpoints gives $\\ln(b/r)$ and avoids taking a logarithm of a dimensional length by itself."
+              },
+              "math": "\\begin{aligned}\\int_r^b\\frac{ds}s&=[\\ln(s/a)]_r^b\\\\&=\\ln(b/a)-\\ln(r/a)\\\\&=\\ln\\!\\left(\\frac{b/a}{r/a}\\right)=\\ln(b/r)\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "第二项是常数积分。原函数是积分变量本身，代入上限再减下限，得到 $b-r$。",
+                "en": "The second term is a constant integral. Its antiderivative is the integration variable itself; upper minus lower gives $b-r$."
+              },
+              "math": "\\int_r^b1\\,ds=[s]_r^b=b-r",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "把两个积分值分别乘回各自的系数后相加。代入接地点可以逐项核对电势为零。",
+                "en": "Multiply each integral value by its own coefficient and add them. Substitution at the grounded conductor checks that both terms vanish."
+              },
+              "math": "\\begin{aligned}V(r)&=\\frac a\\epsilon[(\\rho_{sa}-a\\rho_0)\\ln(b/r)+\\rho_0(b-r)]\\\\V(b)&=\\frac a\\epsilon[(\\rho_{sa}-a\\rho_0)\\ln1+\\rho_0(b-b)]=0\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "代入两端，使用 $\\ln b-\\ln r=\\ln(b/r)$。在 $r=b$ 时对数项和线性项都为零。",
+                "en": "Evaluate both endpoints and use $\\ln b-\\ln r=\\ln(b/r)$. Both terms vanish at $r=b$."
               },
               "math": "V(r)=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\ln\\frac br+\\rho_0(b-r)\\right]",
               "refs": []
@@ -903,8 +1039,8 @@
           "steps": [
             {
               "text": {
-                "zh": "先按定义写两导体电势差，再把上一问电位函数取在 a 和 b。",
-                "en": "Begin with the conductor potential difference and evaluate the preceding potential at a and b."
+                "zh": "先按定义写两导体电势差，再把上一问电位函数取在 $a$ 和 $b$。",
+                "en": "Begin with the conductor potential difference and evaluate the preceding potential at $a$ and $b$."
               },
               "math": "V_0=V(a)-V(b),\\qquad V(b)=0",
               "refs": [
@@ -913,32 +1049,48 @@
             },
             {
               "text": {
-                "zh": "将 r=a 代入，保留完整的对数项与线性项。",
-                "en": "Substitute r=a, retaining both logarithmic and linear contributions."
+                "zh": "将 $r=a$ 代入，保留完整的对数项与线性项。",
+                "en": "Substitute $r=a$, retaining both logarithmic and linear contributions."
               },
               "math": "V_0=\\frac a\\epsilon\\left[(\\rho_{sa}-a\\rho_0)\\ln\\frac ba+\\rho_0(b-a)\\right]",
               "refs": []
             },
             {
               "text": {
-                "zh": "两边乘 ε/a，先消去最外层的系数。",
-                "en": "Multiply both sides by ε/a to remove the outer coefficient."
+                "zh": "两边乘 $\\epsilon/a$，先消去最外层的系数。",
+                "en": "Multiply both sides by $\\epsilon/a$ to remove the outer coefficient."
               },
               "math": "\\frac{\\epsilon V_0}{a}=(\\rho_{sa}-a\\rho_0)\\ln(b/a)+\\rho_0(b-a)",
               "refs": []
             },
             {
               "text": {
-                "zh": "把与 ρsa 无关的线性项移到左边，再除以 ln(b/a)。",
-                "en": "Move the linear term independent of ρsa to the left and divide by ln(b/a)."
+                "zh": "先把不含未知面密度的线性项移到左侧：两边同时减去同一项，不能只改变它在右侧的符号。",
+                "en": "Move the linear term independent of the unknown surface density to the left by subtracting it from both sides."
+              },
+              "math": "\\frac{\\epsilon V_0}{a}-\\rho_0(b-a)=(\\rho_{sa}-a\\rho_0)\\ln(b/a)",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "由于 $b>a>0$，$\\ln(b/a)$ 为正且不为零，因此两边都能除以它。",
+                "en": "Since $b>a>0$, the quantity $\\ln(b/a)$ is positive and nonzero, so divide both sides by it."
               },
               "math": "\\rho_{sa}-a\\rho_0=\\frac{\\epsilon V_0/a-\\rho_0(b-a)}{\\ln(b/a)}",
               "refs": []
             },
             {
               "text": {
-                "zh": "最后加回 aρ₀，并把分子展开；每一项的量纲都是 C/m²。",
-                "en": "Add back aρ₀ and expand the numerator. Every term has dimension C/m²."
+                "zh": "两边加回 $a\\rho_0$，再把分子的两项分别除以同一个分母。",
+                "en": "Add $a\\rho_0$ to both sides, then divide each numerator term by the common denominator."
+              },
+              "math": "\\rho_{sa}=a\\rho_0+\\frac{\\epsilon V_0/a}{\\ln(b/a)}-\\frac{\\rho_0(b-a)}{\\ln(b/a)}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "最后加回 $a\\rho_{0}$，并把分子展开；每一项的量纲都是 $\\mathrm{C}/\\mathrm{m}^{2}$。",
+                "en": "Add back $a\\rho_0$ and expand the numerator. Every term has dimension $\\mathrm{C}/\\mathrm{m}^{2}$."
               },
               "math": "\\rho_{sa}=\\frac{\\epsilon V_0}{a\\ln(b/a)}+a\\rho_0-\\frac{\\rho_0(b-a)}{\\ln(b/a)}",
               "refs": []
@@ -977,32 +1129,40 @@
             },
             {
               "text": {
-                "zh": "把 c) 求出的 ρsa 完整代入。",
-                "en": "Substitute the full expression for ρsa from part c)."
+                "zh": "把 c) 求出的 $\\rho_{sa}$ 完整代入。",
+                "en": "Substitute the full expression for $\\rho_{sa}$ from part c)."
               },
               "math": "Q^\\prime=2\\pi a\\left[\\frac{\\epsilon V_0}{a\\ln(b/a)}+a\\rho_0-\\frac{\\rho_0(b-a)}{\\ln(b/a)}\\right]",
               "refs": []
             },
             {
               "text": {
-                "zh": "把含 V₀ 的线性项与固定电荷造成的偏移量分开。",
-                "en": "Separate the term linear in V₀ from the fixed-charge offset."
+                "zh": "把含 $V_{0}$ 的线性项与固定电荷造成的偏移量分开。",
+                "en": "Separate the term linear in $V_{0}$ from the fixed-charge offset."
               },
               "math": "Q^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}V_0+2\\pi a\\rho_0\\left[a-\\frac{b-a}{\\ln(b/a)}\\right]",
               "refs": []
             },
             {
               "text": {
-                "zh": "对 V₀ 求导。第一项留下系数，第二项在固定 ρ₀ 时导数为零。",
-                "en": "Differentiate with respect to V₀. The first term leaves its coefficient and the fixed-ρ₀ offset has zero derivative."
+                "zh": "求导时只改变 $V_0$。几何尺寸、介电常数和题设体电荷密度都固定，因此不含 $V_0$ 的整项都按常数求导。",
+                "en": "Only $V_0$ varies during differentiation. Geometry, permittivity and the specified volume density are fixed, so the entire term independent of $V_0$ is a constant."
               },
-              "math": "\\frac{\\partial Q^\\prime}{\\partial V_0}=\\frac{2\\pi\\epsilon}{\\ln(b/a)}(1)+0",
+              "math": "\\begin{aligned}\\left.\\frac{\\partial Q^\\prime}{\\partial V_0}\\right|_{\\rho_0}&=\\frac{2\\pi\\epsilon}{\\ln(b/a)}\\frac{\\partial V_0}{\\partial V_0}\\\\&\\quad+2\\pi a\\left[a-\\frac{b-a}{\\ln(b/a)}\\right]\\frac{\\partial\\rho_0}{\\partial V_0}\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "所以空间电荷改变 Q–V 曲线截距，却不改变这里的斜率。",
-                "en": "Space charge changes the Q–V intercept but not the slope in this model."
+                "zh": "变量对自身的导数为 $1$；固定的背景密度对电压的导数为 $0$。逐项代入后只留下线性项的系数。",
+                "en": "The derivative of a variable with respect to itself is $1$, while the fixed background density has zero voltage derivative. Substitution leaves only the coefficient of the linear term."
+              },
+              "math": "\\begin{aligned}\\frac{\\partial V_0}{\\partial V_0}&=1,\\qquad\\left.\\frac{\\partial\\rho_0}{\\partial V_0}\\right|_{\\rho_0}=0\\\\\\frac{\\partial Q^\\prime}{\\partial V_0}&=\\frac{2\\pi\\epsilon}{\\ln(b/a)}(1)\\\\&\\quad+2\\pi a\\left[a-\\frac{b-a}{\\ln(b/a)}\\right](0)\\end{aligned}",
+              "refs": []
+            },
+            {
+              "text": {
+                "zh": "所以空间电荷改变 $Q\\text{–}V$ 曲线截距，却不改变这里的斜率。",
+                "en": "Space charge changes the $Q\\text{–}V$ intercept but not the slope in this model."
               },
               "math": "C^\\prime=\\frac{2\\pi\\epsilon}{\\ln(b/a)}\\quad[\\mathrm{F/m}]",
               "refs": []
@@ -1050,8 +1210,8 @@
         "en": "Two immobile point charges are held at a height $z_0$ above a perfectly conducting plane that occupies the region $z<0$. A point charge $-q$ is located at $(-x_0,0,z_0)$ and a charge $+q$ is located at $(x_0,0,z_0)$. The region above the conductor $(z>0)$ has permittivity $\\varepsilon_0$."
       },
       "givens": [
-        "\\mathbf r_- =(-x_0,0,z_0)",
-        "\\mathbf r_+=(x_0,0,z_0)",
+        "\\vec{r}_- =(-x_0,0,z_0)",
+        "\\vec{r}_+=(x_0,0,z_0)",
         "P=(x,0,0^+)"
       ],
       "points": 10,
@@ -1093,8 +1253,8 @@
           "label": "a",
           "points": 0,
           "prompt": {
-            "zh": "在 x-z 平面内画出用于镜像法的几何示意图。包括真实电荷、镜像电荷及其坐标，并清楚标出导体表面的位置。",
-            "en": "Draw a diagram in the x-z plane showing the geometry you will use for applying the method of images. Include the real charges, their image charges, their coordinates, and clearly mark the position of the conducting surface."
+            "zh": "在 $x-z$ 平面内画出用于镜像法的几何示意图。包括真实电荷、镜像电荷及其坐标，并清楚标出导体表面的位置。",
+            "en": "Draw a diagram in the $x-z$ plane showing the geometry you will use for applying the method of images. Include the real charges, their image charges, their coordinates, and clearly mark the position of the conducting surface."
           },
           "steps": [
             {
@@ -1110,26 +1270,26 @@
             },
             {
               "text": {
-                "zh": "在 x–z 平面先画 z=0，再标出两个真实电荷及其坐标；二者的 y 坐标均为零。",
-                "en": "Draw z=0 in the x–z plane, then place both real charges with coordinates; both have y=0."
+                "zh": "在 $x\\text{–}z$ 平面先画 $z=0$，再标出两个真实电荷及其坐标；二者的 $y$ 坐标均为零。",
+                "en": "Draw $z=0$ in the $x\\text{–}z$ plane, then place both real charges with coordinates; both have $y=0$."
               },
               "math": "-q:\\ (-x_0,0,z_0),\\qquad +q:\\ (x_0,0,z_0)",
               "refs": []
             },
             {
               "text": {
-                "zh": "对左边的 −q，位置关于 z=0 反射，符号反转，得到位于下方的 +q。",
-                "en": "Reflect the left −q across z=0 and reverse its sign, obtaining +q below the plane."
+                "zh": "对左边的 $-q$，位置关于 $z=0$ 反射，符号反转，得到位于下方的 $+q$。",
+                "en": "Reflect the left $-q$ across $z=0$ and reverse its sign, obtaining $+q$ below the plane."
               },
-              "math": "q_{\\mathrm{im},L}=+q,\\qquad \\mathbf r_{\\mathrm{im},L}=(-x_0,0,-z_0)",
+              "math": "q_{\\mathrm{im},L}=+q,\\qquad \\vec{r}_{\\mathrm{im},L}=(-x_0,0,-z_0)",
               "refs": []
             },
             {
               "text": {
-                "zh": "对右边的 +q 作相同操作，得到下方的 −q；上下高度均应标为 z₀。",
-                "en": "Do the same for the right +q, obtaining −q below the plane. Mark equal heights z₀ above and below."
+                "zh": "对右边的 $+q$ 作相同操作，得到下方的 $-q$；上下高度均应标为 $z_{0}$。",
+                "en": "Do the same for the right $+q$, obtaining $-q$ below the plane. Mark equal heights $z_{0}$ above and below."
               },
-              "math": "q_{\\mathrm{im},R}=-q,\\qquad\\mathbf r_{\\mathrm{im},R}=(x_0,0,-z_0)",
+              "math": "q_{\\mathrm{im},R}=-q,\\qquad\\vec{r}_{\\mathrm{im},R}=(x_0,0,-z_0)",
               "refs": []
             },
             {
@@ -1156,12 +1316,12 @@
           "solutionPage": 8,
           "figure": "images-geometry",
           "answerText": {
-            "zh": "镜像只用于求 z>0 的真实场；z<0 是数学延拓区域。",
-            "en": "Images reproduce the physical field only for z>0; z<0 is a mathematical extension."
+            "zh": "镜像只用于求 $z>0$ 的真实场；$z<0$ 是数学延拓区域。",
+            "en": "Images reproduce the physical field only for $z>0$; $z<0$ is a mathematical extension."
           },
           "figureCaption": {
-            "zh": "x–z 平面的四电荷镜像构造，标出真实和镜像电荷坐标及导体表面 z=0。",
-            "en": "Four-charge image construction in the x–z plane, with real/image coordinates and conducting surface z=0."
+            "zh": "$x\\text{–}z$ 平面的四电荷镜像构造，标出真实和镜像电荷坐标及导体表面 $z=0$。",
+            "en": "Four-charge image construction in the $x\\text{–}z$ plane, with real/image coordinates and conducting surface $z=0$."
           },
           "id": "e2-s26-q4-a"
         },
@@ -1178,7 +1338,7 @@
                 "zh": "先写四点电荷的库仑场叠加式，场线切线方向必须与该合场一致。",
                 "en": "Begin with the Coulomb superposition of all four charges; field-line tangents must follow that total field."
               },
-              "math": "\\mathbf E(\\mathbf r)=\\frac1{4\\pi\\epsilon_0}\\sum_iq_i\\frac{\\mathbf r-\\mathbf r_i}{|\\mathbf r-\\mathbf r_i|^3}",
+              "math": "\\vec{E}(\\vec{r})=\\frac1{4\\pi\\epsilon_0}\\sum_iq_i\\frac{\\vec{r}-\\vec{r}_i}{|\\vec{r}-\\vec{r}_i|^3}",
               "refs": [
                 "coulomb"
               ]
@@ -1193,10 +1353,10 @@
             },
             {
               "text": {
-                "zh": "在平面上，真实电荷与对应镜像的切向场抵消、法向场相加，所以场线必须垂直穿过 z=0。",
-                "en": "On the plane, each real–image pair cancels tangential field and adds normal field, so field lines meet z=0 normally."
+                "zh": "在平面上，真实电荷与对应镜像的切向场抵消、法向场相加，所以场线必须垂直穿过 $z=0$。",
+                "en": "On the plane, each real–image pair cancels tangential field and adds normal field, so field lines meet $z=0$ normally."
               },
-              "math": "E_x(x,0,0)=0,\\qquad \\mathbf E(x,0,0)\\parallel\\hat{\\mathbf z}",
+              "math": "E_x(x,0,0)=0,\\qquad \\vec{E}(x,0,0)\\parallel\\hat{z}",
               "refs": [
                 "boundary"
               ]
@@ -1206,19 +1366,19 @@
                 "zh": "箭头从正电荷出发、到负电荷结束；图中上方主要由右向左，下方主要由左向右，符合四电荷的符号。",
                 "en": "Arrows leave positive charges and end on negative charges: mainly right to left above and left to right below, consistent with all four signs."
               },
-              "math": "\\frac{d\\mathbf r}{ds}\\parallel\\mathbf E(\\mathbf r)",
+              "math": "\\frac{d\\vec{r}}{ds}\\parallel\\vec{E}(\\vec{r})",
               "refs": []
             },
             {
               "text": {
-                "zh": "图中场线形状为对称几何示意，弯曲程度随 x₀/z₀ 改变。下半空间只表示镜像系统，真实导体内部 E=0。",
-                "en": "The lines illustrate the symmetric geometry; their curvature depends on x₀/z₀. Below the plane they show the image system only; the physical conductor has E=0."
+                "zh": "图中场线形状为对称几何示意，弯曲程度随 $x_{0}/z_{0}$ 改变。下半空间只表示镜像系统，真实导体内部 $\\vec E=0$。",
+                "en": "The lines illustrate the symmetric geometry; their curvature depends on $x_{0}/z_{0}$. Below the plane they show the image system only; the physical conductor has $\\vec E=0$."
               },
-              "math": "\\mathbf E(0^+)\\parallel\\hat{\\mathbf z}",
+              "math": "\\vec{E}(0^+)\\parallel\\hat{z}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E(0^+)\\parallel\\hat{\\mathbf z}",
+          "answer": "\\vec{E}(0^+)\\parallel\\hat{z}",
           "sourcePage": 8,
           "solutionPage": 8,
           "figure": "images-fieldlines",
@@ -1227,8 +1387,8 @@
             "en": "Arrows show direction; the physical field inside the conductor is zero."
           },
           "figureCaption": {
-            "zh": "场线以 x₀=z₀ 作几何示意，从正电荷到负电荷；下半空间仅为数学镜像系统，实际导体内部电场为零。",
-            "en": "Illustrative field lines with x₀=z₀, from positive to negative charges; the lower half is only the image system, and the physical conductor field is zero."
+            "zh": "场线以 $x_{0}=z_{0}$ 作几何示意，从正电荷到负电荷；下半空间仅为数学镜像系统，实际导体内部电场为零。",
+            "en": "Illustrative field lines with $x_{0}=z_{0}$, from positive to negative charges; the lower half is only the image system, and the physical conductor field is zero."
           },
           "id": "e2-s26-q4-b"
         },
@@ -1245,37 +1405,37 @@
                 "zh": "先写原表的点电荷电场。将单位径向矢量换成位移除以距离，就得到适合坐标代入的形式。",
                 "en": "Begin with the crib point-charge field. Replace the radial unit vector by displacement divided by distance for coordinate substitution."
               },
-              "math": "\\mathbf E=\\frac q{4\\pi\\epsilon_0R^2}\\hat{\\mathbf R}=\\frac{q\\mathbf R}{4\\pi\\epsilon_0R^3}",
+              "math": "\\vec{E}=\\frac q{4\\pi\\epsilon_0R^2}\\hat{R}=\\frac{q\\vec{R}}{4\\pi\\epsilon_0R^3}",
               "refs": [
                 "coulomb"
               ]
             },
             {
               "text": {
-                "zh": "源电荷位于 (x₀,0,z₀)，观察点为 (x,0,0)；位移必须是观察点减源点。",
-                "en": "The source is at (x₀,0,z₀) and observation point at (x,0,0). Displacement is observation minus source."
+                "zh": "源电荷位于 $(x_0,0,z_0)$，观察点为 $(x,0,0)$；位移必须是观察点减源点。",
+                "en": "The source is at $(x_0,0,z_0)$ and observation point at $(x,0,0)$. Displacement is observation minus source."
               },
-              "math": "\\mathbf R_+=(x,0,0)-(x_0,0,z_0)=(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}",
+              "math": "\\vec{R}_+=(x,0,0)-(x_0,0,z_0)=(x-x_0)\\hat{x}-z_0\\hat{z}",
               "refs": []
             },
             {
               "text": {
-                "zh": "逐分量求距离和单位矢量，注意 z 分量为负。",
-                "en": "Compute the distance and unit vector component by component, keeping the negative z component."
+                "zh": "逐分量求距离和单位矢量，注意 $z$ 分量为负。",
+                "en": "Compute the distance and unit vector component by component, keeping the negative $z$ component."
               },
-              "math": "R_+=\\sqrt{(x-x_0)^2+z_0^2},\\qquad \\hat{\\mathbf R}_+=\\frac{(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}}{\\sqrt{(x-x_0)^2+z_0^2}}",
+              "math": "R_+=\\sqrt{(x-x_0)^2+z_0^2},\\qquad \\hat{R}_+=\\frac{(x-x_0)\\hat{x}-z_0\\hat{z}}{\\sqrt{(x-x_0)^2+z_0^2}}",
               "refs": []
             },
             {
               "text": {
-                "zh": "将 q、位移和距离完整代入库仑定律。此问明确忽略导体，因此不加入镜像。",
+                "zh": "将 $q$、位移和距离完整代入库仑定律。此问明确忽略导体，因此不加入镜像。",
                 "en": "Substitute the charge, displacement and distance into Coulomb’s law. This part explicitly ignores the conductor, so include no image charges."
               },
-              "math": "\\mathbf E_{+q}(P)=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
+              "math": "\\vec{E}_{+q}(P)=\\frac{q[(x-x_0)\\hat{x}-z_0\\hat{z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_{+q}(P)=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
+          "answer": "\\vec{E}_{+q}(P)=\\frac{q[(x-x_0)\\hat{x}-z_0\\hat{z}]}{4\\pi\\epsilon_0[(x-x_0)^2+z_0^2]^{3/2}}",
           "sourcePage": 9,
           "solutionPage": 9,
           "id": "e2-s26-q4-c"
@@ -1293,33 +1453,33 @@
                 "zh": "总场由两个真实电荷和两个镜像电荷相加得到，不能只把 c) 的单个电场乘二。",
                 "en": "The total field sums both real charges and both images; doubling the single field in c) is insufficient."
               },
-              "math": "\\mathbf E_{\\mathrm{tot}}=\\frac1{4\\pi\\epsilon_0}\\sum_{i=1}^4q_i\\frac{\\mathbf R_i}{R_i^3}",
+              "math": "\\vec{E}_{\\mathrm{tot}}=\\frac1{4\\pi\\epsilon_0}\\sum_{i=1}^4q_i\\frac{\\vec{R}_i}{R_i^3}",
               "refs": [
                 "coulomb"
               ]
             },
             {
               "text": {
-                "zh": "用 R_L、R_R 分别表示观察点到左、右电荷列的距离；每列上下电荷到平面的距离相同。",
-                "en": "Use R_L and R_R for distances from P to the left and right charge columns. Within a column, real and image distances to P agree."
+                "zh": "用 $R_L$、$R_R$ 分别表示观察点到左、右电荷列的距离；每列上下电荷到平面的距离相同。",
+                "en": "Use $R_L$ and $R_R$ for distances from $P$ to the left and right charge columns. Within a column, real and image distances to $P$ agree."
               },
               "math": "R_L=\\sqrt{(x+x_0)^2+z_0^2},\\qquad R_R=\\sqrt{(x-x_0)^2+z_0^2}",
               "refs": []
             },
             {
               "text": {
-                "zh": "先展开右列：真实 +q 和镜像 −q 的 x 分量相消，z 分量相加为 −2qz₀。",
-                "en": "Expand the right column first: real +q and image −q cancel in x and add to −2qz₀ in z."
+                "zh": "先展开右列：真实 $+q$ 和镜像 $-q$ 的 $x$ 分量相消，$z$ 分量相加为 $-2qz_0$。",
+                "en": "Expand the right column first: real $+q$ and image $-q$ cancel in $x$ and add to $-2qz_0$ in $z$."
               },
-              "math": "\\begin{aligned}\\mathbf E_R&=\\frac{q[(x-x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_R^3}\\\\&\\quad-\\frac{q[(x-x_0)\\hat{\\mathbf x}+z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_R^3}\\\\&=-\\frac{2qz_0}{4\\pi\\epsilon_0R_R^3}\\hat{\\mathbf z}\\end{aligned}",
+              "math": "\\begin{aligned}\\vec{E}_R&=\\frac{q[(x-x_0)\\hat{x}-z_0\\hat{z}]}{4\\pi\\epsilon_0R_R^3}\\\\&\\quad-\\frac{q[(x-x_0)\\hat{x}+z_0\\hat{z}]}{4\\pi\\epsilon_0R_R^3}\\\\&=-\\frac{2qz_0}{4\\pi\\epsilon_0R_R^3}\\hat{z}\\end{aligned}",
               "refs": []
             },
             {
               "text": {
-                "zh": "再展开左列：真实 −q 和镜像 +q 的切向分量相消，法向分量给出相反的正号。",
-                "en": "Expand the left column next: real −q and image +q cancel tangentially and give the opposite, positive normal sign."
+                "zh": "再展开左列：真实 $-q$ 和镜像 $+q$ 的切向分量相消，法向分量给出相反的正号。",
+                "en": "Expand the left column next: real $-q$ and image $+q$ cancel tangentially and give the opposite, positive normal sign."
               },
-              "math": "\\begin{aligned}\\mathbf E_L&=-\\frac{q[(x+x_0)\\hat{\\mathbf x}-z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_L^3}\\\\&\\quad+\\frac{q[(x+x_0)\\hat{\\mathbf x}+z_0\\hat{\\mathbf z}]}{4\\pi\\epsilon_0R_L^3}\\\\&=+\\frac{2qz_0}{4\\pi\\epsilon_0R_L^3}\\hat{\\mathbf z}\\end{aligned}",
+              "math": "\\begin{aligned}\\vec{E}_L&=-\\frac{q[(x+x_0)\\hat{x}-z_0\\hat{z}]}{4\\pi\\epsilon_0R_L^3}\\\\&\\quad+\\frac{q[(x+x_0)\\hat{x}+z_0\\hat{z}]}{4\\pi\\epsilon_0R_L^3}\\\\&=+\\frac{2qz_0}{4\\pi\\epsilon_0R_L^3}\\hat{z}\\end{aligned}",
               "refs": []
             },
             {
@@ -1327,11 +1487,11 @@
                 "zh": "相加并提取公因子；这也显式验证了导体表面的切向场为零。",
                 "en": "Add and factor the common coefficient, explicitly verifying zero tangential field at the conductor."
               },
-              "math": "\\mathbf E_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{\\mathbf z}",
+              "math": "\\vec{E}_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{z}",
               "refs": []
             }
           ],
-          "answer": "\\mathbf E_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{\\mathbf z}",
+          "answer": "\\vec{E}_{\\mathrm{tot}}(P)=\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)\\hat{z}",
           "sourcePage": 9,
           "solutionPage": 9,
           "id": "e2-s26-q4-d"
@@ -1346,36 +1506,36 @@
           "steps": [
             {
               "text": {
-                "zh": "先写原表的法向位移跳变条件，法向取从导体指向空气的 +ẑ。",
-                "en": "Begin with the crib normal-displacement jump condition, using +ẑ from conductor into air."
+                "zh": "先写原表的法向位移跳变条件，法向取从导体指向空气的 $+\\hat{z}$。",
+                "en": "Begin with the crib normal-displacement jump condition, using $+\\hat{z}$ from conductor into air."
               },
-              "math": "D_{\\mathrm{out},n}-D_{\\mathrm{in},n}=\\rho_s,\\qquad\\hat{\\mathbf n}=+\\hat{\\mathbf z}",
+              "math": "D_{\\mathrm{out},n}-D_{\\mathrm{in},n}=\\rho_s,\\qquad\\hat{n}=+\\hat{z}",
               "refs": [
                 "boundary"
               ]
             },
             {
               "text": {
-                "zh": "导体内部 D=0，外部为 ε₀E；因此表面电荷等于外侧电场的有符号法向分量乘 ε₀。",
-                "en": "Inside the conductor D=0 and outside D=ε₀E, so surface charge is ε₀ times the signed exterior normal field."
+                "zh": "导体内部 $\\vec D=0$，外部为 $\\epsilon_{0}\\vec E$；因此表面电荷等于外侧电场的有符号法向分量乘 $\\epsilon_{0}$。",
+                "en": "Inside the conductor $\\vec D=0$ and outside $\\vec D=\\epsilon_0\\vec E$, so surface charge is $\\epsilon_{0}$ times the signed exterior normal field."
               },
-              "math": "\\rho_s=\\epsilon_0\\mathbf E(0^+)\\cdot\\hat{\\mathbf z}=\\epsilon_0 E_z(0^+)",
+              "math": "\\rho_s=\\epsilon_0\\vec{E}(0^+)\\cdot\\hat{z}=\\epsilon_0 E_z(0^+)",
               "refs": [
                 "constitutive"
               ]
             },
             {
               "text": {
-                "zh": "完整代入 d) 的电场，先保留 ε₀ 因子再约去。",
-                "en": "Substitute the full field from d), retaining ε₀ before cancellation."
+                "zh": "完整代入 d) 的电场，先保留 $\\epsilon_{0}$ 因子再约去。",
+                "en": "Substitute the full field from d), retaining $\\epsilon_{0}$ before cancellation."
               },
               "math": "\\rho_s=\\epsilon_0\\frac{qz_0}{2\\pi\\epsilon_0}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)=\\frac{qz_0}{2\\pi}\\left(\\frac1{R_L^3}-\\frac1{R_R^3}\\right)",
               "refs": []
             },
             {
               "text": {
-                "zh": "用位置坐标展开距离；在 x=0 两项相等，右侧 x>0 对应负的感应电荷，可作符号核对。",
-                "en": "Expand the distances in coordinates. At x=0 the terms cancel; for x>0 the induced charge is negative, providing a sign check."
+                "zh": "用位置坐标展开距离；在 $x=0$ 两项相等，右侧 $x>0$ 对应负的感应电荷，可作符号核对。",
+                "en": "Expand the distances in coordinates. At $x=0$ the terms cancel; for $x>0$ the induced charge is negative, providing a sign check."
               },
               "math": "\\rho_s(x)=\\frac{qz_0}{2\\pi}\\left[\\frac1{((x+x_0)^2+z_0^2)^{3/2}}-\\frac1{((x-x_0)^2+z_0^2)^{3/2}}\\right]",
               "refs": []
