@@ -11,7 +11,6 @@
   import FileText from '@lucide/svelte/icons/file-text';
   import Bookmark from '@lucide/svelte/icons/bookmark';
   import Check from '@lucide/svelte/icons/check';
-  import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
   import ShieldCheck from '@lucide/svelte/icons/shield-check';
   import { DEFAULT_PROBLEM_ID, problemPath, followProblemLink } from '#lib/problem-navigation';
   import type { StudyState } from '#lib/study.svelte';
@@ -59,7 +58,6 @@
       <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('lectures')}><BookOpen data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'课程讲义':'Lecture notes'}<span class="resource-shortcut">01–15</span></Button>
       <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('bookmarks')}><Bookmark data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'我的收藏':'Saved problems'}<span class="resource-shortcut">{study.catalog.problemEntries.filter(({problem})=>study.bookmarks[problem.id]).length}</span></Button>
     </div>
-    <div class="nav-tip"><span class="tiny-label">{study.locale==='zh'?'更好的学习方式':'A BETTER WAY TO STUDY'}</span><p>{study.locale==='zh'?'不只记住答案，\n更要找到它的来处。':'Go beyond the answer.\nFind where it comes from.'}</p><Button variant="link" size="sm" onclick={()=>onlibrary('crib')}>{study.locale==='zh'?'从公式表开始':'Start with the crib sheet'}<ArrowUpRight data-icon="inline-end" aria-hidden="true"/></Button></div>
   </div>
   <div class="nav-progress">
     <div class="progress-summary"><span>{study.locale==='zh'?'学习进度':'Your progress'}</span><strong>{progress}<span> / {partIds.length}</span></strong></div>

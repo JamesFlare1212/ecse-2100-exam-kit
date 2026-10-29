@@ -52,7 +52,7 @@ export async function checkI18n(browser, base, record) {
     await page.waitForFunction(() => document.querySelector('[data-study-ready="true"]'));
     assert.equal(await page.locator('.problem-kicker').textContent(), '题目 01');
     assert.ok((await page.locator('.course-eyebrow').textContent()).includes('学习桌'));
-    assert.equal(await page.locator('.tiny-label').textContent(), '更好的学习方式');
+    assert.equal(await page.locator('.resource-label').textContent(), '学习资料');
     assert.ok((await page.locator('meta[name="description"]').getAttribute('content')).includes('份历年试卷'));
     assert.equal(await page.getByText('原题措辞', { exact: true }).count(), 1);
     await page.getByRole('tab', { name: '试卷原页', exact: true }).click();
@@ -72,7 +72,7 @@ export async function checkI18n(browser, base, record) {
     await page.setViewportSize({ width: 375, height: 812 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.getByRole('button', { name: 'Open exam navigation', exact: true }).click();
-    assert.equal(await page.getByRole('dialog').locator('.tiny-label').textContent(), 'A BETTER WAY TO STUDY');
+    assert.equal(await page.getByRole('dialog').locator('.resource-label').textContent(), 'YOUR RESOURCES');
     await page.keyboard.press('Escape');
     record('Desktop and phone interface labels, metadata, source-image alternatives and English reload follow the global language');
 
