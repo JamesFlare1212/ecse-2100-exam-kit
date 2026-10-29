@@ -6,7 +6,7 @@ const browser=await chromium.launch({headless:true,...(process.env.QA_CHROMIUM?{
 const base=process.env.QA_URL??'http://127.0.0.1:4187', key='ecse2100-fieldnotes-v1', checks=[];
 const ids=['e1-f25','e1-f26','e1-s26','e2-f25','e2-s26'].flatMap(p=>[1,2,3,4].map(n=>`${p}-q${n}`));
 const pass=(name,data={})=>{checks.push({name,...data});console.log('PASS',name,JSON.stringify(data));};
-const ready=p=>p.waitForFunction(()=>document.querySelector('main[data-study-ready=true]')&&!document.documentElement.hasAttribute('data-render-pending'));
+const ready=p=>p.waitForFunction(()=>document.querySelector('main[data-study-ready=true]'));
 const go=async(p,id)=>{await p.goto(`${base}/problems/${id}/`,{waitUntil:'domcontentloaded'});await ready(p);await p.evaluate(()=>document.fonts.ready);};
 const fit=p=>p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1);
 try{

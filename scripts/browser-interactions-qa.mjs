@@ -5,7 +5,7 @@ const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'playwright');
 const b=await chromium.launch({headless:true,...(process.env.QA_CHROMIUM?{executablePath:process.env.QA_CHROMIUM}:{}),args:['--no-sandbox']});
 const base=process.env.QA_URL??'http://127.0.0.1:4187',checks=[];
 const pass=(name,data={})=>{checks.push({name,...data});console.log('PASS',name,JSON.stringify(data));};
-const ready=p=>p.waitForFunction(()=>document.querySelector('[data-study-ready=true]')&&!document.documentElement.hasAttribute('data-render-pending'));
+const ready=p=>p.waitForFunction(()=>document.querySelector('[data-study-ready=true]'));
 const go=async(p,id)=>{await p.goto(`${base}/problems/${id}/`);await ready(p);await p.evaluate(()=>document.fonts.ready);};
 try{
  const c=await b.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce'}),p=await c.newPage();p.setDefaultTimeout(10000);

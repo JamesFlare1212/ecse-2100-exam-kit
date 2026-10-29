@@ -5,8 +5,29 @@ retain their source notation. Embedded font subsets keep SVG images independent
 of the reader's installed fonts and make no runtime font requests.
 """
 import base64
+from functools import lru_cache
+from io import BytesIO
 import re
 from pathlib import Path
+
+from fontTools import subset
+from fontTools.ttLib import TTFont
+
+
+@lru_cache(maxsize=128)
+def subset_font(path, codepoints):
+    """Physically remove unused glyphs; unicode-range alone only selects a face."""
+    with TTFont(path, recalcTimestamp=False) as font:
+        options = subset.Options()
+        options.ignore_missing_unicodes = False
+        # Retain the font's attribution and license in each embedded subset.
+        options.name_IDs += [13, 14]
+        subsetter = subset.Subsetter(options=options)
+        subsetter.populate(unicodes=codepoints)
+        subsetter.subset(font)
+        output = BytesIO()
+        font.save(output)
+        return output.getvalue()
 
 
 def localize(path, labels):
@@ -34,9 +55,9 @@ def localize(path, labels):
         if not covered:
             continue
         file = fonts / re.search(r'url\(\./([^\)]+)\)', block).group(1)
-        encoded = base64.b64encode(file.read_bytes()).decode()
-        subset = ','.join(f'U+{code:X}' for code in sorted(covered))
-        faces.append("@font-face{font-family:'Fieldnotes Chinese';font-weight:100 900;src:url(data:font/woff2;base64," + encoded + ") format('woff2');unicode-range:" + subset + ';}')
+        encoded = base64.b64encode(subset_font(file, tuple(sorted(covered)))).decode()
+        ranges_used = ','.join(f'U+{code:X}' for code in sorted(covered))
+        faces.append("@font-face{font-family:'Fieldnotes Chinese';font-weight:100 900;src:url(data:font/woff2;base64," + encoded + ") format('woff2');unicode-range:" + ranges_used + ';}')
         missing -= covered
     if missing:
         raise ValueError(f'Missing local font characters: {missing}')

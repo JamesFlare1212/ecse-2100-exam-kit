@@ -8,7 +8,7 @@ const base=process.env.QA_URL??'http://127.0.0.1:4187', key='ecse2100-fieldnotes
 const checks=[], errors=[];
 const ids=['e1-f25','e1-f26','e1-s26','e2-f25','e2-s26'].flatMap(p=>[1,2,3,4].map(n=>`${p}-q${n}`));
 const pass=(name,data={})=>{checks.push({name,...data});console.log('PASS',name,JSON.stringify(data));};
-const ready=p=>p.waitForFunction(()=>document.querySelector('main[data-study-ready=true]')&&!document.documentElement.hasAttribute('data-render-pending'));
+const ready=p=>p.waitForFunction(()=>document.querySelector('main[data-study-ready=true]'));
 const stored=p=>p.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
 const goto=async(p,id)=>{await p.goto(`${base}/problems/${id}/`);await ready(p);};
 const newContext=async(options={})=>{const c=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce',...options});c.on('page',p=>{p.setDefaultTimeout(10000);p.on('pageerror',e=>errors.push(e.message));});return c;};

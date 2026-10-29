@@ -2,14 +2,9 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/layout.css';
 import favicon from '#lib/assets/favicon.svg';
-import {criticalFontFiles} from '../../content/fonts.server';
 import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-const cjkFonts=import.meta.glob('../../node_modules/@fontsource-variable/noto-sans-sc/files/*.woff2',{eager:true,query:'?url',import:'default'}) as Record<string,string>;
-const mathFonts=import.meta.glob('../../node_modules/katex/dist/fonts/KaTeX_{Main-Regular,Main-Bold,Math-Italic,Size1-Regular,Size2-Regular}.woff2',{eager:true,query:'?url',import:'default'}) as Record<string,string>;
-interface Props { title: string; description: string; fontText?:string }
-const { title, description, fontText='' } = Astro.props;
-const labels='历年试卷学习资料课程讲义公式表我的收藏学习进度保存在此浏览器更好的方式不只记住答案更要找到它的来处从开始知识连接让每一步推导都有据可循题目与试卷原页原题措辞分小问已掌握先写方程再代入数值图示矢量复刻原始插图放大查看定位收起展开全部推导学习桌春季秋季';
-const critical=new Set(criticalFontFiles(title+fontText+labels));
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
 ---
 <!doctype html>
 <html lang="zh-CN" transition:animate="none">
@@ -22,28 +17,7 @@ const critical=new Set(criticalFontFiles(title+fontText+labels));
     <meta name="description" content={description} />
     <link rel="icon" href={favicon.src} />
     <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
-    {Object.values(mathFonts).map(href=><link rel="preload" {href} as="font" type="font/woff2" crossorigin />)}
-    {Object.entries(cjkFonts).filter(([file])=>critical.has(file.split('/').at(-1)!)).map(([,href])=><link rel="preload" {href} as="font" type="font/woff2" crossorigin />)}
     <script is:inline data-astro-rerun>
-      if (!document.querySelector('[data-study-ready="true"]')) {
-        document.documentElement.dataset.renderPending = '';
-        const reveal = () => {
-          delete document.documentElement.dataset.renderPending;
-          window.clearTimeout(timeout);
-          window.removeEventListener('error', failed, true);
-          window.removeEventListener('unhandledrejection', reveal);
-          document.removeEventListener('astro:hydration-error', reveal);
-          document.removeEventListener('fieldnotes:ready', reveal);
-        };
-        const failed = (event) => {
-          if (event instanceof ErrorEvent || event.target instanceof HTMLScriptElement) reveal();
-        };
-        const timeout = window.setTimeout(reveal, 8000);
-        window.addEventListener('error', failed, true);
-        window.addEventListener('unhandledrejection', reveal);
-        document.addEventListener('astro:hydration-error', reveal);
-        document.addEventListener('fieldnotes:ready', reveal);
-      }
       try {
         const p = JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1') || '{}');
         const dark = p.theme === 'dark' || ((!p.theme || p.theme === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
@@ -66,11 +40,10 @@ const critical=new Set(criticalFontFiles(title+fontText+labels));
     <ClientRouter fallback="swap" />
   </head>
   <body>
-    <div id="startup-status" class="startup-status" role="status">
-      <span lang="zh-CN">正在准备阅读界面，请稍候。</span>
-      <span lang="en">Preparing the reading view.</span>
+    <div id="startup-status" class="startup-status" role="status" hidden>
+      <span lang="zh-CN">交互功能尚未就绪。可继续阅读题目，或重新加载后重试。</span>
+      <span lang="en">Study controls are not ready. Keep reading or reload to retry.</span>
       <a href="" lang="zh-CN">重新加载 / Reload</a>
-      <button type="button" onclick="document.dispatchEvent(new Event('fieldnotes:ready'))">立即阅读静态题目 / Read static question</button>
     </div>
     <noscript><style>#startup-status { display:none; }</style><p class="startup-status">交互需要 JavaScript，仍可阅读静态题目。 / Enable JavaScript for study controls; static questions remain readable.</p></noscript>
     <!-- Keep native Svelte portals attached when ClientRouter replaces the body. -->
@@ -81,8 +54,7 @@ const critical=new Set(criticalFontFiles(title+fontText+labels));
         const status = document.getElementById('startup-status');
         if (status && !document.querySelector('[data-study-ready="true"], [data-error-ready="true"]')) {
           status.setAttribute('role','alert');
-          status.querySelector('span[lang="zh-CN"]').textContent = '交互功能尚未就绪。可继续阅读题目，或重新加载后重试。';
-          status.querySelector('span[lang="en"]').textContent = 'Study controls are not ready. Keep reading or reload to retry.';
+          status.hidden = false;
         }
       }, 5000);
     </script>

@@ -23,19 +23,20 @@ export async function checkI18n(browser, base, record) {
       await page.goto(`${base}/problems/e1-f26-q1/`, { waitUntil: 'commit' });
       await page.waitForFunction(() => document.getElementById('problem-title'));
       assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
-      assert.ok(await page.locator('#startup-status').isVisible());
+      assert.ok(await page.locator('#problem-title').isVisible());
+      assert.ok(await page.locator('[data-original-statement]').isVisible());
       assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN');
-      // Hold beyond the old timeout approach: slow scripts must not reveal Chinese.
+      // Static questions stay readable while the saved language awaits hydration.
       await page.waitForTimeout(3200);
       assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
-      assert.ok(await page.locator('#startup-status').isVisible());
+      assert.ok(await page.locator('#problem-title').isVisible());
       release();
-      await page.waitForFunction(() => !document.documentElement.hasAttribute('data-render-pending'));
+      if (!failScripts) await page.waitForFunction(() => document.querySelector('[data-study-ready="true"]'));
       assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
       assert.equal(await page.locator('html').getAttribute('lang'), failScripts ? 'zh-CN' : 'en');
       assert.equal(await page.locator('#problem-title').textContent(), failScripts ? '传输线基础' : 'Transmission Line Fundamentals');
-      record(failScripts ? 'Failed application scripts reveal readable static Chinese with the correct document language'
-        : 'A visible loading state prepares saved English; script failures restore readable static content');
+      record(failScripts ? 'Failed application scripts preserve readable static Chinese with the correct document language'
+        : 'Static questions remain readable until hydration applies saved English');
     } finally {
       release();
       await context.close();
@@ -89,6 +90,7 @@ export async function checkI18n(browser, base, record) {
     assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
     await page.getByRole('button', { name: '切换为中文', exact: true }).click();
     assert.equal(await page.getByRole('heading', { name: '找不到这道题', exact: true }).count(), 1);
+    await page.waitForFunction(key => JSON.parse(localStorage.getItem(key)).locale === 'zh', storageKey);
     assert.deepEqual(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), storageKey), { ...saved, locale: 'zh' });
     await page.getByRole('link', { name: '返回习题室', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-study-ready="true"]'));

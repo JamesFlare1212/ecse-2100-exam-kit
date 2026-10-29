@@ -67,7 +67,6 @@
   let mobileRailTab=$state('formulas');
   let sourceTrigger: HTMLElement | null = null;
   let macKeys=$state(false);
-  let rendered=$state(false);
   let restoreTraversalFocus=$state<(()=>void)|undefined>();
   const t=(zh:string,en:string)=>study.locale==='zh'?zh:en;
   const navigationLabel=$derived(compactNavigation?t('打开试卷导航','Open exam navigation'):t(study.navigationOpen?'收起试卷导航':'展开试卷导航',study.navigationOpen?'Collapse exam navigation':'Expand exam navigation'));
@@ -81,7 +80,6 @@
     if(!study.ready)return;
     document.title=`${problem.title[study.locale]} · Fieldnotes · ECSE 2100`;
     document.querySelector('meta[name="description"]')?.setAttribute('content',t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`));
-    void tick().then(()=>document.fonts.ready).then(async()=>{rendered=true;await tick();document.dispatchEvent(new Event('fieldnotes:ready'));});
   });
 
   function library(kind:string){libraryKind=kind;libraryOpen=true;navOpen=false;}
@@ -123,7 +121,7 @@
       if(!traversal||location.pathname!==traversal||problemPath(problem.id).replace(/\/$/,'')!==traversal.replace(/\/$/,''))return;
       const destination=traversal;
       requestAnimationFrame(async()=>{
-        await tick();await document.fonts.ready;
+        await tick();
         if(traversal!==destination||location.pathname!==destination)return;
         const candidates=[...document.querySelectorAll<HTMLElement>('main button, main a, main [tabindex="0"]')];
         const target=candidates.find(node=>{const box=node.getBoundingClientRect();return box.height>0&&box.top>=80&&box.top<innerHeight-20;});
@@ -145,22 +143,16 @@
     macKeys=/Mac|iPhone|iPad/.test(navigator.platform);
     const stored=(event:StorageEvent)=>{if(event.key==='ecse2100-fieldnotes-v1')untrack(()=>study.sync(event.newValue));};
     window.addEventListener('storage',stored);
-    let pendingHashFocus:(()=>void)|undefined;
     const hashPart=()=>{
-      if(pendingHashFocus)document.removeEventListener('fieldnotes:ready',pendingHashFocus);
       let id:string;
       try{id=decodeURIComponent(location.hash.slice(1));}catch{return;}
       if(problem.parts.some(p=>p.id===id)){
         openParts=[id];
-        const focusPart=()=>{void tick().then(()=>requestAnimationFrame(()=>{
-          if(document.documentElement.hasAttribute('data-render-pending')||location.hash!=='#'+encodeURIComponent(id))return;
+        void tick().then(()=>requestAnimationFrame(()=>{
+          if(location.hash!=='#'+encodeURIComponent(id))return;
           const target=document.querySelector<HTMLElement>(`[data-part="${id}"] .part-trigger`);
           target?.focus({preventScroll:true});target?.scrollIntoView({block:'start'});
-        }));};
-        if(document.documentElement.hasAttribute('data-render-pending')){
-          pendingHashFocus=focusPart;
-          document.addEventListener('fieldnotes:ready',focusPart,{once:true});
-        }else focusPart();
+        }));
       }
     };
     hashPart();document.addEventListener('astro:page-load',hashPart);
@@ -170,7 +162,7 @@
       else if((event.metaKey||event.ctrlKey)&&!event.altKey&&!event.shiftKey&&event.key.toLowerCase()==='b'){event.preventDefault();toggleNavigation();}
     };
     window.addEventListener('keydown',keydown);
-    return()=>{preference.removeEventListener('change',onAppearance);navLayout.removeEventListener('change',onNavLayout);refLayout.removeEventListener('change',onRefLayout);window.removeEventListener('keydown',keydown);window.removeEventListener('storage',stored);document.removeEventListener('astro:page-load',hashPart);document.removeEventListener('astro:before-preparation',beforeNavigation);document.removeEventListener('astro:page-load',restoreReadingFocus);if(pendingHashFocus)document.removeEventListener('fieldnotes:ready',pendingHashFocus);};
+    return()=>{preference.removeEventListener('change',onAppearance);navLayout.removeEventListener('change',onNavLayout);refLayout.removeEventListener('change',onRefLayout);window.removeEventListener('keydown',keydown);window.removeEventListener('storage',stored);document.removeEventListener('astro:page-load',hashPart);document.removeEventListener('astro:before-preparation',beforeNavigation);document.removeEventListener('astro:page-load',restoreReadingFocus);};
   });
 </script>
 
@@ -195,7 +187,7 @@
         </div>
       </header>
       <div class="reading-layout" data-references={study.referencesOpen?'open':'closed'}>
-        <main id="main-content" class="main-content" data-problem={problem.id} data-study-ready={rendered}>
+        <main id="main-content" class="main-content" data-problem={problem.id} data-study-ready={study.ready}>
           <div class="course-eyebrow"><span class="eyebrow-line"></span>FIELDS & WAVES I <span class="eyebrow-divider">/</span> {t('学习桌','THE STUDY DESK')}</div>
           <div class="problem-meta"><Badge variant="outline">Exam {exam.number}</Badge><span>{exam.term[study.locale]} {exam.year}</span><span class="metadata-dot">·</span><span>{problem.points} {t('分','points')}</span><span class="metadata-dot">·</span><span>{problem.parts.length} {t('小问','parts')}</span></div>
           <div class="problem-title-row"><div><p class="problem-kicker">{t('题目','PROBLEM')} {String(problem.number).padStart(2,'0')}</p><h1 id="problem-title" lang={study.locale==='zh'?'zh-CN':'en'} tabindex="-1">{problem.title[study.locale]}</h1></div><Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'outline',size:'icon'})} onclick={()=>study.bookmarks[problem.id]=!study.bookmarks[problem.id]} aria-label={t(study.bookmarks[problem.id]?'取消收藏':'收藏此题',study.bookmarks[problem.id]?'Remove bookmark':'Bookmark problem')} aria-pressed={Boolean(study.bookmarks[problem.id])}>{#if study.bookmarks[problem.id]}<BookmarkCheck aria-hidden="true"/>{:else}<Bookmark aria-hidden="true"/>{/if}</Tooltip.Trigger><Tooltip.Content>{t(study.bookmarks[problem.id]?'已收藏':'留待再次练习',study.bookmarks[problem.id]?'Saved':'Save for another attempt')}</Tooltip.Content></Tooltip.Root></div>

@@ -106,6 +106,8 @@ QA_URL=http://localhost:4173 bun scripts/browser-qa.mjs
 
 若浏览器装在自定义位置，同时设置 `PLAYWRIGHT_BROWSERS_PATH`。结果写入 Git 忽略的 `artifacts/`，测试使用独立浏览器上下文，不修改日常浏览器进度。
 
+`scripts/browser-startup-qa.mjs` 使用同样的环境变量，CI 会单独运行。它为每道题建立冷缓存上下文，记录从 HTML 响应到正文可见的时间；在手机、桌面和两种语言下扣住脚本及字体，验证静态题目先可读、脚本到达后交互不等字体，并限制晚到字体造成的布局偏移与字体下载量。构建同时限制每页字体预加载不超过 64 KiB。中文正文使用系统中文字体；图内中文仍用离线裁剪的 Noto 字形，`check_figures.py` 会解码交付 SVG 的内嵌字体，检查字形覆盖、多余字符及每图 32 KiB 的字体上限。
+
 编辑题库和构建站点只需要 Bun。只有重新绘图、渲染 PDF 页图及裁图，或核验这些图像工具时才需要 Python：
 
 ```bash

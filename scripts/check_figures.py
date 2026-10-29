@@ -1,16 +1,46 @@
 """Render and inspect the actual figure generators without changing static assets."""
 import argparse
+import base64
+from io import BytesIO
 import itertools
 import json
 import math
+import re
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 import numpy as np
 from matplotlib.text import Text
+from fontTools.ttLib import TTFont
 import generate_figures as figures
 
 
+def check_embedded_fonts():
+    """Inspect the delivered SVGs, including the post-render Chinese labels."""
+    count = 0
+    for paper in figures.papers():
+        for path in (paper['directory'] / 'assets/figures').glob('*.svg'):
+            svg = path.read_text()
+            text = ''.join(''.join(node.itertext()) for node in ET.fromstring(svg).iter('{http://www.w3.org/2000/svg}text'))
+            characters = {ord(char) for char in text}
+            chinese = {code for code in characters if 0x4e00 <= code <= 0x9fff}
+            payloads = re.findall(r'data:font/woff2;base64,([A-Za-z0-9+/=]+)', svg)
+            covered, size = set(), 0
+            for payload in payloads:
+                data = base64.b64decode(payload)
+                size += len(data)
+                with TTFont(BytesIO(data)) as font:
+                    glyphs = set(font.getBestCmap())
+                assert glyphs <= characters, (path, 'embedded unused characters', glyphs - characters)
+                covered.update(glyphs)
+            assert chinese <= covered, (path, 'missing embedded Chinese glyphs', chinese - covered)
+            assert size <= 32 * 1024, (path, 'embedded fonts exceed 32 KiB', size)
+            count += bool(payloads)
+    print(f'Checked {count} SVGs with embedded fonts: all Chinese labels covered; no unused characters; each below 32 KiB.')
+
+
 def review(output):
+    check_embedded_fonts()
     output.mkdir(parents=True, exist_ok=True)
     results = []
 
