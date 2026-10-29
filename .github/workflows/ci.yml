@@ -53,7 +53,7 @@ jobs:
       - name: Check cold reading, delayed fonts and font budgets
         run: |
           trap 'bun --bun astro preview stop' EXIT
-          bun run preview
+          bun run preview --background
           PLAYWRIGHT_MODULE="$RUNNER_TEMP/fieldnotes-browser/node_modules/playwright/index.mjs" \
             QA_URL=http://127.0.0.1:4173 bun scripts/browser-startup-qa.mjs
 
