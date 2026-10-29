@@ -21,7 +21,7 @@ export async function checkContentLocales(browser, base, record) {
         assert.ok((await page.locator('.figure-image img').first().getAttribute('src')).startsWith(prefix + 'original-figures/'));
         await page.getByRole('tab', { name: english ? 'Source pages' : '试卷原页', exact: true }).click();
         assert.ok((await page.locator('.original-page-card img').first().getAttribute('src')).startsWith(prefix + 'pages/'));
-        await page.getByRole('button', { name: english ? 'Inspect page' : '放大查看', exact: true }).first().click();
+        await page.getByRole('button', { name: english ? /^Inspect page \d+$/ : /^放大查看第 \d+ 页$/ }).first().click();
         const dialog = page.locator('.source-dialog');
         await dialog.waitFor();
         assert.ok((await dialog.locator('.source-paper img').getAttribute('src')).startsWith(prefix + 'pages/'));

@@ -184,7 +184,7 @@ def tl_circuit(ax, rg, load, z0=r'$Z_0$', length=r'$L$', dc=False,
         text(ax, 7.97, 1.4, load, va='center', fontsize=11)
     for x in [4.15,6.65]:
         for y in [.35,2.4]:node(ax,x,y)
-    text(ax, 5.38, 1.35, z0, ha='center', color=ACCENT, fontsize=13)
+    text(ax, 4.9 if damage else 5.38, 1.35, z0, ha='center', color=ACCENT, fontsize=13)
     if length:
         arrow(ax, (4.15,.02),(6.65,.02), style='<->')
         text(ax, 5.4, -.34, length, ha='center', fontsize=11,
@@ -251,8 +251,8 @@ def stub_network(ax, spring=False, source_circuit=False, spring_c=False):
         arrow(ax,(2.1,.8),(2.7,.8))
         text(ax,2.1,-.7,r'$Y_{in}$' if spring else r'$Z_{in}$',ha='center')
         if spring:
-            text(ax,joint+.33,top-.42,r'$Y_d$',fontsize=10)
-            text(ax,joint+.12,bottom-.45,r'$Y_s$',fontsize=10)
+            text(ax,joint+1.1,top-.30,r'$Y_d$',fontsize=10)
+            text(ax,joint-.1,bottom-1.1,r'$Y_s$',fontsize=10)
     if not spring_c:
         arrow(ax,(joint,top+.32),(7.6,top+.32),style='<->')
         text(ax,(joint+7.6)/2,top+.25,r'$d$' if spring or source_circuit else r'$d_1$',ha='center',

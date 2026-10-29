@@ -395,7 +395,7 @@ try {
   assert.equal(await practicePart.locator('[data-answer]').count(),1);
   assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
-  await page.getByRole('button',{name:'标记已掌握',exact:true}).first().click();
+  await page.getByRole('button',{name:/小问 .+: 标记已掌握/}).first().click();
   record('Solutions collapse and reopen in full; mastery and legacy records remain independent');
   assert.equal(await page.getByRole('tab',{name:'我的笔记',exact:true}).count(),0);
   assert.equal(await page.locator('textarea').count(),0);

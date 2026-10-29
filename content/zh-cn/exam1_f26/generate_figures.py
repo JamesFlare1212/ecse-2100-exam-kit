@@ -7,6 +7,8 @@ import numpy as np
 import plotting as p
 import question_primitives as q
 
+SVG_LABELS = {'Source': '源端', 'Load': '负载', 'Impedance Smith chart': '阻抗 Smith 圆图', 'Voltage envelope (V)': '电压包络 (V)'}
+
 
 def render_figures(save, dark):
     p.setup(dark)

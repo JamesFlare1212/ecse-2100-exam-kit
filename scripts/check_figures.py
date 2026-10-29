@@ -26,6 +26,15 @@ def review(output):
             for (a, first), (b, second) in itertools.combinations(boxes, 2):
                 if first.overlaps(second):
                     collisions.append([a.get_text(), b.get_text()])
+            # Regression: electrical strokes must not pass through these labels.
+            guarded = {'e1-f26-q2': {'$Z_0=50$'}, 'e1-s26-q4': {'$Y_d$', '$Y_s$'}}.get(name, set())
+            for label, box in boxes:
+                if label.get_text() not in guarded:
+                    continue
+                for stroke in ax.lines:
+                    path = stroke.get_path().transformed(stroke.get_transform())
+                    if box.overlaps(path.get_extents()) and path.intersects_bbox(box, filled=False):
+                        strokes.append([label.get_text(), 'electrical stroke'])
             geometry = getattr(ax, '_projection_geometry', None)
             if geometry:
                 camera = geometry['camera']

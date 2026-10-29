@@ -7,6 +7,8 @@ import numpy as np
 import plotting as p
 import question_primitives as q
 
+SVG_LABELS = {'Source': '源端', 'Load': '负载', 'Admittance Smith chart': '导纳 Smith 圆图'}
+
 
 def render_figures(save, dark):
     p.setup(dark)

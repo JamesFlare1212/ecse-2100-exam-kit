@@ -13,7 +13,7 @@
 <div class="solution-body">
   {#each nodes as node,i}
     {#if node.type==='math'}
-      <div class="derivation-equations" data-answer={i===conclusion?partId:undefined}><Math tex={node.value} display/></div>
+      <div class="derivation-equations" data-answer={i===conclusion?partId:undefined}><Math {locale} tex={node.value} display/></div>
     {:else if node.type==='paragraph'}
       <p class="solution-annotation" data-authored-annotation><ReferencedText text={body.slice(node.position!.start.offset,node.position!.end.offset)} {locale} {documents} {onsource}/></p>
     {:else}

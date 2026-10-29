@@ -10,7 +10,7 @@ export async function checkI18n(browser, base, record) {
     const gate = new Promise(resolve => { release = resolve; });
     try {
       await context.addInitScript(key => {
-        localStorage.setItem(key, JSON.stringify({ version: 1, locale: 'en' }));
+        if(location.protocol==='http:')localStorage.setItem(key, JSON.stringify({ version: 1, locale: 'en' }));
       }, storageKey);
       await context.route('**/*', async route => {
         if (route.request().resourceType() === 'script') {
@@ -22,18 +22,20 @@ export async function checkI18n(browser, base, record) {
       const page = await context.newPage();
       await page.goto(`${base}/problems/e1-f26-q1/`, { waitUntil: 'commit' });
       await page.waitForFunction(() => document.getElementById('problem-title'));
-      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'hidden');
-      assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
+      assert.ok(await page.locator('#startup-status').isVisible());
+      assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN');
       // Hold beyond the old timeout approach: slow scripts must not reveal Chinese.
       await page.waitForTimeout(3200);
-      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'hidden');
+      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
+      assert.ok(await page.locator('#startup-status').isVisible());
       release();
-      await page.waitForFunction(() => !document.documentElement.hasAttribute('data-locale-pending'));
+      await page.waitForFunction(() => !document.documentElement.hasAttribute('data-render-pending'));
       assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
       assert.equal(await page.locator('html').getAttribute('lang'), failScripts ? 'zh-CN' : 'en');
       assert.equal(await page.locator('#problem-title').textContent(), failScripts ? '传输线基础' : 'Transmission Line Fundamentals');
       record(failScripts ? 'Failed application scripts reveal readable static Chinese with the correct document language'
-        : 'Saved English stays hidden until English is ready, even when application scripts are delayed');
+        : 'A visible loading state prepares saved English; script failures restore readable static content');
     } finally {
       release();
       await context.close();
@@ -55,7 +57,7 @@ export async function checkI18n(browser, base, record) {
     await page.getByRole('tab', { name: '试卷原页', exact: true }).click();
     const alts = await page.locator('.original-page-card img').evaluateAll(images => images.map(img => img.alt));
     assert.ok(alts.every(alt => /秋季 2026 · 第 \d+ 页$/.test(alt)));
-    await page.getByRole('button', { name: '放大查看', exact: true }).first().click();
+    await page.getByRole('button', { name: /^放大查看第 \d+ 页$/ }).first().click();
     assert.match(await page.locator('.source-paper img').getAttribute('alt'), /，第 \d+ 页$/);
     await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'Switch to English', exact: true }).click();

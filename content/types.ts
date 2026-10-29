@@ -58,7 +58,7 @@ export interface Exam {
 export type ExamInfo = Omit<Exam, 'problems'>;
 /** Search/navigation data deliberately excludes guides, worked steps and answers. */
 export type ProblemIndex = Pick<Problem, 'id' | 'number' | 'title' | 'topic' | 'statement'> & {
-  parts: Pick<Part, 'id' | 'prompt'>[];
+  parts: Pick<Part, 'id' | 'label' | 'prompt'>[];
 };
 export type ExamIndex = ExamInfo & { problems: ProblemIndex[] };
 export interface SourceDocument {
@@ -71,4 +71,5 @@ export interface StudyPageData {
   exam: ExamInfo;
   problem: Problem;
   assetBase: Localized;
+  figureSizes: Record<Locale, Record<string, [number, number, number]>>;
 }

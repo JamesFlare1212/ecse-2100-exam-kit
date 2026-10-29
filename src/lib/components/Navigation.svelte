@@ -15,15 +15,16 @@
   import ShieldCheck from '@lucide/svelte/icons/shield-check';
   import { DEFAULT_PROBLEM_ID, problemPath, followProblemLink } from '#lib/problem-navigation';
   import type { StudyState } from '#lib/study.svelte';
-  let {study,onselect,onlibrary}: {study:StudyState;onselect:(id:string)=>void;onlibrary:(kind:string)=>void}=$props();
+  let {study,onselect,onlibrary,openExam=$bindable<string|undefined>()}: {study:StudyState;openExam?:string;onselect:(id:string)=>void;onlibrary:(kind:string)=>void}=$props();
   const selected=$derived(study.catalog.findProblem(study.selected));
-  let openExam=$state(untrack(()=>study.catalog.findProblem(study.selected).exam.id));
+  if(openExam===undefined)openExam=untrack(()=>study.catalog.findProblem(study.selected).exam.id);
+  let lastSelected=untrack(()=>study.selected);
   const exams=$derived(study.catalog.exams.filter(exam=>exam.number===selected.exam.number));
   const partIds=$derived(exams.flatMap(exam=>exam.problems.flatMap(problem=>problem.parts.map(part=>part.id))));
   const progress=$derived(study.count(partIds));
   const examNumbers=$derived([...new Set(study.catalog.exams.map(exam=>exam.number))]);
   const home=$derived(study.catalog.findProblem(DEFAULT_PROBLEM_ID).problem.id);
-  $effect(()=>{openExam=selected.exam.id;});
+  $effect(()=>{if(study.selected!==lastSelected){lastSelected=study.selected;openExam=selected.exam.id;}});
 </script>
 <div class="navigation-content">
   <a href={problemPath(home)} class="brand" aria-label="Fieldnotes · ECSE 2100" onclick={(event)=>followProblemLink(event,()=>onselect(home))}><span class="brand-mark"><Waves aria-hidden="true"/></span><span><strong>fieldnotes<span class="brand-dot">.</span></strong><small>ECSE 2100 · FIELDS & WAVES I</small></span></a>
@@ -32,7 +33,7 @@
     <Tabs.Root value={String(selected.exam.number)} onValueChange={(v)=>{if(v&&v!==String(selected.exam.number))onselect(study.catalog.exams.filter(exam=>exam.number===Number(v)).at(-1)!.problems[0].id);}}>
       <Tabs.List class="w-full">{#each examNumbers as number(number)}<Tabs.Trigger value={String(number)}>Exam {number}</Tabs.Trigger>{/each}</Tabs.List>
     </Tabs.Root>
-    <Accordion.Root type="single" value={openExam} onValueChange={(v)=>openExam=v} class="exam-list">
+    <Accordion.Root type="single" value={openExam??''} onValueChange={(v)=>openExam=v} class="exam-list">
       {#each exams.toReversed() as exam(exam.id)}
         <Accordion.Item value={exam.id}>
           <Accordion.Trigger class="exam-trigger"><span class="exam-season">{exam.term[study.locale]} {exam.year}<small>{exam.points} {study.locale==='zh'?'分':'pts'} · {exam.problems.length} {study.locale==='zh'?'题':'problems'}</small></span></Accordion.Trigger>
@@ -63,6 +64,6 @@
   <div class="nav-progress">
     <div class="progress-summary"><span>{study.locale==='zh'?'学习进度':'Your progress'}</span><strong>{progress}<span> / {partIds.length}</span></strong></div>
     <Progress value={progress} max={partIds.length} aria-label={`Exam ${selected.exam.number} · ${study.locale==='zh'?'已掌握的小问':'Parts marked mastered'}`}/>
-    <div class="local-status"><ShieldCheck aria-hidden="true"/>{study.locale==='zh'?'学习进度保存在此浏览器':'Progress saved in this browser'}</div>
+    <div class="local-status"><ShieldCheck aria-hidden="true"/>{study.storageError?(study.locale==='zh'?'更改尚未保存':'Changes not saved'):(study.locale==='zh'?'学习进度保存在此浏览器':'Progress saved in this browser')}</div>
   </div>
 </div>

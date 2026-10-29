@@ -1,7 +1,7 @@
 export const DEFAULT_PROBLEM_ID = 'e2-s26-q3';
 
-export function problemPath(id: string) {
-  return `/problems/${id}/`;
+export function problemPath(id: string, part?: string) {
+  return `/problems/${id}/${part ? '#'+encodeURIComponent(part) : ''}`;
 }
 
 /** Keep native open-in-new-tab and modified-click behavior on problem links. */

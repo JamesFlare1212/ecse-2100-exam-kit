@@ -7,6 +7,8 @@ import numpy as np
 import plotting as p
 import question_primitives as q
 
+SVG_LABELS = {'Real charges': '真实电荷', 'Image system only': '仅用于构造镜像'}
+
 
 def render_figures(save, dark):
     p.setup(dark)

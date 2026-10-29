@@ -56,7 +56,7 @@ def resistor(ax,a,b,text):
     label(ax,mid[0]+(.20 if abs(direction[1]) else 0),mid[1]+(.0 if abs(direction[1]) else .24),text,ha='left' if abs(direction[1]) else 'center',va='center',fontsize=9)
 def tidy(ax):
     ax.grid(True,alpha=.65,lw=.6); ax.set_axisbelow(True); ax.spines['left'].set_color(GRID);ax.spines['bottom'].set_color(GRID)
-    ax.tick_params(labelsize=8)
+    ax.tick_params(labelsize=12)
 def bounce(ax,values,td=1,unit='Td',measurements=(),coefficients=None):
     ax.set_xlim(-1.85,2.35); ax.set_ylim(4.6,-.65);ax.axis('off')
     line(ax,[0,0],[0,4.1],color=GRID,lw=2);line(ax,[1,1],[0,4.1],color=GRID,lw=2)

@@ -7,7 +7,7 @@ import { DEFAULT_PROBLEM_ID, problemPath } from '../src/lib/problem-navigation';
 import { renderText } from '../src/lib/math';
 
 const root = resolve(import.meta.dir, '..', 'build');
-assert.ok(readFileSync(resolve(root, '404.html'), 'utf8').includes('data-locale-pending'), 'localized static error fallback');
+assert.ok(readFileSync(resolve(root, '404.html'), 'utf8').includes('startup-status'), 'readable static error fallback');
 const ids = problemEntries.map(({ problem }) => problem.id).sort();
 assert.deepEqual(readdirSync(resolve(root, 'problems')).sort(), ids);
 const defaultId = problemEntries.find(entry => entry.problem.id === DEFAULT_PROBLEM_ID)?.problem.id ?? problemEntries[0].problem.id;
