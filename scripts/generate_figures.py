@@ -10,6 +10,7 @@ from PIL import Image
 import plotting
 from plotting import prepare_figure, plt
 from paper_assets import ROOT, papers, documents, asset_source
+from svg_labels import localize
 
 
 def renderer(paper):
@@ -37,9 +38,11 @@ def generate_paper(directory):
         if Path(name).name != name:
             raise ValueError(f'Invalid figure name: {name}')
         prepare_figure(fig)
-        fig.savefig(output / f'{name}{"-dark" if dark else ""}.svg',
+        target = output / f'{name}{"-dark" if dark else ""}.svg'
+        fig.savefig(target,
                     bbox_inches='tight', pad_inches=.16,
                     metadata={'Date': None, 'Creator': 'Matplotlib · ECSE 2100 Fieldnotes'})
+        localize(target, getattr(renderer(owner), 'SVG_LABELS', {}))
         plt.close(fig)
         generated.add(name)
 

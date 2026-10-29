@@ -11,23 +11,23 @@
   import Figure from './Figure.svelte';
   import type { Part, SourceRef, ExamInfo } from '#lib/types';
   import type { StudyState } from '#lib/study.svelte';
-  let {part,study,exam,dark,assetBase,onsource}: {assetBase:string;part:Part;study:StudyState;exam:ExamInfo;dark:boolean;onsource:(s:SourceRef)=>void}=$props();
+  let {part,study,exam,dark,assetBase,onsource,sizes}: {assetBase:string;sizes:Record<string,[number,number,number]>;part:Part;study:StudyState;exam:ExamInfo;dark:boolean;onsource:(s:SourceRef)=>void}=$props();
   const done=$derived(Boolean(study.completed[part.id]));
   const sourceNote=$derived(part.note?.[study.locale]);
   function source(solution=false){onsource({doc:solution?exam.solutionDoc:exam.doc,page:solution?part.solutionPage:part.sourcePage,label:{zh:solution?'官方解答原页':'原始试题',en:solution?'Official solution page':'Original question'}});}
 </script>
 <Accordion.Item value={part.id} class="problem-part" data-part={part.id}>
-  <Accordion.Trigger class="part-trigger" level={3}><span class:complete={done} class="part-letter">{#if done}<Check aria-label={study.locale==='zh'?'已掌握':'Mastered'}/>{:else}{part.label}{/if}</span><span class="part-prompt" lang={study.locale==='zh'?'zh-CN':'en'} data-original-prompt><RichText text={part.prompt[study.locale]}/></span>{#if part.points>0}<Badge variant="outline">{part.points} {study.locale==='zh'?'分':'pts'}</Badge>{/if}</Accordion.Trigger>
-  {#if part.questionFigure}<div class="part-question-figure"><Figure {assetBase} name={part.questionFigure.name} locale={study.locale} {dark} caption={part.questionFigure.caption} original={part.questionFigure.source} {onsource}/></div>{/if}
+  <Accordion.Trigger class="part-trigger" level={3}><span class:complete={done} class="part-letter">{part.label}{#if done}<Check aria-label={study.locale==='zh'?'已掌握':'Mastered'}/>{/if}</span><span class="part-prompt" lang={study.locale==='zh'?'zh-CN':'en'} data-original-prompt><RichText text={part.prompt[study.locale]}/></span>{#if part.points>0}<Badge variant="outline">{part.points} {study.locale==='zh'?'分':'pts'}</Badge>{/if}</Accordion.Trigger>
+  {#if part.questionFigure}<div class="part-question-figure"><Figure {assetBase} size={sizes[part.questionFigure.name]} name={part.questionFigure.name} locale={study.locale} {dark} caption={part.questionFigure.caption} original={part.questionFigure.source} {onsource}/></div>{/if}
   <Accordion.Content class="part-content">
       <SolutionBody body={part.solution[study.locale]} partId={part.id} locale={study.locale} documents={study.catalog.documents} {onsource}/>
-      {#if part.figure}<Figure {assetBase} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
+      {#if part.figure}<Figure {assetBase} size={sizes[part.figure]} name={part.figure} locale={study.locale} {dark} caption={part.figureCaption}/>{/if}
       {#if sourceNote}<Alert.Root class="solution-note"><Info aria-hidden="true"/><Alert.Title>{study.locale==='zh'?'核对说明':'Source check'}</Alert.Title><Alert.Description><RichText text={sourceNote}/></Alert.Description></Alert.Root>{/if}
     <div class="part-actions">
       <div class="flex flex-wrap items-center gap-2">
-        <Button variant={done?'secondary':'outline'} size="sm" onclick={()=>study.completed[part.id]=!done}><Check data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?(done?'已掌握 · 撤销':'标记已掌握'):(done?'Mastered · undo':'Mark as mastered')}</Button>
+        <Button variant={done?'secondary':'outline'} size="sm" aria-label={`${study.locale==='zh'?'小问':'Part'} ${part.label}: ${study.locale==='zh'?(done?'已掌握 · 撤销':'标记已掌握'):(done?'Mastered · undo':'Mark as mastered')}`} onclick={()=>study.completed[part.id]=!done}><Check data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?(done?'已掌握 · 撤销':'标记已掌握'):(done?'Mastered · undo':'Mark as mastered')}</Button>
       </div>
-      <div class="flex items-center gap-1"><Button size="sm" variant="ghost" onclick={()=>source()} aria-label={study.locale==='zh'?'查看本问原题':'View original question'}><FileText data-icon="inline-start" aria-hidden="true"/>p.{part.sourcePage}</Button><Button size="sm" variant="link" onclick={()=>source(true)}>{study.locale==='zh'?'官方解答':'Official solution'}</Button></div>
+      <div class="flex items-center gap-1"><Button size="sm" variant="ghost" onclick={()=>source()} aria-label={`${study.locale==='zh'?'小问':'Part'} ${part.label}: ${study.locale==='zh'?'查看本问原题':'View original question'}`}><FileText data-icon="inline-start" aria-hidden="true"/>p.{part.sourcePage}</Button><Button size="sm" variant="link" aria-label={`${study.locale==='zh'?'小问':'Part'} ${part.label}: ${study.locale==='zh'?'官方解答':'Official solution'}`} onclick={()=>source(true)}>{study.locale==='zh'?'官方解答':'Official solution'}</Button></div>
     </div>
   </Accordion.Content>
 </Accordion.Item>

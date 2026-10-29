@@ -83,7 +83,7 @@
       {@const active=number===page}
       {@const citation=number===source.page?source.region:undefined}
       <li id={'source-thumbnail-'+doc.id+'-'+number} class="source-thumbnail" data-thumbnail-page={number} data-current={active?'true':undefined}>
-        <Button variant="outline" class="source-page-map" style={'aspect-ratio:'+size[0]+' / '+size[1]} onclick={(event)=>selectPage(event,number)} onkeydown={(event)=>{if(active)mapKey(event);}} aria-current={active?'page':undefined} aria-label={locale==='zh'?'第 '+number+' 页'+(active?'，当前页，点击定位，方向键滚动原页':'，点击切页'):'Page '+number+(active?', current page: click to locate or use arrow keys to scroll':': click to open')}>
+        <Button variant="outline" class="source-page-map" style={'aspect-ratio:'+size[0]+' / '+size[1]} tabindex={active?0:-1} onclick={(event)=>selectPage(event,number)} onkeydown={(event)=>{if(active)mapKey(event);}} aria-current={active?'page':undefined} aria-label={locale==='zh'?'第 '+number+' 页'+(active?'，当前页，点击定位，方向键滚动原页':'，点击切页'):'Page '+number+(active?', current page: click to locate or use arrow keys to scroll':': click to open')}>
           <img src={doc.pageBase+'/'+number+'.webp'} alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async"/>
           {#if citation}<span class="source-highlight source-map-highlight" data-source-map-highlight style:left={citation[0]*100+'%'} style:top={citation[1]*100+'%'} style:width={citation[2]*100+'%'} style:height={citation[3]*100+'%'}></span>{/if}
           {#if active}<span class="source-map-viewport" data-source-map-viewport style:left={viewport.left*100+'%'} style:top={viewport.top*100+'%'} style:width={viewport.width*100+'%'} style:height={viewport.height*100+'%'}></span>{/if}

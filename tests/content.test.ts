@@ -24,7 +24,7 @@ describe('Complete, bilingual and source-addressable content',()=>{
         expect(summary.title).toEqual(question.title);
         expect(summary.topic).toEqual(question.topic);
         expect(summary.statement).toEqual(question.statement);
-        expect(summary.parts).toEqual(question.parts.map(({id,prompt})=>({id,prompt})));
+        expect(summary.parts).toEqual(question.parts.map(({id,label,prompt})=>({id,label,prompt})));
         expect(summary).not.toHaveProperty('guide');
         expect(summary).not.toHaveProperty('givens');
         for(const part of summary.parts)expect(part).not.toHaveProperty('solution');

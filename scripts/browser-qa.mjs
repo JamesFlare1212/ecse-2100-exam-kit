@@ -141,8 +141,9 @@ try {
   record('Problem links use client navigation and browser history; a direct path overrides the saved selection');
   await goto('e2-s26-q3');
   await page.evaluate(()=>document.fonts.ready);
-  assert.ok(await page.evaluate(()=>[...document.fonts].some(f=>f.family.includes('Noto')&&f.status==='loaded')));
-  record('Self-hosted Chinese glyphs loaded');
+  assert.ok(await page.locator('[data-original-statement]').isVisible());
+  assert.ok(await page.evaluate(()=>performance.getEntriesByType('resource').every(r=>!r.name.includes('noto-sans-sc'))));
+  record('Chinese questions use system fonts without CJK webfont downloads');
   const navigationToggle=page.locator('[data-sidebar-toggle="navigation"]');
   const referencesToggle=page.locator('[data-sidebar-toggle="references"]');
   async function sidebars(navigation,references){
@@ -395,7 +396,7 @@ try {
   assert.equal(await practicePart.locator('[data-answer]').count(),1);
   assert.equal(await page.getByRole('button',{name:'下一步',exact:true}).count(),0);
   assert.equal((await stored()).revealed['e2-s26-q2-a'],1);
-  await page.getByRole('button',{name:'标记已掌握',exact:true}).first().click();
+  await page.getByRole('button',{name:/小问 .+: 标记已掌握/}).first().click();
   record('Solutions collapse and reopen in full; mastery and legacy records remain independent');
   assert.equal(await page.getByRole('tab',{name:'我的笔记',exact:true}).count(),0);
   assert.equal(await page.locator('textarea').count(),0);
@@ -418,7 +419,8 @@ try {
   await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:resolve(destination,'desktop-light-zh.png')});
   await page.keyboard.press('Control+k');await page.locator('#global-search').fill('镜像');
   await page.getByRole('dialog').getByRole('link',{name:/导体平面上方的点电荷/}).click();
-  await page.waitForURL('**/problems/e2-s26-q4/');
+  await page.waitForURL(url=>url.pathname==='/problems/e2-s26-q4/');
+  await selected('e2-s26-q4');
   assert.equal((await stored()).selected,'e2-s26-q4');record('Keyboard search navigates across the bilingual question bank');
   await revealAll();
   for(const viewport of [{width:375,height:812},{width:390,height:844},{width:768,height:1024},{width:667,height:375}]){

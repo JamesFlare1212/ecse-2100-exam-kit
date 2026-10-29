@@ -45,6 +45,17 @@ jobs:
         run: bun test
       - name: Build static app
         run: bun run build
+      - name: Install isolated startup-test browser
+        run: |
+          mkdir -p "$RUNNER_TEMP/fieldnotes-browser"
+          bun add --cwd "$RUNNER_TEMP/fieldnotes-browser" playwright@1.64.1
+          bun "$RUNNER_TEMP/fieldnotes-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Check cold reading, delayed fonts and font budgets
+        run: |
+          trap 'bun --bun astro preview stop' EXIT
+          bun run preview --background
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/fieldnotes-browser/node_modules/playwright/index.mjs" \
+            QA_URL=http://127.0.0.1:4173 bun scripts/browser-startup-qa.mjs
 
   source-tools:
     name: Source tools (Python ${{ matrix.python }})

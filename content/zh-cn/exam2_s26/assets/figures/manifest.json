@@ -3,10 +3,10 @@
   "matplotlib": "3.11.2",
   "generator": "content/zh-cn/exam2_s26/generate_figures.py",
   "sourceSha256": {
-    "content/zh-cn/exam2_s26/generate_figures.py": "39d4414ef0a07153dbd3a293e446a3962f342f3ba108745a5e99bf67219518b2",
+    "content/zh-cn/exam2_s26/generate_figures.py": "db3ee7d727b493774ed609847ec67c8a865b074f7e0dca4e05881162087f4e7c",
     "content/zh-cn/exam2_s26/figure-sources.json": "a79eed259b3f29407109db7903b2dc16f56d7fac3b75f7cf930a65d5f158135d",
-    "scripts/plotting.py": "e12baa5cdf0527b1dd16c58b5fb25f5917f12f8e5568db62e201b805195940d8",
-    "scripts/question_primitives.py": "9adacc9f31269f9add16b7a8790ecc6af913d6bf5d78214e34c091abd8e93090"
+    "scripts/plotting.py": "f0e57d535040559f933fb52c1cbd16e7ea9843384e4002ee7df1ccace1f418d8",
+    "scripts/question_primitives.py": "ff01131c66a2fc665cc4fecfc24e6fcced4f49eaeb86e7c922884b55cf978969"
   },
   "svgFonttype": "none",
   "textScale": 1.3,

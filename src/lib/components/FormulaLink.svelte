@@ -14,13 +14,15 @@
   const previewId = Symbol();
   const open = $derived(previews.active === previewId);
   onDestroy(() => previews.setOpen(previewId, false));
+  let trigger = $state<HTMLAnchorElement|null>(null);
   function showSource() {
+    trigger?.focus({preventScroll:true});
     previews.active = null;
     onsource(formula.source);
   }
 </script>
 <HoverCard.Root bind:open={() => open, (value) => previews.setOpen(previewId, value)} openDelay={180} closeDelay={160}>
-  <HoverCard.Trigger href={`${documents[formula.source.doc].pdf}#page=${formula.source.page}`} class={cn('formula-link',inline && 'formula-link-inline')} onclick={(e) => {e.preventDefault(); showSource();}} aria-label={`${formula.title[locale]} · ${formula.source.label[locale]}`}>
+  <HoverCard.Trigger bind:ref={trigger} href={`${documents[formula.source.doc].pdf}#page=${formula.source.page}`} class={cn('formula-link',inline && 'formula-link-inline')} onclick={(e) => {e.preventDefault(); showSource();}} aria-label={`${formula.title[locale]} · ${formula.source.label[locale]}`}>
     {#if inline}
       {#if children}{@render children()}{:else}{formula.title[locale]}{/if}
     {:else}
@@ -28,9 +30,9 @@
       <span>{formula.title[locale]}</span>
       {#if !compact}<span class="reference-page">p.{formula.source.page}</span>{/if}
     {/if}
-  </HoverCard.Trigger><HoverCard.Content hidden={!open} class="w-80 max-w-[calc(100vw-2rem)]">
+  </HoverCard.Trigger><HoverCard.Content collisionPadding={12} hidden={!open} class="w-80 max-w-[calc(100vw-2rem)]">
     <div class="excerpt-heading"><strong>{formula.title[locale]}</strong><span>{formula.source.doc === 'crib' ? 'CRIB' : 'LECTURE 04'} / {formula.source.page}</span></div>
-    <div class="excerpt-equation"><Math tex={formula.math} display /></div>
+    <div class="excerpt-equation"><Math {locale} tex={formula.math} display /></div>
     <div class="original-excerpt"><img src={`/excerpts/${formula.id}.webp`} alt={formula.source.label[locale]} loading="lazy" /></div>
     <p class="excerpt-description">{locale === 'zh' ? '来自原始 PDF 的公式区域' : 'Excerpt from the original PDF'}</p>
     <Button size="sm" variant="secondary" onclick={showSource}><ArrowUpRight data-icon="inline-start" aria-hidden="true" />{locale === 'zh' ? '打开原页并定位' : 'Locate on original page'}</Button>

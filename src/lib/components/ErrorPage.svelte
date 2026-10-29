@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount } from 'svelte';
   import { Button } from '#lib/components/ui/button';
   import * as Empty from '#lib/components/ui/empty';
   import { readSavedLocale, saveLocale } from '#lib/locale';
@@ -12,7 +12,8 @@
     ? t('找不到这道题', 'Problem not found')
     : t('页面暂时无法打开', 'Unable to open this page'));
 
-  onMount(() => { locale = readSavedLocale(); void tick().then(() => delete document.documentElement.dataset.localePending); });
+  let ready = $state(false);
+  onMount(() => { locale = readSavedLocale(); ready = true; });
   $effect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
     document.title = `${title} · Fieldnotes · ECSE 2100`;
@@ -25,7 +26,7 @@
   }
 </script>
 
-<main class="error-page">
+<main class="error-page" data-error-ready={ready}>
   <Empty.Root>
     <Empty.Header>
       <p>{status} · Fieldnotes</p>

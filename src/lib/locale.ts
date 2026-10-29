@@ -10,7 +10,14 @@ export function readSavedLocale(): Locale {
 }
 
 /** Change the error-page language without replacing saved study records. */
-export function saveLocale(locale: Locale) {
+export async function saveLocale(locale: Locale) {
+  if (typeof navigator !== 'undefined' && navigator.locks) {
+    try { await navigator.locks.request(STORAGE_KEY, () => writeLocale(locale)); }
+    catch { /* Keep the existing record if coordination is unavailable. */ }
+  } else writeLocale(locale);
+}
+
+function writeLocale(locale: Locale) {
   try {
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
     if (!data || typeof data !== 'object' || Array.isArray(data)) return;

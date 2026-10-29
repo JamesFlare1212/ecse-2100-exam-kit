@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/layout.css';
 import favicon from '#lib/assets/favicon.svg';
+import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
 ---
@@ -15,27 +16,14 @@ const { title, description } = Astro.props;
     <title>{title} · Fieldnotes · ECSE 2100</title>
     <meta name="description" content={description} />
     <link rel="icon" href={favicon.src} />
-    <style is:global>html[data-locale-pending] body { visibility: hidden; }</style>
+    <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
     <script is:inline data-astro-rerun>
       try {
         const p = JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1') || '{}');
         const dark = p.theme === 'dark' || ((!p.theme || p.theme === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', dark);
         document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-        if (p.version === 1 && p.locale === 'en') {
-          document.documentElement.lang = 'en';
-          document.documentElement.dataset.localePending = '';
-          const revealFallback = () => {
-            if (document.documentElement.hasAttribute('data-locale-pending')) {
-              document.documentElement.lang = 'zh-CN';
-              delete document.documentElement.dataset.localePending;
-            }
-          };
-          window.addEventListener('error', (event) => {
-            if (event instanceof ErrorEvent || event.target instanceof HTMLScriptElement) revealFallback();
-          }, { capture: true, once: true });
-          window.addEventListener('unhandledrejection', revealFallback, { once: true });
-        }
+        // Keep the authored static content readable while the island loads.
         document.documentElement.dataset.navigation = p.sidebars?.navigation === false ? 'closed' : 'open';
         document.documentElement.dataset.references = p.sidebars?.references === false ? 'closed' : 'open';
       } catch {}
@@ -52,8 +40,23 @@ const { title, description } = Astro.props;
     <ClientRouter fallback="swap" />
   </head>
   <body>
+    <div id="startup-status" class="startup-status" role="status" hidden>
+      <span lang="zh-CN">交互功能尚未就绪。可继续阅读题目，或重新加载后重试。</span>
+      <span lang="en">Study controls are not ready. Keep reading or reload to retry.</span>
+      <a href="" lang="zh-CN">重新加载 / Reload</a>
+    </div>
+    <noscript><style>#startup-status { display:none; }</style><p class="startup-status">交互需要 JavaScript，仍可阅读静态题目。 / Enable JavaScript for study controls; static questions remain readable.</p></noscript>
     <!-- Keep native Svelte portals attached when ClientRouter replaces the body. -->
     <div id="fieldnotes-overlays" transition:persist="study-overlays"></div>
     <slot />
+    <script is:inline data-astro-rerun>
+      window.setTimeout(() => {
+        const status = document.getElementById('startup-status');
+        if (status && !document.querySelector('[data-study-ready="true"], [data-error-ready="true"]')) {
+          status.setAttribute('role','alert');
+          status.hidden = false;
+        }
+      }, 5000);
+    </script>
   </body>
 </html>

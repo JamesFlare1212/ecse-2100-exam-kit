@@ -1,13 +1,13 @@
 /** Validate Astro's deliverable HTML and isolated per-page island data. */
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { problemEntries } from '../src/lib/catalog.server';
 import { DEFAULT_PROBLEM_ID, problemPath } from '../src/lib/problem-navigation';
 import { renderText } from '../src/lib/math';
 
 const root = resolve(import.meta.dir, '..', 'build');
-assert.ok(readFileSync(resolve(root, '404.html'), 'utf8').includes('data-locale-pending'), 'localized static error fallback');
+assert.ok(readFileSync(resolve(root, '404.html'), 'utf8').includes('startup-status'), 'readable static error fallback');
 const ids = problemEntries.map(({ problem }) => problem.id).sort();
 assert.deepEqual(readdirSync(resolve(root, 'problems')).sort(), ids);
 const defaultId = problemEntries.find(entry => entry.problem.id === DEFAULT_PROBLEM_ID)?.problem.id ?? problemEntries[0].problem.id;
@@ -17,6 +17,13 @@ let parts = 0;
 for (const { problem } of problemEntries) {
   const directory = resolve(root, 'problems', problem.id);
   const html = readFileSync(resolve(directory, 'index.html'), 'utf8');
+  const fontPreloads = [...html.matchAll(/<link\b[^>]*>/g)].map(([tag]) => tag)
+    .filter(tag => /rel="preload"/.test(tag) && /as="font"/.test(tag))
+    .map(tag => /href="([^"]+)"/.exec(tag)![1]);
+  assert.ok(fontPreloads.every(href => href.startsWith('/_astro/') && !href.includes('noto-sans-sc')),
+    `${problem.id}: only small local reading fonts may be preloaded`);
+  const fontBytes = fontPreloads.reduce((sum, href) => sum + statSync(resolve(root, '.' + href)).size, 0);
+  assert.ok(fontBytes <= 64 * 1024, `${problem.id}: font preload budget exceeded (${fontBytes} bytes)`);
   const document = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   assert.ok(document.includes(`data-problem="${problem.id}"`), `${problem.id}: page identity`);
   assert.ok(document.includes(`>${problem.title.zh}</h1>`), `${problem.id}: prerendered title`);

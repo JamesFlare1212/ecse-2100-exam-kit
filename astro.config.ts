@@ -7,7 +7,7 @@ export default defineConfig({
   output: 'static',
   outDir: './build',
   publicDir: './static',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   server: { host: '127.0.0.1', port: 5173 },
   integrations: [svelte()],
   vite: {

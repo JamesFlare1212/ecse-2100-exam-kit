@@ -10,7 +10,7 @@ export async function checkI18n(browser, base, record) {
     const gate = new Promise(resolve => { release = resolve; });
     try {
       await context.addInitScript(key => {
-        localStorage.setItem(key, JSON.stringify({ version: 1, locale: 'en' }));
+        if(location.protocol==='http:')localStorage.setItem(key, JSON.stringify({ version: 1, locale: 'en' }));
       }, storageKey);
       await context.route('**/*', async route => {
         if (route.request().resourceType() === 'script') {
@@ -22,18 +22,21 @@ export async function checkI18n(browser, base, record) {
       const page = await context.newPage();
       await page.goto(`${base}/problems/e1-f26-q1/`, { waitUntil: 'commit' });
       await page.waitForFunction(() => document.getElementById('problem-title'));
-      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'hidden');
-      assert.equal(await page.locator('html').getAttribute('lang'), 'en');
-      // Hold beyond the old timeout approach: slow scripts must not reveal Chinese.
+      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
+      assert.ok(await page.locator('#problem-title').isVisible());
+      assert.ok(await page.locator('[data-original-statement]').isVisible());
+      assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN');
+      // Static questions stay readable while the saved language awaits hydration.
       await page.waitForTimeout(3200);
-      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'hidden');
+      assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
+      assert.ok(await page.locator('#problem-title').isVisible());
       release();
-      await page.waitForFunction(() => !document.documentElement.hasAttribute('data-locale-pending'));
+      if (!failScripts) await page.waitForFunction(() => document.querySelector('[data-study-ready="true"]'));
       assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
       assert.equal(await page.locator('html').getAttribute('lang'), failScripts ? 'zh-CN' : 'en');
       assert.equal(await page.locator('#problem-title').textContent(), failScripts ? '传输线基础' : 'Transmission Line Fundamentals');
-      record(failScripts ? 'Failed application scripts reveal readable static Chinese with the correct document language'
-        : 'Saved English stays hidden until English is ready, even when application scripts are delayed');
+      record(failScripts ? 'Failed application scripts preserve readable static Chinese with the correct document language'
+        : 'Static questions remain readable until hydration applies saved English');
     } finally {
       release();
       await context.close();
@@ -55,7 +58,7 @@ export async function checkI18n(browser, base, record) {
     await page.getByRole('tab', { name: '试卷原页', exact: true }).click();
     const alts = await page.locator('.original-page-card img').evaluateAll(images => images.map(img => img.alt));
     assert.ok(alts.every(alt => /秋季 2026 · 第 \d+ 页$/.test(alt)));
-    await page.getByRole('button', { name: '放大查看', exact: true }).first().click();
+    await page.getByRole('button', { name: /^放大查看第 \d+ 页$/ }).first().click();
     assert.match(await page.locator('.source-paper img').getAttribute('alt'), /，第 \d+ 页$/);
     await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'Switch to English', exact: true }).click();
@@ -87,6 +90,7 @@ export async function checkI18n(browser, base, record) {
     assert.equal(await page.locator('body').evaluate(e => getComputedStyle(e).visibility), 'visible');
     await page.getByRole('button', { name: '切换为中文', exact: true }).click();
     assert.equal(await page.getByRole('heading', { name: '找不到这道题', exact: true }).count(), 1);
+    await page.waitForFunction(key => JSON.parse(localStorage.getItem(key)).locale === 'zh', storageKey);
     assert.deepEqual(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), storageKey), { ...saved, locale: 'zh' });
     await page.getByRole('link', { name: '返回习题室', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-study-ready="true"]'));

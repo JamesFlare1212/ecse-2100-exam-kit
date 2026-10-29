@@ -6,7 +6,7 @@ export function createExamIndex(exams: Exam[]): ExamIndex[] {
     ...exam,
     problems: problems.map(({ id, number, title, topic, statement, parts }) => ({
       id, number, title, topic, statement,
-      parts: parts.map(({ id, prompt }) => ({ id, prompt })),
+      parts: parts.map(({ id, label, prompt }) => ({ id, label, prompt })),
     })),
   }));
 }
