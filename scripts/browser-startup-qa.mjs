@@ -22,7 +22,7 @@ async function context(locale,width){
   const visible=selector=>{const node=document.querySelector(selector);if(!node)return false;const style=getComputedStyle(node);return node.getClientRects().length>0&&style.visibility==='visible'&&style.opacity!=='0';};
   const measure=()=>{if(visible('#problem-title')&&visible('[data-original-statement]'))window.readingAt=performance.now();else requestAnimationFrame(measure);};
   requestAnimationFrame(measure);
-  new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.layoutShifts.push({at:e.startTime,value:e.value});}).observe({type:'layout-shift',buffered:true});
+  new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.layoutShifts.push({at:e.startTime,value:e.value,sources:e.sources.map(source=>{const node=source.node?.nodeType===Node.TEXT_NODE?source.node.parentElement:source.node;return {tag:node?.tagName,id:node?.id,text:node?.textContent?.slice(0,100),previous:source.previousRect.toJSON(),current:source.currentRect.toJSON()};})});}).observe({type:'layout-shift',buffered:true});
  },{locale,storageKey:course.storageKey});
  return c;
 }
@@ -31,6 +31,24 @@ async function readable(p){
  const elapsed=await p.evaluate(()=>window.readingAt-performance.getEntriesByType('navigation')[0].responseStart);
  assert.ok(elapsed<2000,`Reading took ${elapsed}ms after the HTML response`);
  return Math.round(elapsed);
+}
+async function fontPayload(page){
+ return page.evaluate(()=>{
+  const networkFontBytes=performance.getEntriesByType('resource').filter(e=>/\.woff2?(?:\?|$)/.test(e.name)).reduce((sum,e)=>sum+e.decodedBodySize,0);
+  const embedded=new Set();
+  const scan=rules=>{for(const rule of rules){
+   if(rule.type===CSSRule.FONT_FACE_RULE){for(const match of rule.style.getPropertyValue('src').matchAll(/url\(["']?(data:[^"')]+)["']?\)/g))embedded.add(match[1]);}
+   else if(rule.cssRules)scan(rule.cssRules);
+  }};
+  for(const sheet of document.styleSheets)scan(sheet.cssRules);
+  const inlineFontBytes=[...embedded].reduce((sum,url)=>sum+atob(url.split(',')[1]).length,0);
+  return {networkFontBytes,inlineFontBytes,fontBytes:networkFontBytes+inlineFontBytes};
+ });
+}
+async function screenshotWithoutWaitingForFonts(page,path){
+ const session=await page.context().newCDPSession(page);
+ try{const {data}=await session.send('Page.captureScreenshot',{format:'png'});await writeFile(path,Buffer.from(data,'base64'));}
+ finally{await session.detach();}
 }
 try{
  await checkHoverContrast(browser,base,sampleId,pass);
@@ -70,7 +88,7 @@ try{
    assert.equal(await p.locator('main').getAttribute('data-study-ready'),'false');
    assert.ok(await p.locator('#problem-title').isVisible());
    releaseScripts();await ready(p);
-   // Study controls work while every font stays pending.
+   // Study controls work while every independently fetched font stays pending.
    await p.locator('.solution-section-heading button').click();
    assert.equal(await p.locator('.part-trigger[aria-expanded=true]').count(),await p.locator('.part-trigger').count());
    await p.waitForTimeout(3100);
@@ -78,13 +96,21 @@ try{
    assert.equal(await p.locator('#startup-status').isVisible(),false);
    assert.ok(fontRequests.length>0,'The test actually held a font request');
    assert.ok(fontRequests.every(url=>!url.includes('noto-sans-sc')),'No CJK webfont payload in either locale');
+   assert.ok(fontRequests.every(url=>!/(KaTeX_Main-Regular|KaTeX_Math-Italic)\./.test(url)),'Critical formula faces must not wait on separate font requests');
+   const criticalFonts=await p.evaluate(()=>[...document.fonts].filter(face=>face.status!=='unloaded'&&(face.weight==='normal'||face.weight==='400')&&((face.family.includes('KaTeX_Main')&&face.style==='normal')||(face.family.includes('KaTeX_Math')&&face.style==='italic'))).map(face=>({family:face.family,status:face.status})));
+   assert.ok(criticalFonts.every(face=>face.status==='loaded'),'Used critical formula faces must already be available while other fonts are held');
+   const output=process.env.QA_FONT_ARTIFACTS??'artifacts/font-loading';await mkdir(output,{recursive:true});
+   await screenshotWithoutWaitingForFonts(p,`${output}/${locale}-${width}-before.png`);
    const releaseAt=await p.evaluate(()=>performance.now());
    releaseFonts();await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(100);
-   const fontCLS=await p.evaluate(at=>window.layoutShifts.filter(e=>e.at>=at).reduce((sum,e)=>sum+e.value,0),releaseAt);
+   const shifts=await p.evaluate(at=>window.layoutShifts.filter(e=>e.at>=at),releaseAt);
+   const fontCLS=shifts.reduce((sum,e)=>sum+e.value,0),payload=await fontPayload(p);
+   await screenshotWithoutWaitingForFonts(p,`${output}/${locale}-${width}-after.png`);
+   // Persist diagnostics before asserting, so CI retains the failing case too.
+   await writeFile(`${output}/${locale}-${width}.json`,JSON.stringify({locale,width,readingMs,fontCLS,...payload,criticalFonts,fontRequests,shifts},null,2));
    assert.ok(fontCLS<=0.1,`Late font swap shifts the page: ${fontCLS}`);
-   const fontBytes=await p.evaluate(()=>performance.getEntriesByType('resource').filter(e=>/\.woff2?(?:\?|$)/.test(e.name)).reduce((sum,e)=>sum+e.decodedBodySize,0));
-   assert.ok(fontBytes<=200*1024,`Reading fonts exceeded 200 KiB: ${fontBytes}`);
-   pass('Delayed fonts and scripts do not block reading; font transfer and late shifts stay bounded',{locale,width,readingMs,fontBytes,fontCLS});
+   assert.ok(payload.fontBytes<=200*1024,`Reading fonts exceeded 200 KiB (including embedded faces): ${payload.fontBytes}`);
+   pass('Delayed fonts and scripts do not block reading; font transfer and late shifts stay bounded',{locale,width,readingMs,...payload,fontCLS});
   }finally{releaseScripts();releaseFonts();await c.close();}
  }
  const c=await context('zh',1280),p=await c.newPage();
