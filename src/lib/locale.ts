@@ -1,6 +1,7 @@
 import type { Locale } from './types';
+import { course } from '../../content/course';
 
-export const STORAGE_KEY = 'ecse2100-fieldnotes-v1';
+export const STORAGE_KEY = course.storageKey;
 
 export function readSavedLocale(): Locale {
   try {

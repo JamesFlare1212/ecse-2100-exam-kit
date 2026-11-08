@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { pageTitle } from '../../../content/course';
   import { Button } from '#lib/components/ui/button';
   import * as Empty from '#lib/components/ui/empty';
   import { readSavedLocale, saveLocale } from '#lib/locale';
@@ -16,7 +17,7 @@
   onMount(() => { locale = readSavedLocale(); ready = true; });
   $effect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
-    document.title = `${title} · Fieldnotes · ECSE 2100`;
+    document.title = pageTitle(title);
     document.querySelector('meta[name="description"]')?.setAttribute('content', t('返回习题室继续学习。', 'Return to the study room to keep learning.'));
   });
 

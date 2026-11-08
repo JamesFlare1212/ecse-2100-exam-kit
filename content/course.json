@@ -1,0 +1,27 @@
+{
+  "id": "ecse-2100",
+  "code": "ECSE 2100",
+  "title": { "zh": "场与波 I", "en": "Fields and Waves I" },
+  "defaultProblemId": "e2-s26-q3",
+  "storageKey": "ecse2100-fieldnotes-v1",
+  "resources": {
+    "formulaSheet": "crib",
+    "lectures": [
+      { "doc": "lecture-01", "label": "01", "title": { "zh": "电磁学导论", "en": "Introduction to electromagnetics" } },
+      { "doc": "lecture-02", "label": "02", "title": { "zh": "传输线模型与波动方程", "en": "Line models & wave equations" } },
+      { "doc": "lecture-03", "label": "03", "title": { "zh": "反射、驻波与输入阻抗", "en": "Reflections, standing waves & impedance" } },
+      { "doc": "lecture-04", "label": "04", "title": { "zh": "瞬态分析与反弹图", "en": "Transient analysis & bounce diagrams" } },
+      { "doc": "lecture-05", "label": "05", "title": { "zh": "功率与有损传输线", "en": "Power & lossy transmission lines" } },
+      { "doc": "lecture-06", "label": "06", "title": { "zh": "阻抗匹配与 Smith 图", "en": "Impedance matching & Smith charts" } },
+      { "doc": "lecture-07", "label": "07", "title": { "zh": "传输线支节匹配", "en": "Matching with transmission-line stubs" } },
+      { "doc": "lecture-08", "label": "08", "title": { "zh": "场论数学 I：坐标与积分", "en": "Field math I: coordinates & integrals" } },
+      { "doc": "lecture-09", "label": "09", "title": { "zh": "场论数学 II：矢量算符", "en": "Field math II: vector operators" } },
+      { "doc": "lecture-10", "label": "10", "title": { "zh": "高斯定律", "en": "Gauss’s law" } },
+      { "doc": "lecture-11", "label": "11", "title": { "zh": "电势与电介质", "en": "Electric potential & materials" } },
+      { "doc": "lecture-12", "label": "12", "title": { "zh": "电边界条件与电容", "en": "Electric boundary conditions & capacitance" } },
+      { "doc": "lecture-13", "label": "13", "title": { "zh": "Laplace、Poisson 与数值法", "en": "Laplace, Poisson & numerical methods" } },
+      { "doc": "lecture-14", "label": "14", "title": { "zh": "电流与电阻", "en": "Current & resistance" } },
+      { "doc": "lecture-15", "label": "15", "title": { "zh": "静磁场与安培定律", "en": "Magnetostatics & Ampère’s law" } }
+    ]
+  }
+}

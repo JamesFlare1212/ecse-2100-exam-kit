@@ -10,6 +10,7 @@
   import Math from './Math.svelte';
   import FormulaLink from './FormulaLink.svelte';
   import { problemFormulas } from '#lib/catalog';
+  import { course, sourceName } from '../../../content/course';
   import type { Problem, Locale, SourceRef, SourceDocument } from '#lib/types';
   let {problem,locale,documents,onsource,onlibrary,tab=$bindable('formulas')}: {problem:Problem;locale:Locale;tab?:string;documents:Record<string,SourceDocument>;onsource:(s:SourceRef)=>void;onlibrary:(kind:string)=>void}=$props();
   const formulas=$derived(problemFormulas(problem,locale));
@@ -18,12 +19,12 @@
   <div class="rail-heading"><span><Link aria-hidden="true"/>{locale==='zh'?'知识连接':'Connected knowledge'}</span><Badge variant="outline">{formulas.length+problem.lectures.length}</Badge></div>
   <p class="rail-intro">{locale==='zh'?'让每一步推导，都有据可循。':'A source behind every step.'}</p>
   <Tabs.Root bind:value={tab}>
-    <Tabs.List class="w-full"><Tabs.Trigger value="formulas">{locale==='zh'?'公式表':'Crib sheet'}</Tabs.Trigger><Tabs.Trigger value="lectures">{locale==='zh'?'Lecture notes':'Lectures'}</Tabs.Trigger></Tabs.List>
+    <Tabs.List class="w-full"><Tabs.Trigger value="formulas">{locale==='zh'?'公式表':'Crib sheet'}</Tabs.Trigger><Tabs.Trigger value="lectures">{locale==='zh'?'课件':'Lecture notes'}</Tabs.Trigger></Tabs.List>
     <Tabs.Content value="formulas">
       <div class="rail-formulas">
         {#each formulas as formula,i(formula.id)}
           <section class="rail-formula">
-            <div class="rail-formula-number">{String(i+1).padStart(2,'0')} <span>{formula.source.doc==='crib'?'CRIB SHEET':'LECTURE 04'} · P.{formula.source.page}</span></div>
+            <div class="rail-formula-number">{String(i+1).padStart(2,'0')} <span>{sourceName(formula.source.doc,documents).toUpperCase()} · P.{formula.source.page}</span></div>
             <FormulaLink {documents} {formula} {locale} {onsource}/>
             <div class="rail-equation"><Math {locale} tex={formula.math} display/></div>
           </section>
@@ -34,9 +35,9 @@
     <Tabs.Content value="lectures">
       <div class="lecture-links">
         {#each problem.lectures as lecture,i(`${lecture.doc}-${lecture.page}`)}
-          <Button variant="ghost" class="lecture-link" onclick={()=>onsource(lecture)}><span class="lecture-index">{lecture.doc.slice(-2)}</span><span class="lecture-text"><strong>{lecture.label[locale]}</strong><small>Lecture {Number(lecture.doc.slice(-2))} · p.{lecture.page}</small></span><ArrowUpRight aria-hidden="true"/></Button>
+          <Button variant="ghost" class="lecture-link" onclick={()=>onsource(lecture)}><span class="lecture-index">{course.resources.lectures.find(entry=>entry.doc===lecture.doc)?.label??'↗'}</span><span class="lecture-text"><strong>{lecture.label[locale]}</strong><small>{sourceName(lecture.doc,documents)} · p.{lecture.page}</small></span><ArrowUpRight aria-hidden="true"/></Button>
         {/each}
-        <Button variant="outline" class="w-full" onclick={()=>onlibrary('lectures')}><BookOpen data-icon="inline-start" aria-hidden="true"/>{locale==='zh'?'浏览全部 15 讲':'Browse all 15 lectures'}</Button>
+        <Button variant="outline" class="w-full" onclick={()=>onlibrary('lectures')}><BookOpen data-icon="inline-start" aria-hidden="true"/>{locale==='zh'?`浏览全部 ${course.resources.lectures.length} 讲`:`Browse all ${course.resources.lectures.length} lectures`}</Button>
       </div>
     </Tabs.Content>
   </Tabs.Root>

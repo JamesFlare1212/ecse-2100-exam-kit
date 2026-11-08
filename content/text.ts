@@ -26,6 +26,12 @@ export function hasFormulaReference(node: TextNode): boolean {
   return Boolean(formulaReference(node)) || ('children' in node && node.children.some(hasFormulaReference));
 }
 
+/** Group closing prose punctuation with inline math without changing authored TeX or text. */
+export function mathClosingPunctuation(node: TextNode, next: TextNode | undefined, source: string): string {
+  if (node.type !== 'inlineMath' || source.slice(node.position?.start.offset ?? 0).startsWith('$$') || next?.type !== 'text') return '';
+  return next.value.match(/^[,.;:!?，。；：！？、）］】》〉」』”’]+/u)?.[0] ?? '';
+}
+
 /** Read typed references from actual links, never code or mathematical text. */
 export function formulaReferences(text: string): string[] {
   const ids = new Set<string>();

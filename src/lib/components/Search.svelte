@@ -27,8 +27,8 @@
 </script>
 <Dialog.Root bind:open>
   <Dialog.Content onCloseAutoFocus={(event)=>{if(navigating)event.preventDefault();}} closeLabel={locale==='zh'?'关闭':'Close'} class="search-dialog sm:max-w-2xl">
-    <Dialog.Header><Dialog.Title>{locale==='zh'?'找到下一个理解的起点':'Find your next starting point'}</Dialog.Title><Dialog.Description>{locale==='zh'?`搜索全部 ${catalog.problemEntries.length} 题、${catalog.totalParts} 个小问与公式，中英文都可以。`:`Search all ${catalog.problemEntries.length} problems, ${catalog.totalParts} subparts and formulas in either language.`}</Dialog.Description></Dialog.Header>
-    <Field.Group><Field.Field><Field.Label class="sr-only" for="global-search">{locale==='zh'?'搜索题目或公式':'Search problems or formulas'}</Field.Label><Input id="global-search" bind:value={query} placeholder={locale==='zh'?'例如：高斯定律、同轴、Smith…':'Try Gauss, coaxial, Smith…'}/></Field.Field></Field.Group>
+    <Dialog.Header><Dialog.Title>{locale==='zh'?'搜索题目与公式':'Search problems and formulas'}</Dialog.Title><Dialog.Description>{locale==='zh'?`搜索全部 ${catalog.problemEntries.length} 题、${catalog.totalParts} 个小问与公式，中英文都可以。`:`Search all ${catalog.problemEntries.length} problems, ${catalog.totalParts} subparts and formulas in either language.`}</Dialog.Description></Dialog.Header>
+    <Field.Group><Field.Field><Field.Label class="sr-only" for="global-search">{locale==='zh'?'搜索题目或公式':'Search problems or formulas'}</Field.Label><Input id="global-search" bind:value={query} placeholder={locale==='zh'?'输入题目、概念或公式名称…':'Enter a problem, concept or formula name…'}/></Field.Field></Field.Group>
     <p class="search-count" role="status" aria-live="polite">{matches.length+formulaMatches.length} {locale==='zh'?'个匹配结果':'matching results'}</p>
     <div bind:this={results} class="search-results" role="region" aria-label={locale==='zh'?'搜索结果':'Search results'}>
       {#if formulaMatches.length}<p class="search-group-label">{locale==='zh'?'公式':'FORMULAS'}</p>{/if}

@@ -4,11 +4,12 @@ import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { loadContent, assetSource, stagePaperAssets } from '../content/papers.server';
 import {displayEquations} from '../content/text';
+import {course} from '../content/course';
 
 const project = resolve(import.meta.dir, '..');
 function fixture() {
   const root = mkdtempSync(resolve(tmpdir(), 'fieldnotes-papers-'));
-  for (const name of ['documents.json', 'formulas.json']) cpSync(resolve(project, 'content', name), resolve(root, name));
+  for (const name of ['course.json', 'documents.json', 'formulas.json']) cpSync(resolve(project, 'content', name), resolve(root, name));
   for(const locale of ['en','zh-cn'])mkdirSync(resolve(root,locale));
   function add(name: string, id: string, year: number) {
     const directories=[];
@@ -33,7 +34,8 @@ function fixture() {
   return { root, add };
 }
 
-describe('Pluggable paper folders', () => {
+// These regression fixtures deliberately reuse the shipped ECSE exam; generic migration coverage lives in template.test.ts.
+describe.skipIf(course.id !== 'ecse-2100' || !existsSync(resolve(project, 'content/en/exam1_f25')))('Pluggable paper folders', () => {
   test('discovers added papers, scopes assets and removes unplugged staged assets without a registry edit', () => {
     const { root, add } = fixture();
     try {

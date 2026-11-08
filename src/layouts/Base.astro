@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import { course, pageTitle } from '../../content/course';
 import '../styles/layout.css';
 import favicon from '#lib/assets/favicon.svg';
 import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
@@ -13,13 +14,13 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="text-scale" content="scale" />
     <meta name="theme-color" content="#ad5030" />
-    <title>{title} · Fieldnotes · ECSE 2100</title>
+    <title>{pageTitle(title)}</title>
     <meta name="description" content={description} />
     <link rel="icon" href={favicon.src} />
     <link rel="preload" href={inter} as="font" type="font/woff2" crossorigin />
-    <script is:inline data-astro-rerun>
+    <script is:inline data-astro-rerun define:vars={{ storageKey: course.storageKey }}>
       try {
-        const p = JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1') || '{}');
+        const p = JSON.parse(localStorage.getItem(storageKey) || '{}');
         const dark = p.theme === 'dark' || ((!p.theme || p.theme === 'system') && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', dark);
         document.documentElement.style.colorScheme = dark ? 'dark' : 'light';

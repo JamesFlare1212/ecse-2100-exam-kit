@@ -22,6 +22,13 @@ for (const paper of papers) for (const locale of ['en','zh'] as const) {
   }
 }
 
+// Shared course resources must be complete too, including after replacing the sample course.
+for (const doc of Object.values(documents)) {
+  required(assetSource(doc.pdf));
+  for (let page = 1; page <= doc.pages; page++) required(assetSource(`${doc.pageBase}/${page}.webp`));
+}
+for (const formula of formulas) required(assetSource(`/excerpts/${formula.id}.webp`));
+
 const problems = exams.flatMap(exam => exam.problems);
 const parts = problems.flatMap(problem => problem.parts);
 console.log(`Content verified from Markdown: ${exams.length} exams / ${problems.length} problems / ${parts.length} parts / ${parts.reduce((sum, part) => sum + displayEquations(part.solution.en).length, 0)} English equation groups / ${formulas.length} formulas / ${Object.keys(documents).length} documents.`);

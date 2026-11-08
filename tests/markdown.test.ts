@@ -1,5 +1,6 @@
 import {describe,expect,test} from 'bun:test';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
+import {course} from '../content/course';
 import {resolve} from 'node:path';
 import {parseDocument} from 'yaml';
 import {parseQuestionBody,readQuestionMarkdown} from '../content/markdown';
@@ -8,11 +9,13 @@ import {displayEquations,formulaReferences,hasFormulaReference,parseText} from '
 
 const directory=resolve(import.meta.dir,'../content/en/exam1_f26');
 const file=resolve(directory,'questions/q1.md');
-const resources=JSON.parse(readFileSync(resolve(directory,'figure-sources.json'),'utf8'));
-const source=readFileSync(file,'utf8');
+const active=course.id==='ecse-2100'&&existsSync(file);
+const resources=active?JSON.parse(readFileSync(resolve(directory,'figure-sources.json'),'utf8')):{figures:{}};
+const source=active?readFileSync(file,'utf8'):'';
 const read=(text:string,path=file)=>readQuestionMarkdown(text,path,resources);
 
-describe('Natural Markdown question articles',()=>{
+// ECSE wording/parser regressions; template.test.ts also exercises independent course articles.
+describe.skipIf(!active)('Natural Markdown question articles',()=>{
   test('derives defaults and stable part IDs while preserving original prose and equations',()=>{
     const problem=read(source);
     expect(problem.id).toBe('e1-f26-q1');

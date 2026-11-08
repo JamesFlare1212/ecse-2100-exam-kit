@@ -1,5 +1,5 @@
 import formulaData from '../../content/formulas.json';
-import type { ExamIndex, Formula, Problem, SourceDocument, Localized, Locale } from './types';
+import type { ExamIndex, Formula, Problem, SourceDocument, Locale } from './types';
 import { formulaReferences } from '../../content/text';
 import { DEFAULT_PROBLEM_ID } from './problem-navigation';
 
@@ -18,20 +18,3 @@ export function problemFormulas(problem: Problem, locale: Locale) {
   const ids = [...new Set(problem.parts.flatMap(p => formulaReferences(p.solution[locale])))];
   return ids.map(id => formulaById[id]).filter(Boolean);
 }
-export const lectureTitles: Record<number, Localized> = {
-  1: {zh:'电磁学导论',en:'Introduction to electromagnetics'},
-  2: {zh:'传输线模型与波动方程',en:'Line models & wave equations'},
-  3: {zh:'反射、驻波与输入阻抗',en:'Reflections, standing waves & impedance'},
-  4: {zh:'瞬态分析与反弹图',en:'Transient analysis & bounce diagrams'},
-  5: {zh:'功率与有损传输线',en:'Power & lossy transmission lines'},
-  6: {zh:'阻抗匹配与 Smith 图',en:'Impedance matching & Smith charts'},
-  7: {zh:'传输线支节匹配',en:'Matching with transmission-line stubs'},
-  8: {zh:'场论数学 I：坐标与积分',en:'Field math I: coordinates & integrals'},
-  9: {zh:'场论数学 II：矢量算符',en:'Field math II: vector operators'},
-  10: {zh:'高斯定律',en:'Gauss’s law'},
-  11: {zh:'电势与电介质',en:'Electric potential & materials'},
-  12: {zh:'电边界条件与电容',en:'Electric boundary conditions & capacitance'},
-  13: {zh:'Laplace、Poisson 与数值法',en:'Laplace, Poisson & numerical methods'},
-  14: {zh:'电流与电阻',en:'Current & resistance'},
-  15: {zh:'静磁场与安培定律',en:'Magnetostatics & Ampère’s law'}
-};

@@ -1,4 +1,6 @@
-export const DEFAULT_PROBLEM_ID = 'e2-s26-q3';
+import { course } from '../../content/course';
+
+export const DEFAULT_PROBLEM_ID = course.defaultProblemId ?? '';
 
 export function problemPath(id: string, part?: string) {
   return `/problems/${id}/${part ? '#'+encodeURIComponent(part) : ''}`;

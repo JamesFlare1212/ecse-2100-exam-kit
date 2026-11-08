@@ -1,5 +1,7 @@
 <script lang="ts">
   import { untrack } from 'svelte';
+  import { course } from '../../../content/course';
+  import { formulas } from '#lib/catalog';
   import * as Tabs from '#lib/components/ui/tabs';
   import * as Accordion from '#lib/components/ui/accordion';
   import { Button } from '#lib/components/ui/button';
@@ -23,10 +25,12 @@
   const progress=$derived(study.count(partIds));
   const examNumbers=$derived([...new Set(study.catalog.exams.map(exam=>exam.number))]);
   const home=$derived(study.catalog.findProblem(DEFAULT_PROBLEM_ID).problem.id);
+  const sheet=$derived(course.resources.formulaSheet?study.catalog.documents[course.resources.formulaSheet]:undefined);
+  const lectures=course.resources.lectures;
   $effect(()=>{if(study.selected!==lastSelected){lastSelected=study.selected;openExam=selected.exam.id;}});
 </script>
 <div class="navigation-content">
-  <a href={problemPath(home)} class="brand" aria-label="Fieldnotes · ECSE 2100" onclick={(event)=>followProblemLink(event,()=>onselect(home))}><span class="brand-mark"><Waves aria-hidden="true"/></span><span><strong>fieldnotes<span class="brand-dot">.</span></strong><small>ECSE 2100 · FIELDS & WAVES I</small></span></a>
+  <a href={problemPath(home)} class="brand" aria-label={`Fieldnotes · ${course.code}`} onclick={(event)=>followProblemLink(event,()=>onselect(home))}><span class="brand-mark"><Waves aria-hidden="true"/></span><span><strong>fieldnotes<span class="brand-dot">.</span></strong><small>{course.code} · {course.title.en.toUpperCase()}</small></span></a>
   <div class="nav-body">
     <div class="nav-section-label">{study.locale==='zh'?'历年试卷':'THE EXAM ARCHIVE'}<Badge variant="outline">{study.catalog.exams.length}</Badge></div>
     <Tabs.Root value={String(selected.exam.number)} onValueChange={(v)=>{if(v&&v!==String(selected.exam.number))onselect(study.catalog.exams.filter(exam=>exam.number===Number(v)).at(-1)!.problems[0].id);}}>
@@ -34,13 +38,13 @@
     </Tabs.Root>
     <Accordion.Root type="single" value={openExam??''} onValueChange={(v)=>openExam=v} class="exam-list">
       {#each exams.toReversed() as exam(exam.id)}
-        <Accordion.Item value={exam.id}>
+        <Accordion.Item value={exam.id} data-exam={exam.id}>
           <Accordion.Trigger class="exam-trigger"><span class="exam-season">{exam.term[study.locale]} {exam.year}<small>{exam.points} {study.locale==='zh'?'分':'pts'} · {exam.problems.length} {study.locale==='zh'?'题':'problems'}</small></span></Accordion.Trigger>
           <Accordion.Content>
             <nav aria-label={`${exam.term[study.locale]} ${exam.year}`} class="question-navigation">
               {#each exam.problems as q(q.id)}
                 {@const done=study.count(q.parts.map(p=>p.id))}
-                <Button variant={q.id===study.selected?'secondary':'ghost'} class="question-link" href={problemPath(q.id)} onclick={(event)=>followProblemLink(event,()=>onselect(q.id))} aria-current={q.id===study.selected?'page':undefined}>
+                <Button variant={q.id===study.selected?'secondary':'ghost'} class="question-link active:not-aria-[haspopup]:translate-y-0" href={problemPath(q.id)} onclick={(event)=>followProblemLink(event,()=>onselect(q.id))} aria-current={q.id===study.selected?'page':undefined}>
                   <span class="question-number">{#if done===q.parts.length}<Check aria-label={study.locale==='zh'?'已完成':'Complete'}/>{:else}{String(q.number).padStart(2,'0')}{/if}</span>
                   <span class="question-link-title">{q.title[study.locale]}<small>{done}/{q.parts.length} {study.locale==='zh'?'小问':'parts'}</small></span>
                   {#if study.bookmarks[q.id]}<Bookmark class="nav-bookmark" aria-label={study.locale==='zh'?'已收藏':'Bookmarked'}/>{/if}
@@ -54,8 +58,8 @@
     <Separator />
     <div class="nav-section-label resource-label">{study.locale==='zh'?'学习资料':'YOUR RESOURCES'}</div>
     <div class="resource-navigation">
-      <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('crib')}><FileText data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'公式表':'Crib sheet'}<span class="resource-shortcut">10 p.</span></Button>
-      <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('lectures')}><BookOpen data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'课程讲义':'Lecture notes'}<span class="resource-shortcut">01–15</span></Button>
+      <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('crib')}><FileText data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'公式表':'Crib sheet'}<span class="resource-shortcut">{sheet?`${sheet.pages} p.`:formulas.length}</span></Button>
+      <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('lectures')}><BookOpen data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'课程讲义':'Lecture notes'}<span class="resource-shortcut">{lectures.length>1?`${lectures[0].label}–${lectures.at(-1)!.label}`:lectures[0]?.label??'0'}</span></Button>
       <Button variant="ghost" class="resource-link" onclick={()=>onlibrary('bookmarks')}><Bookmark data-icon="inline-start" aria-hidden="true"/>{study.locale==='zh'?'我的收藏':'Saved problems'}<span class="resource-shortcut">{study.catalog.problemEntries.filter(({problem})=>study.bookmarks[problem.id]).length}</span></Button>
     </div>
   </div>

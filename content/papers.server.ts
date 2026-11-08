@@ -1,6 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseContent } from './schema.ts';
+import { parseCourseConfig, validateCourseDocuments } from './course.ts';
 import { createExamIndex } from './navigation.ts';
 import { readQuestionMarkdown, type MarkdownQuestion } from './markdown.ts';
 import { CONTENT_LOCALES, joinTranslations } from './localization.ts';
@@ -22,6 +23,7 @@ function readJson<T>(path: string): T {
 
 /** Discover complete paper folders; no source list or generated registry. */
 export function loadContent(directory = resolve('content'), articles?: readonly MarkdownQuestion[]) {
+  const course = parseCourseConfig(readJson(resolve(directory, 'course.json')));
   const shared = readJson<Record<string, SourceDocument>>(resolve(directory, 'documents.json'));
   const documentsByLocale = { en: { ...shared }, zh: { ...shared } };
   const formulas = readJson<Formula[]>(resolve(directory, 'formulas.json'));
@@ -74,7 +76,8 @@ export function loadContent(directory = resolve('content'), articles?: readonly 
     || Number(a.exam.id.includes('-f')) - Number(b.exam.id.includes('-f')) || a.name.localeCompare(b.name));
   const checked = parseContent(papers.map(paper => paper.exam), formulas, documentsByLocale.en);
   parseContent(checked.exams, formulas, documentsByLocale.zh);
-  return { ...checked, documentsByLocale, papers, examIndex: createExamIndex(checked.exams) };
+  for (const documents of Object.values(documentsByLocale)) validateCourseDocuments(course, documents);
+  return { ...checked, course, documentsByLocale, papers, examIndex: createExamIndex(checked.exams) };
 }
 
 /** Resolve public asset URLs to canonical source files without staging. */

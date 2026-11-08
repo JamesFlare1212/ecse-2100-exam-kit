@@ -32,7 +32,7 @@ describe('Authored question and metadata validation', () => {
     expect(() => parseContent(input, formulas, documents)).toThrow(error);
   });
 
-  test('validates inline mathematics in shared formula notes too', () => {
+  test.skipIf(formulas.length === 0)('validates inline mathematics in shared formula notes too', () => {
     const input = structuredClone(formulas);
     input[0].note = {zh: '关系 $\\frac{$', en: 'Relation $a$'};
     expect(() => parseContent(exams, input, documents)).toThrow(/formulas\[0\]\.note\.zh.*invalid TeX/);

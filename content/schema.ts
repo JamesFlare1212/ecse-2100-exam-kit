@@ -101,7 +101,7 @@ const document = object({
 /** Validate authored content in memory, without rewriting Markdown or generating JSON. */
 export function parseContent(rawExams: unknown, rawFormulas: unknown, rawDocuments: unknown) {
   array(exam, 1)(rawExams, 'exams');
-  array(formula, 1)(rawFormulas, 'formulas');
+  array(formula)(rawFormulas, 'formulas');
   if (!rawDocuments || typeof rawDocuments !== 'object' || Array.isArray(rawDocuments)) fail('documents', 'expected a document registry');
   for (const [id, entry] of Object.entries(rawDocuments)) document(entry, `documents.${id}`);
   const exams = rawExams as Exam[];
@@ -142,8 +142,11 @@ export function parseContent(rawExams: unknown, rawFormulas: unknown, rawDocumen
         if (p.questionFigure) page(p.questionFigure.source.doc, p.questionFigure.source.page, `${p.id}.questionFigure`);
         if (p.figure && !p.figureCaption) fail(`${p.id}.figureCaption`, 'solution figures need bilingual captions');
         for (const locale of ['en','zh'] as const) {
-          if (!/\\boxed\s*\{/.test(displayEquations(p.solution[locale]).at(-1) ?? ''))
+          const equations = displayEquations(p.solution[locale]);
+          if (!/\\boxed\s*\{/.test(equations.at(-1) ?? ''))
             fail(`${p.id}.solution.${locale}`, 'expected a displayed boxed result');
+          if (equations.slice(0, -1).some(tex => /\\boxed\s*\{/.test(tex)))
+            fail(`${p.id}.solution.${locale}`, 'boxed results belong only in the final displayed calculation');
           let refs: string[];
           try { refs = formulaReferences(p.solution[locale]); } catch (error) { fail(`${p.id}.solution.${locale}`, String(error)); }
           for (const ref of refs) if (!formulaIds.has(ref)) fail(`${p.id}.solution.${locale}`, `unknown formula ${ref}`);

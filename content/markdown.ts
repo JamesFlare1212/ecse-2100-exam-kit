@@ -72,6 +72,8 @@ export function parseQuestionBody(rawMetadata: unknown, body: string, file = 'qu
     const solution = nonempty(solutionSection);
     const equations = displayEquations(solution);
     if (!equations.length) fail(solutionSection, 'expected a displayed governing formula');
+    if (equations.slice(0, -1).some(tex => /\\boxed\s*\{/.test(tex)))
+      fail(solutionSection, 'boxed results belong only in the final displayed calculation');
     const finalEquation = parseText(solution).children.findLast(node => node.type === 'math');
     if (finalEquation?.type !== 'math' || !/\\boxed\s*\{/.test(finalEquation.value))
       fail(solutionSection, 'put the final result in a displayed boxed formula');

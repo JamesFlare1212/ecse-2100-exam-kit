@@ -1,6 +1,7 @@
 <script lang="ts">
   import {onMount,tick,untrack} from 'svelte';
-  import {navigate} from 'astro:transitions/client';
+  import {navigate,type TransitionBeforeSwapEvent} from 'astro:transitions/client';
+  import {preserveNavigationScroll} from '#lib/navigation-scroll';
   import {BitsConfig} from 'bits-ui';
   import * as Tabs from '#lib/components/ui/tabs';
   import * as Accordion from '#lib/components/ui/accordion';
@@ -35,7 +36,8 @@
   import RichText from '#lib/components/RichText.svelte';
   import ProblemPart from '#lib/components/ProblemPart.svelte';
   import ProblemOverview from '#lib/components/ProblemOverview.svelte';
-  import {StudyState} from '#lib/study.svelte';
+  import {StudyState,STORAGE_KEY} from '#lib/study.svelte';
+  import {course,pageTitle,sourceName,studyDescription} from '../../../content/course';
   import {provideFormulaPreviews} from '#lib/formula-preview.svelte';
   import {createCatalog} from '#lib/catalog';
   import {problemPath} from '#lib/problem-navigation';
@@ -66,6 +68,9 @@
   let mobileNavExam=$state<string|undefined>();
   let mobileRailTab=$state('formulas');
   let sourceTrigger: HTMLElement | null = null;
+  let libraryTrigger: HTMLElement | null = null;
+  let libraryOrigin: 'navigation' | 'references' = 'navigation';
+  let libraryFromSheet = false;
   let macKeys=$state(false);
   let restoreTraversalFocus=$state<(()=>void)|undefined>();
   const t=(zh:string,en:string)=>study.locale==='zh'?zh:en;
@@ -78,11 +83,24 @@
   $effect(()=>{if(study.ready){document.documentElement.classList.toggle('dark',dark);document.documentElement.lang=study.locale==='zh'?'zh-CN':'en';document.documentElement.style.colorScheme=dark?'dark':'light';document.documentElement.dataset.navigation=study.navigationOpen?'open':'closed';document.documentElement.dataset.references=study.referencesOpen?'open':'closed';}});
   $effect(()=>{
     if(!study.ready)return;
-    document.title=`${problem.title[study.locale]} · Fieldnotes · ECSE 2100`;
-    document.querySelector('meta[name="description"]')?.setAttribute('content',t(`ECSE 2100 场与波 I：${catalog.exams.length} 份历年试卷、${catalog.totalParts} 个双语详解小问，以及附来源的公式与课程讲义。`,`ECSE 2100 Fields and Waves I: ${catalog.exams.length} back exams, ${catalog.totalParts} bilingual worked subparts, source-linked formulas and lecture notes.`));
+    document.title=pageTitle(problem.title[study.locale]);
+    document.querySelector('meta[name="description"]')?.setAttribute('content',studyDescription(study.locale,catalog.exams.length,catalog.totalParts));
   });
 
-  function library(kind:string){libraryKind=kind;libraryOpen=true;navOpen=false;}
+  function library(kind:string,origin:'navigation'|'references'='navigation'){
+    libraryTrigger=document.activeElement instanceof HTMLElement?document.activeElement:null;
+    libraryOrigin=origin;
+    libraryFromSheet=Boolean(libraryTrigger?.closest('#mobile-exam-navigation, #mobile-reference-sidebar'));
+    libraryKind=kind;libraryOpen=true;navOpen=false;railOpen=false;
+  }
+  function returnFromLibrary(event:Event){
+    event.preventDefault();
+    if(!libraryFromSheet&&libraryTrigger?.isConnected&&!libraryTrigger.closest('[inert], [hidden]')&&libraryTrigger.getClientRects().length){
+      libraryTrigger.focus({preventScroll:true});
+    }else{
+      document.querySelector<HTMLElement>(`[data-sidebar-toggle="${libraryOrigin}"]`)?.focus({preventScroll:true});
+    }
+  }
   function openSource(ref:SourceRef){sourceTrigger=document.activeElement as HTMLElement;source=ref;railOpen=false;}
   function returnFromSource(event: Event){
     if(sourceTrigger?.isConnected&&!sourceTrigger.closest('[inert], [hidden]')){event.preventDefault();sourceTrigger.focus({preventScroll:true});}
@@ -130,7 +148,18 @@
       });
     };
     restoreTraversalFocus=restoreReadingFocus;
+    const beforeSwap=(event:TransitionBeforeSwapEvent)=>{
+      const nextId=event.newDocument.querySelector<HTMLElement>('main[data-problem]')?.dataset.problem;
+      const next=catalog.problemEntries.find(entry=>entry.problem.id===nextId);
+      // Opening another paper already changes the directory before its link is
+      // clicked. Preserve that position too; only a different Exam tab replaces
+      // the directory and intentionally starts at the top.
+      if(next?.exam.number!==exam.number)return;
+      const scroller=document.querySelector<HTMLElement>('#exam-navigation .nav-body');
+      if(scroller)preserveNavigationScroll(event,scroller);
+    };
     document.addEventListener('astro:before-preparation',beforeNavigation);
+    document.addEventListener('astro:before-swap',beforeSwap);
     document.addEventListener('astro:page-load',restoreReadingFocus);
     const preference=matchMedia('(prefers-color-scheme: dark)');systemDark=preference.matches;
     const onAppearance=(event:MediaQueryListEvent)=>systemDark=event.matches;preference.addEventListener('change',onAppearance);
@@ -141,7 +170,7 @@
     navLayout.addEventListener('change',onNavLayout);refLayout.addEventListener('change',onRefLayout);
     study.restore();study.selected=problem.id;study.ready=true;
     macKeys=/Mac|iPhone|iPad/.test(navigator.platform);
-    const stored=(event:StorageEvent)=>{if(event.key==='ecse2100-fieldnotes-v1')untrack(()=>study.sync(event.newValue));};
+    const stored=(event:StorageEvent)=>{if(event.key===STORAGE_KEY)untrack(()=>study.sync(event.newValue));};
     window.addEventListener('storage',stored);
     const hashPart=()=>{
       let id:string;
@@ -162,7 +191,7 @@
       else if((event.metaKey||event.ctrlKey)&&!event.altKey&&!event.shiftKey&&event.key.toLowerCase()==='b'){event.preventDefault();toggleNavigation();}
     };
     window.addEventListener('keydown',keydown);
-    return()=>{preference.removeEventListener('change',onAppearance);navLayout.removeEventListener('change',onNavLayout);refLayout.removeEventListener('change',onRefLayout);window.removeEventListener('keydown',keydown);window.removeEventListener('storage',stored);document.removeEventListener('astro:page-load',hashPart);document.removeEventListener('astro:before-preparation',beforeNavigation);document.removeEventListener('astro:page-load',restoreReadingFocus);};
+    return()=>{preference.removeEventListener('change',onAppearance);navLayout.removeEventListener('change',onNavLayout);refLayout.removeEventListener('change',onRefLayout);window.removeEventListener('keydown',keydown);window.removeEventListener('storage',stored);document.removeEventListener('astro:page-load',hashPart);document.removeEventListener('astro:before-preparation',beforeNavigation);document.removeEventListener('astro:before-swap',beforeSwap);document.removeEventListener('astro:page-load',restoreReadingFocus);};
   });
 </script>
 
@@ -176,7 +205,7 @@
         <div class="toolbar-breadcrumb">
           <Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'icon',highlightExpanded:false})} data-sidebar-toggle="navigation" onclick={toggleNavigation} aria-label={navigationLabel} aria-controls={compactNavigation?'mobile-exam-navigation':'exam-navigation'} aria-expanded={compactNavigation?navOpen:study.navigationOpen} aria-keyshortcuts="Control+b Meta+b"><PanelLeft aria-hidden="true"/></Tooltip.Trigger><Tooltip.Content>{navigationLabel}{#if !compactNavigation} · Ctrl / ⌘ B{/if}</Tooltip.Content></Tooltip.Root>
           <Separator orientation="vertical" class="h-5 data-vertical:self-center"/>
-          <span class="course-label">ECSE 2100</span><ChevronRight aria-hidden="true"/><span>{t('习题室','Study room')}</span>
+          <span class="course-label">{course.code}</span><ChevronRight aria-hidden="true"/><span class="toolbar-problem-context" title={`${exam.term[study.locale]} ${exam.year} · Exam ${exam.number} · Q${problem.number}`} aria-label={t(`${exam.year} 年${exam.term.zh}，Exam ${exam.number}，第 ${problem.number} 题`,`${exam.term.en} ${exam.year}, Exam ${exam.number}, problem ${problem.number}`)}><span class="toolbar-paper-context">{exam.term[study.locale]} {exam.year} · </span>Exam {exam.number} · Q{problem.number}</span>
         </div>
         <div class="toolbar-actions">
           <Button variant="ghost" class="search-button" onclick={()=>searchOpen=true} aria-label={t('搜索题目与公式','Search problems and formulas')}><SearchIcon data-icon="inline-start" aria-hidden="true"/><span class="search-button-label">{t('搜索','Search')}</span><kbd>{macKeys?'⌘':'Ctrl'} K</kbd></Button>
@@ -188,11 +217,11 @@
       </header>
       <div class="reading-layout" data-references={study.referencesOpen?'open':'closed'}>
         <main id="main-content" class="main-content" data-problem={problem.id} data-study-ready={study.ready}>
-          <div class="course-eyebrow"><span class="eyebrow-line"></span>FIELDS & WAVES I <span class="eyebrow-divider">/</span> {t('学习桌','THE STUDY DESK')}</div>
+          <div class="course-eyebrow"><span class="eyebrow-line"></span>{course.title.en.toUpperCase()} <span class="eyebrow-divider">/</span> {t('学习桌','THE STUDY DESK')}</div>
           <div class="problem-meta"><Badge variant="outline">Exam {exam.number}</Badge><span>{exam.term[study.locale]} {exam.year}</span><span class="metadata-dot">·</span><span>{problem.points} {t('分','points')}</span><span class="metadata-dot">·</span><span>{problem.parts.length} {t('小问','parts')}</span></div>
           <div class="problem-title-row"><div><p class="problem-kicker">{t('题目','PROBLEM')} {String(problem.number).padStart(2,'0')}</p><h1 id="problem-title" lang={study.locale==='zh'?'zh-CN':'en'} tabindex="-1">{problem.title[study.locale]}</h1></div><Tooltip.Root><Tooltip.Trigger class={buttonVariants({variant:'outline',size:'icon'})} onclick={()=>study.bookmarks[problem.id]=!study.bookmarks[problem.id]} aria-label={t(study.bookmarks[problem.id]?'取消收藏':'收藏此题',study.bookmarks[problem.id]?'Remove bookmark':'Bookmark problem')} aria-pressed={Boolean(study.bookmarks[problem.id])}>{#if study.bookmarks[problem.id]}<BookmarkCheck aria-hidden="true"/>{:else}<Bookmark aria-hidden="true"/>{/if}</Tooltip.Trigger><Tooltip.Content>{t(study.bookmarks[problem.id]?'已收藏':'留待再次练习',study.bookmarks[problem.id]?'Saved':'Save for another attempt')}</Tooltip.Content></Tooltip.Root></div>
           <p class="problem-subtitle">{problem.topic[study.locale]}<span>·</span>{t('先写方程，再代入数值。','Start with the equation. Then work through the numbers.')}</p>
-          <div class="problem-lectures lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>Number(l.doc.slice(-2))))] as number(number)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>Number(l.doc.slice(-2))===number)!)}>Lecture {String(number).padStart(2,'0')}</Button>{/each}</div>
+          <div class="problem-lectures lecture-badges"><GraduationCap aria-hidden="true"/>{#each [...new Set(problem.lectures.map(l=>l.doc))] as doc(doc)}<Button variant="ghost" size="sm" onclick={()=>openSource(problem.lectures.find(l=>l.doc===doc)!)}>{sourceName(doc,documents)}</Button>{/each}</div>
           {#if study.storageError}<Alert.Root class="storage-status"><Info aria-hidden="true"/><Alert.Title>{t('浏览器存储暂不可用','Browser storage is unavailable')}</Alert.Title><Alert.Description>{t('本次更改尚未保存，原记录保持不变。可继续练习并重试。','Changes are not saved; your original record is preserved. Keep working and retry.')}</Alert.Description><Button variant="outline" size="sm" onclick={()=>study.persist(study.serialize())}>{t('重试保存','Retry saving')}</Button></Alert.Root>{/if}
           <Tabs.Root bind:value={view} class="problem-tabs">
             <Tabs.List variant="line" class="problem-tab-list"><Tabs.Trigger value="learn"><Layers aria-hidden="true"/>{t('题目与推导','Problem & solution')}</Tabs.Trigger><Tabs.Trigger value="source"><FileText aria-hidden="true"/>{t('试卷原页','Source pages')}</Tabs.Trigger></Tabs.List>
@@ -200,7 +229,7 @@
               <section class="problem-statement" aria-label={t('题目条件','Problem statement')}><div class="section-label"><span>01</span>{t('试卷原题','THE ORIGINAL QUESTION')}<Badge variant="secondary">{t('原题措辞','Original wording')}</Badge></div><div class="original-statement" lang={study.locale==='zh'?'zh-CN':'en'} data-original-statement><RichText text={problem.statement[study.locale]}/></div></section>
               {#if !problem.figureAtParts}<Figure {assetBase} size={data.figureSizes[study.locale][problem.figure]} name={problem.figure} locale={study.locale} {dark} caption={problem.figureCaption} original={problem.originalFigure} onsource={openSource}/>{/if}
               <section class="worked-solution" aria-label={t('分步解答','Worked solution')}><div class="solution-section-heading"><div class="section-label"><span>02</span>{t('一步一步推导','WORK IT THROUGH')}</div><Button variant="ghost" size="sm" onclick={toggleSolutions} aria-controls="worked-parts" aria-expanded={openParts.length>0}>{#if openParts.length}{t('收起全部推导','Collapse all steps')}<ChevronsUp data-icon="inline-end" aria-hidden="true"/>{:else}{t('展开全部推导','Reveal all steps')}<Layers data-icon="inline-end" aria-hidden="true"/>{/if}</Button></div>
-                <ProblemOverview {problem} locale={study.locale} onsource={openSource}/>
+                <ProblemOverview {problem} {documents} locale={study.locale} onsource={openSource}/>
                 <Accordion.Root id="worked-parts" type="multiple" bind:value={openParts}>{#each problem.parts as part(part.id)}<ProblemPart {assetBase} sizes={data.figureSizes[study.locale]} {part} {study} {exam} {dark} onsource={openSource}/>{/each}</Accordion.Root>
               </section>
               {#if problem.note?.[study.locale]}<Alert.Root class="problem-model-note"><Info aria-hidden="true"/><Alert.Title>{t('模型与原题说明','Model & source note')}</Alert.Title><Alert.Description><RichText text={problem.note[study.locale]!}/></Alert.Description></Alert.Root>{/if}
@@ -210,16 +239,16 @@
               {#each originalPages as page(page)}<SourcePage doc={documents[exam.doc]} {page} locale={study.locale} alt={t(`Exam ${exam.number} · ${exam.term.zh} ${exam.year} · 第 ${page} 页`,`Exam ${exam.number}, ${exam.term.en} ${exam.year}, page ${page}`)} onopen={()=>openSource({doc:exam.doc,page,label:{zh:'原始试题',en:'Original exam'}})}/>{/each}
             </Tabs.Content>
           </Tabs.Root>
-          <footer class="reading-footer"><span>fieldnotes<span class="brand-dot">.</span></span><p>{t('把答案连回原理。','Connect the answer to the idea.')}<small>ECSE 2100 · {catalog.totalParts} {t('小问','worked parts')}</small></p></footer>
+          <footer class="reading-footer"><span>fieldnotes<span class="brand-dot">.</span></span><p>{t('把答案连回原理。','Connect the answer to the idea.')}<small>{course.code} · {catalog.totalParts} {t('小问','worked parts')}</small></p></footer>
         </main>
-        <aside id="reference-sidebar" class="reference-rail" aria-label={t('公式与课件引用','Formula and lecture references')} aria-hidden={compactReferences||!study.referencesOpen} inert={compactReferences||!study.referencesOpen}><ReferenceRail {documents} {problem} locale={study.locale} onsource={openSource} onlibrary={library}/></aside>
+        <aside id="reference-sidebar" class="reference-rail" aria-label={t('公式与课件引用','Formula and lecture references')} aria-hidden={compactReferences||!study.referencesOpen} inert={compactReferences||!study.referencesOpen}><ReferenceRail {documents} {problem} locale={study.locale} onsource={openSource} onlibrary={(kind)=>library(kind,'references')}/></aside>
       </div>
     </div>
   </div>
   <Sheet.Root bind:open={navOpen}><Sheet.Content onCloseAutoFocus={panelCloseFocus} id="mobile-exam-navigation" closeLabel={t('关闭','Close')} side="left" class="mobile-nav-sheet"><Sheet.Header class="sr-only"><Sheet.Title>{t('试卷与资料导航','Exams and resources')}</Sheet.Title><Sheet.Description>{t('选择试卷、题目或学习资料。','Choose an exam, problem or course resource.')}</Sheet.Description></Sheet.Header><Navigation bind:openExam={mobileNavExam} {study} onselect={select} onlibrary={library}/></Sheet.Content></Sheet.Root>
-  <Sheet.Root bind:open={railOpen}><Sheet.Content onCloseAutoFocus={panelCloseFocus} id="mobile-reference-sidebar" closeLabel={t('关闭','Close')} side="right" class="reference-sheet"><Sheet.Header><Sheet.Title>{t('公式与课程连接','Formulas and lectures')}</Sheet.Title><Sheet.Description>{t('查看本题使用的公式与对应讲义。','The equations and lecture pages used in this problem.')}</Sheet.Description></Sheet.Header><ReferenceRail bind:tab={mobileRailTab} {documents} {problem} locale={study.locale} onsource={openSource} onlibrary={(kind)=>{railOpen=false;library(kind);}}/></Sheet.Content></Sheet.Root>
+  <Sheet.Root bind:open={railOpen}><Sheet.Content onCloseAutoFocus={panelCloseFocus} id="mobile-reference-sidebar" closeLabel={t('关闭','Close')} side="right" class="reference-sheet"><Sheet.Header><Sheet.Title>{t('公式与课程连接','Formulas and lectures')}</Sheet.Title><Sheet.Description>{t('查看本题使用的公式与对应讲义。','The equations and lecture pages used in this problem.')}</Sheet.Description></Sheet.Header><ReferenceRail bind:tab={mobileRailTab} {documents} {problem} locale={study.locale} onsource={openSource} onlibrary={(kind)=>library(kind,'references')}/></Sheet.Content></Sheet.Root>
   <Search bind:open={searchOpen} {catalog} locale={study.locale} onselect={select} onsource={openSource}/>
-  <Library bind:open={libraryOpen} bind:kind={libraryKind} {study} onsource={openSource} onselect={select}/>
+  <Library bind:open={libraryOpen} bind:kind={libraryKind} {study} onsource={openSource} onselect={select} onCloseAutoFocus={returnFromLibrary}/>
   <SourceViewer {source} {documents} locale={study.locale} onCloseAutoFocus={returnFromSource} onclose={()=>source=null}/>
 </Tooltip.Provider>
 </BitsConfig>

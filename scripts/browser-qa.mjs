@@ -156,7 +156,7 @@ try {
     },{navigation,references});
   }
   const readingWidth=await page.locator('#main-content').evaluate(e=>e.getBoundingClientRect().width);
-  await page.locator('#reference-sidebar').getByRole('tab',{name:'Lecture notes',exact:true}).click();
+  await page.locator('#reference-sidebar').getByRole('tab',{name:'课件',exact:true}).click();
   for(const [navigation,references] of [[false,true],[true,false],[false,false],[true,true]]){
     await sidebars(navigation,references);await noOverflow();
     assert.equal(await page.locator('#exam-navigation').evaluate(e=>e.inert),!navigation);
@@ -164,10 +164,15 @@ try {
     assert.equal((await stored()).selected,'e2-s26-q3');
     if(!navigation||!references)assert.ok(await page.locator('#main-content').evaluate(e=>e.getBoundingClientRect().width)>=readingWidth);
   }
-  assert.equal(await page.locator('#reference-sidebar').getByRole('tab',{name:'Lecture notes',exact:true}).getAttribute('aria-selected'),'true');
+  assert.equal(await page.locator('#reference-sidebar').getByRole('tab',{name:'课件',exact:true}).getAttribute('aria-selected'),'true');
   await page.locator('#reference-sidebar').getByRole('tab',{name:'公式表',exact:true}).click();
   record('Both sidebars collapse independently, release reading width and preserve the selected reference tab');
   await sidebars(false,false);
+  // The storage transaction is coordinated asynchronously across tabs; verify it committed before reloading.
+  await page.waitForFunction(()=>{
+    const sidebars=JSON.parse(localStorage.getItem('ecse2100-fieldnotes-v1')??'{}').sidebars;
+    return sidebars?.navigation===false&&sidebars?.references===false;
+  });
   await page.reload({waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>document.documentElement.dataset.navigation==='closed'&&document.documentElement.dataset.references==='closed');
   assert.equal(await navigationToggle.getAttribute('aria-expanded'),'false');

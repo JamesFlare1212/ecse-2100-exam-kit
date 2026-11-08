@@ -14,7 +14,7 @@
 		"test": "bun test",
 		"content:check": "bun scripts/check_content.ts",
 		"papers:prepare": "bun scripts/prepare_papers.ts",
-		"assets:prepare": "python3 scripts/prepare_sources.py && python3 scripts/render_excerpts.py && python3 scripts/generate_figures.py"
+		"assets:prepare": "python3 scripts/prepare_sources.py --locale en && python3 scripts/prepare_sources.py --locale zh-cn && python3 scripts/render_excerpts.py && python3 scripts/generate_figures.py"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.12",

@@ -1,4 +1,5 @@
 import {describe,expect,test} from 'bun:test';
+import {course} from '../content/course';
 import {existsSync,readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import katex from 'katex';
@@ -13,7 +14,8 @@ const {partIds}=createCatalog(examIndex,documents);
 const exists=(path:string)=>existsSync(assetSource(path));
 const checkTex=(tex:string)=>katex.renderToString(tex,{throwOnError:true,strict:'ignore',trust:false});
 const equations=(part:Part,locale:Locale='en')=>displayEquations(part.solution[locale]);
-describe('Complete, bilingual and source-addressable content',()=>{
+// This shipped course's scientific/source regressions are not requirements for other subjects.
+describe.skipIf(course.id!=='ecse-2100')('Complete, bilingual and source-addressable content',()=>{
   test('the client index preserves all searchable questions without shipping solutions',()=>{
     expect(examIndex.map(e=>e.id)).toEqual(exams.map(e=>e.id));
     for(const exam of exams){
@@ -206,7 +208,7 @@ const mul=(a:C,b:C):C=>({re:a.re*b.re-a.im*b.im,im:a.re*b.im+a.im*b.re});
 const div=(a:C,b:C):C=>{const d=b.re*b.re+b.im*b.im;return{re:(a.re*b.re+a.im*b.im)/d,im:(a.im*b.re-a.re*b.im)/d};};
 const scale=(a:C,n:number):C=>({re:a.re*n,im:a.im*n});
 function input(z:C,d:number):C {const t=Math.tan(2*Math.PI*d);return div(add(z,{re:0,im:t}),add({re:1,im:0},mul({re:0,im:t},z)));}
-describe('Independent physical and numerical consistency checks',()=>{
+describe.skipIf(course.id!=='ecse-2100')('Independent physical and numerical consistency checks',()=>{
   test('numerical quadrature agrees with the expanded current, Gaussian charge and potential integrals',()=>{
     function integrate(f:(x:number)=>number,a:number,b:number){
       const n=400,h=(b-a)/n;

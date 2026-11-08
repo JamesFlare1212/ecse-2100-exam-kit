@@ -3,6 +3,7 @@ import { fromMarkdown } from 'mdast-util-from-markdown';
 import { math } from 'micromark-extension-math';
 import { mathFromMarkdown } from 'mdast-util-math';
 import type { Root, RootContent, PhrasingContent, ListItem } from 'mdast';
+import { mathClosingPunctuation } from '../../content/text';
 
 export function renderMath(tex: string, displayMode = false) {
   return katex.renderToString(tex, {displayMode, throwOnError:false, strict:'ignore', trust:false, output:'htmlAndMathml'});
@@ -18,7 +19,16 @@ export function renderText(text: string) {
 /** Phrasing-safe Markdown also works inside accordion buttons and captions. */
 function renderMarkdownNode(node: Root | RootContent | PhrasingContent | ListItem, source: string): string {
   const render = (child: RootContent | PhrasingContent | ListItem) => renderMarkdownNode(child, source);
-  const children = () => 'children' in node ? node.children.map(render).join('') : '';
+  const children = () => {
+    if (!('children' in node)) return '';
+    const nodes = node.children;
+    return nodes.map((child, index) => {
+      const punctuation = mathClosingPunctuation(child, nodes[index + 1], source);
+      if (punctuation) return `<span class="math-with-punctuation">${render(child)}${escape(punctuation)}</span>`;
+      const preceding = index > 0 ? mathClosingPunctuation(nodes[index - 1], child, source) : '';
+      return preceding && child.type === 'text' ? render({ ...child, value: child.value.slice(preceding.length) }) : render(child);
+    }).join('');
+  };
   switch (node.type) {
     case 'root': return node.children.map(render).join('<br><br>');
     case 'paragraph': case 'listItem': return children();

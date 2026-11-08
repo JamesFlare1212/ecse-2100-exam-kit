@@ -1,6 +1,7 @@
 <script lang="ts">
   import { RadioGroup } from 'bits-ui';
-  import { toggleVariants } from '#lib/components/ui/toggle';
+  import { tabsListVariants, tabsTriggerVariants } from '#lib/components/ui/tabs';
+  import { cn } from '#lib/utils';
   import * as Dialog from '#lib/components/ui/dialog';
   import { Button } from '#lib/components/ui/button';
   import Expand from '@lucide/svelte/icons/expand';
@@ -42,12 +43,12 @@
 </script>
 <figure class="study-figure" data-figure={name}>
   <div class="figure-toolbar">
-    <span class="figure-label">{locale==='zh'?'图示':'FIGURE'} <span>↗</span></span>
-    <div class="flex items-center gap-2">
+    <span class="figure-label hidden min-[360px]:inline">{locale==='zh'?'图示':'FIGURE'} <span>↗</span></span>
+    <div class="ml-auto flex items-center gap-2">
       {#if original}
-        <RadioGroup.Root class="figure-version" bind:value={view} aria-label={locale==='zh'?'图像版本':'Figure version'}>
-          <RadioGroup.Item class={toggleVariants({variant:'outline',size:'sm'})} value="recreated">{locale==='zh'?'矢量复刻':'Recreated SVG'}</RadioGroup.Item>
-          <RadioGroup.Item class={toggleVariants({variant:'outline',size:'sm'})} value="original">{locale==='zh'?'原始插图':'Original'}</RadioGroup.Item>
+        <RadioGroup.Root class={cn(tabsListVariants(),'figure-version h-9')} data-variant="default" orientation="horizontal" bind:value={view} aria-label={locale==='zh'?'图像版本':'Figure version'}>
+          <RadioGroup.Item class={tabsTriggerVariants()} data-active={view==='recreated'?true:undefined} value="recreated">{locale==='zh'?'矢量复刻':'Recreated SVG'}</RadioGroup.Item>
+          <RadioGroup.Item class={tabsTriggerVariants()} data-active={view==='original'?true:undefined} value="original">{locale==='zh'?'原始插图':'Original'}</RadioGroup.Item>
         </RadioGroup.Root>
       {/if}
       <Button size="icon-sm" variant="ghost" onclick={()=>{zoomError=false;zoom=true;}} disabled={error} aria-label={locale==='zh'?'放大图示':'Enlarge figure'}><Expand aria-hidden="true" /></Button>

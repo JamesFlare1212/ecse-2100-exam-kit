@@ -3,8 +3,9 @@
   import { buttonVariants } from '#lib/components/ui/button';
   import GraduationCap from '@lucide/svelte/icons/graduation-cap';
   import RichText from './RichText.svelte';
-  import type { Problem, Locale, SourceRef } from '#lib/types';
-  let {problem,locale,onsource}: {problem:Problem;locale:Locale;onsource:(source:SourceRef)=>void}=$props();
+  import { sourceName } from '../../../content/course';
+  import type { Problem, Locale, SourceRef, SourceDocument } from '#lib/types';
+  let {problem,locale,documents,onsource}: {problem:Problem;locale:Locale;documents:Record<string,SourceDocument>;onsource:(source:SourceRef)=>void}=$props();
 </script>
 
 <section class="problem-overview" aria-labelledby="overview-title" data-problem-guide>
@@ -15,8 +16,8 @@
     <div class="flex flex-wrap gap-1">
       {#each problem.lectures as lecture(lecture.doc+'-'+lecture.page)}
         <Tooltip.Root>
-          <Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'sm'})} onclick={()=>onsource(lecture)} aria-label={'Lecture '+Number(lecture.doc.slice(-2))+' · p.'+lecture.page+' · '+lecture.label[locale]}>
-            <GraduationCap data-icon="inline-start" aria-hidden="true"/>Lecture {Number(lecture.doc.slice(-2))} · p.{lecture.page}
+          <Tooltip.Trigger class={buttonVariants({variant:'ghost',size:'sm'})} onclick={()=>onsource(lecture)} aria-label={sourceName(lecture.doc,documents)+' · p.'+lecture.page+' · '+lecture.label[locale]}>
+            <GraduationCap data-icon="inline-start" aria-hidden="true"/>{sourceName(lecture.doc,documents)} · p.{lecture.page}
           </Tooltip.Trigger>
           <Tooltip.Content>{lecture.label[locale]}</Tooltip.Content>
         </Tooltip.Root>
