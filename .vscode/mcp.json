@@ -1,8 +1,0 @@
-{
-  "servers": {
-    "shadcn-svelte": {
-      "type": "http",
-      "url": "https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp"
-    }
-  }
-}

@@ -73,13 +73,22 @@ bunx skills add huntabyte/shadcn-svelte --agent universal --yes --copy
 
 官方入口：[llms.txt](https://www.shadcn-svelte.com/llms.txt)、[Skills](https://www.shadcn-svelte.com/docs/skills)。该文档入口没有官方独立的 shadcn-svelte MCP 安装项；项目配置使用 [Michael-Obele/shadcn-svelte-mcp](https://github.com/Michael-Obele/shadcn-svelte-mcp) 的文档服务，未将 React 的组件服务器混作 Svelte 组件来源。
 
-`.mcp.json` 与 `.vscode/mcp.json` 都已配置 HTTP MCP：
+项目只在根目录的 `.mcp.json` 中配置 MCP，使用 `mcpServers` 格式，不依赖 VS Code 或其他特定编辑器：
 
-```text
-https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp
+```json
+{
+  "mcpServers": {
+    "shadcn-svelte": {
+      "type": "http",
+      "url": "https://shadcn-svelte-mcp.svelte-apps.workers.dev/api/mcp/shadcn/mcp"
+    }
+  }
+}
 ```
 
-已成功完成 MCP `initialize` 握手：`Shadcn Svelte Docs`，版本 `1.10.0`，协议 `2025-03-26`。在支持对应项目配置的客户端中重新载入 MCP 即可使用；安装配置不会把新的 MCP 动态注入已经运行的对话。MCP 只用于开发文档查询，网页运行不依赖该服务。
+支持 `.mcp.json` 的 MCP 客户端可直接加载；其他客户端可将上述服务地址按 HTTP 传输方式添加到各自的 MCP 配置中，无需安装编辑器扩展。
+
+已成功完成 MCP `initialize` 握手：`Shadcn Svelte Docs`，版本 `1.10.0`，协议 `2025-03-26`。配置后需在客户端重新载入 MCP 或新建会话，不会把新的 MCP 动态注入已经运行的对话。MCP 只用于开发文档查询，网页运行不依赖该服务。
 
 ## 校验与重新生成
 
