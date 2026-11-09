@@ -137,8 +137,8 @@ validates and assembles page data in memory. No question-bank JSON is generated.
 Each page contains its own full bilingual problem plus a solution-free navigation
 index. The persistent Svelte island preserves state across Astro navigation.
 Language switching selects that language's figures, original crops, PDF pages and
-downloads at `/papers/en/...` or `/papers/zh-cn/...`. Portals remain attached to
-`#fieldnotes-overlays` across swaps.
+original PDF links at `/papers/en/...` or `/papers/zh-cn/...`. Portals remain
+attached to `#fieldnotes-overlays` across swaps.
 
 `bun run papers:prepare` copies only `assets/` into ignored
 `static/papers/{en|zh-cn}/`. Markdown, metadata, extraction and Python are not

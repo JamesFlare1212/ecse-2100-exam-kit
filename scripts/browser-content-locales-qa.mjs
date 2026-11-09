@@ -25,12 +25,16 @@ export async function checkContentLocales(browser, base, record) {
         const dialog = page.locator('.source-dialog');
         await dialog.waitFor();
         assert.ok((await dialog.locator('.source-paper img').getAttribute('src')).startsWith(prefix + 'pages/'));
-        assert.ok((await dialog.locator('a[download]').getAttribute('href')).startsWith(prefix + 'sources/'));
+        assert.equal(await dialog.locator('[download]').count(), 0);
+        const originalPDF = dialog.getByRole('link', { name: english ? 'Open original PDF' : '打开原始 PDF', exact: true });
+        const href = await originalPDF.getAttribute('href');
+        assert.ok(href.startsWith(prefix + 'sources/'));
+        assert.equal(new URL(href, base).hash, `#page=${await dialog.locator('#source-page').inputValue()}`);
         await page.keyboard.press('Escape');
         await dialog.waitFor({ state: 'detached' });
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       }
-      record(`${width}px language switching uses separate SVG, crop, PDF page and download copies`);
+      record(`${width}px language switching uses separate SVG, crop, PDF page and original PDF links without download actions`);
     } finally { await context.close(); }
   }
 }

@@ -10,7 +10,6 @@
   import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
   import ZoomIn from '@lucide/svelte/icons/zoom-in';
   import ZoomOut from '@lucide/svelte/icons/zoom-out';
-  import Download from '@lucide/svelte/icons/download';
   import type { SourceRef, Locale, SourceDocument } from '#lib/types';
   let {source,locale,documents,onclose,onCloseAutoFocus}: {source:SourceRef|null;locale:Locale;documents:Record<string,SourceDocument>;onclose:()=>void;onCloseAutoFocus?:(event:Event)=>void}=$props();
   let requestedPage=$state(1);
@@ -88,7 +87,6 @@
       </div>
       <Dialog.Footer class="source-footer">
         <span class="source-origin">{locale==='zh'?'原始课程资料':'Original course material'} · {doc.kind==='lecture'?'LECTURE':'PDF'}</span>
-        <Button variant="outline" href={doc.pdf} download><Download data-icon="inline-start" aria-hidden="true"/>{locale==='zh'?'下载':'Download'}</Button>
         <Button href={`${doc.pdf}#page=${page}`} target="_blank" rel="noopener noreferrer"><ArrowUpRight data-icon="inline-start" aria-hidden="true"/>{locale==='zh'?'打开原始 PDF':'Open original PDF'}</Button>
       </Dialog.Footer>
     {/if}

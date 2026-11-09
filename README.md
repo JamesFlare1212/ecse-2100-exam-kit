@@ -27,7 +27,7 @@ bun run dev
 
 打开终端显示的地址（默认 http://127.0.0.1:5173）。 `bun run build` 输出可静态托管的 `build/`；`bun run preview --host 127.0.0.1` 可预览构建结果。现有资源包含 PDF、页图和 SVG，运行网页无需 Python 或外部服务。
 
-课程 PDF 允许随站点发布，`build/` 会包含供浏览和下载的 PDF；这与 Git 提交限制是两回事。不要把新增的大型 PDF 文件提交到 Git，应在本地或构建环境中将它们放入所属的规范资源目录，再构建和发布。保留已有 PDF、SHA-256 来源记录及双语独立副本；常规编辑不删除现有文件、不改变其跟踪状态，也不改写 Git 历史。
+课程 PDF 允许随站点发布，`build/` 会包含供浏览的 PDF；这与 Git 提交限制是两回事。不要把新增的大型 PDF 文件提交到 Git，应在本地或构建环境中将它们放入所属的规范资源目录，再构建和发布。保留已有 PDF、SHA-256 来源记录及双语独立副本；常规编辑不删除现有文件、不改变其跟踪状态，也不改写 Git 历史。
 
 每道大题分别在 `content/en/exam1_f26/questions/q1.md` 和 `content/zh-cn/exam1_f26/questions/q1.md` 保存独立的单语言 Markdown。两边各自拥有试卷元数据、PDF、SVG、页图、提取文本和绘图配置，相同素材也分别保留。YAML frontmatter 保存标题、分值、来源和必要的元数据覆盖；题号、默认图名和裁图来源自动推导。正文只需 `Question`、`Guide`、`Part` 和 `Solution` 等结构标题，直接书写段落与公式，最终方框结果仅写一次。两种语言按题目和小问的稳定 ID 配对，保留相同的分值、物理条件和来源信息，各自独立安排解答的段落与公式；一对翻译只计为一套试卷。新增或移除 paper 时同时处理两边目录，无需修改导入清单。编辑规则见 [content/README.md](content/README.md)。开发服务器监听两种语言的文章、元数据和资源变化；各自的 `assets/` 自动复制到 Git 忽略的 `static/papers/en/` 和 `static/papers/zh-cn/`，不要手工编辑暂存目录。
 
